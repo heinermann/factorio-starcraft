@@ -193,7 +193,7 @@ function BroodlingGndAttkInit()
 	playfram(0x88)	-- Frame set 8
 	wait(1) 
 	playfram(0x99)	-- Frame set 9
-	attackmelee(1, 786)	-- Zerg\BROODLING\ZBrAtt00.WAV
+	attackmelee(786)	-- Zerg\BROODLING\ZBrAtt00.WAV
 	wait(1) 
 	playfram(0xaa)	-- Frame set 10
 	wait(1) 
@@ -1547,7 +1547,7 @@ function InfestedKerriganGndAttkRpt()
 	playfram(0x66)	-- Frame set 6
 	wait(2) 
 	playfram(0x77)	-- Frame set 7
-	attackmelee(1, 0)	-- Protoss\Artanis\PAtYes03.wav
+	attackmelee(0)	-- (nullsound)
 	wait(3) 
 	playfram(0x66)	-- Frame set 6
 	wait(2) 
@@ -1974,7 +1974,7 @@ function QueenGndAttkToIdle()
 end
 
 function QueenDeath()
-	playsndbtwn(925, 927)	-- Zerg\Queen\ZQuDth00.WAV | Zerg\Queen\ZQuDth02.WAV
+	playsnd(925)	-- Zerg\Queen\ZQuDth00.WAV | Zerg\Queen\ZQuDth02.WAV
 	sprol(156, 0, 0)	-- Queen Death (zerg\zquDeath.grp)
 	wait(1) 
 end
@@ -2120,12 +2120,12 @@ end
 function UltraliskGndAttkRpt()
 	wait(1) 
 	nobrkcodestart()
-	playsndrand(3, 891, 892, 893)	-- Zerg\Ultra\zulAtt00.WAV | Zerg\Ultra\zulAtt01.WAV | Zerg\Ultra\zulAtt02.WAV
+  playsnd(891) -- Zerg\Ultra\zulAtt00.WAV | Zerg\Ultra\zulAtt01.WAV | Zerg\Ultra\zulAtt02.WAV
 	wait(2) 
 	playfram(0xdd)	-- Frame set 13
 	wait(2) 
 	playfram(0xcc)	-- Frame set 12
-	attackmelee(2, 894, 895)	-- Zerg\Ultra\zulHit00.WAV | Zerg\Ultra\zulHit01.WAV
+	attackmelee(894)	-- Zerg\Ultra\zulHit00.WAV | Zerg\Ultra\zulHit01.WAV
 	wait(2) 
 	playfram(0xbb)	-- Frame set 11
 	wait(2) 
@@ -2274,7 +2274,7 @@ function ZerglingGndAttkInit()
 	playfram(0x11)	-- Frame set 1
 	wait(1) 
 	playfram(0x22)	-- Frame set 2
-	attackmelee(1, 894)	-- Zerg\Ultra\zulHit00.WAV
+	attackmelee(894)	-- Zerg\Ultra\zulHit00.WAV
 	wait(1) 
 	playfram(0x33)	-- Frame set 3
 	wait(1) 
@@ -4595,7 +4595,7 @@ function CivilianLocal01()
 end
 
 function CivilianDeath()
-	playsndbtwn(276, 277)	-- Terran\MARINE\TMaDth00.WAV | Terran\MARINE\TMaDth01.WAV
+	playsnd(276)	-- Terran\MARINE\TMaDth00.WAV | Terran\MARINE\TMaDth01.WAV
 	imgol(242, 0, 0)	-- Marine Death (terran\marine.grp)
 	wait(1) 
 end
@@ -4764,7 +4764,7 @@ function FirebatLocal02()
 end
 
 function FirebatDeath()
-	playsndbtwn(296, 298)	-- Terran\Firebat\TFBDth00.WAV | Terran\Firebat\TFBDth02.WAV
+	playsnd(296)	-- Terran\Firebat\TFBDth00.WAV | Terran\Firebat\TFBDth02.WAV
 	imgol(332, 0, 0)	-- Explosion2 (Small) (thingy\tBangS.grp)
 	wait(3) 
 end
@@ -5625,7 +5625,7 @@ function MarineLocal02()
 end
 
 function MarineDeath()
-	playsndbtwn(276, 277)	-- Terran\MARINE\TMaDth00.WAV | Terran\MARINE\TMaDth01.WAV
+	playsnd(276)	-- Terran\MARINE\TMaDth00.WAV | Terran\MARINE\TMaDth01.WAV
 	MarineLocal05()
 end
 
@@ -9933,7 +9933,7 @@ function CarrierInit()
 end
 
 function CarrierDeath()
-	playsndbtwn(595, 596)	-- Protoss\Carrier\PCaDth00.WAV | Protoss\Carrier\PCaDth01.WAV
+	playsnd(595)	-- Protoss\Carrier\PCaDth00.WAV | Protoss\Carrier\PCaDth01.WAV
 	imgol(214, 0, 0)	-- Explosion1 (Medium) (thingy\tBangL.grp)
 	wait(3) 
 end
@@ -10603,7 +10603,7 @@ end
 
 function ReaverGndAttkInit()
 	wait(1) 
-	playsndbtwn(102, 103)	-- Bullet\pTrFir00.wav | Bullet\pTrFir01.wav
+	playsnd(102)	-- Bullet\pTrFir00.wav | Bullet\pTrFir01.wav
 	attackwith(1) 
 	wait(1) 
 	gotorepeatattk()
@@ -10888,7 +10888,7 @@ function ZealotGndAttkInit()
 end
 
 function ZealotGndAttkRpt()
-	playsndrand(2, 662, 663)	-- Protoss\ZEALOT\pzeAtt00.WAV | Protoss\ZEALOT\pzeAtt01.WAV
+	playsnd(662)	-- Protoss\ZEALOT\pzeAtt00.WAV | Protoss\ZEALOT\pzeAtt01.WAV
 	playfram(0x11)	-- Frame set 1
 	wait(1) 
 	nobrkcodestart()
@@ -10897,12 +10897,12 @@ function ZealotGndAttkRpt()
 	playfram(0x33)	-- Frame set 3
 	wait(1) 
 	playfram(0x44)	-- Frame set 4
-	attackmelee(1, 664)	-- Protoss\ZEALOT\pzeHit00.WAV
+	attackmelee(664)	-- Protoss\ZEALOT\pzeHit00.WAV
 	wait(1) 
 	playfram(0x33)	-- Frame set 3
 	wait(1) 
 	playfram(0x22)	-- Frame set 2
-	attackmelee(1, 664)	-- Protoss\ZEALOT\pzeHit00.WAV
+	attackmelee(664)	-- Protoss\ZEALOT\pzeHit00.WAV
 	wait(1) 
 	playfram(0x11)	-- Frame set 1
 	wait(1) 
@@ -11000,7 +11000,7 @@ function ObserverInit()
 end
 
 function ObserverDeath()
-	playsndbtwn(651, 652)	-- Protoss\Witness\PWiDth00.WAV | Protoss\Witness\PWiDth01.WAV
+	playsnd(651)	-- Protoss\Witness\PWiDth00.WAV | Protoss\Witness\PWiDth01.WAV
 	imgol(214, 0, 0)	-- Explosion1 (Medium) (thingy\tBangL.grp)
 	wait(3) 
 end
@@ -14020,7 +14020,7 @@ end
 
 function FusionCutterHitDeath()
 	playfram(0x00)	-- Frame set 0
-	playsndbtwn(35, 39)	-- terran\SCV\EDrRep00.wav | terran\SCV\EDrRep04.wav
+	playsnd(35)	-- terran\SCV\EDrRep00.wav | terran\SCV\EDrRep04.wav
 	domissiledmg()
 	wait(1) 
 	playfram(1)	-- Frame set 0,  direction 1
@@ -14112,7 +14112,7 @@ iscript[239] = {
 
 function GeminiMissilesInit()
 	playfram(0x00)	-- Frame set 0
-	playsndbtwn(82, 83)	-- Bullet\TPhFi200.wav | Bullet\TPhFi200.wav
+	playsnd(82)	-- Bullet\TPhFi200.wav | Bullet\TPhFi200.wav
 	wait(1) 
 	sigorder(1) 
 	wait(1) 
@@ -15069,7 +15069,7 @@ function GlaveWurmDeath()
 end
 
 function GlaveWurmSpecialState1()
-	playsndbtwn(91, 92)	-- Bullet\ZQuHit00.wav | Bullet\ZQuHit01.wav
+	playsnd(91)	-- Bullet\ZQuHit00.wav | Bullet\ZQuHit01.wav
 	sprol(365, 0, 0)	-- Glave Wurm/Seeker Spores Hit (thingy\SporeHit.grp)
 	domissiledmg()
 	GlaveWurmGndAttkInit()
@@ -15883,7 +15883,7 @@ iscript[283] = {
 -- ----------------------------------------------------------------------------- --
 
 function FragmentationGrenadeHitInit()
-	playsndbtwn(107, 109)	-- Bullet\tvuHit00.wav | Bullet\tvuHit02.wav
+	playsnd(107)	-- Bullet\tvuHit00.wav | Bullet\tvuHit02.wav
 	playfram(0x00)	-- Frame set 0
 	wait(2) 
 	playfram(1)	-- Frame set 0,  direction 1
@@ -16980,7 +16980,7 @@ iscript[312] = {
 -- ----------------------------------------------------------------------------- --
 
 function FlamethrowerInit()
-	playsndbtwn(314, 315)	-- Terran\Firebat\TFBFir00.WAV | Terran\Firebat\TFBFir01.WAV
+	playsnd(314)	-- Terran\Firebat\TFBFir00.WAV | Terran\Firebat\TFBFir01.WAV
 	FlamethrowerLocal00()
 end
 
@@ -20616,7 +20616,7 @@ function DarkTemplar_Unit_GndAttkInit()
 	wait(1) 
 	playfram(0x44)	-- Frame set 4
 	wait(1) 
-	attackmelee(1, 111)	-- Bullet\UZeFir00.wav
+	attackmelee(111)	-- Bullet\UZeFir00.wav
 	playfram(0x55)	-- Frame set 5
 	wait(1) 
 	playfram(0x66)	-- Frame set 6

@@ -16067,7 +16067,6 @@ function CursorMarkerGndAttkInit()
 	wait(1) 
 	playfram(4)	-- Frame set 0,  direction 4
 	wait(1) 
-	op__2d()
 	ScourgeLocal00()
 end
 

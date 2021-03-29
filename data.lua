@@ -4,3 +4,7 @@
 --
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
+require("prototypes.damage-type")
+require("prototypes.item-groups")
+require("prototypes.animation")
+require("prototypes.unit")

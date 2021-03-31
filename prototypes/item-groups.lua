@@ -10,6 +10,12 @@ data:extend(
   },
   {
     type = "item-subgroup",
+    name = "starcraft-mechanics",
+    group = "starcraft",
+    order = "u"
+  },
+  {
+    type = "item-subgroup",
     name = "terran",
     group = "starcraft",
     order = "w"

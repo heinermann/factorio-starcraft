@@ -6,5 +6,7 @@
 
 require("prototypes.damage-type")
 require("prototypes.item-groups")
+require("prototypes.equipment-grid")
+require("prototypes.item")
 require("prototypes.animation")
 require("prototypes.unit")

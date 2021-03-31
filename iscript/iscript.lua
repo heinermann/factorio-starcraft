@@ -1,3 +1,62 @@
+-- WARNING: Some scripts will stack overflow as is, it should not be run.
+
+-- imgul
+-- playfram
+-- waitrand
+-- setvertpos
+-- wait
+-- playsnd
+-- imgol
+-- sprol
+-- attackwith
+-- lowsprul
+-- nobrkcodestart
+-- attackmelee
+-- nobrkcodeend
+-- move
+-- setfldirect
+-- sigorder
+-- imgoluselo
+-- castspell
+-- sproluselo
+-- randcondjmp
+-- turnccwise
+-- turncwise
+-- attack
+-- ignorerest
+-- turnrand
+-- liftoffcondjmp
+-- trgtarccondjmp
+-- creategasoverlays
+-- imgolorig
+-- attkshiftproj
+-- engframe
+-- useweapon
+-- setflspeed
+-- tmprmgraphicstart
+-- tmprmgraphicend
+-- turnlcwise
+-- curdirectcondjmp
+-- trgtrangecondjmp
+-- imgulnextid
+-- spruluselo
+-- followmaingraphic
+-- warpoverlay
+-- playframtile
+-- pwrupcondjmp
+-- switchul
+-- domissiledmg
+-- sprul
+-- engset
+-- imguluselo
+-- setflipstate
+-- setpos
+-- setspawnframe
+-- orderdone
+-- grdsprol
+-- dogrddamage
+-- sethorpos
+
 iscript = {}
 
 -- ----------------------------------------------------------------------------- --

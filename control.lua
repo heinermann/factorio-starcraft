@@ -54,6 +54,19 @@ function attach_ol(entity, anim, tint)
   }
 end
 
+
+-- What a nightmare this is going to be
+-- Cons of unit:
+--  - Biter AI still has some control
+--  - Can't programmatically switch weapons or take direct movement control
+--  - Limited facing directions
+-- Cons of car:
+--  - Not targetable
+--  - Shows in UI as a vehicle
+-- Cons of character:
+--  - Limited facing directions
+--  - Anim bug that tries to load additional graphics out of a sheet
+
 function create_unit(position, force, surface)
   surface = surface or "nauvis"
 
@@ -62,15 +75,29 @@ function create_unit(position, force, surface)
 
   setup_unit_inventory(baseunit)
 
-  baseunit.orientation = 0.25
+  --baseunit.orientation = 0
+  --baseunit.direction = defines.direction.north
+  --baseunit.direction = 8
 
-  attach_ol(baseunit, "starcraft_main_221")
-  attach_ol(baseunit, "starcraft_main_221_teamcolor", baseunit.color)
+  --attach_ol(baseunit, "starcraft_main_221")
+  --attach_ol(baseunit, "starcraft_main_221_teamcolor", baseunit.color)
+  return baseunit
 end
+
+directions = {
+  defines.direction.north,
+  defines.direction.northeast,
+  defines.direction.east,
+  defines.direction.southeast,
+  defines.direction.south,
+  defines.direction.southwest,
+  defines.direction.west,
+  defines.direction.northwest
+}
 
 script.on_nth_tick(2, function(event)
   if event.tick == 0 then
-    create_unit({2, 0}, "terran")
+    global.testunit = create_unit({2, 0}, "terran")
 
     --test_entities = game.surfaces['nauvis'].find_entities_filtered{force = "terran"}
     --
@@ -94,6 +121,10 @@ script.on_nth_tick(2, function(event)
     --end
   end
 
+  target_rate = math.floor(event.tick / 30)
+  --global.testunit.direction = directions[(target_rate % #directions) + 1]
+  global.testunit.walking_state = {walking = true, direction = directions[(target_rate % #directions) + 1]}
+  --global.testunit.orientation = target_rate / 34.0
 
   --rendering.set_animation_offset(global.test_anim, 119)
 

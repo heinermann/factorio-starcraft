@@ -5,6 +5,82 @@ blank_anim = {
   filename = "__starcraft__/graphics/blank.png"
 }
 
+anim_221_idle = {
+  layers = {
+    {
+      filename = "__starcraft__/graphics/main_221_diffuse.png",
+      size = { 78, 124 },
+      line_length = 8,
+      frame_count = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      direction_count = 34,
+      animation_speed = 1 / 2.52   -- Starcraft fastest speed @ 23.8 fps
+    },
+    {
+      filename = "__starcraft__/graphics/main_221_teamcolor.png",
+      size = { 78, 124 },
+      line_length = 8,
+      frame_count = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      apply_runtime_tint = true,
+      direction_count = 34,
+      animation_speed = 1 / 2.52
+    },
+    {
+      -- TODO: Move to script, for cloaking
+      filename = "__starcraft__/graphics/main_222_diffuse.png",
+      size = { 80, 54 },
+      line_length = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      draw_as_shadow = true,
+      frame_count = 8,
+      direction_count = 34,
+      animation_speed = 1 / 2.52
+    }
+  }
+}
+
+anim_221_run = {
+  layers = {
+    {
+      filename = "__starcraft__/graphics/main_221_diffuse.png",
+      size = { 78, 124 },
+      line_length = 8,
+      frame_count = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      direction_count = 34,
+      animation_speed = 1 / 2.52
+    },
+    {
+      filename = "__starcraft__/graphics/main_221_teamcolor.png",
+      size = { 78, 124 },
+      line_length = 8,
+      frame_count = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      apply_runtime_tint = true,
+      direction_count = 34,
+      animation_speed = 1 / 2.52
+    },
+    {
+      -- TODO: Move to script, for cloaking
+      filename = "__starcraft__/graphics/main_222_diffuse.png",
+      size = { 80, 54 },
+      line_length = 8,
+      scale = 0.5,
+      shift = {0, -9.0/16},
+      draw_as_shadow = true,
+      frame_count = 8,
+      direction_count = 34,
+      animation_speed = 1 / 2.52
+    }
+  }
+}
+
 data:extend({
   {
     -- PrototypeBase
@@ -188,7 +264,6 @@ data:extend({
     -- drawing_box
     -- enemy_map_color
     flags = {
-      "not-rotatable",
       "placeable-neutral",
       "placeable-off-grid",
       "breaths-air",
@@ -275,16 +350,18 @@ data:extend({
     mining_with_tool_particles_animation_positions = {},
     animations = {
       {
-        idle = blank_anim,
+        idle = anim_221_idle,
         idle_with_gun = blank_anim,
         mining_with_tool = blank_anim,
         running_with_gun = blank_anim,
-        flipped_shadow_running_with_gun = blank_anim,
-        running = blank_anim
+        flipped_shadow_running_with_gun = nil,
+        running = anim_221_run
       }
     },
     tool_attack_distance = 0,
     has_belt_immunity = false,
-    character_corpse = "character-corpse"
+    --character_corpse = "character-corpse"
+    crafting_categories = {"starcraft-none"},
+    mining_categories = {"starcraft-none"}
   }
 })

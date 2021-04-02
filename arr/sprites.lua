@@ -1,4 +1,4 @@
-spritesdat = {
+return {
   {                  -- Sprite name: 2/38 Ash
     ImageFile = 589,        -- Images.dat entry: 2/38 Ash
     IsVisible = 1,

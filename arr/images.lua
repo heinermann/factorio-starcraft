@@ -1,4 +1,4 @@
-imagesdat = {
+return {
   {             -- Image name: Scourge
     GfxTurns = 1,
     Clickable = 1,

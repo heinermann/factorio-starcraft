@@ -7,7 +7,8 @@
   "contact": "",
   "dependencies": [
     "base >= 1.1",
-    "stdlib >= 1.4.6"
+    "stdlib >= 1.4.6",
+    "? alien-biomes"
   ],
   "homepage": "https://github.com/heinermann/factorio-starcraft",
   "description": "Adds Starcraft to Factorio. All the units, structures, behaviours, AI, etc."

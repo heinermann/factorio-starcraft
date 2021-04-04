@@ -28,12 +28,12 @@ register_unit_map(188, "starcraft-vespene-geyser")
 register_image_map(344, "starcraft-vespene-geyser", "resource")
 register_image_map(346, "starcraft-vespene-geyser-shadow", "sprite")
 register_image_map(347, "starcraft-mineral-field", "resource")
-register_image_map(430, "starcraft-vespene-smoke-1", "animation")
-register_image_map(431, "starcraft-vespene-smoke-2", "animation")
-register_image_map(432, "starcraft-vespene-smoke-3", "animation")
-register_image_map(433, "starcraft-vespene-smoke-4", "animation")
-register_image_map(434, "starcraft-vespene-smoke-5", "animation")
-register_image_map(435, "starcraft-vespene-smoke-depleted", "animation")
+register_image_map(430, "starcraft-vespene-smoke-1", "trivial-smoke")
+register_image_map(431, "starcraft-vespene-smoke-2", "trivial-smoke")
+register_image_map(432, "starcraft-vespene-smoke-3", "trivial-smoke")
+register_image_map(433, "starcraft-vespene-smoke-4", "trivial-smoke")
+register_image_map(434, "starcraft-vespene-smoke-5", "trivial-smoke")
+register_image_map(435, "starcraft-vespene-smoke-depleted", "trivial-smoke")
 
 ------------------------------------------------------------------------------------
 ------- Access functions

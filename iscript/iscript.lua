@@ -267,13 +267,18 @@ local function creategasoverlays(num)
     anim_info.animation = "starcraft-vespene-smoke-depleted"
     anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 5
 
-    rendering.draw_animation(anim_info)
+    --rendering.draw_animation(anim_info)
   else
     anim_info.animation = gasoverlays[num]
     anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 8
 
     Log.log("Created " .. anim_info.animation .. " which expires in " .. anim_info.time_to_live)
-    rendering.draw_animation(anim_info)
+    --rendering.draw_animation(anim_info)
+    iscript.entity.surface.create_trivial_smoke{
+      name = gasoverlays[num],
+      position = target_position
+    }
+
   end
 end
 

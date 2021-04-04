@@ -2477,11 +2477,13 @@ return {
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
     VerticalOffset = 0,
   },
+  {
     HealthBar = 0,          -- Health Bar Boxes: -1
     IsVisible = 1,
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
     VerticalOffset = 0,
   },
+  {
     HealthBar = 0,          -- Health Bar Boxes: -1
     IsVisible = 1,
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
@@ -2515,6 +2517,7 @@ return {
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
     VerticalOffset = 0,
   },
+  {
     HealthBar = 0,          -- Health Bar Boxes: -1
     IsVisible = 1,
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
@@ -2674,6 +2677,7 @@ return {
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
     VerticalOffset = 0,
   },
+  {
     HealthBar = 0,          -- Health Bar Boxes: -1
     IsVisible = 1,
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
@@ -2763,6 +2767,7 @@ return {
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels
     VerticalOffset = 0,
   },
+  {
     HealthBar = 0,          -- Health Bar Boxes: -1
     IsVisible = 1,
     SelectionCircleImage = 0,          -- Selection Circle Size: 22 pixels

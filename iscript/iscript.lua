@@ -1,63 +1,391 @@
--- WARNING: Some scripts will stack overflow as is, it should not be run.
+-- WARNING: Scripts need modification to run outside of coroutines or moved into native Factorio facilities (i.e. smoke overlays)
 
--- imgul
--- playfram
--- waitrand
--- setvertpos
--- wait
--- playsnd
--- imgol
--- sprol
--- attackwith
--- lowsprul
--- nobrkcodestart
--- attackmelee
--- nobrkcodeend
--- move
--- setfldirect
--- sigorder
--- imgoluselo
--- castspell
--- sproluselo
--- randcondjmp
--- turnccwise
--- turncwise
--- attack
--- ignorerest
--- turnrand
--- liftoffcondjmp
--- trgtarccondjmp
--- creategasoverlays
--- imgolorig
--- attkshiftproj
--- engframe
--- useweapon
--- setflspeed
--- tmprmgraphicstart
--- tmprmgraphicend
--- turnlcwise
--- curdirectcondjmp
--- trgtrangecondjmp
--- imgulnextid
--- spruluselo
--- followmaingraphic
--- warpoverlay
--- playframtile
--- pwrupcondjmp
--- switchul
--- domissiledmg
--- sprul
--- engset
--- imguluselo
--- setflipstate
--- setpos
--- setspawnframe
--- orderdone
--- grdsprol
--- dogrddamage
--- sethorpos
+local Entity = require('__stdlib__/stdlib/entity/entity')
 
-iscript = {}
+local lo_data = require("__starcraft__/unit/lo")
+local convert = require("__starcraft__/glue/convert")
+local images = require("__starcraft__/arr/images")
+
+local Log = require('__stdlib__/stdlib/misc/logger').new("iscript")
+
+-- Convert a BW pixel to Factorio tile
+local function to_tiles(value)
+  return value / 16.0
+end
+
+-- Convert a BW direction to Factorio orientation
+local function to_orientation(value)
+  return value / 34
+end
+
+-- Convert BW direction to Factorio direction
+local function to_direction(value)
+  return math.floor(to_orientation(value) * 8 + 1)
+end
+
+-- Convert BW frames to Factorio ticks
+local function to_ticks(value)
+  --- BW 42ms / frame, Factorio 1000/60 ms per frame
+  return math.ceil((value * 42) * 0.06)
+end
+
+local function bounding_box_to_xy(bounding_box)
+  return {
+    (bounding_box.left_top.x + bounding_box.right_bottom.x)/2,
+    (bounding_box.left_top.y + bounding_box.right_bottom.y)/2
+  }
+end
+
+
+local iscript = {}
+local scripts = {}
+
+local function image_create(img, x, y, render_layer)
+  if iscript.entity == nil then
+    Log.log("WARNING: iscript.entity is nil")
+    return
+  end
+
+  imgname = convert.image.to_name(img)
+  if imgname ~= nil then
+    Log.log("Creating " .. imgname)
+
+    imgtype = convert.image.to_type(img)
+    if imgtype == "animation" then
+      img_track_id = rendering.draw_animation{
+        animation = imgname,
+        render_layer = render_layer,
+        animation_speed = 0,
+        target = iscript.entity,
+        target_offset = { to_tiles(x), to_tiles(y) },
+        surface = iscript.entity.surface
+      }
+      iscript.init_obj_data(img_track_id)
+      global.iscript_images[img_track_id] = {}
+
+    elseif imgtype == "sprite" then
+      img_track_id = rendering.draw_sprite{
+        sprite = imgname,
+        render_layer = render_layer,
+        target = iscript.entity,
+        target_offset = { to_tiles(x), to_tiles(y) },
+        surface = iscript.entity.surface
+      }
+
+      iscript.init_obj_data(img_track_id)
+    elseif imgtype == "smoke" or imgtype == "trivial-smoke" then
+      pos = bounding_box_to_xy(iscript.entity.bounding_box)
+      iscript.entity.surface.create_trivial_smoke{
+        name = imgname,
+        position = { pos[1] + to_tiles(x), pos[2] + to_tiles(y) }
+      }
+    end
+  end
+end
+
+local function imgul(img, x, y)
+  -- TODO: Relative to entity's render_layer
+  Log.log("imgul(" .. img .. "," .. x .. "," .. y .. ")")
+
+  image_create(img, x, y, "lower-object-above-shadow")
+end
+
+local function playfram(num)
+  if iscript.anim == nil then return end
+
+  -- TODO: GFXTurns
+  rendering.set_animation_offset(iscript.anim, num)
+end
+
+local function waitrand(min, max)
+  Log.log("waitrand(" .. min .. "," .. max .. ")")
+
+  if iscript.entity == nil then
+    Log.log("WARNING: iscript.entity is nil")
+    return
+  end
+
+  iscript.edata.wait_ticks = to_ticks(math.random(min, max) - 1)
+end
+
+local function setvertpos(y_offset)
+  if iscript.anim ~= nil then
+    target = rendering.get_target(iscript.anim)
+    rendering.set_target(target.entity or target.position, {target.entity_offset[1], to_tiles(y_offset)})
+  end
+end
+
+local function wait(amount)
+  Log.log("wait(" .. amount .. ")")
+  if iscript.entity == nil then
+    Log.log("WARNING: iscript.entity is nil")
+    return
+  end
+
+  iscript.edata.wait_ticks = to_ticks(amount - 1)
+end
+
+local function playsnd(sfx)
+  -- TODO
+end
+
+local function imgol(img, x, y)
+  -- TODO: Relative to entity's render_layer
+  image_create(img, x, y, "higher-object-under")
+end
+
+local function sprol(sprite, x, y)
+  -- TODO
+end
+
+local function attackwith(v)
+  -- TODO
+end
+
+local function lowsprul(sprite, x, y)
+  -- TODO
+end
+
+local function nobrkcodestart()
+  iscript.edata.no_break_code_section = true
+end
+
+local function attackmelee(sfx1, sfx2)
+  chosen = sfx1
+  if sfx2 ~= nil then
+    chosen = math.random(sfx1, sfx2)
+  end
+  playsnd(chosen)
+  -- TODO: attackmelee
+end
+
+local function nobrkcodeend()
+  iscript.edata.no_break_code_section = false
+end
+
+local function move(amount)
+  -- TODO
+end
+
+local function setfldirect(direction)
+  if iscript.anim ~= nil then
+    rendering.set_orientation(iscript.anim, to_orientation(direction))
+  elseif iscript.entity ~= nil then
+    iscript.entity.orientation = to_orientation(direction)
+    iscript.entity.direction = to_direction(direction)
+  end
+end
+
+local function sigorder(value)
+  iscript.edata.order_signal = value
+end
+
+local function imgoluselo(img, x, y)
+  -- TODO
+end
+
+local function castspell()
+  -- TODO
+end
+
+local function sproluselo(sprite)
+  -- TODO
+end
+
+-- TODO: turn into native code
+local function randcondjmp(chance, fn)
+  -- TODO
+end
+
+local function turnccwise(amount)
+  turncwise(-amount)
+end
+
+local function turncwise(amount)
+  -- TODO
+end
+
+local function attack()
+  -- TODO
+end
+
+local function ignorerest()
+  iscript.edata.wait_ticks = math.huge
+end
+
+local function turnrand(amount)
+  if math.random(1, 4) == 1 then
+    turnccwise(amount)
+  else
+    turncwise(amount)
+  end
+end
+
+-- TODO: turn into native code
+--function liftoffcondjmp()
+--end
+
+-- TODO: turn into native code
+--function trgtarccondjmp()
+--end
+
+local gasoverlays = {
+  "starcraft-vespene-smoke-1",
+  "starcraft-vespene-smoke-2",
+  "starcraft-vespene-smoke-3",
+  "starcraft-vespene-smoke-4",
+  "starcraft-vespene-smoke-5"
+}
+local function creategasoverlays(num)
+  Log.log("creategasoverlays(" .. num .. ")")
+
+  if iscript.entity == nil then
+    Log.log("WARNING: iscript.entity is nil")
+    return
+  end
+
+  num = num + 1 -- Lua uses 1-indexing
+
+  -- TODO: refinery state
+  img_type = convert.image.from_name(iscript.entity.name)
+  overlay_positions = lo_data.get_gas_overlays(img_type)
+
+  Log.log("imgid " .. tostring(img_type))
+  Log.write()
+  entity_position = bounding_box_to_xy(iscript.entity.bounding_box)
+  target_position = {
+    entity_position[1] + to_tiles(overlay_positions[num][1]),
+    entity_position[2] + to_tiles(overlay_positions[num][2]),
+  }
+
+  anim_info = {
+    render_layer = "higher-object-above",
+    target = target_position,
+    surface = iscript.entity.surface
+  }
+  if iscript.entity.amount == 0 then
+    anim_info.animation = "starcraft-vespene-smoke-depleted"
+    anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 5
+
+    rendering.draw_animation(anim_info)
+  else
+    anim_info.animation = gasoverlays[num]
+    anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 8
+
+    Log.log("Created " .. anim_info.animation .. " which expires in " .. anim_info.time_to_live)
+    rendering.draw_animation(anim_info)
+  end
+end
+
+local function imgolorig(imgid)
+  -- TODO
+end
+
+local function attkshiftproj(distance)
+  -- TODO
+end
+
+local function engframe(frame)
+  -- TODO
+end
+
+local function useweapon(wpn)
+  -- TODO
+end
+
+local function setflspeed(speed)
+  -- TODO
+end
+
+local function tmprmgraphicstart()
+  -- TODO: probable workaround is to generate an additional "blank" frame per image that uses this
+end
+
+local function tmprmgraphicend()
+  -- TODO
+end
+
+local function curdirectcondjmp(angle1, angle2, jmp)
+  -- TODO
+end
+
+local function trgtrangecondjmp(distance, jmp)
+  -- TODO
+end
+
+local function imgulnextid(x, y)
+  -- TODO
+end
+
+local function spruluselo(sprite, x, y)
+  -- TODO
+end
+
+local function followmaingraphic()
+  -- TODO
+end
+
+local function warpoverlay(frame)
+  -- TODO ?????
+  -- Warp overlay might not be doable, we can pre-process the overlay per unit though
+end
+
+-- Not doable. Will replace Vespene Geysers with different variants on placement.
+--function playframtile()
+--end
+
+local function pwrupcondjmp(jmp)
+  -- TODO? Logic is specific to carryables which will be getting different logic
+end
+
+local function switchul(imgid)
+  -- Again specific to carryables
+end
+
+local function domissiledmg()
+  -- TODO
+end
+
+local function sprul(sprite, x, y)
+  -- TODO: only used by Yamato trail
+end
+
+local function engset(frame)
+  -- TODO
+end
+
+local function imguluselo(img, x, y)
+  -- TODO
+end
+
+local function setflipstate(flipped)
+  -- TODO
+end
+
+-- only used for psi field overlay which we can remove
+--function setpos(x, y)
+--end
+
+local function setspawnframe(direction)
+  -- TODO? Only used for floor missile traps
+end
+
+local function orderdone(signal)
+  -- TODO
+end
+
+local function grdsprol(sprite, x, y)
+  -- TODO Img overlay only over ground, Subterranean Spines
+end
+
+local function dogrddamage()
+  -- TODO
+end
+
+-- Only used for a twilight doodad which we won't be including
+--function sethorpos()
+--end
+
 
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
@@ -854,7 +1182,7 @@ end
 function DroneGndAttkInit()
 	setvertpos(0) 
 	playsnd(64)	-- Bullet\SpoogHit.wav
-	sproluselo(332, 0)	-- Needle Spines (thingy\spooge.grp)
+	sproluselo(332)	-- Needle Spines (thingy\spooge.grp)
 	wait(1) 
 	attackwith(1) 
 	gotorepeatattk()
@@ -1407,7 +1735,7 @@ function HydraliskGndAttkRpt()
 	wait(1) 
 	playfram(0x44)	-- Frame set 4
 	playsnd(64)	-- Bullet\SpoogHit.wav
-	sproluselo(332, 0)	-- Needle Spines (thingy\spooge.grp)
+	sproluselo(332)	-- Needle Spines (thingy\spooge.grp)
 	attack()
 	wait(1) 
 	playfram(0x33)	-- Frame set 3
@@ -2184,7 +2512,7 @@ function UltraliskGndAttkRpt()
 	playfram(0xdd)	-- Frame set 13
 	wait(2) 
 	playfram(0xcc)	-- Frame set 12
-	attackmelee(894)	-- Zerg\Ultra\zulHit00.WAV | Zerg\Ultra\zulHit01.WAV
+	attackmelee(894, 895)	-- Zerg\Ultra\zulHit00.WAV | Zerg\Ultra\zulHit01.WAV
 	wait(2) 
 	playfram(0xbb)	-- Frame set 11
 	wait(2) 
@@ -8173,7 +8501,7 @@ end
 function MissileTurret_Turret_Built()
 ::MissileTurret_Turret_Built_label::
 	wait(1) 
-	turnlcwise()
+	turncwise(1)
 	goto MissileTurret_Turret_Built_label
 end
 
@@ -12850,8 +13178,8 @@ end
 iscript[201] = {
   IsId =          	201,
   Type =          	20,
-  Init =          	VespeneGeyserInit,
-  Death =         	VespeneGeyserDeath,
+  Init =          	"VespeneGeyserInit",
+  Death =         	"VespeneGeyserDeath",
   GndAttkInit =   	nil,
   AirAttkInit =   	nil,
   Unused1 =       	nil,
@@ -12863,52 +13191,51 @@ iscript[201] = {
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
-  SpecialState1 = 	VespeneGeyserSpecialState1,
+  SpecialState1 = 	"VespeneGeyserSpecialState1",
   SpecialState2 = 	nil,
   AlmostBuilt =   	nil,
-  Built =         	VespeneGeyserBuilt,
+  Built =         	"VespeneGeyserBuilt",
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	VespeneGeyserSpecialState1,
-  WorkingToIdle = 	VespeneGeyserSpecialState1,
+  IsWorking =     	"VespeneGeyserSpecialState1",
+  WorkingToIdle = 	"VespeneGeyserSpecialState1",
   WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --
 
-function VespeneGeyserInit()
-	playframtile(0x00)	-- Frame set 0
-	imgul(346, 0, 0)	-- Vespene Geyser Shadow (neutral\geyShad.grp)
-	VespeneGeyserBuilt()
-end
+scripts.VespeneGeyserInit = {
+  --playframtile(0x00)  -- Frame set 0
+  function() imgul(346, 0, 0) end,    -- Vespene Geyser Shadow (neutral\geyShad.grp)
+  "VespeneGeyserBuilt"
+}
 
-function VespeneGeyserBuilt()
-	wait(15) 
-	VespeneGeyserSpecialState1()
-end
+scripts.VespeneGeyserBuilt = {
+  function() wait(15) end,
+  "VespeneGeyserSpecialState1"
+}
 
-function VespeneGeyserSpecialState1()
-::VespeneGeyserSpecialState1_label::
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(1) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(1) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	goto VespeneGeyserSpecialState1_label
-end
+scripts.VespeneGeyserSpecialState1 = {
+	function() creategasoverlays(0) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(2) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(1) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(2) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(0) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(1) end,
+	function() waitrand(5, 50) end,
+	function() creategasoverlays(2) end,
+	function() waitrand(5, 50) end,
+	"VespeneGeyserSpecialState1"
+}
 
-function VespeneGeyserDeath()
-	imgol(332, 0, 0)	-- Explosion2 (Small) (thingy\tBangS.grp)
-	wait(3) 
-end
+scripts.VespeneGeyserDeath = {
+	function() imgol(332, 0, 0) end,	-- Explosion2 (Small) (thingy\tBangS.grp)
+	function() wait(3) end
+}
 
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
@@ -22559,3 +22886,108 @@ function MaelstromHitInit()
 	wait(2) 
 end
 
+-- ----------------------------------------------------------------------------- --
+-- ----------------------------------------------------------------------------- --
+-- ----------------------------------------------------------------------------- --
+
+function iscript.get_obj_data(obj)
+  if type(obj) == "table" then
+    return Entity.get_data(obj)
+  elseif type(obj) == "number" then
+    return global.iscript_tracking[obj]
+  end
+end
+
+function iscript.set_obj_data(obj, data)
+  if type(obj) == "table" then
+    Entity.set_data(obj, data)
+  elseif type(obj) == "number" then
+    global.iscript_tracking[obj] = data
+  end
+end
+
+function iscript.play_anim(obj, anim_name)
+  data = iscript.get_obj_data(obj)
+
+  if data.no_break_code_section then return end
+
+  imgid = convert.image.from_name(obj.name)
+  iscriptid = images[imgid+1].IscriptID
+  Log.log("SCRIPT NAME: " .. tostring(iscript[iscriptid][anim_name]))
+  Log.write()
+
+
+  data.anim_name = anim_name
+  data.script_name = iscript[iscriptid][anim_name]
+  data.script_index = 1
+  data.wait_ticks = 0
+  iscript.set_obj_data(obj, data)
+end
+
+function iscript.init_obj_data(obj)
+  data = iscript.get_obj_data(obj) or {}
+  
+  data.anim_name = "Init"
+  data.script_name = nil
+  data.script_index = 1
+  data.wait_ticks = 0
+  data.no_break_code_section = false
+
+  iscript.set_obj_data(obj, data)
+end
+
+function iscript.set_tracking_object(obj)
+  if type(obj) == "table" then
+    iscript.entity = obj
+    iscript.anim = nil
+  else
+    iscript.entity = nil
+    iscript.anim = obj
+  end
+
+  iscript.edata = iscript.get_obj_data(obj)
+end
+
+function iscript.advance(obj)
+  iscript.set_tracking_object(obj)
+  --Log.log("Advancing script for " .. obj.name)
+  Log.write()
+
+  if iscript.edata.wait_ticks > 0 then
+    iscript.edata.wait_ticks = iscript.edata.wait_ticks - 1
+    return
+  end
+
+  repeat
+    if iscript.edata.script_name == nil or scripts[iscript.edata.script_name] == nil then
+      Log.log("script_name is nil")
+      return
+    end
+    if iscript.edata.script_index > #scripts[iscript.edata.script_name] then
+      Log.log("script_index out of range")
+      return
+    end
+
+    --Log.log("Script " .. iscript.edata.script_name .. " @ " .. iscript.edata.script_index)
+    --Log.write()
+    operation = scripts[iscript.edata.script_name][iscript.edata.script_index]
+    if type(operation) == "function" then
+      Log.log("calling operation")
+
+      operation()
+      iscript.edata.script_index = iscript.edata.script_index + 1
+    elseif type(operation) == "string" then
+      Log.log("goto " .. operation)
+
+      iscript.edata.script_name = operation
+      iscript.edata.script_index = 1
+    else
+      Log.log("WARNING: Unsupported type - " .. type(operation))
+    end
+  until iscript.edata.wait_ticks > 0
+
+  iscript.set_obj_data(obj, iscript.edata)
+end
+
+
+return iscript

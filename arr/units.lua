@@ -9,7 +9,50 @@
 -- UnitSizeTypes and DamageTypes relationships are modeled as resistances. 
 -- Armor is also modeled in resistances
 
-unitsdat = {   -- Terran Marine
+local unitSizeTypes = {
+  independent = {
+    { type = "physical", percent = 99 },
+    { type = "impact", percent = 99 },
+    { type = "explosion", percent = 99 },
+    { type = "fire", percent = 99 },
+    { type = "laser", percent = 99 },
+    { type = "acid", percent = 99 },
+    { type = "electric", percent = 99 },
+    { type = "psionic", percent = 99 }
+  },
+  small = {
+    { type = "physical", percent = 0 },
+    { type = "impact", percent = 0 },
+    { type = "explosion", percent = 50 },
+    { type = "fire", percent = 0 },
+    { type = "laser", percent = 0 },
+    { type = "acid", percent = 50 },
+    { type = "electric", percent = 0 },
+    { type = "psionic", percent = 0 }
+  },
+  medium = {
+    { type = "physical", percent = 0 },
+    { type = "impact", percent = 50 },
+    { type = "explosion", percent = 25 },
+    { type = "fire", percent = 50 },
+    { type = "laser", percent = 0 },
+    { type = "acid", percent = 25 },
+    { type = "electric", percent = 0 },
+    { type = "psionic", percent = 0 }
+  },
+  large = {
+    { type = "physical", percent = 0 },
+    { type = "impact", percent = 75 },
+    { type = "explosion", percent = 0 },
+    { type = "fire", percent = 75 },
+    { type = "laser", percent = 0 },
+    { type = "acid", percent = 0 },
+    { type = "electric", percent = 0 },
+    { type = "psionic", percent = 0 }
+  }
+}
+
+return {   -- Terran Marine
   {
     Flingy = 78,                      -- Marine
     SubUnit = 228,                  -- None
@@ -17,15 +60,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -63,15 +98,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 45,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -111,15 +138,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 80,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -157,15 +176,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 125,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -203,16 +214,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -250,15 +252,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 150,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -297,16 +291,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -344,15 +329,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -392,15 +369,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 120,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 18,
@@ -442,15 +411,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -493,15 +454,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 160,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -540,15 +493,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 150,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -588,15 +533,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -637,15 +574,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 20,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -682,16 +611,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 100,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -730,15 +650,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -776,15 +688,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -825,15 +729,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -872,16 +768,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -919,15 +806,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 3,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -966,15 +845,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -1013,15 +884,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 18,
@@ -1064,15 +927,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -1116,15 +971,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1164,16 +1011,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1211,15 +1049,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1257,16 +1087,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 28,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1304,15 +1125,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 1000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -1354,15 +1167,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -1404,15 +1209,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 700,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -1454,15 +1251,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 150,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1499,16 +1288,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 28,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 1,                -- Terran Vehicle Plating 
     ElevationLevel = 4,
@@ -1546,15 +1326,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 1,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -1592,16 +1364,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -1640,15 +1403,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 1,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -1687,15 +1442,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 25,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 10,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 2,
@@ -1734,15 +1481,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 10,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -1778,15 +1517,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 10,
     MaxShields = 0,
     max_health = 35,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -1827,15 +1558,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 80,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -1875,15 +1598,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 14,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -1923,15 +1638,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 30,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -1970,15 +1677,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 13,
     MaxShields = 0,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2019,15 +1718,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 13,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 16,
@@ -2069,15 +1760,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 15,
     MaxShields = 0,
     max_health = 120,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2118,15 +1801,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 14,
     MaxShields = 0,
     max_health = 150,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 2,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2168,15 +1843,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 15,
     MaxShields = 0,
     max_health = 120,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 0,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2218,15 +1885,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 13,
     MaxShields = 0,
     max_health = 80,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 1,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2268,15 +1927,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 25,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2317,15 +1968,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 14,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2366,15 +2009,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 15,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 3,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2417,15 +2052,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2465,15 +2092,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 2,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2515,15 +2134,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 13,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 3,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2566,15 +2177,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 160,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 2,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2615,15 +2218,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 10,
     MaxShields = 0,
     max_health = 120,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -2665,15 +2260,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 15,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2715,15 +2302,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 14,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -2766,15 +2345,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 13,
     MaxShields = 0,
     max_health = 1000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 16,
@@ -2817,15 +2388,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 2,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -2865,15 +2428,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 18,
@@ -2910,15 +2465,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 80,
     max_health = 100,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 1,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -2959,15 +2506,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 40,
     max_health = 80,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 1,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3006,15 +2545,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 2,
     ArmorUpgrade = 4,                -- Zerg Flyer Caparace 
     ElevationLevel = 18,
@@ -3056,15 +2587,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 200,
     max_health = 25,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3104,15 +2627,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 20,
     max_health = 20,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3152,15 +2667,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 60,
     max_health = 100,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 1,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3198,15 +2705,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 80,
     max_health = 100,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3245,15 +2744,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 40,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3292,15 +2783,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 350,
     max_health = 10,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3339,15 +2822,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 60,
     max_health = 80,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -3388,15 +2863,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 100,
     max_health = 150,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -3436,15 +2903,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 150,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 16,
@@ -3485,15 +2944,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 150,
     max_health = 300,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 16,
@@ -3533,15 +2984,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 40,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -3580,15 +3023,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 80,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3627,15 +3062,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 400,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3675,15 +3102,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 800,
     max_health = 100,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3723,15 +3142,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 240,
     max_health = 240,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 2,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3770,15 +3181,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 240,
     max_health = 240,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3818,15 +3221,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 300,
     max_health = 80,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 2,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3866,15 +3261,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 400,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -3915,15 +3302,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 400,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -3964,15 +3343,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 500,
     max_health = 800,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 16,
@@ -4013,15 +3384,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 80,
     max_health = 100,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -4061,15 +3424,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 20,
     max_health = 40,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -4111,15 +3466,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 10,
     max_health = 20,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -4158,15 +3505,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 500,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 16,
@@ -4208,15 +3547,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 300,
     max_health = 80,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 2,
     ArmorUpgrade = 5,                -- Protoss Armor 
     ElevationLevel = 4,
@@ -4256,15 +3587,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 250,
     max_health = 250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 3,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -4305,15 +3628,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -4351,15 +3666,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -4397,15 +3704,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 125,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -4440,15 +3739,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 125,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -4483,15 +3774,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -4529,15 +3812,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -4576,15 +3851,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -4622,15 +3889,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 60,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -4668,15 +3927,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 10,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -4712,15 +3963,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 60,
     max_health = 100,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 0,
     ArmorUpgrade = 6,                -- Protoss Plating 
     ElevationLevel = 18,
@@ -4762,15 +4005,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 2,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -4811,15 +4046,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 0,                -- Terran Infantry Armor 
     ElevationLevel = 4,
@@ -4860,16 +4087,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 1,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 18,
@@ -4905,15 +4123,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 700,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 4,
     ArmorUpgrade = 2,                -- Terran Ship Plating 
     ElevationLevel = 16,
@@ -4955,15 +4165,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 12,
     MaxShields = 0,
     max_health = 125,
-    resistances = {  -- Medium Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 50 },
-      { type = "explosion", percent = 25 },
-      { type = "fire", percent = 50 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 25 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.medium,
     Armor = 1,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -5003,15 +4205,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 32,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Small Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 0 },
-      { type = "explosion", percent = 50 },
-      { type = "fire", percent = 0 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 50 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.small,
     Armor = 3,
     ArmorUpgrade = 3,                -- Zerg Carapace 
     ElevationLevel = 4,
@@ -5053,16 +4247,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 19,
@@ -5098,15 +4283,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5147,15 +4324,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5195,15 +4364,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5242,15 +4403,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5288,15 +4441,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5335,15 +4480,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5383,15 +4520,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5429,15 +4558,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5477,15 +4598,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1300,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5524,15 +4637,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5571,15 +4676,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5618,15 +4715,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5665,15 +4754,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5712,16 +4793,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5758,15 +4830,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5805,15 +4869,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5852,15 +4908,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5899,15 +4947,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5945,15 +4985,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -5994,15 +5026,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 350,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 3,
@@ -6041,15 +5065,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 700,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6087,15 +5103,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6133,16 +5141,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 10000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6179,16 +5178,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 10000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6225,15 +5215,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6273,15 +5255,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6323,15 +5297,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1800,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6373,15 +5339,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6423,15 +5381,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6472,15 +5422,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6521,15 +5463,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6570,15 +5504,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6619,15 +5545,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 850,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6668,15 +5586,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6717,15 +5627,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6766,15 +5668,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6815,15 +5709,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 2,
@@ -6864,15 +5750,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6913,15 +5791,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 400,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -6964,16 +5834,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7013,15 +5874,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 300,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 2,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7063,15 +5916,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 5000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7113,15 +5958,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7163,15 +6000,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7212,15 +6041,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7261,15 +6082,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7311,15 +6124,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7361,16 +6166,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 0,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7409,15 +6205,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 750,
     max_health = 750,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7457,15 +6245,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7505,15 +6285,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 300,
     max_health = 300,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7551,15 +6323,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 450,
     max_health = 450,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7598,16 +6362,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 300,
     max_health = 300,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7646,15 +6401,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 250,
     max_health = 250,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7693,15 +6440,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7741,15 +6480,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 1,
     max_health = 0,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7788,15 +6519,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 100,
     max_health = 100,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7837,15 +6560,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 450,
     max_health = 450,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7884,15 +6599,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7931,15 +6638,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -7978,15 +6677,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 550,
     max_health = 550,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8025,15 +6716,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 600,
     max_health = 600,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8072,15 +6755,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8118,15 +6793,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8165,15 +6832,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 500,
     max_health = 500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8212,15 +6871,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 450,
     max_health = 450,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8259,15 +6910,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 200,
     max_health = 200,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8307,15 +6950,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8353,15 +6988,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 1500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8398,15 +7025,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 5000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8443,16 +7062,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8491,16 +7101,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8539,16 +7140,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8587,16 +7179,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8635,16 +7218,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8683,16 +7257,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8730,16 +7295,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8777,16 +7333,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8824,16 +7371,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8871,16 +7409,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8917,16 +7446,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -8963,16 +7483,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9009,16 +7520,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9057,15 +7559,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 700,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9103,15 +7597,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2000,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9149,16 +7635,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 1,
@@ -9195,16 +7672,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 1,
@@ -9241,16 +7709,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 1,
@@ -9287,16 +7746,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9333,16 +7783,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9379,16 +7820,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9425,16 +7857,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9471,16 +7894,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9517,16 +7931,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 0,
@@ -9563,15 +7968,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9609,15 +8006,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 2500,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 1,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9659,16 +8048,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 19,
@@ -9704,15 +8084,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9751,16 +8123,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 1,
@@ -9796,16 +8159,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9841,16 +8195,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9886,16 +8231,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9931,16 +8267,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -9976,15 +8303,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10023,15 +8342,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10069,15 +8380,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10115,15 +8418,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10161,15 +8456,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 50,
-    resistances = {  -- Large Size Type
-      { type = "physical", percent = 0 },
-      { type = "impact", percent = 75 },
-      { type = "explosion", percent = 0 },
-      { type = "fire", percent = 75 },
-      { type = "laser", percent = 0 },
-      { type = "acid", percent = 0 },
-      { type = "electric", percent = 0 }
-    },
+    resistances = unitSizeTypes.large,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10207,16 +8494,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 1,
@@ -10253,16 +8531,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 8,
     MaxShields = 0,
     max_health = 100000,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10299,16 +8568,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10346,16 +8606,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10393,16 +8644,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10440,16 +8682,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10487,16 +8720,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10533,16 +8757,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10579,16 +8794,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10625,16 +8831,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10671,16 +8868,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10717,16 +8905,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10763,16 +8942,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,
@@ -10809,16 +8979,7 @@ unitsdat = {   -- Terran Marine
     SpawnDirection = 0,
     MaxShields = 0,
     max_health = 800,
-    resistances = {  -- Independent Size Type
-      { type = "physical", percent = 99 },
-      { type = "impact", percent = 99 },
-      { type = "poison", percent = 99 },
-      { type = "explosion", percent = 99 },
-      { type = "fire", percent = 99 },
-      { type = "laser", percent = 99 },
-      { type = "acid", percent = 99 },
-      { type = "electric", percent = 99 }
-    },
+    resistances = unitSizeTypes.independent,
     Armor = 0,
     ArmorUpgrade = 60,               -- Unknown Upgrade60
     ElevationLevel = 4,

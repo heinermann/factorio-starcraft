@@ -5,29 +5,43 @@
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
+local iscript = require("iscript.iscript")
+local Log = require('__stdlib__/stdlib/misc/logger').new("control")
+
+local g_iscript_entities = {}
+
+local game_just_loaded = false
+
+----------------------------------------------
+-- Called once every time the game is loaded, but not when it's first started
+-- Should never modify `global`
+script.on_load(function()
+  game_just_loaded = true
+end)
+
+----------------------------------------------
 
 
 function create_new_force(forcename)
+  Log.log("Creating " .. forcename)
   newforce = game.create_force(forcename)
 
   newforce.disable_research()
   newforce.disable_all_prototypes()
   newforce.ai_controllable = false
-
-
-  global.forces[forcename] = newforce
 end
 
-
+----------------------------------------------
+-- Called once when the game is originally created or mod injected, never after even if the game is loaded
 script.on_init(function()
-  global.forces = {}
+  create_new_force("terran")
+  create_new_force("protoss")
+  create_new_force("zerg")
 
-  game.create_force("terran")
-  game.create_force("protoss")
-  game.create_force("zerg")
-
-  global.main_graphic = {}
+  global.iscript_tracking = {}
 end)
+
+----------------------------------------------
 
 function get_unit_grid(entity)
   return entity.get_inventory(defines.inventory.character_armor)[1].grid
@@ -43,20 +57,6 @@ function setup_unit_inventory(entity)
   grid = get_unit_grid(entity)
   grid.put({name = "starcraft-energy-src"})
 end
-
-function attach_ol(entity, anim, tint)
-  -- "128" or "127" for ul and ""
-  rendering.draw_animation{
-    animation = anim,
-    target = entity,
-    surface = entity.surface,
-    render_layer = "object",  -- air-object for air unit
-    animation_speed = 0,
-    tint = tint,
-    target_offset = {0, -9.0/16}
-  }
-end
-
 
 -- What a nightmare this is going to be
 -- Cons of unit:
@@ -78,33 +78,59 @@ function create_unit(position, force, surface)
 
   setup_unit_inventory(baseunit)
 
-  --baseunit.orientation = 0
-  --baseunit.direction = defines.direction.north
-  --baseunit.direction = 8
-
-  --attach_ol(baseunit, "starcraft_main_221")
-  --attach_ol(baseunit, "starcraft_main_221_teamcolor", baseunit.color)
   return baseunit
 end
 
-directions = {
-  defines.direction.north,
-  defines.direction.northeast,
-  defines.direction.east,
-  defines.direction.southeast,
-  defines.direction.south,
-  defines.direction.southwest,
-  defines.direction.west,
-  defines.direction.northwest
-}
-
-script.on_nth_tick(2, function(event)
+function test_of_the_day(event)
   if event.tick == 0 then
     global.testunit = create_unit({2, 0}, "terran")
   end
 
   target_rate = math.floor(event.tick / 30)
-  global.testunit.walking_state = {walking = true, direction = directions[(target_rate % #directions) + 1]}
+  global.testunit.walking_state = {walking = true, direction = (target_rate % 8)}
+end
+
+
+function register_iscript_entity(entity)
+  g_iscript_entities[entity] = true
+  iscript.init_obj_data(entity)
+  iscript.play_anim(entity, "Init")
+  Log.log("Registered " .. entity.name .. " for iscript")
+end
+
+local supported_iscript_entity_names = {
+  "starcraft-vespene-geyser"
+}
+
+function on_game_loaded()
+  for _, surface in pairs(game.surfaces) do
+    entities = surface.find_entities_filtered{
+      name = supported_iscript_entity_names,
+      type = {"resource"}
+    }
+
+    for _, entity in pairs(entities) do
+      register_iscript_entity(entity)
+    end
+  end
+end
+
+--------------------------------------
+script.on_nth_tick(1, function(event)
+  test_of_the_day(event)
+
+  if game_just_loaded then
+    game_just_loaded = false
+    on_game_loaded()
+  end
+
+  for entity, _ in pairs(g_iscript_entities) do
+    iscript.advance(entity)
+  end
+end)
+
+script.on_nth_tick(120, function(event)
+  Log.write()
 end)
 
 -- Destroy decoratives that spawn on minerals and vespene geysers, as well as other post-processing
@@ -124,6 +150,8 @@ script.on_event(defines.events.on_chunk_generated, function(event)
     event.surface.destroy_decoratives{area = resource.selection_box}
 
     if resource.name == "starcraft-vespene-geyser" then
+      register_iscript_entity(resource)
+
       gas_box = resource.bounding_box
       minerals_filter = {
         name = "starcraft-mineral-field",
@@ -139,7 +167,7 @@ script.on_event(defines.events.on_chunk_generated, function(event)
       all_bounds = {left_bounds, top_bounds, right_bounds, bottom_bounds}
       
       -- Find the side of the geyser with the least minerals
-      best_count = 10000
+      best_count = math.huge
       best_bounds = left_bounds
       for _, area in pairs(all_bounds) do
         minerals_filter.area = area

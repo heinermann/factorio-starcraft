@@ -1778,7 +1778,7 @@ local lo_special_data = {
       {127, 127},
     }
   },
-  [378] = { -- vespene geyser overlays
+  [345] = { -- vespene geyser overlays
     {11, -19},
     {-40, -13},
     {34, 2},
@@ -2294,7 +2294,7 @@ local lo_shield_data = {
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 
-function get_shield_offset(size, table)
+local function get_shield_offset(size, table)
   direction = 0
   if table.direction ~= nil then
     direction = math.floor(32 / ((table.direction - 1) / 8)) + 1
@@ -2307,7 +2307,23 @@ function get_shield_offset(size, table)
   return lo_shield_data[size][direction]
 end
 
-function get_birth_offsets(type)
+local function get_birth_offsets(type)
   return lo_unitbirth_data[type]
 end
 
+local function get_gas_overlays(type, state)
+  type = type + 1
+  state = state or 1
+
+  if type == 308 then  -- Terran refinery build stages
+    return lo_special_data[type][state]
+  else
+    return lo_special_data[type]
+  end
+end
+
+return {
+  get_shield_offset = get_shield_offset,
+  get_birth_offsets = get_birth_offsets,
+  get_gas_overlays = get_gas_overlays,
+}

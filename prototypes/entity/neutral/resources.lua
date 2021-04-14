@@ -121,7 +121,7 @@ data:extend({
       sheet = {
         filename = "__starcraft__/graphics/main_344_diffuse.png",
         priority = "extra-high",
-        size = { 460, 220 },
+        size = { 518, 268 },
         scale = 0.5,
         frame_count = 1,
         variation_count = 1

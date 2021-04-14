@@ -20,6 +20,7 @@ local function make_simple_smoke(table)
       frame_count = table.frame_count,
       line_length = table.line_length or table.frame_count,
       frame_sequence = frame_sequence,
+      shift = table.shift,
       --animation_speed = animation_speed-- This is broken.
       -- If Factorio doesn't get an animation in something that doesn't easily divide 60 ticks per second it throws a fit.
     },
@@ -38,8 +39,7 @@ data:extend({
   make_simple_smoke{
     name = "starcraft-vespene-smoke-1",
     filename = "__starcraft__/graphics/main_430_diffuse.png",
-    size = { 166, 264 },
-    shift = {-58/16, -103/16},
+    size = { 224, 367 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true
@@ -47,8 +47,7 @@ data:extend({
   make_simple_smoke{
     name = "starcraft-vespene-smoke-2",
     filename = "__starcraft__/graphics/main_431_diffuse.png",
-    size = { 160, 316 },
-    shift = {-22/16, 0},
+    size = { 182, 316 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true

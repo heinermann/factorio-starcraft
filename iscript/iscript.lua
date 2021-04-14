@@ -74,10 +74,10 @@ local function image_create(img, x, y, render_layer)
 
       iscript.init_obj_data(img_track_id)
     elseif imgtype == "smoke" or imgtype == "trivial-smoke" then
-      pos = bounding_box_to_xy(iscript.entity.bounding_box)
+      pos = iscript.entity.position
       iscript.entity.surface.create_trivial_smoke{
         name = imgname,
-        position = { pos[1] + to_tiles(x), pos[2] + to_tiles(y) }
+        position = { pos.x + to_tiles(x), pos.y + to_tiles(y) }
       }
     end
   end
@@ -252,10 +252,10 @@ local function creategasoverlays(num)
 
   Log.log("imgid " .. tostring(img_type))
   Log.write()
-  entity_position = bounding_box_to_xy(iscript.entity.bounding_box)
+  entity_position = iscript.entity.position
   target_position = {
-    entity_position[1] + to_tiles(overlay_positions[num][1]),
-    entity_position[2] + to_tiles(overlay_positions[num][2]),
+    entity_position.x + to_tiles(overlay_positions[num][1]),
+    entity_position.y + to_tiles(overlay_positions[num][2]),
   }
 
   anim_info = {
@@ -272,7 +272,7 @@ local function creategasoverlays(num)
     anim_info.animation = gasoverlays[num]
     anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 8
 
-    Log.log("Created " .. anim_info.animation .. " which expires in " .. anim_info.time_to_live)
+    --Log.log("Created " .. anim_info.animation .. " which expires in " .. anim_info.time_to_live)
     --rendering.draw_animation(anim_info)
     iscript.entity.surface.create_trivial_smoke{
       name = gasoverlays[num],
@@ -13210,7 +13210,7 @@ iscript[201] = {
 
 scripts.VespeneGeyserInit = {
   --playframtile(0x00)  -- Frame set 0
-  function() imgul(346, 0, 0) end,    -- Vespene Geyser Shadow (neutral\geyShad.grp)
+  --function() imgul(346, 0, 0) end,    -- Vespene Geyser Shadow (neutral\geyShad.grp)
   "VespeneGeyserBuilt"
 }
 

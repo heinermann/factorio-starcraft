@@ -31,6 +31,47 @@ function fake_item(name)
   }
 end
 
+function make_energy(amount)
+  local item_name = "starcraft-unit-energy-" .. tostring(amount)
+  return fake_item(item_name), {
+    type = "battery-equipment",
+    name = item_name,
+    categories = {"starcraft"},
+    energy_source = {
+      type = "electric",
+      render_no_power_icon = false,
+      render_no_network_icon = false,
+      buffer_capacity = tostring(amount) .. "J",
+      usage_priority = "primary-input",
+      input_flow_limit = "1W",
+      output_flow_limit = "0W"
+    },
+    shape = { width = 1, height = 1, type = "full" },
+    sprite = tempSprite
+  }
+end
+
+function make_shields(amount)
+  local item_name = "starcraft-shields-" .. tostring(amount)
+  return fake_item(item_name), {
+    type = "energy-shield-equipment",
+    name = item_name,
+    categories = {"starcraft"},
+    energy_per_shield = "1J",
+    max_shield_value = amount,
+    energy_source = {
+      type = "electric",
+      render_no_power_icon = false,
+      render_no_network_icon = false,
+      usage_priority = "primary-input",
+      input_flow_limit = "1W",
+      output_flow_limit = "0W"
+    },
+    shape = { width = 1, height = 1, type = "full" },
+    sprite = tempSprite
+  }
+end
+
 data:extend({
   -------------------------------------
   -- Equipment categories and grid
@@ -66,62 +107,30 @@ data:extend({
   -------------------------------------
   -- Energy
   -------------------------------------
-  {
-    type = "battery-equipment",
-    name = "starcraft-unit-energy-200",
-    categories = {"starcraft"},
-    energy_source = {
-      type = "electric",
-      render_no_power_icon = false,
-      render_no_network_icon = false,
-      buffer_capacity = "200J",
-      usage_priority = "primary-input",
-      input_flow_limit = "1W",
-      output_flow_limit = "0W"
-    },
-    shape = { width = 1, height = 1, type = "full" },
-    sprite = tempSprite
-  },
-  fake_item("starcraft-unit-energy-200"),
+  make_energy(200),
   -------------------------------------
   -- Upgraded Energy
   -------------------------------------
-  {
-    type = "battery-equipment",
-    name = "starcraft-unit-energy-250",
-    categories = {"starcraft"},
-    energy_source = {
-      type = "electric",
-      render_no_power_icon = false,
-      render_no_network_icon = false,
-      buffer_capacity = "250J",
-      usage_priority = "primary-input",
-      input_flow_limit = "1W",
-      output_flow_limit = "0W"
-    },
-    shape = { width = 1, height = 1, type = "full" },
-    sprite = tempSprite
-  },
-  fake_item("starcraft-unit-energy-250"),
+  make_energy(250),
   -------------------------------------
   -- Shields
   -------------------------------------
-  {
-    type = "energy-shield-equipment",
-    name = "starcraft-shields-80",
-    categories = {"starcraft"},
-    energy_per_shield = "1J",
-    max_shield_value = 80,
-    energy_source = {
-      type = "electric",
-      render_no_power_icon = false,
-      render_no_network_icon = false,
-      usage_priority = "primary-input",
-      input_flow_limit = "1W",
-      output_flow_limit = "0W"
-    },
-    shape = { width = 1, height = 1, type = "full" },
-    sprite = tempSprite
-  },
-  fake_item("starcraft-shields-80")
+  make_shields(20),   -- Probe), Observer
+  make_shields(40),   -- DT), Templar), Interceptor
+  make_shields(60),   -- Zealot), Shuttle
+  make_shields(80),   -- Corsair), Goon), Hero DT), Reaver
+  make_shields(100),  -- Scout), Cannon
+  make_shields(150),  -- Arbiter), Carrier
+  make_shields(200),  -- Dark Archon), Shield Battery
+  make_shields(240),  -- Fenix
+  make_shields(250),  -- Artanis), Observatory
+  make_shields(300),  -- Tassadar), Aldaris), Pylon
+  make_shields(350),  -- Archon
+  make_shields(400),  -- Zeratul), Mojo), Warbringer
+  make_shields(450),  -- Assimilator), Citadel), Robotics Bay
+  make_shields(500),  -- Gantrithor), Danimoth), Robotics), Gateway), Cybernetics), Archive), Fleet Beacon), Tribunal
+  make_shields(550),  -- Forge
+  make_shields(600),  -- Stargate
+  make_shields(750),  -- Nexus
+  make_shields(800)   -- Archon Hero
 })

@@ -4,7 +4,7 @@
 -- 3. Spellcaster energy storage +upgrade.
 -- 4. Defense matrix shields? (unlikely as it will conflict with protoss shields unless I can guarantee it hits this first)
 
-tempSprite = {
+local tempSprite = {
   filename = "__base__/graphics/equipment/fusion-reactor-equipment.png",
   width = 128,
   height = 128,
@@ -19,7 +19,7 @@ tempSprite = {
   }
 }
 
-function fake_item(name)
+local function fake_item(name)
   return {
     type = "item",
     name = name,
@@ -27,11 +27,11 @@ function fake_item(name)
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "starcraft-mechanics",
     stack_size = 1,
-    flags = {"hidden"}
+    flags = {"hidden", "not-stackable", "hide-from-bonus-gui"}
   }
 end
 
-function make_energy(amount)
+local function make_energy(amount)
   local item_name = "starcraft-unit-energy-" .. tostring(amount)
   return fake_item(item_name), {
     type = "battery-equipment",
@@ -51,7 +51,7 @@ function make_energy(amount)
   }
 end
 
-function make_shields(amount)
+local function make_shields(amount)
   local item_name = "starcraft-shields-" .. tostring(amount)
   return fake_item(item_name), {
     type = "energy-shield-equipment",

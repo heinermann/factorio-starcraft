@@ -5,6 +5,7 @@
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
 require("prototypes.categories")
+require("prototypes.recipe")
 require("prototypes.autoplace")
 require("prototypes.damage-type")
 require("prototypes.item-groups")
@@ -12,5 +13,7 @@ require("prototypes.equipment-grid")
 require("prototypes.item")
 require("prototypes.animation")
 require("prototypes.smoke")
-require("prototypes.entity.neutral.resources")
 require("prototypes.unit")
+
+require("prototypes.entity.neutral.resources")
+require("prototypes.entity.protoss.buildings")

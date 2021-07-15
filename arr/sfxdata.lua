@@ -305,7 +305,7 @@ sfxdata = {
       { filename = "sound/terran/scv/edrrep02.wav" },
       { filename = "sound/terran/scv/edrrep03.wav" },
       { filename = "sound/terran/scv/edrrep04.wav" }
-    }
+    },
     aggregation = {
       max_count = 1,
       remove = false
@@ -660,7 +660,7 @@ sfxdata = {
     variations = {
       { filename = "sound/bullet/zquhit00.wav" },
       { filename = "sound/bullet/zquhit01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -744,7 +744,7 @@ sfxdata = {
     variations = {
       { filename = "sound/bullet/ptrfir00.wav" },
       { filename = "sound/bullet/ptrfir01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -781,7 +781,7 @@ sfxdata = {
       { filename = "sound/bullet/tvuhit00.wav" },
       { filename = "sound/bullet/tvuhit01.wav" },
       { filename = "sound/bullet/tvuhit02.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -1560,7 +1560,7 @@ sfxdata = {
     variations = {
       { filename = "sound/terran/marine/tmadth00.wav" },
       { filename = "sound/terran/marine/tmadth01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -1605,7 +1605,7 @@ sfxdata = {
       { filename = "sound/terran/firebat/tfbdth00.wav" },
       { filename = "sound/terran/firebat/tfbdth01.wav" },
       { filename = "sound/terran/firebat/tfbdth02.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -1633,7 +1633,7 @@ sfxdata = {
     variations = {
       { filename = "sound/terran/firebat/tfbfir00.wav" },
       { filename = "sound/terran/firebat/tfbfir01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -2177,7 +2177,7 @@ sfxdata = {
     variations = {
       { filename = "sound/protoss/carrier/pcadth00.wav" },
       { filename = "sound/protoss/carrier/pcadth01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -2348,7 +2348,7 @@ sfxdata = {
     variations = {
       { filename = "sound/protoss/witness/pwidth00.wav" },
       { filename = "sound/protoss/witness/pwidth01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -2369,7 +2369,7 @@ sfxdata = {
     variations = {
       { filename = "sound/protoss/zealot/pzeatt00.wav" },
       { filename = "sound/protoss/zealot/pzeatt01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -2784,7 +2784,7 @@ sfxdata = {
       { filename = "sound/zerg/ultra/zulatt00.wav" },
       { filename = "sound/zerg/ultra/zulatt01.wav" },
       { filename = "sound/zerg/ultra/zulatt02.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false
@@ -2797,7 +2797,7 @@ sfxdata = {
     variations = {
       { filename = "sound/zerg/ultra/zulhit00.wav" },
       { filename = "sound/zerg/ultra/zulhit01.wav" }
-    }
+    },
     aggregation = {
       max_count = 4,
       remove = false

@@ -238,7 +238,7 @@ data:extend({
     selection_box = {{-0.5, -0.5}, {0.5, 0.5}},
     -- selection_priority  -- prioritize air units and non-structures first
     -- sticker_box -- in case it doesn't align correctly
-    subgroup = "terran"
+    subgroup = "starcraft-terran-ground-units",
     -- tile_width = 8,
     -- tile_height = 8,
     -- trigger_target_mask = {}  -- things that this can target?
@@ -285,7 +285,7 @@ data:extend({
     selection_box = {{-8.0/16, -9.0/16}, {8.0/16, 10.0/16}},
     -- selection_priority  -- prioritize air units and non-structures first
     -- sticker_box -- in case it doesn't align correctly
-    subgroup = "terran",
+    subgroup = "starcraft-terran-ground-units",
     -- tile_width = 8,
     -- tile_height = 8,
     -- trigger_target_mask = {}  -- things that this can target?

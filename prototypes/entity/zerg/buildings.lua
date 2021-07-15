@@ -19,7 +19,7 @@ local zerg_buildings = {
             animation_speed = 1/5 -- 84ms in SC (2 ticks)
         }, {"main", "teamcolor"}),
 
-        --corpse = "SPR_Z_BLDG_RUBBLE_LRG",
+        corpse = "starcraft-z_bldg_rubble_lrg",
         --dying_explosion = "IMG_Z_BLDG_DEATH_SML",
         max_health = 1250,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},

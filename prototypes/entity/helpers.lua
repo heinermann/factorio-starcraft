@@ -72,12 +72,15 @@ function make_functional_structure(data)
     
     --------------------------------------------------------------------
     -- PrototypeBase
-    type = "assembling-machine",
+    type = "furnace",
     name = data.name,
 
     --------------------------------------------------------------------
-    -- AssemblingMachine
-    ingredient_count = 0,
+    -- AssemblingMachine/Furnace
+    --ingredient_count = 0,
+
+    source_inventory_size = 0,
+    result_inventory_size = 1,
 
     --------------------------------------------------------------------
     -- CraftingMachine
@@ -89,7 +92,8 @@ function make_functional_structure(data)
     energy_usage = "1W",
     allowed_effects = { "speed" },
     animation = data.animation,
-    --idle_animation = data.animation,
+    idle_animation = data.animation,
+    always_draw_idle_animation = false,
     return_ingredients_on_change = false,
     show_recipe_icon = false,
     show_recipe_icon_on_map = false,
@@ -133,13 +137,14 @@ function make_functional_structure(data)
       "no-automated-item-removal",
       "no-automated-item-insertion",
       "no-copy-paste",
-      "not-upgradable"
+      "not-upgradable",
+      "player-creation"
     },
 
     map_generator_bounding_box = data.map_generator_bounding_box,
     remove_decoratives = "true",
     selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    -- shooting_cursor_size
+    shooting_cursor_size = 8, -- TODO adjust
     subgroup = data.subgroup,
     tile_height = data.tile_height,
     tile_width = data.tile_width,
@@ -214,7 +219,7 @@ function create_layered_anim(data, layers)
         return create_anim(table.merge({
           filename = data.name .. "_teamcolor.png",
           apply_runtime_tint = true,
-          flags = { "mask" },
+          --flags = { "mask" },
         }, common_attributes))
       elseif layer == "emissive" then
         return create_anim(table.merge({
@@ -229,7 +234,7 @@ function create_layered_anim(data, layers)
 end
 
 function sc_bounds_to_factorio(bounds)
-  return {{-bounds[1]*2, -bounds[2]*2}, {(bounds[3] + 1)*2, (bounds[4] + 1)*2}}
+  return {{-bounds[1]/16, -bounds[2]/16}, {(bounds[3] + 1)/16, (bounds[4] + 1)/16}}
 end
 
 function make_zerg_structure(data)

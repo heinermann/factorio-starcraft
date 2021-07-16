@@ -28,18 +28,18 @@ anim_221_idle = {
       direction_count = 32,
       animation_speed = 1 / 2.52
     },
-    {
-      -- TODO: Move to script, for cloaking
-      filename = "__starcraft__/graphics/hd/main_221_shadow.png",
-      size = { 80, 136 },
-      line_length = 8,
-      scale = 0.5,
-      shift = {0, -9.0/16},
-      draw_as_shadow = true,
-      frame_count = 8,
-      direction_count = 32,
-      animation_speed = 1 / 2.52
-    }
+    --{
+    --  -- TODO: Move to script, for cloaking
+    --  filename = "__starcraft__/graphics/hd/main_221_shadow.png",
+    --  size = { 80, 136 },
+    --  line_length = 8,
+    --  scale = 0.5,
+    --  shift = {0, -9.0/16},
+    --  draw_as_shadow = true,
+    --  frame_count = 8,
+    --  direction_count = 32,
+    --  animation_speed = 1 / 2.52
+    --}
   }
 }
 
@@ -66,18 +66,18 @@ anim_221_run = {
       direction_count = 34,
       animation_speed = 1 / 2.52
     },
-    {
-      -- TODO: Move to script, for cloaking
-      filename = "__starcraft__/graphics/hd/main_221_shadow.png",
-      size = { 80, 54 },
-      line_length = 8,
-      scale = 0.5,
-      shift = {0, -9.0/16},
-      draw_as_shadow = true,
-      frame_count = 8,
-      direction_count = 34,
-      animation_speed = 1 / 2.52
-    }
+    --{
+    --  -- TODO: Move to script, for cloaking
+    --  filename = "__starcraft__/graphics/hd/main_221_shadow.png",
+    --  size = { 80, 54 },
+    --  line_length = 8,
+    --  scale = 0.5,
+    --  shift = {0, -9.0/16},
+    --  draw_as_shadow = true,
+    --  frame_count = 8,
+    --  direction_count = 34,
+    --  animation_speed = 1 / 2.52
+    --}
   }
 }
 

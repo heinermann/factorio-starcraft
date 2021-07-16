@@ -1,6 +1,7 @@
 
 local function make_rubble_anim(data)
     return {
+        direction_count = 1,
         filename = "__starcraft__/graphics/low/" .. data.name .. "_diffuse.png",
         size = data.size,
         frame_count = 4,
@@ -8,6 +9,7 @@ local function make_rubble_anim(data)
         animation_speed = 1/1890, -- Each frame lasts 31.5 seconds in Starcraft
 
         hr_version = {
+            direction_count = 1,
             filename = "__starcraft__/graphics/hd/" .. data.name .. "_diffuse.png",
             size = data.hr_size,
             scale = 0.5,
@@ -53,7 +55,8 @@ local function make_corpse(data)
         time_before_shading_off = 0,
         time_before_removed = 60 * 126, -- 126 seconds (31.5 * 4 anim frames)
 
-        ground_patch = data.ground_patch
+        ground_patch = data.ground_patch,
+        animation = data.animation
     }
 end
 
@@ -61,7 +64,7 @@ end
 data:extend({
     make_corpse{
         name = "starcraft-t_bldg_rubble_lrg",
-        ground_patch = make_rubble_anim{
+        animation = make_rubble_anim{
             name = "main_336",
             size = { 237, 233 },
             hr_size = { 473, 467 }
@@ -69,7 +72,7 @@ data:extend({
     },
     make_corpse{
         name = "starcraft-t_bldg_rubble_sml",
-        ground_patch = make_rubble_anim{
+        animation = make_rubble_anim{
             name = "main_335",
             size = { 178, 170 },
             hr_size = { 356, 340 }
@@ -77,7 +80,7 @@ data:extend({
     },
     make_corpse{
         name = "starcraft-p_bldg_rubble_lrg",
-        ground_patch = make_glowy_rubble_anim{
+        animation = make_glowy_rubble_anim{
             name = "main_217",
             size = { 224, 247 },
             hr_size = { 446, 493 }
@@ -85,7 +88,7 @@ data:extend({
     },
     make_corpse{
         name = "starcraft-p_bldg_rubble_sml",
-        ground_patch = make_glowy_rubble_anim{
+        animation = make_glowy_rubble_anim{
             name = "main_217",
             size = { 157, 173 },
             hr_size = { 313, 348 }
@@ -93,7 +96,7 @@ data:extend({
     },
     make_corpse{
         name = "starcraft-z_bldg_rubble_lrg",
-        ground_patch = make_rubble_anim{
+        animation = make_rubble_anim{
             name = "main_111",
             size = { 254, 230 },
             hr_size = { 509, 459 }
@@ -101,7 +104,7 @@ data:extend({
     },
     make_corpse{
         name = "starcraft-z_bldg_rubble_sml",
-        ground_patch = make_rubble_anim{
+        animation = make_rubble_anim{
             name = "main_110",
             size = { 173, 164 },
             hr_size = { 346, 329 }

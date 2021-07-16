@@ -82,12 +82,14 @@ function create_unit(position, force, surface)
 end
 
 function test_of_the_day(event)
-  if event.tick == 0 then
-    global.testunit = create_unit({2, 0}, "terran")
-  end
+  --if event.tick == 0 then
+  --  global.testunit = create_unit({2, 0}, "terran")
+  --end
+--
+  --target_rate = math.floor(event.tick / 30)
+  --global.testunit.walking_state = {walking = true, direction = (target_rate % 8)}
 
-  target_rate = math.floor(event.tick / 30)
-  global.testunit.walking_state = {walking = true, direction = (target_rate % 8)}
+  --game.surfaces["nauvis"].
 end
 
 

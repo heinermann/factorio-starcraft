@@ -12,14 +12,14 @@ data:extend({
             hr_line_length = 4,
             hr_size = { 955, 828 },
 
-            animation_speed = 1/5, -- 84 ms per frame
-            sound = {
-                type = "sound",
-                filename = "__starcraft__/sound/zerg/bldg/zbldgdth.wav",
-                aggregation = {
-                    max_count = 4,
-                    remove = false
-                }
+            animation_speed = 1/5 -- 84 ms per frame
+        },
+        sound = {
+            type = "sound",
+            filename = "__starcraft__/sound/zerg/bldg/zbldgdth.wav",
+            aggregation = {
+                max_count = 4,
+                remove = false
             }
         }
     },
@@ -36,15 +36,15 @@ data:extend({
             hr_size = { 1067, 1113 },
             draw_as_glow = true,
 
-            animation_speed = 1/5, -- 84 ms per frame
-            sound = {
-                type = "sound",
-                filename = "__starcraft__/sound/misc/explolrg.wav",
-                audible_distance_modifier = 40.0,
-                aggregation = {
-                    max_count = 4,
-                    remove = false
-                }
+            animation_speed = 1/5 -- 84 ms per frame
+        },
+        sound = {
+            type = "sound",
+            filename = "__starcraft__/sound/misc/explolrg.wav",
+            audible_distance_modifier = 40.0,
+            aggregation = {
+                max_count = 4,
+                remove = false
             }
         }
     },
@@ -60,15 +60,15 @@ data:extend({
             hr_size = { 1067, 1113 },
             draw_as_glow = true,
 
-            animation_speed = 1/5, -- 84 ms per frame
-            sound = {
-                type = "sound",
-                filename = "__starcraft__/sound/misc/explolrg.wav",
-                audible_distance_modifier = 40.0,
-                aggregation = {
-                    max_count = 4,
-                    remove = false
-                }
+            animation_speed = 1/5 -- 84 ms per frame
+        },
+        sound = {
+            type = "sound",
+            filename = "__starcraft__/sound/misc/explolrg.wav",
+            audible_distance_modifier = 40.0,
+            aggregation = {
+                max_count = 4,
+                remove = false
             }
         }
     },

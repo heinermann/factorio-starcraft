@@ -146,7 +146,7 @@ function make_functional_structure(data)
     map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
     remove_decoratives = "true",
     selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    shooting_cursor_size = 8, -- TODO adjust
+    shooting_cursor_size = data.tile_width + 1,
     subgroup = data.subgroup,
     tile_height = data.tile_height,
     tile_width = data.tile_width,

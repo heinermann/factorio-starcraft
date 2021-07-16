@@ -2,7 +2,7 @@
 blank_anim = {
   direction_count = 18,
   size = {1, 1},
-  filename = "__starcraft__/graphics/blank.png"
+  filename = "__starcraft__/graphics2/blank.png"
 }
 
 anim_221_idle = {

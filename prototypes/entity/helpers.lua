@@ -72,31 +72,33 @@ function make_functional_structure(data)
     
     --------------------------------------------------------------------
     -- PrototypeBase
-    type = "furnace",
+    type = "simple-entity-with-force",
     name = data.name,
 
-    --------------------------------------------------------------------
-    -- AssemblingMachine/Furnace
+    ----------------------------------------------------------------------
+    ---- AssemblingMachine
     --ingredient_count = 0,
 
-    source_inventory_size = 0,
-    result_inventory_size = 1,
+    ----------------------------------------------------------------------
+    ---- CraftingMachine
+    --crafting_categories = data.crafting_categories,
+    --crafting_speed = 1,
+    --energy_source = {
+    --  type = "void"
+    --},
+    --energy_usage = "1W",
+    --allowed_effects = { "speed" },
+    --animation = data.animation,
+    --idle_animation = data.animation,
+    --always_draw_idle_animation = false,
+    --return_ingredients_on_change = false,
+    --show_recipe_icon = false,
+    --show_recipe_icon_on_map = false,
 
     --------------------------------------------------------------------
-    -- CraftingMachine
-    crafting_categories = data.crafting_categories,
-    crafting_speed = 1,
-    energy_source = {
-      type = "void"
-    },
-    energy_usage = "1W",
-    allowed_effects = { "speed" },
-    animation = data.animation,
-    idle_animation = data.animation,
-    always_draw_idle_animation = false,
-    return_ingredients_on_change = false,
-    show_recipe_icon = false,
-    show_recipe_icon_on_map = false,
+    -- SimpleEntityWithForce
+    animations = data.animation,
+    random_variation_on_create = false,
 
     --------------------------------------------------------------------
     -- EntityWithHealth
@@ -141,7 +143,7 @@ function make_functional_structure(data)
       "player-creation"
     },
 
-    map_generator_bounding_box = data.map_generator_bounding_box,
+    map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
     remove_decoratives = "true",
     selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
     shooting_cursor_size = 8, -- TODO adjust

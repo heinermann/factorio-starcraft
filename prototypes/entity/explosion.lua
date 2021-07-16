@@ -4,7 +4,6 @@ data:extend({
     {
         type = "explosion",
         name = "starcraft-z_bldg_death_sml",
-        
         animations = create_anim{
             filename = "main_060_diffuse.png",
             frame_count = 12,
@@ -14,7 +13,14 @@ data:extend({
             hr_size = { 955, 828 },
 
             animation_speed = 1/5, -- 84 ms per frame
-            -- sound = TODO -- 774	# Zerg\Bldg\ZBldgDth.WAV
+            sound = {
+                type = "sound",
+                filename = "__starcraft__/sound/zerg/bldg/zbldgdth.wav",
+                aggregation = {
+                    max_count = 4,
+                    remove = false
+                }
+            }
         }
     },
     {
@@ -31,7 +37,15 @@ data:extend({
             draw_as_glow = true,
 
             animation_speed = 1/5, -- 84 ms per frame
-            -- sound = TODO -- 774	# Misc\ExploLrg.wav
+            sound = {
+                type = "sound",
+                filename = "__starcraft__/sound/misc/explolrg.wav",
+                audible_distance_modifier = 40.0,
+                aggregation = {
+                    max_count = 4,
+                    remove = false
+                }
+            }
         }
     },
     {
@@ -47,7 +61,15 @@ data:extend({
             draw_as_glow = true,
 
             animation_speed = 1/5, -- 84 ms per frame
-            -- sound = TODO -- 774	# Misc\ExploLrg.wav
+            sound = {
+                type = "sound",
+                filename = "__starcraft__/sound/misc/explolrg.wav",
+                audible_distance_modifier = 40.0,
+                aggregation = {
+                    max_count = 4,
+                    remove = false
+                }
+            }
         }
     },
     

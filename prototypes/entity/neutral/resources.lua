@@ -4,7 +4,7 @@ data:extend({
   {
     type = "item",
     name = "starcraft-mineral-chunk",
-    icon = "__starcraft__/graphics/main_397_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_397_diffuse.png",
     icon_size = 74,
     stack_size = 64,
     flags = {"hidden"}
@@ -12,7 +12,7 @@ data:extend({
   {
     type = "item",
     name = "starcraft-vespene-gas-orb",
-    icon = "__starcraft__/graphics/main_399_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_399_diffuse.png",
     icon_size = 78,
     stack_size = 64,
     flags = {"hidden"}
@@ -20,7 +20,7 @@ data:extend({
   {
     type = "item",
     name = "starcraft-vespene-gas-sac",
-    icon = "__starcraft__/graphics/main_401_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_401_diffuse.png",
     icon_size = 78,
     stack_size = 64,
     flags = {"hidden"}
@@ -28,7 +28,7 @@ data:extend({
   {
     type = "item",
     name = "starcraft-vespene-gas-tank",
-    icon = "__starcraft__/graphics/main_403_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_403_diffuse.png",
     icon_size = 72,
     stack_size = 64,
     flags = {"hidden"}
@@ -37,7 +37,7 @@ data:extend({
     type = "resource",
     name = "starcraft-mineral-field",
     category = "starcraft-minerals",
-    icon = "__starcraft__/graphics/main_397_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_397_diffuse.png",
     icon_size = 74,
     flags = {"placeable-neutral"},
     collision_mask = {"item-layer", "object-layer", "player-layer", "water-tile", "resource-layer"},
@@ -47,9 +47,9 @@ data:extend({
     stage_counts = {750, 500, 250, 0},
     stages = {
       sheet = {
-        filename = "__starcraft__/graphics/main_347_diffuse.png",
+        filename = "__starcraft__/graphics/hd/main_347_diffuse.png",
         priority = "extra-high",
-        size = { 264, 222 },
+        size = { 262, 253 },
         scale = 0.5,
         frame_count = 1,
         variation_count = 4
@@ -57,9 +57,9 @@ data:extend({
     },
     stages_effect = {
       sheet = {
-        filename = "__starcraft__/graphics/main_347_emissive.png",
+        filename = "__starcraft__/graphics/hd/main_347_emissive.png",
         priority = "medium",
-        size = { 264, 222 },
+        size = { 262, 253 },
         scale = 0.5,
         frame_count = 1,
         variation_count = 4,
@@ -109,7 +109,7 @@ data:extend({
     type = "resource",
     name = "starcraft-vespene-geyser",
     category = "starcraft-vespene",
-    icon = "__starcraft__/graphics/main_403_diffuse.png",
+    icon = "__starcraft__/graphics/hd/main_403_diffuse.png",
     icon_size = 83,
     flags = {"placeable-neutral"},
     collision_mask = {"item-layer", "object-layer", "player-layer", "water-tile", "resource-layer"},
@@ -119,7 +119,7 @@ data:extend({
     stage_counts = {0},
     stages = {
       sheet = {
-        filename = "__starcraft__/graphics/main_344_diffuse.png",
+        filename = "__starcraft__/graphics/hd/main_344_diffuse.png",
         priority = "extra-high",
         size = { 518, 268 },
         scale = 0.5,

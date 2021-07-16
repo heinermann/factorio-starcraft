@@ -8,36 +8,36 @@ blank_anim = {
 anim_221_idle = {
   layers = {
     {
-      filename = "__starcraft__/graphics/main_221_diffuse.png",
-      size = { 78, 124 },
+      filename = "__starcraft__/graphics/hd/main_221_diffuse.png",
+      size = { 80, 136 },
       line_length = 8,
       frame_count = 8,
       scale = 0.5,
       shift = {0, -9.0/16},
-      direction_count = 34,
+      direction_count = 32,
       animation_speed = 1 / 2.52   -- Starcraft fastest speed @ 23.8 fps
     },
     {
-      filename = "__starcraft__/graphics/main_221_teamcolor.png",
-      size = { 78, 124 },
+      filename = "__starcraft__/graphics/hd/main_221_teamcolor.png",
+      size = { 80, 136 },
       line_length = 8,
       frame_count = 8,
       scale = 0.5,
       shift = {0, -9.0/16},
       apply_runtime_tint = true,
-      direction_count = 34,
+      direction_count = 32,
       animation_speed = 1 / 2.52
     },
     {
       -- TODO: Move to script, for cloaking
-      filename = "__starcraft__/graphics/main_222_diffuse.png",
-      size = { 80, 54 },
+      filename = "__starcraft__/graphics/hd/main_221_shadow.png",
+      size = { 80, 136 },
       line_length = 8,
       scale = 0.5,
       shift = {0, -9.0/16},
       draw_as_shadow = true,
       frame_count = 8,
-      direction_count = 34,
+      direction_count = 32,
       animation_speed = 1 / 2.52
     }
   }
@@ -46,7 +46,7 @@ anim_221_idle = {
 anim_221_run = {
   layers = {
     {
-      filename = "__starcraft__/graphics/main_221_diffuse.png",
+      filename = "__starcraft__/graphics/hd/main_221_diffuse.png",
       size = { 78, 124 },
       line_length = 8,
       frame_count = 8,
@@ -56,7 +56,7 @@ anim_221_run = {
       animation_speed = 1 / 2.52
     },
     {
-      filename = "__starcraft__/graphics/main_221_teamcolor.png",
+      filename = "__starcraft__/graphics/hd/main_221_teamcolor.png",
       size = { 78, 124 },
       line_length = 8,
       frame_count = 8,
@@ -68,7 +68,7 @@ anim_221_run = {
     },
     {
       -- TODO: Move to script, for cloaking
-      filename = "__starcraft__/graphics/main_222_diffuse.png",
+      filename = "__starcraft__/graphics/hd/main_221_shadow.png",
       size = { 80, 54 },
       line_length = 8,
       scale = 0.5,

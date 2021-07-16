@@ -13,7 +13,7 @@ local function make_rubble_anim(data)
             scale = 0.5,
             frame_count = 4,
             line_length = 4,
-            animation_speed = data.animation_speed,
+            animation_speed = 1/1890,
         }
     }
 end
@@ -42,6 +42,8 @@ local function make_corpse(data)
     return {
         type = "corpse",
         name = data.name,
+        icon = "__base__/graphics/icons/info.png",
+        icon_size = 64,
         subgroup = "starcraft-mechanics",
         flags = {"placeable-neutral", "not-on-map"},
         selectable_in_game = false,

@@ -38,49 +38,48 @@ end
 data:extend({
   make_simple_smoke{
     name = "starcraft-vespene-smoke-1",
-    filename = "__starcraft__/graphics/main_430_diffuse.png",
-    size = { 224, 367 },
+    filename = "__starcraft__/graphics/hd/main_430_diffuse.png",
+    size = { 174, 367 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true
   },
   make_simple_smoke{
     name = "starcraft-vespene-smoke-2",
-    filename = "__starcraft__/graphics/main_431_diffuse.png",
-    size = { 182, 316 },
+    filename = "__starcraft__/graphics/hd/main_431_diffuse.png",
+    size = { 172, 310 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true
   },
   make_simple_smoke{
     name = "starcraft-vespene-smoke-3",
-    filename = "__starcraft__/graphics/main_432_diffuse.png",
-    size = { 124, 347 },
+    filename = "__starcraft__/graphics/hd/main_432_diffuse.png",
+    size = { 118, 177 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true
   },
   make_simple_smoke{
     name = "starcraft-vespene-smoke-4",
-    filename = "__starcraft__/graphics/main_433_diffuse.png",
-    size = { 352, 512 },
+    filename = "__starcraft__/graphics/hd/main_433_diffuse.png",
+    size = { 152, 308 },
     frame_count = 8,
-    line_length = 5,
     time_between_frames = 2,
     draw_as_glow = true
   },
   make_simple_smoke{
     name = "starcraft-vespene-smoke-5",
-    filename = "__starcraft__/graphics/main_434_diffuse.png",
-    size = { 218, 472 },
+    filename = "__starcraft__/graphics/hd/main_434_diffuse.png",
+    size = { 128, 202 },
     frame_count = 8,
     time_between_frames = 2,
     draw_as_glow = true
   },
   make_simple_smoke{
     name = "starcraft-vespene-smoke-depleted",
-    filename = "__starcraft__/graphics/main_435_diffuse.png",
-    size = { 204, 320 },
+    filename = "__starcraft__/graphics/hd/main_435_diffuse.png",
+    size = { 56, 90 },
     frame_count = 5,
     time_between_frames = 2,
     draw_as_glow = true

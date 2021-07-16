@@ -86,7 +86,7 @@ function make_functional_structure(data)
     energy_source = {
       type = "void"
     },
-    energy_usage = "0W",
+    energy_usage = "1W",
     allowed_effects = { "speed" },
     animation = data.animation,
     --idle_animation = data.animation,
@@ -193,10 +193,12 @@ function create_anim(data)
 end
 
 -- NOTE: Shadows unsupported because structure shadows need to be remade from scratch
-function create_unit_anim(data, layers)
+function create_layered_anim(data, layers)
   local common_attributes = {
-    line_length = data.line_length,
     size = data.size,
+    line_length = data.line_length,
+    hr_size = data.hr_size,
+    hr_line_length = data.hr_line_length,
     frame_count = data.frame_count,
     frame_sequence = data.frame_sequence,
     animation_speed = data.animation_speed

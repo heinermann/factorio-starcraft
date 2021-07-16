@@ -1,4 +1,4 @@
-sfxdata = {
+local sounds = {
   nil, {
     type = "sound",
     filename = "sound/zerg/drone/zdrerr00.wav",

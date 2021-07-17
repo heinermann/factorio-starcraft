@@ -16,6 +16,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 1250,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
         tile_width = 8
@@ -35,6 +36,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 1800,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
         tile_width = 8
@@ -54,6 +56,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 2500,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
         tile_width = 8
@@ -73,6 +76,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 250,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
         tile_width = 4
@@ -92,6 +96,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 850,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 40, 24},
         tile_height = 4,
         tile_width = 6
@@ -111,6 +116,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 850,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 48, 4},
         tile_height = 4,
         tile_width = 8
@@ -130,6 +136,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 1000,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
         tile_width = 4
@@ -149,6 +156,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 850,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{38, 28, 32, 28},
         tile_height = 4,
         tile_width = 6
@@ -168,6 +176,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 750,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{44, 32, 32, 20},
         tile_height = 4,
         tile_width = 6
@@ -187,6 +196,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 600,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6
@@ -206,6 +216,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 600,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
         tile_width = 4
@@ -225,6 +236,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 750,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{36, 28, 40, 18},
         tile_height = 4,
         tile_width = 6
@@ -244,6 +256,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 400,
+        armor = 0,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
         tile_width = 4
@@ -263,6 +276,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 400,
+        armor = 0,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
         tile_width = 4
@@ -284,6 +298,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 300,
+        armor = 2,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
         tile_width = 4
@@ -303,6 +318,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg", -- TODO - two-stage death anim
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 5000,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
         tile_width = 10
@@ -322,6 +338,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 2500,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
         tile_width = 10
@@ -341,6 +358,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_lrg",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 2500,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 47, 31},
         tile_height = 4,
         tile_width = 6
@@ -361,6 +379,7 @@ data:extend({
         corpse = nil,
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 750,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{64, 32, 63, 31},
         tile_height = 4,
         tile_width = 8
@@ -380,6 +399,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 250,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
         tile_width = 4
@@ -399,6 +419,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 1500,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6
@@ -418,6 +439,7 @@ data:extend({
         corpse = "starcraft-z_bldg_rubble_sml",
         dying_explosion = "starcraft-z_bldg_death_sml",
         max_health = 1500,
+        armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6

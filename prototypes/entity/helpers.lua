@@ -1,6 +1,6 @@
 local table = require('__stdlib__/stdlib/utils/table')
 
-unitSizeTypes = {
+local unitSizeTypes = {
   independent = {
     { type = "physical", percent = 99 },
     { type = "impact", percent = 99 },
@@ -42,6 +42,17 @@ unitSizeTypes = {
     { type = "psionic", percent = 0 }
   }
 }
+
+local function make_resistances(unit_size_type, armor_amount)
+  local result = table.deep_copy(unitSizeTypes[unit_size_type])
+  for _, resist in ipairs(result) do
+    if (resist.type ~= "psionic") then
+      resist.decrease = armor_amount
+    end
+  end
+
+  return result
+end
 
 function create_ground_unit(data)
   
@@ -110,7 +121,7 @@ function make_functional_structure(data)
     hide_resistances = false,
     max_health = data.max_health,
     repair_speed_modifier = data.repair_speed_modifier,
-    resistances = unitSizeTypes.large,
+    resistances = make_resistances("large", data.armor),
 
     --------------------------------------------------------------------
     -- Entity

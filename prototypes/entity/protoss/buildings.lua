@@ -1,7 +1,5 @@
 require("prototypes.entity.helpers")
 
--- TODO: Potential performance - A lot of these could be "picture" instead of "animation"
-
 data:extend({
     make_protoss_structure{
         name = "starcraft-nexus",
@@ -23,16 +21,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-robotics-facility",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_192",
             size = { 193, 256 },
-            hr_size = { 386, 512 },
-
-            line_length = 20,
-            hr_line_length = 10,
-
-            frame_count = 20,
-            frame_sequence = { 1 },
+            hr_size = { 386, 512 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -45,12 +37,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-pylon",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_189",
             size = { 112, 129 },
-            hr_size = { 223, 258 },
-
-            frame_count = 1,
+            hr_size = { 223, 258 }
         }, {"main", "teamcolor", "emissive"}),
 
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -62,12 +52,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-assimilator",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_158",
             size = { 248, 235 },
-            hr_size = { 494, 469 },
-
-            frame_count = 1,
+            hr_size = { 494, 469 }
         }, {"main", "teamcolor", "emissive"}),
 
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -79,12 +67,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-observatory",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_161",
             size = { 195, 190 },
-            hr_size = { 390, 380 },
-
-            frame_count = 1,
+            hr_size = { 390, 380 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -97,12 +83,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-gateway",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_171",
             size = { 253, 248 },
-            hr_size = { 506, 497 },
-
-            frame_count = 1,
+            hr_size = { 506, 497 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -134,12 +118,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-citadel",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_164",
             size = { 196, 203 },
-            hr_size = { 392, 404 },
-
-            frame_count = 1,
+            hr_size = { 392, 404 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -170,13 +152,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-archives",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_155",
             size = { 303, 367 },
-            hr_size = { 606, 735 },
-
-            frame_count = 2,
-            frame_sequence = { 1 },
+            hr_size = { 606, 735 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -225,12 +204,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-stasis-cell",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_203",
             size = { 240, 304 },
-            hr_size = { 480, 608 },
-
-            frame_count = 1,
+            hr_size = { 480, 608 }
         }, {"main", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -243,12 +220,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-fleet-beacon",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_208",
             size = { 266, 210 },
-            hr_size = { 533, 421 },
-
-            frame_count = 1,
+            hr_size = { 533, 421 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -261,12 +236,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-tribunal",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_186",
             size = { 186, 172 },
-            hr_size = { 373, 342 },
-
-            frame_count = 1,
+            hr_size = { 373, 342 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -279,12 +252,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-robotics-support-bay",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_204",
             size = { 202, 213 },
-            hr_size = { 403, 427 },
-
-            frame_count = 1,
+            hr_size = { 403, 427 }
         }, {"main", "teamcolor", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -314,12 +285,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-khaydarin-crystal-formation",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_178",
             size = { 259, 256 },
-            hr_size = { 518, 512 },
-
-            frame_count = 1,
+            hr_size = { 518, 512 }
         }, {"main", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -332,12 +301,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-protoss-temple",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_207",
             size = { 451, 308 },
-            hr_size = { 902, 616 },
-
-            frame_count = 1,
+            hr_size = { 902, 616 }
         }, {"main"}),
 
         corpse = "starcraft-p_bldg_rubble_lrg",
@@ -350,12 +317,10 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-xel-naga-temple",
-        animation = create_layered_anim({
+        picture = create_layered_anim({
             name = "main_937",
             size = { 385, 520 },
-            hr_size = { 769, 1040 },
-
-            frame_count = 1,
+            hr_size = { 769, 1040 }
         }, {"main", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_lrg",
@@ -368,13 +333,30 @@ data:extend({
     },
     make_protoss_structure{
         name = "starcraft-warp-gate",
-        animation = create_layered_anim({
-            name = "main_934",
-            size = { 247, 452 },
-            hr_size = { 493, 905 },
+        animation = {
+            layers = {
+                create_layered_anim({
+                    name = "main_934",
+                    size = { 247, 452 },
+                    hr_size = { 493, 905 },
 
-            frame_count = 1,
-        }, {"main", "emissive"}),
+                    frame_count = 1,
+                    repeat_count = 10,
+                    animation_speed = 1/5 -- 84ms in SC (2 ticks)
+                }, {"main", "emissive"}),
+                create_anim({
+                    filename = "main_936_diffuse.png",
+                    size = { 103, 382 },
+                    hr_size = { 207, 765 },
+
+                    draw_as_glow = true,
+
+                    frame_count = 6,
+                    frame_sequence = { 1, 2, 3, 4, 5, 6, 5, 4, 3, 2 },
+                    animation_speed = 1/5 -- 84ms in SC (2 ticks)
+                })
+            }
+        },
 
         corpse = "starcraft-p_bldg_rubble_lrg",
         dying_explosion = "starcraft-p_explode_death_xlrg",

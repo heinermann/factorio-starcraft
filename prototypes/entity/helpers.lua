@@ -109,6 +109,8 @@ function make_functional_structure(data)
     --------------------------------------------------------------------
     -- SimpleEntityWithForce
     animations = data.animation,
+    picture = data.picture,
+    pictures = data.pictures,
     random_variation_on_create = false,
 
     --------------------------------------------------------------------
@@ -191,6 +193,7 @@ function create_anim(data)
       draw_as_light = data.draw_as_light,
       apply_runtime_tint = data.apply_runtime_tint,
       blend_mode = data.blend_mode,
+      repeat_count = data.repeat_count,
 
       hr_version = {
           filename = "__starcraft__/graphics/hd/" .. data.filename,
@@ -205,7 +208,8 @@ function create_anim(data)
           draw_as_glow = data.draw_as_glow,
           draw_as_light = data.draw_as_light,
           apply_runtime_tint = data.apply_runtime_tint,
-          blend_mode = data.blend_mode
+          blend_mode = data.blend_mode,
+          repeat_count = data.repeat_count
       }
   }
 end
@@ -219,7 +223,8 @@ function create_layered_anim(data, layers)
     hr_line_length = data.hr_line_length,
     frame_count = data.frame_count,
     frame_sequence = data.frame_sequence,
-    animation_speed = data.animation_speed
+    animation_speed = data.animation_speed,
+    repeat_count = data.repeat_count
   }
 
   return {

@@ -169,7 +169,7 @@ end
 function create_anim(data)
   return {
       filename = "__starcraft__/graphics/low/" .. data.filename,
-      line_length = data.line_length,
+      line_length = data.line_length or data.frame_count,
       size = data.size,
       frame_count = data.frame_count,
       frame_sequence = data.frame_sequence,
@@ -183,7 +183,7 @@ function create_anim(data)
 
       hr_version = {
           filename = "__starcraft__/graphics/hd/" .. data.filename,
-          line_length = data.hr_line_length,
+          line_length = data.hr_line_length or data.frame_count,
           size = data.hr_size,
           scale = 0.5,
           frame_count = data.frame_count,

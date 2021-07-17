@@ -50,7 +50,7 @@ data:extend({
     },
     {
         type = "explosion",
-        name = "starcraft-p_bldg_death_xlrg",
+        name = "starcraft-p_explode_death_xlrg",
         animations = create_anim{
             filename = "main_215_diffuse.png",
             frame_count = 14,

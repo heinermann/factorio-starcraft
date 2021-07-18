@@ -1,16 +1,152 @@
 require("prototypes.entity.helpers")
+local table = require('__stdlib__/stdlib/utils/table')
+
+
+local nexus_main = {
+    name = "main_179",
+    size = { 291, 311 },
+    hr_size = { 582, 622 }
+}
+local nexus_overlay = {
+    filename = "main_181_diffuse.png",
+    size = { 239, 311 },
+    hr_size = { 478, 622 },
+    draw_as_glow = true
+}
+
+local robo_facility_main = {
+    name = "main_192",
+    size = { 193, 256 },
+    hr_size = { 386, 512 }
+}
+
+local pylon_main = {
+    name = "main_189",
+    size = { 112, 129 },
+    hr_size = { 223, 258 }
+}
+
+local assimilator_main = {
+    name = "main_158",
+    size = { 248, 235 },
+    hr_size = { 494, 469 }
+}
+
+local observatory_main = {
+    name = "main_161",
+    size = { 195, 190 },
+    hr_size = { 390, 380 }
+}
+
+local gateway_main = {
+    name = "main_171",
+    size = { 253, 248 },
+    hr_size = { 506, 497 }
+}
+
+local citadel_main = {
+    name = "main_164",
+    size = { 196, 203 },
+    hr_size = { 392, 404 }
+}
+
+local cyber_core_main = {
+    name = "main_174",
+    size = { 174, 217 },
+    hr_size = { 349, 434 },
+}
+
+local archives_main = {
+    name = "main_155",
+    size = { 303, 367 },
+    hr_size = { 606, 735 }
+}
+
+local forge_main = {
+    name = "main_167",
+    size = { 193, 176 },
+    hr_size = { 385, 352 },
+}
+
+local stargate_main = {
+    name = "main_199",
+    size = { 248, 264 },
+    hr_size = { 496, 528 },
+}
+
+local stargate_overlay = {
+    filename = "main_200_diffuse.png",
+    size = { 204, 144 },
+    hr_size = { 408, 288 },
+    draw_as_glow = true
+}
+
+local fleet_beacon_main = {
+    name = "main_208",
+    size = { 266, 210 },
+    hr_size = { 533, 421 }
+}
+
+local tribunal_main = {
+    name = "main_186",
+    size = { 186, 172 },
+    hr_size = { 373, 342 }
+}
+
+local robotics_support_main = {
+    name = "main_204",
+    size = { 202, 213 },
+    hr_size = { 403, 427 }
+}
+
+local shield_battery_main = {
+    name = "main_195",
+    size = { 169, 118 },
+    hr_size = { 337, 237 },
+}
+
+local shield_battery_overlay = {
+    filename = "main_196_diffuse.png",
+    size = { 185, 142 },
+    hr_size = { 369, 285 },
+    draw_as_glow = true
+}
+
+local function make_common_states(data)
+    return {
+        create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- idle
+        create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- working
+        create_layered_anim(data, {"main", "teamcolor"})                  -- disabled
+    }
+end
 
 data:extend({
+--------------------------------------------------------------------------------------------------
+-- NEXUS
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-nexus",
-        animation = create_layered_anim({
-            name = "main_179",
-            size = { 291, 311 },
-            hr_size = { 582, 622 },
-
-            frame_count = 1,
-        }, {"main", "teamcolor", "emissive"}),
-
+        animation = {
+            {   -- idle
+                layers = {
+                    create_layered_anim(nexus_main, {"main", "teamcolor", "emissive"}),
+                    create_anim(nexus_overlay)
+                }
+            },
+            {   -- working anim
+                layers = {
+                    create_layered_anim(table.dictionary_merge(nexus_main, {
+                        repeat_count = 4,
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }), {"main", "teamcolor", "emissive"}),
+                    create_anim(table.dictionary_merge(nexus_overlay, {
+                        frame_count = 5,
+                        frame_sequence = { 2, 3, 4, 5 },
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }))
+                }
+            }
+        },
         corpse = "starcraft-p_bldg_rubble_lrg",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 750,   -- +750 shields
@@ -19,14 +155,12 @@ data:extend({
         tile_height = 6,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- ROBOTICS FACILITY
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-robotics-facility",
-        picture = create_layered_anim({
-            name = "main_192",
-            size = { 193, 256 },
-            hr_size = { 386, 512 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(robo_facility_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields
@@ -35,14 +169,12 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- PYLON
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-pylon",
-        picture = create_layered_anim({
-            name = "main_189",
-            size = { 112, 129 },
-            hr_size = { 223, 258 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        picture = create_layered_anim(pylon_main, {"main", "teamcolor", "emissive"}),
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 300,   -- +300 shields
         armor = 0,
@@ -50,14 +182,12 @@ data:extend({
         tile_height = 4,
         tile_width = 4
     },
+--------------------------------------------------------------------------------------------------
+-- ASSIMILATOR
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-assimilator",
-        picture = create_layered_anim({
-            name = "main_158",
-            size = { 248, 235 },
-            hr_size = { 494, 469 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        picture = create_layered_anim(assimilator_main, {"main", "teamcolor", "emissive"}),
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 450,   -- +450 shields
         armor = 1,
@@ -65,14 +195,12 @@ data:extend({
         tile_height = 4,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- OBSERVATORY
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-observatory",
-        picture = create_layered_anim({
-            name = "main_161",
-            size = { 195, 190 },
-            hr_size = { 390, 380 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(observatory_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 250,   -- +250 shields
@@ -81,14 +209,12 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- GATEWAY
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-gateway",
-        picture = create_layered_anim({
-            name = "main_171",
-            size = { 253, 248 },
-            hr_size = { 506, 497 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(gateway_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields
@@ -97,6 +223,9 @@ data:extend({
         tile_height = 6,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- CANNON (TODO)
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-cannon",
         animation = create_layered_anim({
@@ -116,14 +245,12 @@ data:extend({
         tile_height = 4,
         tile_width = 4
     },
+--------------------------------------------------------------------------------------------------
+-- CITADEL OF ADUN
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-citadel",
-        picture = create_layered_anim({
-            name = "main_164",
-            size = { 196, 203 },
-            hr_size = { 392, 404 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(citadel_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 450,   -- +450 shields
@@ -132,15 +259,33 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- CYBERNETICS CORE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-cyber-core",
-        animation = create_layered_anim({
-            name = "main_174",
-            size = { 174, 217 },
-            hr_size = { 349, 434 },
+        animation = {
+            -- idle
+            create_layered_anim(cyber_core_main, {"main", "teamcolor", "emissive"}),
+            {   -- working anim
+                layers = {
+                    create_layered_anim(table.dictionary_merge(cyber_core_main, {
+                        repeat_count = 2,
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }), {"main", "teamcolor", "emissive"}),
+                    create_layered_anim({
+                        name = "main_176",
+                        size = { 174, 217 },
+                        hr_size = { 349, 434 },
 
-            frame_count = 1,
-        }, {"main", "teamcolor", "emissive"}),
+                        frame_count = 2,
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }, {"main", "teamcolor", "emissive"})
+                }
+            },
+            -- disabled
+            create_layered_anim(cyber_core_main, {"main", "teamcolor"}),
+        },
 
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -150,14 +295,12 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- TEMPLAR ARCHIVES
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-archives",
-        picture = create_layered_anim({
-            name = "main_155",
-            size = { 303, 367 },
-            hr_size = { 606, 735 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(archives_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields
@@ -166,15 +309,32 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- FORGE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-forge",
-        animation = create_layered_anim({
-            name = "main_167",
-            size = { 193, 176 },
-            hr_size = { 385, 352 },
+        animation = {   -- idle
+            create_layered_anim(forge_main, {"main", "teamcolor", "emissive"}),
+            {   -- working anim
+                layers = {
+                    create_layered_anim(table.dictionary_merge(forge_main, {
+                        repeat_count = 3,
+                        animation_speed = 1/7.5 -- 126ms in SC (3 ticks)
+                    }), {"main", "teamcolor", "emissive"}),
+                    create_layered_anim({
+                        name = "main_168",
+                        size = { 181, 104 },
+                        hr_size = { 361, 208 },
 
-            frame_count = 1,
-        }, {"main", "teamcolor", "emissive"}),
+                        frame_count = 3,
+                        animation_speed = 1/7.5 -- 126ms in SC (3 ticks)
+                    }, {"main"})
+                }
+            },
+            -- disabled
+            create_layered_anim(forge_main, {"main", "teamcolor"}),
+        },
 
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -184,15 +344,34 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- STARGATE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-stargate",
-        animation = create_layered_anim({
-            name = "main_199",
-            size = { 248, 264 },
-            hr_size = { 496, 528 },
-
-            frame_count = 1,
-        }, {"main", "teamcolor", "emissive"}),
+        animation = {
+            {   -- idle
+                layers = {
+                    create_layered_anim(stargate_main, {"main", "teamcolor", "emissive"}),
+                    create_anim(stargate_overlay)
+                }
+            },
+            {   -- working anim
+                layers = {
+                    create_layered_anim(table.dictionary_merge(stargate_main, {
+                        repeat_count = 9,
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }), {"main", "teamcolor", "emissive"}),
+                    create_anim(table.dictionary_merge(stargate_overlay, {
+                        frame_count = 2,
+                        frame_sequence = { 1, 1, 2, 1, 2, 1, 1, 2, 1 },
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    }))
+                }
+            },
+            -- disabled
+            create_layered_anim(stargate_main, {"main", "teamcolor"})
+        },
 
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -202,6 +381,9 @@ data:extend({
         tile_height = 6,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- STASIS CELL/PRISON
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-stasis-cell",
         picture = create_layered_anim({
@@ -218,14 +400,12 @@ data:extend({
         tile_height = 6,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- FLEET BEACON
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-fleet-beacon",
-        picture = create_layered_anim({
-            name = "main_208",
-            size = { 266, 210 },
-            hr_size = { 533, 421 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(fleet_beacon_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields
@@ -234,14 +414,12 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- ARBITER TRIBUNAL
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-tribunal",
-        picture = create_layered_anim({
-            name = "main_186",
-            size = { 186, 172 },
-            hr_size = { 373, 342 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(tribunal_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields
@@ -250,14 +428,12 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- ROBOTICS SUPPORT BAY
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-robotics-support-bay",
-        picture = create_layered_anim({
-            name = "main_204",
-            size = { 202, 213 },
-            hr_size = { 403, 427 }
-        }, {"main", "teamcolor", "emissive"}),
-
+        pictures = make_common_states(robotics_support_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 450,   -- +450 shields
@@ -266,15 +442,34 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- SHIELD BATTERY
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-shield-battery",
-        animation = create_layered_anim({
-            name = "main_195",
-            size = { 169, 118 },
-            hr_size = { 337, 237 },
-
-            frame_count = 1,
-        }, {"main", "teamcolor", "emissive"}),
+        animation = {
+            {  -- idle
+                layers = {
+                    create_layered_anim(shield_battery_main, {"main", "teamcolor", "emissive"}),
+                    create_anim(shield_battery_overlay)
+                }
+            },
+            {   -- working anim
+                layers = {
+                    create_layered_anim(table.dictionary_merge(shield_battery_main, {
+                        repeat_count = 2,
+                        animation_speed = 1/5 -- 84ms in SC (2 ticks)
+                    }), {"main", "teamcolor", "emissive"}),
+                    create_anim(table.dictionary_merge(shield_battery_overlay, {
+                        frame_count = 3,
+                        frame_sequence = { 2, 3 },
+                        animation_speed = 1/5 -- 84ms in SC (2 ticks)
+                    }))
+                }
+            },
+            -- disabled
+            create_layered_anim(shield_battery_main, {"main", "teamcolor"})
+        },
 
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 200,   -- +200 shields
@@ -283,6 +478,9 @@ data:extend({
         tile_height = 4,
         tile_width = 6
     },
+--------------------------------------------------------------------------------------------------
+-- KHAYDARIN CRYSTAL FORMATION
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-khaydarin-crystal-formation",
         picture = create_layered_anim({
@@ -299,6 +497,9 @@ data:extend({
         tile_height = 6,
         tile_width = 8
     },
+--------------------------------------------------------------------------------------------------
+-- PROTOSS TEMPLE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-protoss-temple",
         picture = create_layered_anim({
@@ -315,6 +516,9 @@ data:extend({
         tile_height = 6,
         tile_width = 14
     },
+--------------------------------------------------------------------------------------------------
+-- XEL'NAGA TEMPLE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-xel-naga-temple",
         picture = create_layered_anim({
@@ -331,6 +535,9 @@ data:extend({
         tile_height = 8,
         tile_width = 10
     },
+--------------------------------------------------------------------------------------------------
+-- WARP GATE
+--------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-warp-gate",
         animation = {

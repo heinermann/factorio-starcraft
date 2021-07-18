@@ -182,9 +182,9 @@ end
 function create_anim(data)
   return {
       filename = "__starcraft__/graphics/low/" .. data.filename,
-      line_length = data.line_length or data.frame_count,
+      line_length = data.line_length or data.frame_count or 1,
       size = data.size,
-      frame_count = data.frame_count,
+      frame_count = data.frame_count or 1,
       frame_sequence = data.frame_sequence,
       animation_speed = data.animation_speed,
       flags = data.flags,
@@ -197,10 +197,10 @@ function create_anim(data)
 
       hr_version = {
           filename = "__starcraft__/graphics/hd/" .. data.filename,
-          line_length = data.hr_line_length or data.frame_count,
+          line_length = data.hr_line_length or data.frame_count or 1,
           size = data.hr_size,
           scale = 0.5,
-          frame_count = data.frame_count,
+          frame_count = data.frame_count or 1,
           frame_sequence = data.frame_sequence,
           animation_speed = data.animation_speed,
           flags = data.flags,
@@ -230,17 +230,17 @@ function create_layered_anim(data, layers)
   return {
     layers = table.map(layers, function(layer)
       if layer == "main" then
-        return create_anim(table.merge({
+        return create_anim(table.dictionary_merge({
             filename = data.name .. "_diffuse.png"
           }, common_attributes))
       elseif layer == "teamcolor" then
-        return create_anim(table.merge({
+        return create_anim(table.dictionary_merge({
           filename = data.name .. "_teamcolor.png",
           apply_runtime_tint = true,
           --flags = { "mask" },
         }, common_attributes))
       elseif layer == "emissive" then
-        return create_anim(table.merge({
+        return create_anim(table.dictionary_merge({
           filename = data.name .. "_emissive.png",
           blend_mode = "additive",
           draw_as_light = true

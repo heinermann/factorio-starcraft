@@ -131,8 +131,32 @@ script.on_nth_tick(1, function(event)
   end
 end)
 
-script.on_nth_tick(120, function(event)
+script.on_nth_tick(300, function(event)
   Log.write()
+
+  --if event.tick > 0 and event.tick < 600 then
+  --  cannons = game.surfaces["nauvis"].find_entities_filtered{
+  --    type = "turret",
+  --    name = "starcraft-cannon"
+  --  }
+--
+  --  for _, c in ipairs(cannons) do
+  --    c.shooting_target = c
+  --    c.active = false
+  --  end
+  --end
+--
+  --if event.tick > 800 and event.tick < 1400 then
+  --  cannons = game.surfaces["nauvis"].find_entities_filtered{
+  --    type = "turret",
+  --    name = "starcraft-cannon"
+  --  }
+--
+  --  for _, c in ipairs(cannons) do
+  --    c.active = true
+  --    c.shooting_target = c
+  --  end
+  --end
 end)
 
 -- Destroy decoratives that spawn on minerals and vespene geysers, as well as other post-processing

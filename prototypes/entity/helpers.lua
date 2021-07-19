@@ -58,6 +58,121 @@ function create_ground_unit(data)
   
 end
 
+function sc_ticks_to_factorio_ticks(value)
+  return (value * 42) / 1000 / (1 / 60)
+end
+-- 924ms 
+function sc_tiles_per_frame_to_factorio_tiles_per_tick(value)
+  -- 2.52 tick/frame = 42ms/frame / (1000ms/s / 60tick/s)
+  return (value * 2) / 2.52
+end
+
+function sc_pixels_to_factorio_tiles(value)
+  return value / 32 * 2
+end
+
+function sc_tiles_to_factorio_tiles(value)
+  return value * 2
+end
+
+function sc_pixels_per_frame_to_factorio_tiles_per_tick(value)
+  return sc_tiles_per_frame_to_factorio_tiles_per_tick(value / 32)
+end
+
+function sc_attack_range_to_factorio_tiles(value)
+  return value * 16 / 32 * 2
+end
+
+function make_functional_turret(data)
+  return {
+    --------------------------------------------------------------------
+    -- PrototypeBase
+    type = "turret",
+    name = data.name,
+
+    --------------------------------------------------------------------
+    -- Turret
+    attack_parameters = data.attack_parameters,
+    alert_when_attacking = false,
+    attack_target_mask = data.attack_target_mask,
+    ignore_target_mask = data.ignore_target_mask,
+    prepare_range = data.prepare_range,
+    call_for_help_radius = 0,
+
+    folding_animation = data.folding_animation,
+    folding_speed = data.folding_speed,
+
+    folded_animation = data.folded_animation,
+    folded_speed = data.folded_speed,
+
+    preparing_animation = data.preparing_animation,
+    preparing_speed = data.preparing_speed,
+
+    prepared_animation = data.prepared_animation,
+    prepared_speed = data.prepared_speed,
+
+    attacking_animation = data.attacking_animation,
+    attacking_speed = data.attacking_speed,
+
+    ending_attack_animation = data.ending_attack_animation,
+    ending_attack_speed = data.ending_attack_speed,
+
+    starting_attack_animation = data.starting_attack_animation,
+    starting_attack_speed = data.starting_attack_speed,
+
+    --------------------------------------------------------------------
+    -- EntityWithHealth
+    corpse = data.corpse,
+    damaged_trigger_effect = data.damaged_trigger_effect,
+    dying_explosion = data.dying_explosion,
+    dying_trigger_effect = data.dying_trigger_effect,
+    healing_per_tick = data.healing_per_tick,
+    hide_resistances = false,
+    max_health = data.max_health,
+    repair_speed_modifier = data.repair_speed_modifier,
+    resistances = make_resistances("large", data.armor),
+
+    --------------------------------------------------------------------
+    -- Entity
+    icon = "__base__/graphics/icons/info.png",
+    icon_size = 64,
+
+    allow_copy_paste = false,
+    build_sound = data.build_sound,
+    collision_box = data.collision_box,
+    collision_mask = {
+      "item-layer",
+      "object-layer",
+      "player-layer",
+      "water-tile",
+      "resource-layer"
+    },
+
+    -- TODO: created_effect ?
+
+    flags = {
+      "not-rotatable",
+      "not-blueprintable",
+      "not-deconstructable",
+      "hidden",
+      "not-flammable",
+      "no-automated-item-removal",
+      "no-automated-item-insertion",
+      "no-copy-paste",
+      "not-upgradable",
+      "player-creation",
+      "placeable-enemy"
+    },
+
+    map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
+    remove_decoratives = "true",
+    selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
+    shooting_cursor_size = data.tile_width + 1,
+    subgroup = data.subgroup,
+    tile_height = data.tile_height,
+    tile_width = data.tile_width,
+  }
+end
 
 -- The following fields for `data` are used:
 --
@@ -80,7 +195,6 @@ end
 -- tile_width
 function make_functional_structure(data)
   local result = {
-    
     --------------------------------------------------------------------
     -- PrototypeBase
     type = "simple-entity-with-force",
@@ -194,6 +308,7 @@ function create_anim(data)
       apply_runtime_tint = data.apply_runtime_tint,
       blend_mode = data.blend_mode,
       repeat_count = data.repeat_count,
+      direction_count = 1,
 
       hr_version = {
           filename = "__starcraft__/graphics/hd/" .. data.filename,
@@ -209,8 +324,9 @@ function create_anim(data)
           draw_as_light = data.draw_as_light,
           apply_runtime_tint = data.apply_runtime_tint,
           blend_mode = data.blend_mode,
-          repeat_count = data.repeat_count
-      }
+          repeat_count = data.repeat_count,
+          direction_count = 1
+    }
   }
 end
 
@@ -272,6 +388,23 @@ function make_zerg_structure(data)
   return result
 end
 
+function protossify_prototype(data)
+  data.subgroup = "starcraft-protoss-buildings"
+
+  -- TODO: Protoss shields
+
+  data.flags = {
+    "not-repairable",
+    table.unpack(data.flags)
+  }
+
+  data.damaged_trigger_effect = {
+    type = "script",
+    effect_id = "on_protoss_bldg_dmg" -- Used to update overlays
+  }
+  return data
+end
+
 function make_protoss_structure(data)
   local result = make_functional_structure(data)
   result.subgroup = "starcraft-protoss-buildings"
@@ -301,4 +434,36 @@ function make_terran_structure(data)
     effect_id = "on_terran_bldg_dmg" -- Used to update overlays
   }
   return result
+end
+
+function make_projectile(data)
+  return {
+    --------------------------------------------------------------------
+    -- PrototypeBase
+    type = "projectile",
+    name = data.name,
+
+    --------------------------------------------------------------------
+    -- Projectile
+    action = data.action,
+    animation = data.animation,
+    direction_only = data.direction_only,   -- Fly & Follow target or not
+    hit_collision_mask = data.hit_collision_mask,
+    piercing_damage = data.piercing_damage,
+    final_action = data.final_action,
+    rotatable = data.rotatable,
+    shadow = data.shadow,
+    smoke = data.smoke,
+
+    -- Flingy values
+    acceleration = data.acceleration,
+    max_speed = data.max_speed,
+    turn_speed = data.turn_speed,
+    turning_speed_increases_exponentially_with_projectile_speed = data.turning_speed_increases_exponentially_with_projectile_speed,
+
+    --------------------------------------------------------------------
+    -- Entity
+    icon = "__base__/graphics/icons/info.png",
+    icon_size = 64,
+  }
 end

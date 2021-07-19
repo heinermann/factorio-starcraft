@@ -112,6 +112,17 @@ local shield_battery_overlay = {
     draw_as_glow = true
 }
 
+local function make_photon_cannon_anim(frame_seq)
+    return create_layered_anim({
+        name = "main_183",
+        size = { 128, 129 },
+        hr_size = { 256, 258 },
+        frame_count = 4,
+        frame_sequence = frame_seq,
+        animation_speed = 1/5 -- 84ms in SC (2 ticks)
+    }, {"main", "teamcolor", "emissive"})
+end
+
 local function make_common_states(data)
     return {
         create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- idle
@@ -224,27 +235,57 @@ data:extend({
         tile_width = 8
     },
 --------------------------------------------------------------------------------------------------
--- CANNON (TODO)
+-- PHOTON CANNON
 --------------------------------------------------------------------------------------------------
-    make_protoss_structure{
+    protossify_prototype(make_functional_turret{
         name = "starcraft-cannon",
-        animation = create_layered_anim({
-            name = "main_183",
-            size = { 128, 129 },
-            hr_size = { 256, 258 },
-
-            frame_count = 4,
-            frame_sequence = { 1 },
-        }, {"main", "teamcolor", "emissive"}),
-
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 100,   -- +100 shields
         armor = 0,
         collision_box = sc_bounds_to_factorio{20, 16, 20, 16},
         tile_height = 4,
-        tile_width = 4
-    },
+        tile_width = 4,
+
+        folded_animation = make_photon_cannon_anim{ 1 },
+        folded_speed = 1/5,
+        folding_animation = make_photon_cannon_anim{ 2, 3 },
+        folding_speed = 1/5,
+        preparing_animation = make_photon_cannon_anim{ 3, 2, 4 },
+        preparing_speed = 1/5,
+        attacking_animation = make_photon_cannon_anim{ 4 },
+        attacking_speed = 1/5,
+        prepared_animation = make_photon_cannon_anim{ 4 },
+        prepared_speed = 1/5,
+
+        attack_parameters = {
+            type = "projectile",
+            range = sc_attack_range_to_factorio_tiles(14),
+            cooldown = sc_ticks_to_factorio_ticks(22-1),
+            range_mode = "bounding-box-to-bounding-box",
+            cooldown_deviation = 0.05,  -- TODO: figure out what this *actually* does??
+            warmup = sc_ticks_to_factorio_ticks(2),
+            sound = {
+                filename = "__starcraft__/sound/bullet/dragbull.wav",
+                aggregation = {
+                    max_count = 4,
+                    remove = false
+                }
+            },
+            projectile_center = { 0, -sc_pixels_to_factorio_tiles(20)/2 },
+            ammo_type = {
+                category = "bullet",
+                action = {
+                    type = "direct",
+                    action_delivery = {
+                        type = "projectile",
+                        projectile = "starcraft-sts_sta_photon_cannon",
+                        starting_speed = 0
+                    }
+                }
+            }
+        }
+    }),
 --------------------------------------------------------------------------------------------------
 -- CITADEL OF ADUN
 --------------------------------------------------------------------------------------------------

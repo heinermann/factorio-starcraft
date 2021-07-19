@@ -1,3 +1,5 @@
+require("prototypes.entity.helpers")
+
 local function make_simple_smoke(table)
   --anim_speed = (1000/(42 * (table.time_between_frames or 1)))/60  -- ((1000ms/s / 42ms/frame) / 60t/s)/2
   num_ticks_per_frame = math.ceil(60/(1000/(42 * (table.time_between_frames or 1))))
@@ -30,6 +32,19 @@ local function make_simple_smoke(table)
     affected_by_wind = false,
     show_when_smoke_off = true,
     color = {1, 1, 1, 0.9},
+  }
+end
+
+local function make_simple_smoke2(data)
+  return {
+    type = "trivial-smoke",
+    name = data.name,
+    animation = data.animation,
+    duration = data.duration,
+    affected_by_wind = false,
+    show_when_smoke_off = true,
+    movement_slow_down_factor = 0,
+    color = {1, 1, 1, 0.9}
   }
 end
 
@@ -84,4 +99,16 @@ data:extend({
     time_between_frames = 2,
     draw_as_glow = true
   },
+  make_simple_smoke2{
+    name = "starcraft-dragbull_explode",
+    animation = create_anim{
+      filename = "main_427_diffuse.png",
+      size = { 118, 121 },
+      hr_size = { 237, 243 },
+      frame_count = 14,
+      draw_as_glow = true,
+      animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+    },
+    duration = 2.52 * 14
+  }
 })

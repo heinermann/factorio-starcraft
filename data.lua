@@ -17,6 +17,7 @@ require("prototypes.unit")
 
 require("prototypes.entity.corpse")
 require("prototypes.entity.explosion")
+require("prototypes.entity.projectile")
 require("prototypes.entity.neutral.resources")
 require("prototypes.entity.protoss.buildings")
 require("prototypes.entity.zerg.buildings")

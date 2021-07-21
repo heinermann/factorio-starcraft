@@ -129,6 +129,29 @@ script.on_nth_tick(1, function(event)
   for entity, _ in pairs(g_iscript_entities) do
     iscript.advance(entity)
   end
+
+  local cannons = game.surfaces["nauvis"].find_entities_filtered{
+    type = {"turret", "ammo-turret", "electric-turret"}
+  }
+
+  for _, c in ipairs(cannons) do
+    c.shooting_target = {}
+    c.energy = 0
+  end
+
+  local fluid_turrets = game.surfaces["nauvis"].find_entities_filtered{
+    type = "fluid-turret"
+  }
+  for _, c in ipairs(fluid_turrets) do
+    c.shooting_target = {}
+    c.energy = 0
+    c.clear_fluid_inside()
+    c.insert_fluid{
+      name = "water",
+      amount = 1000
+    }
+  end
+
 end)
 
 script.on_nth_tick(300, function(event)

@@ -19,7 +19,7 @@ v0 will **include**:
 v0 will **exclude** the following:
 - Terran
 - Choice Protoss units: Archons, Dark Archons, Dark Templar, High Templar, Carriers, Reavers, Arbiters, Observers, Shuttles
-- Choice Zerg units: Broodlings, Infested Command Center, Infested Terran
+- Choice Zerg units: Broodlings, Infested Command Center, Infested Terran, Lurker
 - Zerg Abilities: Parasite, Broodling, Dark Swarm, Ventral Sacs
 - Shield battery functionality
 - Nydus canal functionality

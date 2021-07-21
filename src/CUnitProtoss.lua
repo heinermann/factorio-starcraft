@@ -129,7 +129,7 @@ local function AddPsiField(surface, x, y, force)
 end
 
 local function RemovePsiField(surface, x, y, force)
-    ModifyPsiField(surface, x, y, force, 1)
+    ModifyPsiField(surface, x, y, force, -1)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------

@@ -6,7 +6,6 @@ local function make_rubble_anim(data)
         size = data.size,
         frame_count = 4,
         line_length = 4,
-        animation_speed = 1/1890, -- Each frame lasts 31.5 seconds in Starcraft
 
         hr_version = {
             direction_count = 1,
@@ -14,8 +13,7 @@ local function make_rubble_anim(data)
             size = data.hr_size,
             scale = 0.5,
             frame_count = 4,
-            line_length = 4,
-            animation_speed = 1/1890,
+            line_length = 4
         }
     }
 end
@@ -56,7 +54,9 @@ local function make_corpse(data)
         time_before_removed = 60 * 126, -- 126 seconds (31.5 * 4 anim frames)
 
         ground_patch = data.ground_patch,
-        animation = data.animation
+        animation = data.animation,
+        animation_render_layer = "remnants",
+        dying_speed = 1/(60 * 31.5 * 4) -- Each frame lasts 31.5 seconds in Starcraft
     }
 end
 
@@ -89,7 +89,7 @@ data:extend({
     make_corpse{
         name = "starcraft-p_bldg_rubble_sml",
         animation = make_glowy_rubble_anim{
-            name = "main_217",
+            name = "main_216",
             size = { 157, 173 },
             hr_size = { 313, 348 }
         }

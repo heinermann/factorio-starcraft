@@ -3,10 +3,32 @@ A mod that brings a 1:1 Starcraft simulation to Factorio.
 
 Note: This mod only includes Starcraft's units and behaviours, it does not allow you to control them and there is no plan to.
 
+## V0 Target (Beta)
+v0 will **include**:
+- SFX
+- Most Protoss and Zerg Units/structures
+- Orders
+- Weapons
+- Creep
+- Pylon power
+- Basic AI behaviours (unit responses and worker harvesting)
+- Names
+- Multiplayer
+- Setup tool
+
+v0 will **exclude** the following:
+- Terran
+- Choice Protoss units: Archons, Dark Archons, Dark Templar, High Templar, Carriers, Reavers, Arbiters, Observers, Shuttles
+- Choice Zerg units: Broodlings, Infested Command Center, Infested Terran
+- Zerg Abilities: Parasite, Broodling, Dark Swarm, Ventral Sacs
+- Shield battery functionality
+- Nydus canal functionality
+- Everything excluded in V1
+
 ## V1 Target
 v1 will **include**:
 - SFX
-- Units/structures and their Flingy -> Sprite -> Image relationships
+- Units/structures
 - IScript (image script)
 - Orders
 - Weapons

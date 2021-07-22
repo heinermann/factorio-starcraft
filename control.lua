@@ -31,15 +31,15 @@ end)
 
 ----------------------------------------------
 -- TODO: Deal with this stuff
-function get_unit_grid(entity)
+local function get_unit_grid(entity)
   return entity.get_inventory(defines.inventory.character_armor)[1].grid
 end
 
-function get_unit_weapons_inventory(entity)
+local function get_unit_weapons_inventory(entity)
   return entity.get_inventory(defines.inventory.character_guns)
 end
 
-function setup_unit_inventory(entity)
+local function setup_unit_inventory(entity)
   entity.get_inventory(defines.inventory.character_armor).insert({name = "starcraft-armor"})
 
   local grid = get_unit_grid(entity)
@@ -57,7 +57,7 @@ end
 -- Cons of character:
 --  - Limited facing directions
 --  - Anim bug that tries to load additional graphics out of a sheet
-function create_unit(position, force, surface)
+local function create_unit(position, force, surface)
   surface = surface or "nauvis"
 
   local baseunit = game.surfaces[surface].create_entity{ name = "starcraft-unit-base", position = position, force = force }
@@ -91,5 +91,7 @@ script.on_event(defines.events.on_chunk_generated, function(event)
     force = "neutral"
   }
 
-  table.each(resources, setup_resource)
+  for _, entity in ipairs(resources) do
+    setup_resource(entity, iscript)
+  end
 end)

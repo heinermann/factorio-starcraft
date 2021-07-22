@@ -1,6 +1,5 @@
-
-local function setup_vespene_geyser(entity)
-    register_iscript_entity(entity)
+local function setup_vespene_geyser(entity, iscript)
+    iscript.register_entity(entity)
 
     local gas_box = entity.bounding_box
     local minerals_filter = {
@@ -35,7 +34,7 @@ local function setup_vespene_geyser(entity)
     end
 end
 
-function setup_resource(entity)
+function setup_resource(entity, iscript)
     if not entity.valid then
         return
     end
@@ -43,6 +42,6 @@ function setup_resource(entity)
     entity.surface.destroy_decoratives{area = entity.selection_box}
 
     if entity.name == "starcraft-vespene-geyser" then
-        setup_vespene_geyser(entity)
+        setup_vespene_geyser(entity, iscript)
     end
 end

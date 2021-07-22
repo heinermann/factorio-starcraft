@@ -1,6 +1,8 @@
 -- WARNING: Scripts need modification to run outside of coroutines or moved into native Factorio facilities (i.e. smoke overlays)
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
+local Surface = require('__stdlib__/stdlib/area/surface')
+local table = require('__stdlib__/stdlib/utils/table')
 
 local lo_data = require("__starcraft__/unit/lo")
 local convert = require("__starcraft__/glue/convert")
@@ -18930,6 +18932,29 @@ function iscript.advance(obj)
   until iscript.edata.wait_ticks > 0
 
   iscript.set_obj_data(obj, iscript.edata)
+end
+
+function iscript.register_entity(entity)
+	iscript.tracking_entities[entity] = true
+	iscript.init_obj_data(entity)
+	iscript.play_anim(entity, "Init")
+	Log.log("Registered " .. entity.name .. " for iscript")
+end
+
+function iscript.update()
+	for entity, _ in ipairs(iscript.tracking_entities) do
+		iscript.advance(entity)
+	end
+end
+
+iscript.supported_entity_names = {
+	"starcraft-vespene-geyser"
+}
+
+function iscript.on_load()
+	-- Reassign iscripts to entities
+	local entities = Surface.find_all_entities{name = iscript.supported_entity_names}
+	table.each(entities, iscript.register_entity)
 end
 
 

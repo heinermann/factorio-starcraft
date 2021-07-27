@@ -5,25 +5,29 @@ local table = require('__stdlib__/stdlib/utils/table')
 local nexus_main = {
     name = "main_179",
     size = { 291, 311 },
-    hr_size = { 582, 622 }
+    hr_size = { 582, 622 },
+    vshift = -4/16
 }
 local nexus_overlay = {
     filename = "main_181_diffuse.png",
     size = { 239, 311 },
     hr_size = { 478, 622 },
-    draw_as_glow = true
+    draw_as_glow = true,
+    vshift = -4/16
 }
 
 local robo_facility_main = {
     name = "main_192",
     size = { 193, 256 },
-    hr_size = { 386, 512 }
+    hr_size = { 386, 512 },
+    vshift = -8/16
 }
 
 local pylon_main = {
     name = "main_189",
     size = { 112, 129 },
-    hr_size = { 223, 258 }
+    hr_size = { 223, 258 },
+    vshift = -11/16
 }
 
 local assimilator_main = {
@@ -35,81 +39,94 @@ local assimilator_main = {
 local observatory_main = {
     name = "main_161",
     size = { 195, 190 },
-    hr_size = { 390, 380 }
+    hr_size = { 390, 380 },
+    vshift = -8/16
 }
 
 local gateway_main = {
     name = "main_171",
     size = { 253, 248 },
-    hr_size = { 506, 497 }
+    hr_size = { 506, 497 },
+    vshift = -11/16
 }
 
 local citadel_main = {
     name = "main_164",
     size = { 196, 203 },
-    hr_size = { 392, 404 }
+    hr_size = { 392, 404 },
+    vshift = -13/16
 }
 
 local cyber_core_main = {
     name = "main_174",
     size = { 174, 217 },
     hr_size = { 349, 434 },
+    vshift = -1/16
 }
 
 local archives_main = {
     name = "main_155",
     size = { 303, 367 },
-    hr_size = { 606, 735 }
+    hr_size = { 606, 735 },
+    vshift = -5/16
 }
 
 local forge_main = {
     name = "main_167",
     size = { 193, 176 },
     hr_size = { 385, 352 },
+    vshift = -1/16
 }
 
 local stargate_main = {
     name = "main_199",
     size = { 248, 264 },
     hr_size = { 496, 528 },
+    vshift = -16/16
 }
 
 local stargate_overlay = {
     filename = "main_200_diffuse.png",
     size = { 204, 144 },
     hr_size = { 408, 288 },
-    draw_as_glow = true
+    draw_as_glow = true,
+    vshift = -16/16
 }
 
 local fleet_beacon_main = {
     name = "main_208",
     size = { 266, 210 },
-    hr_size = { 533, 421 }
+    hr_size = { 533, 421 },
+    vshift = -7/16
 }
 
 local tribunal_main = {
     name = "main_186",
     size = { 186, 172 },
-    hr_size = { 373, 342 }
+    hr_size = { 373, 342 },
+    vshift = -4/16
 }
 
 local robotics_support_main = {
     name = "main_204",
     size = { 202, 213 },
-    hr_size = { 403, 427 }
+    hr_size = { 403, 427 },
+    vshift = -6/16
 }
 
 local shield_battery_main = {
     name = "main_195",
     size = { 169, 118 },
     hr_size = { 337, 237 },
+    vshift = -3/16
 }
 
 local shield_battery_overlay = {
     filename = "main_196_diffuse.png",
     size = { 185, 142 },
     hr_size = { 369, 285 },
-    draw_as_glow = true
+    draw_as_glow = true,
+    vshift = -3/16
 }
 
 local function make_photon_cannon_anim(frame_seq)
@@ -119,7 +136,8 @@ local function make_photon_cannon_anim(frame_seq)
         hr_size = { 256, 258 },
         frame_count = 4,
         frame_sequence = frame_seq,
-        animation_speed = 1/5 -- 84ms in SC (2 ticks)
+        animation_speed = 1/5, -- 84ms in SC (2 ticks)
+        vshift = -2/16
     }, {"main", "teamcolor", "emissive"})
 end
 
@@ -320,7 +338,8 @@ data:extend({
                         hr_size = { 349, 434 },
 
                         frame_count = 2,
-                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                        animation_speed = 1/2.5, -- 42ms in SC (1 ticks)
+                        vshift = -1/16
                     }, {"main", "teamcolor", "emissive"})
                 }
             },
@@ -369,7 +388,8 @@ data:extend({
                         hr_size = { 361, 208 },
 
                         frame_count = 3,
-                        animation_speed = 1/7.5 -- 126ms in SC (3 ticks)
+                        animation_speed = 1/7.5, -- 126ms in SC (3 ticks)
+                        vshift = -1/16
                     }, {"main"})
                 }
             },
@@ -527,7 +547,8 @@ data:extend({
         picture = create_layered_anim({
             name = "main_178",
             size = { 259, 256 },
-            hr_size = { 518, 512 }
+            hr_size = { 518, 512 },
+            vshift = -16/16
         }, {"main", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_sml",
@@ -546,7 +567,8 @@ data:extend({
         picture = create_layered_anim({
             name = "main_207",
             size = { 451, 308 },
-            hr_size = { 902, 616 }
+            hr_size = { 902, 616 },
+            vshift = -7/16
         }, {"main"}),
 
         corpse = "starcraft-p_bldg_rubble_lrg",
@@ -565,7 +587,8 @@ data:extend({
         picture = create_layered_anim({
             name = "main_937",
             size = { 385, 520 },
-            hr_size = { 769, 1040 }
+            hr_size = { 769, 1040 },
+            vshift = -16/16
         }, {"main", "emissive"}),
 
         corpse = "starcraft-p_bldg_rubble_lrg",

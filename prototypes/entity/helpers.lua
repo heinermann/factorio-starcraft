@@ -80,7 +80,8 @@ function sc_pixels_per_frame_to_factorio_tiles_per_tick(value)
 end
 
 function sc_attack_range_to_factorio_tiles(value)
-  return value * 16 / 32 * 2
+  -- value is in half-tiles in Starcraft, which is equal to full tiles in Factorio so there is no change
+  return value
 end
 
 function make_functional_turret(data)
@@ -294,7 +295,7 @@ function make_functional_structure(data)
 end
 
 function create_anim(data)
-  return {
+  local result = {
       filename = "__starcraft__/graphics/low/" .. data.filename,
       line_length = data.line_length or data.frame_count or 1,
       size = data.size,
@@ -309,6 +310,7 @@ function create_anim(data)
       blend_mode = data.blend_mode,
       repeat_count = data.repeat_count,
       direction_count = 1,
+      shift = data.shift,
 
       hr_version = {
           filename = "__starcraft__/graphics/hd/" .. data.filename,
@@ -325,9 +327,16 @@ function create_anim(data)
           apply_runtime_tint = data.apply_runtime_tint,
           blend_mode = data.blend_mode,
           repeat_count = data.repeat_count,
-          direction_count = 1
+          direction_count = 1,
+          shift = data.shift
     }
   }
+
+  if data.vshift ~= nil then
+    result.shift = { 0, data.vshift }
+    result.hr_version.shift = result.shift
+  end
+  return result
 end
 
 -- NOTE: Shadows unsupported because structure shadows need to be remade from scratch
@@ -340,7 +349,9 @@ function create_layered_anim(data, layers)
     frame_count = data.frame_count,
     frame_sequence = data.frame_sequence,
     animation_speed = data.animation_speed,
-    repeat_count = data.repeat_count
+    repeat_count = data.repeat_count,
+    shift = data.shift,
+    vshift = data.vshift
   }
 
   return {

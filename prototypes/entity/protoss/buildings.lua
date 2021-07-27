@@ -260,9 +260,9 @@ data:extend({
 
         attack_parameters = {
             type = "projectile",
-            range = sc_attack_range_to_factorio_tiles(14),
-            cooldown = sc_ticks_to_factorio_ticks(22-1),
-            range_mode = "bounding-box-to-bounding-box",
+            range = sc_attack_range_to_factorio_tiles(14 + 2),  -- BUG: Added 2 tiles because it doesn't compute from bounding box
+            cooldown = sc_ticks_to_factorio_ticks(22 - 1),
+            range_mode = "bounding-box-to-bounding-box",    -- BUG: This is unsupported for turrets
             cooldown_deviation = 0.05,  -- TODO: figure out what this *actually* does??
             warmup = sc_ticks_to_factorio_ticks(2),
             sound = {

@@ -1,5 +1,4 @@
 local Entity = require('__stdlib__/stdlib/entity/entity')
-local Tile = require('__stdlib__/stdlib/area/tile')
 local ForceTile = require('src.ForceTile')
 local ForceSurface = require('src.ForceSurface')
 
@@ -209,3 +208,4 @@ end
 
 function DispatchRecall(entity)
 end
+

@@ -39,7 +39,9 @@ local function bounding_box_to_xy(bounding_box)
 end
 
 
-local iscript = {}
+local iscript = {
+	iscript_tracking_entities = {}
+}
 local scripts = {}
 
 local function image_create(img, x, y, render_layer)
@@ -48,13 +50,13 @@ local function image_create(img, x, y, render_layer)
     return
   end
 
-  imgname = convert.image.to_name(img)
+  local imgname = convert.image.to_name(img)
   if imgname ~= nil then
     Log.log("Creating " .. imgname)
 
-    imgtype = convert.image.to_type(img)
+    local imgtype = convert.image.to_type(img)
     if imgtype == "animation" then
-      img_track_id = rendering.draw_animation{
+      local img_track_id = rendering.draw_animation{
         animation = imgname,
         render_layer = render_layer,
         animation_speed = 0,
@@ -66,7 +68,7 @@ local function image_create(img, x, y, render_layer)
       global.iscript_images[img_track_id] = {}
 
     elseif imgtype == "sprite" then
-      img_track_id = rendering.draw_sprite{
+      local img_track_id = rendering.draw_sprite{
         sprite = imgname,
         render_layer = render_layer,
         target = iscript.entity,
@@ -76,7 +78,7 @@ local function image_create(img, x, y, render_layer)
 
       iscript.init_obj_data(img_track_id)
     elseif imgtype == "smoke" or imgtype == "trivial-smoke" then
-      pos = iscript.entity.position
+      local pos = iscript.entity.position
       iscript.entity.surface.create_trivial_smoke{
         name = imgname,
         position = { pos.x + to_tiles(x), pos.y + to_tiles(y) }
@@ -112,7 +114,7 @@ end
 
 local function setvertpos(y_offset)
   if iscript.anim ~= nil then
-    target = rendering.get_target(iscript.anim)
+    local target = rendering.get_target(iscript.anim)
     rendering.set_target(target.entity or target.position, {target.entity_offset[1], to_tiles(y_offset)})
   end
 end
@@ -153,9 +155,9 @@ local function nobrkcodestart()
 end
 
 local function attackmelee(sfx1, sfx2)
-  chosen = sfx1
+  local chosen = sfx1
   if sfx2 ~= nil then
-    chosen = math.random(sfx1, sfx2)
+    local chosen = math.random(sfx1, sfx2)
   end
   playsnd(chosen)
   -- TODO: attackmelee
@@ -249,18 +251,18 @@ local function creategasoverlays(num)
   num = num + 1 -- Lua uses 1-indexing
 
   -- TODO: refinery state
-  img_type = convert.image.from_name(iscript.entity.name)
-  overlay_positions = lo_data.get_gas_overlays(img_type)
+  local img_type = convert.image.from_name(iscript.entity.name)
+  local overlay_positions = lo_data.get_gas_overlays(img_type)
 
   Log.log("imgid " .. tostring(img_type))
   Log.write()
-  entity_position = iscript.entity.position
-  target_position = {
+  local entity_position = iscript.entity.position
+  local target_position = {
     entity_position.x + to_tiles(overlay_positions[num][1]),
     entity_position.y + to_tiles(overlay_positions[num][2]),
   }
 
-  anim_info = {
+  local anim_info = {
     render_layer = "higher-object-above",
     target = target_position,
     surface = iscript.entity.surface
@@ -18839,7 +18841,7 @@ function iscript.get_obj_data(obj)
   if type(obj) == "table" then
     return Entity.get_data(obj)
   elseif type(obj) == "number" then
-    return global.iscript_tracking[obj]
+    return global.iscript_tracking_objects[obj]
   end
 end
 
@@ -18847,17 +18849,17 @@ function iscript.set_obj_data(obj, data)
   if type(obj) == "table" then
     Entity.set_data(obj, data)
   elseif type(obj) == "number" then
-    global.iscript_tracking[obj] = data
+    global.iscript_tracking_objects[obj] = data
   end
 end
 
 function iscript.play_anim(obj, anim_name)
-  data = iscript.get_obj_data(obj)
+  local data = iscript.get_obj_data(obj)
 
   if data.no_break_code_section then return end
 
-  imgid = convert.image.from_name(obj.name)
-  iscriptid = images[imgid+1].IscriptID
+  local imgid = convert.image.from_name(obj.name)
+  local iscriptid = images[imgid+1].IscriptID
   Log.log("SCRIPT NAME: " .. tostring(iscript[iscriptid][anim_name]))
   Log.write()
 
@@ -18870,8 +18872,8 @@ function iscript.play_anim(obj, anim_name)
 end
 
 function iscript.init_obj_data(obj)
-  data = iscript.get_obj_data(obj) or {}
-  
+  local data = iscript.get_obj_data(obj) or {}
+
   data.anim_name = "Init"
   data.script_name = nil
   data.script_index = 1
@@ -18891,6 +18893,7 @@ function iscript.set_tracking_object(obj)
   end
 
   iscript.edata = iscript.get_obj_data(obj)
+  --Log.log("edata = " .. tostring(iscript.edata))
 end
 
 function iscript.advance(obj)
@@ -18915,7 +18918,7 @@ function iscript.advance(obj)
 
     --Log.log("Script " .. iscript.edata.script_name .. " @ " .. iscript.edata.script_index)
     --Log.write()
-    operation = scripts[iscript.edata.script_name][iscript.edata.script_index]
+    local operation = scripts[iscript.edata.script_name][iscript.edata.script_index]
     if type(operation) == "function" then
       Log.log("calling operation")
 
@@ -18935,15 +18938,17 @@ function iscript.advance(obj)
 end
 
 function iscript.register_entity(entity)
-	iscript.tracking_entities[entity] = true
+	iscript.iscript_tracking_entities[entity] = true
 	iscript.init_obj_data(entity)
-	iscript.play_anim(entity, "Init")
+	iscript.play_anim(entity, "Init")	-- TODO: only if anim is not already playing (to fix on_load)
 	Log.log("Registered " .. entity.name .. " for iscript")
 end
 
 function iscript.update()
-	for entity, _ in ipairs(iscript.tracking_entities) do
-		iscript.advance(entity)
+	for entity, _ in pairs(iscript.iscript_tracking_entities) do
+		if entity ~= nil then
+			iscript.advance(entity)
+		end
 	end
 end
 
@@ -18953,9 +18958,15 @@ iscript.supported_entity_names = {
 
 function iscript.on_load()
 	-- Reassign iscripts to entities
+	Log.log("Iscript on_load")
 	local entities = Surface.find_all_entities{name = iscript.supported_entity_names}
 	table.each(entities, iscript.register_entity)
 end
 
+function iscript.on_init()
+	Log.log("Iscript on_init")
+	global.iscript_tracking_entities = {}
+	global.iscript_tracking_objects = {}
+end
 
 return iscript

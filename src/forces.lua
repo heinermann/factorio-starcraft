@@ -1,3 +1,4 @@
+local forces = {}
 
 local function create_new_force(forcename)
     local newforce = game.create_force(forcename)
@@ -7,8 +8,10 @@ local function create_new_force(forcename)
     newforce.ai_controllable = false
 end
 
-function create_forces()
+function forces.on_init()
     create_new_force("terran")
     create_new_force("protoss")
     create_new_force("zerg")
 end
+
+return forces

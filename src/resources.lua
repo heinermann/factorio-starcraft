@@ -1,3 +1,5 @@
+local resources = {}
+
 local function setup_vespene_geyser(entity, iscript)
     iscript.register_entity(entity)
 
@@ -34,7 +36,7 @@ local function setup_vespene_geyser(entity, iscript)
     end
 end
 
-function setup_resource(entity, iscript)
+function resources.setup_resource(entity, iscript)
     if not entity.valid then
         return
     end
@@ -45,3 +47,5 @@ function setup_resource(entity, iscript)
         setup_vespene_geyser(entity, iscript)
     end
 end
+
+return resources

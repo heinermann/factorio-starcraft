@@ -1,6 +1,9 @@
+local CUnitProtoss = {}
+
 local Entity = require('__stdlib__/stdlib/entity/entity')
+local Position = require('__stdlib__/stdlib/area/position')
+
 local ForceTile = require('src.ForceTile')
-local ForceSurface = require('src.ForceSurface')
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL CONSTANTS
@@ -14,6 +17,7 @@ local VARIATION_DISABLED = 3
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 local POWER_KEY = "powered"
+local PYLON_ENTITY_NAME = "starcraft-pylon"
 
 local requires_power = {
     ["starcraft-robotics-facility"] = true,
@@ -76,8 +80,22 @@ local bPsiFieldMask = {
 -- width: 32 (+-16)
 -- height: 20 (+-10)
 
-local function IsCellPowered(surface, x, y, force)
-    return ForceTile.get_data(surface, force, POWER_KEY, {x, y}) > 0
+local function IsCellPowered(surface, position, force)
+    return (ForceTile.get_data(surface, force, POWER_KEY, position) or 0) > 0
+end
+
+local function UpdateProtossPowerSingle(entity)
+    -- TODO: Check extra associated data to determine whether the entity should be enabled again. Other mods might also disable things for various reasons.
+    -- Those reasons may be unclear from our perspective but we can at least deduce whether or not it was set by us.
+    if IsCellPowered(entity.surface, entity.position, entity.force) then
+        -- TODO: if it was previously disabled by us, then...
+        entity.active = true
+        entity.graphics_variation = VARIATION_IDLE
+    else
+        -- TODO: set data to indicate that we disabled it for being unpowered and not any other reason
+        entity.active = false
+        entity.graphics_variation = VARIATION_DISABLED
+    end
 end
 
 local function UpdateProtossPower(surface, force, area)
@@ -88,47 +106,40 @@ local function UpdateProtossPower(surface, force, area)
     }
 
     for _, bldg in ipairs(structures) do
-        -- TODO: Check extra associated data to determine whether the entity should be enabled again. Other mods might also disable things for various reasons.
-        -- Those reasons may be unclear from our perspective but we can at least deduce whether or not it was set by us.
-        if IsCellPowered(surface, bldg.position.x, bldg.position.y, force) then
-            -- TODO: if it was previously disabled by us, then...
-            bldg.active = true
-            bldg.graphics_variation = VARIATION_IDLE
-        else
-            -- TODO: set data to indicate that we disabled it for being unpowered and not any other reason
-            bldg.active = false
-            bldg.graphics_variation = VARIATION_DISABLED
-        end
+        UpdateProtossPowerSingle(bldg)
     end
 end
 
-local function ModifyPsiField(surface, x, y, force, change)
-    x = math.floor(x) - 16
-    y = math.floor(y) - 10
+local function ModifyPsiField(surface, position, force, change)
+    local pos = Position.floor(position)
+
+    pos.x = pos.x - 16
+    pos.y = pos.y - 10
 
     for psi_y = 1, 20 do
         for psi_x = 1, 32 do
             if bPsiFieldMask[psi_y][psi_x] == 1 then
-                local power = ForceTile.get_data(surface, force, POWER_KEY, {x + psi_x, y + psi_y}) or 0
+                local target_pos = Position.add(pos, {x = psi_x, y = psi_y})
+                local power = ForceTile.get_data(surface, force, POWER_KEY, target_pos) or 0
 
                 power = power + change
                 if power <= 0 then
                     power = nil
                 end
-                ForceTile.set_data(surface, force, POWER_KEY, {x + psi_x, y + psi_y}, power)
+                ForceTile.set_data(surface, force, POWER_KEY, target_pos, power)
             end
         end
     end
 
-    UpdateProtossPower(surface, force, {{x, y}, {x + 32, y + 20}})
+    UpdateProtossPower(surface, force, {pos, {pos.x + 32, pos.y + 20}})
 end
 
-local function AddPsiField(surface, x, y, force)
-    ModifyPsiField(surface, x, y, force, 1)
+local function AddPsiField(surface, position, force)
+    ModifyPsiField(surface, position, force, 1)
 end
 
-local function RemovePsiField(surface, x, y, force)
-    ModifyPsiField(surface, x, y, force, -1)
+local function RemovePsiField(surface, position, force)
+    ModifyPsiField(surface, position, force, -1)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,7 +168,7 @@ local shield_values = {
 -- TODO
 
 -- Factorio doesn't support the concept of shields outside of equipment grids, so we'll have to implement it ourselves.
-function InitShields(entity)
+local function InitShields(entity)
     local data = Entity.get_data(entity) or {}
 
     if shield_values[entity.name] ~= nil then
@@ -183,29 +194,51 @@ end
 
 -- TODO (prototypes are wack for now)
 
-function CreatePsionicStorm(x, y)
+local function CreatePsionicStorm(x, y)
 end
 
-function CreateDisruptionWeb(x, y)
+local function CreateDisruptionWeb(x, y)
 end
 
-function ApplyMaelstromGround(x, y, entity)
+local function ApplyMaelstromGround(x, y, entity)
 end
 
-function ApplyStasisGround(x, y, entity)
+local function ApplyStasisGround(x, y, entity)
 end
 
 -- Hallucination needs a new separate entity for all units, vehicles, and robots which gets its HP cut in half and deal zero damage.
 -- This will be a pain in the ass to do?
-function DispatchHallucinate(entity)
+local function DispatchHallucinate(entity)
 end
 
-function DispatchCastMindControl(entity)
+local function DispatchCastMindControl(entity)
 end
 
-function DispatchCastFeedback(entity)
+local function DispatchCastFeedback(entity)
 end
 
-function DispatchRecall(entity)
+local function DispatchRecall(entity)
 end
 
+------------------------------------------------------------------------------------------------------------------------------------------
+-- Callback Logic
+------------------------------------------------------------------------------------------------------------------------------------------
+function CUnitProtoss.on_pylon_destroyed(entity)
+    RemovePsiField(entity.surface, entity.position, entity.force)
+end
+
+function CUnitProtoss.on_pylon_created(entity)
+    AddPsiField(entity.surface, entity.position, entity.force)
+end
+
+function CUnitProtoss.on_powered_bldg_created(entity)
+    UpdateProtossPowerSingle(entity)
+end
+
+function CUnitProtoss.on_damaged(entity)
+
+end
+
+
+
+return CUnitProtoss

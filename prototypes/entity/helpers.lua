@@ -84,12 +84,99 @@ function sc_attack_range_to_factorio_tiles(value)
   return value
 end
 
+local function make_common_structure(data)
+  local result = {
+    --------------------------------------------------------------------
+    -- PrototypeBase
+    name = data.name,
+
+    --------------------------------------------------------------------
+    -- EntityWithHealth
+    corpse = data.corpse,
+    dying_explosion = data.dying_explosion,
+    healing_per_tick = data.healing_per_tick,
+    hide_resistances = false,
+    max_health = data.max_health,
+    repair_speed_modifier = data.repair_speed_modifier,
+    resistances = make_resistances("large", data.armor),
+
+    --------------------------------------------------------------------
+    -- Entity
+    icon = "__base__/graphics/icons/info.png",
+    icon_size = 64,
+
+    allow_copy_paste = false,
+    build_sound = data.build_sound,
+    collision_box = data.collision_box,
+    collision_mask = {
+      "item-layer",
+      "object-layer",
+      "player-layer",
+      "water-tile",
+      "resource-layer"
+    },
+
+    flags = {
+      "not-rotatable",
+      "not-blueprintable",
+      "not-deconstructable",
+      "hidden",
+      "not-flammable",
+      "no-automated-item-removal",
+      "no-automated-item-insertion",
+      "no-copy-paste",
+      "not-upgradable",
+      "player-creation"
+    },
+
+    map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
+    remove_decoratives = "true",
+    selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
+    shooting_cursor_size = data.tile_width + 1,
+    subgroup = data.subgroup,
+    tile_height = data.tile_height,
+    tile_width = data.tile_width,
+
+    -- trigger_target_mask
+  }
+
+  if data.created_script then
+    result.created_effect = {
+      type = "direct",
+      action_delivery = {
+        type = "instant",
+        target_effects = {
+          type = "script",
+          effect_id = data.created_script
+        }
+      }
+    }
+  end
+
+  if data.damaged_script then
+    result.damaged_trigger_effect = {
+      type = "script",
+      effect_id = data.damaged_script
+    }
+  end
+
+  if data.dying_script then
+    result.dying_trigger_effect = {
+      type = "script",
+      effect_id = data.dying_script
+    }
+  end
+
+  return result
+end
+
 function make_functional_turret(data)
-  return {
+  local result = make_common_structure(data)
+
+  local amendments = {
     --------------------------------------------------------------------
     -- PrototypeBase
     type = "turret",
-    name = data.name,
 
     --------------------------------------------------------------------
     -- Turret
@@ -119,60 +206,10 @@ function make_functional_turret(data)
     ending_attack_speed = data.ending_attack_speed,
 
     starting_attack_animation = data.starting_attack_animation,
-    starting_attack_speed = data.starting_attack_speed,
-
-    --------------------------------------------------------------------
-    -- EntityWithHealth
-    corpse = data.corpse,
-    damaged_trigger_effect = data.damaged_trigger_effect,
-    dying_explosion = data.dying_explosion,
-    dying_trigger_effect = data.dying_trigger_effect,
-    healing_per_tick = data.healing_per_tick,
-    hide_resistances = false,
-    max_health = data.max_health,
-    repair_speed_modifier = data.repair_speed_modifier,
-    resistances = make_resistances("large", data.armor),
-
-    --------------------------------------------------------------------
-    -- Entity
-    icon = "__base__/graphics/icons/info.png",
-    icon_size = 64,
-
-    allow_copy_paste = false,
-    build_sound = data.build_sound,
-    collision_box = data.collision_box,
-    collision_mask = {
-      "item-layer",
-      "object-layer",
-      "player-layer",
-      "water-tile",
-      "resource-layer"
-    },
-
-    -- TODO: created_effect ?
-
-    flags = {
-      "not-rotatable",
-      "not-blueprintable",
-      "not-deconstructable",
-      "hidden",
-      "not-flammable",
-      "no-automated-item-removal",
-      "no-automated-item-insertion",
-      "no-copy-paste",
-      "not-upgradable",
-      "player-creation",
-      "placeable-enemy"
-    },
-
-    map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    remove_decoratives = "true",
-    selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    shooting_cursor_size = data.tile_width + 1,
-    subgroup = data.subgroup,
-    tile_height = data.tile_height,
-    tile_width = data.tile_width,
+    starting_attack_speed = data.starting_attack_speed
   }
+
+  return table.dictionary_merge(result, amendments)
 end
 
 -- The following fields for `data` are used:
@@ -195,11 +232,12 @@ end
 -- tile_height
 -- tile_width
 function make_functional_structure(data)
-  local result = {
+  local result = make_common_structure(data)
+
+  local amendments = {
     --------------------------------------------------------------------
     -- PrototypeBase
     type = "simple-entity-with-force",
-    name = data.name,
 
     ----------------------------------------------------------------------
     ---- AssemblingMachine
@@ -226,72 +264,20 @@ function make_functional_structure(data)
     animations = data.animation,
     picture = data.picture,
     pictures = data.pictures,
-    random_variation_on_create = false,
-
-    --------------------------------------------------------------------
-    -- EntityWithHealth
-    corpse = data.corpse,
-    damaged_trigger_effect = data.damaged_trigger_effect,
-    dying_explosion = data.dying_explosion,
-    dying_trigger_effect = data.dying_trigger_effect,
-    healing_per_tick = data.healing_per_tick,
-    hide_resistances = false,
-    max_health = data.max_health,
-    repair_speed_modifier = data.repair_speed_modifier,
-    resistances = make_resistances("large", data.armor),
-
-    --------------------------------------------------------------------
-    -- Entity
-    icon = "__base__/graphics/icons/info.png",
-    icon_size = 64,
-    
-    allow_copy_paste = false,
-    build_sound = data.build_sound,
-    collision_box = data.collision_box,
-    collision_mask = {
-      "item-layer",
-      "object-layer",
-      "player-layer",
-      "water-tile",
-      "resource-layer"
-    },
-
-    -- TODO: created_effect ?
-
-    flags = {
-      "not-rotatable",
-      "not-blueprintable",
-      "not-deconstructable",
-      "hidden",
-      "not-flammable",
-      "no-automated-item-removal",
-      "no-automated-item-insertion",
-      "no-copy-paste",
-      "not-upgradable",
-      "player-creation"
-    },
-
-    map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    remove_decoratives = "true",
-    selection_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
-    shooting_cursor_size = data.tile_width + 1,
-    subgroup = data.subgroup,
-    tile_height = data.tile_height,
-    tile_width = data.tile_width,
-
-    -- trigger_target_mask
+    random_variation_on_create = false
   }
 
-  if data.working_anim then
-    result.working_visualisations = {
-      {
-        constant_speed = true,
-        animation = data.working_anim,
-      }
-    }
-  end
+  -- If this were a CraftingMachine
+  --if data.working_anim then
+  --  result.working_visualisations = {
+  --    {
+  --      constant_speed = true,
+  --      animation = data.working_anim,
+  --    }
+  --  }
+  --end
 
-  return result;
+  return table.dictionary_merge(result, amendments);
 end
 
 function create_anim(data)
@@ -417,21 +403,7 @@ function protossify_prototype(data)
 end
 
 function make_protoss_structure(data)
-  local result = make_functional_structure(data)
-  result.subgroup = "starcraft-protoss-buildings"
-
-  -- TODO: Protoss shields
-
-  result.flags = {
-    "not-repairable",
-    table.unpack(result.flags)
-  }
-
-  result.damaged_trigger_effect = {
-    type = "script",
-    effect_id = "on_protoss_bldg_dmg" -- Used to update overlays
-  }
-  return result
+  return protossify_prototype(make_functional_structure(data))
 end
 
 function make_terran_structure(data)

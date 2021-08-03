@@ -9,6 +9,7 @@ local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 
 local Resources = require('src.resources')
 local Forces = require('src.forces')
+local CUnitProtoss = require('src.CUnitProtoss')
 
 local game_just_loaded = false
 
@@ -108,3 +109,25 @@ end)
 script.on_event(defines.events.on_entity_damaged, function(event)
   local entity = event.entity
 end)
+
+---------------------------------------------------------------------------------------------------------------------
+-- Protoss scripts
+---------------------------------------------------------------------------------------------------------------------
+-- https://lua-api.factorio.com/latest/events.html#on_script_trigger_effect
+-- TODO
+
+local script_lookup = {
+  ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
+  ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
+  ["on_protoss_powered_bldg_created"] = CUnitProtoss.on_powered_bldg_created,
+}
+
+script.on_event(defines.events.on_script_trigger_effect, function(event)
+  local fn = script_lookup[event.effect_id]
+  local entity = event.target_entity or event.source_entity
+
+  if fn then
+    fn(entity)
+  end
+end)
+

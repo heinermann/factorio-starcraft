@@ -196,7 +196,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{36, 16, 40, 20},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- PYLON
@@ -209,7 +210,9 @@ data:extend({
         armor = 0,
         collision_box = sc_bounds_to_factorio{16, 12, 16, 20},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        dying_script = "on_protoss_pylon_destroyed",
+        created_script = "on_protoss_pylon_created"
     },
 --------------------------------------------------------------------------------------------------
 -- ASSIMILATOR
@@ -236,7 +239,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{44, 16, 44, 28},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- GATEWAY
@@ -250,7 +254,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 48, 40},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- PHOTON CANNON
@@ -302,7 +307,8 @@ data:extend({
                     }
                 }
             }
-        }
+        },
+        created_script = "on_protoss_powered_bldg_created"
     }),
 --------------------------------------------------------------------------------------------------
 -- CITADEL OF ADUN
@@ -316,7 +322,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{24, 24, 40, 24},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- CYBERNETICS CORE
@@ -353,7 +360,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 24, 40, 24},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- TEMPLAR ARCHIVES
@@ -367,7 +375,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{32, 24, 32, 24},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- FORGE
@@ -403,7 +412,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{36, 24, 36, 20},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- STARGATE
@@ -440,7 +450,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{48, 40, 48, 32},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- STASIS CELL/PRISON
@@ -473,7 +484,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 47, 24},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- ARBITER TRIBUNAL
@@ -487,7 +499,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{44, 28, 44, 28},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- ROBOTICS SUPPORT BAY
@@ -501,7 +514,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{32, 32, 32, 20},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- SHIELD BATTERY
@@ -537,7 +551,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{32, 16, 32, 16},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- KHAYDARIN CRYSTAL FORMATION

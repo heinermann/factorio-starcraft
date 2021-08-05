@@ -6,6 +6,7 @@
 
 require("prototypes.categories")
 require("prototypes.recipe")
+require("prototypes.tiles")
 require("prototypes.autoplace")
 require("prototypes.damage-type")
 require("prototypes.item-groups")

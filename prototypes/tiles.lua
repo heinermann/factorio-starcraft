@@ -76,12 +76,20 @@ data:extend({
                         }
                     }
                 },
-                empty_transitions = false,
-                --side = edge,
-                --inner_corner = edge,
-                --outer_corner = edge,
-                --u_transition = edge,
-                --o_transition = edge
+                material_background = {
+                    picture = "__starcraft__/graphics/tiles/low/creep_background.png",
+                    size = 1,
+                    scale = 1,
+                    count = 64,
+                    line_length = 8,
+                    hr_version = {
+                        picture = "__starcraft__/graphics/tiles/hd/creep_background.png",
+                        size = 1,
+                        scale = 0.5,
+                        count = 64,
+                        line_length = 8,
+                    }
+                }
             }
         )
     }

@@ -10,6 +10,7 @@ local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 local Resources = require('src.resources')
 local Forces = require('src.forces')
 local CUnitProtoss = require('src.CUnitProtoss')
+local CUnitZerg = require('src.CUnitZerg')
 
 local game_just_loaded = false
 
@@ -67,9 +68,11 @@ script.on_nth_tick(1, function(event)
   if game_just_loaded then
     game_just_loaded = false
     iscript.on_load()
+    CUnitZerg.on_load()
   end
 
   iscript.update()
+  CUnitZerg.on_update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -120,6 +123,8 @@ local script_lookup = {
   ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
   ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
   ["on_protoss_powered_bldg_created"] = CUnitProtoss.on_powered_bldg_created,
+  ["on_creep_provider_created"] = CUnitZerg.on_creep_provider_created,
+  ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

@@ -18965,7 +18965,6 @@ end
 
 function iscript.on_init()
 	Log.log("Iscript on_init")
-	global.iscript_tracking_entities = {}
 	global.iscript_tracking_objects = {}
 end
 

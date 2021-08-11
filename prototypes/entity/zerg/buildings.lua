@@ -19,7 +19,9 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-lair",
@@ -39,7 +41,9 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-hive",
@@ -59,7 +63,9 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{49, 32, 49, 32},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-nydus",
@@ -259,7 +265,9 @@ data:extend({
         armor = 0,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-spore-colony",
@@ -279,7 +287,9 @@ data:extend({
         armor = 0,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-sunken-colony",
@@ -301,7 +311,9 @@ data:extend({
         armor = 2,
         collision_box = sc_bounds_to_factorio{24, 24, 23, 23},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        created_script = "on_creep_provider_created",
+        dying_script = "on_creep_provider_destroyed"
     },
     make_zerg_structure{
         name = "starcraft-overmind",    -- with shell

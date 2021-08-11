@@ -111,9 +111,9 @@ local function make_common_structure(data)
     collision_mask = {
       "item-layer",
       "object-layer",
+      "train-layer",
       "player-layer",
-      "water-tile",
-      "resource-layer"
+      "water-tile"
     },
 
     flags = {
@@ -382,6 +382,16 @@ function make_zerg_structure(data)
     type = "script",
     effect_id = "on_zerg_bldg_dmg" -- Used to update overlays
   }
+
+  -- This is the magic that makes creep work, since creep tiles collide with object-layer to prevent other structures
+  -- from being placed on it, that means structures cannot have object-layer collision (so it has other collision masks to make up for it)
+  result.collision_mask = {
+    "item-layer",
+    "train-layer",
+    "player-layer",
+    "water-tile"
+  }
+
   return result
 end
 

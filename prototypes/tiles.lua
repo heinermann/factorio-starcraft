@@ -48,9 +48,8 @@ data:extend({
         type = "tile",
         name = "zerg-creep",
 
-        collision_mask = { "ground-tile" },
+        collision_mask = { "ground-tile", "object-layer" },
         layer = 120,
-        --layer_group = "top",
         map_color = {80, 60, 72},
         pollution_absorption_per_second = 0,
         decorative_removal_probability = 1,
@@ -60,6 +59,7 @@ data:extend({
             "__starcraft__/graphics2/tile/creep-transition.png",
             "__starcraft__/graphics2/tile/hr-creep-transition.png",
             {
+                layer = 120,
                 main = {
                     {
                         picture = "__starcraft__/graphics/tiles/low/creep_main.png",
@@ -89,7 +89,7 @@ data:extend({
                         count = 64,
                         line_length = 8,
                     }
-                }
+                },
             }
         )
     }

@@ -3,6 +3,7 @@ require("prototypes.entity.helpers")
 data:extend({
     make_zerg_structure{
         name = "starcraft-hatchery",
+        icon_id = 131,
         animation = create_layered_anim({
             name = "main_070",
             size = { 259, 204 },
@@ -26,6 +27,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-lair",
+        icon_id = 132,
         animation = create_layered_anim({
             name = "main_074",
             size = { 263, 261 },
@@ -49,6 +51,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-hive",
+        icon_id = 133,
         animation = create_layered_anim({
             name = "main_072",
             size = { 253, 342 },
@@ -72,6 +75,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-nydus",
+        icon_id = 134,
         animation = create_layered_anim({
             name = "main_086",
             size = { 141, 164 },
@@ -93,6 +97,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-hydra-den",
+        icon_id = 135,
         animation = create_layered_anim({
             name = "main_095",
             size = { 213, 234 },
@@ -114,6 +119,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-defiler-mound",
+        icon_id = 136,
         animation = create_layered_anim({
             name = "main_082",
             size = { 229, 211 },
@@ -134,6 +140,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-greater-spire",
+        icon_id = 137,
         animation = create_layered_anim({
             name = "main_080",
             size = { 159, 294 },
@@ -155,6 +162,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-queens-nest",
+        icon_id = 138,
         animation = create_layered_anim({
             name = "main_084",
             size = { 158, 197 },
@@ -176,6 +184,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-evo-chamber",
+        icon_id = 139,
         animation = create_layered_anim({
             name = "main_066",
             size = { 196, 230 },
@@ -197,6 +206,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-ultra-cavern",
+        icon_id = 140,
         animation = create_layered_anim({
             name = "main_091",
             size = { 194, 232 },
@@ -218,6 +228,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-spire",
+        icon_id = 141,
         animation = create_layered_anim({
             name = "main_097",
             size = { 133, 260 },
@@ -239,6 +250,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-spawning-pool",
+        icon_id = 142,
         animation = create_layered_anim({
             name = "main_064",
             size = { 193, 141 },
@@ -260,6 +272,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-creep-colony",
+        icon_id = 143,
         animation = create_layered_anim({
             name = "main_068",
             size = { 137, 116 },
@@ -283,6 +296,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-spore-colony",
+        icon_id = 144,
         animation = create_layered_anim({
             name = "main_099",
             size = { 138, 173 },
@@ -306,6 +320,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-sunken-colony",
+        icon_id = 146,
         animation = create_layered_anim({
             name = "main_076",
             size = { 174, 173 },
@@ -331,6 +346,8 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-overmind",    -- with shell
+        icon_id = 147,
+        icon_size = 124,
         animation = create_layered_anim({
             name = "main_088",
             size = { 414, 286 },
@@ -352,6 +369,8 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-overmind-2",  -- without shell
+        icon_id = 148,
+        icon_size = 124,
         animation = create_layered_anim({
             name = "main_089",
             size = { 414, 258 },
@@ -373,6 +392,8 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-overmind-cocoon",
+        icon_id = 201,
+        icon_size = 76,
         animation = create_layered_anim({
             name = "main_923",
             size = { 288, 195 },
@@ -395,6 +416,7 @@ data:extend({
     make_zerg_structure{
         -- TODO: gas overlays
         name = "starcraft-extractor",
+        icon_id = 149,
         animation = create_layered_anim({
             name = "main_093",
             size = { 249, 341 },
@@ -415,6 +437,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-mature_chrysalis",
+        icon_id = 150,
         animation = create_layered_anim({
             name = "main_078",
             size = { 89, 106 },
@@ -436,6 +459,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-cerebrate",
+        icon_id = 151,
         animation = create_layered_anim({
             name = "main_061",
             size = { 205, 125 },
@@ -457,6 +481,7 @@ data:extend({
     },
     make_zerg_structure{
         name = "starcraft-daggoth",
+        icon_id = 152,
         animation = create_layered_anim({
             name = "main_061",
             size = { 205, 125 },

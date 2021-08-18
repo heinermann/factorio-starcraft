@@ -155,6 +155,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-nexus",
+        icon_id = 154,
         animation = {
             {   -- idle
                 layers = {
@@ -189,6 +190,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-robotics-facility",
+        icon_id = 155,
         pictures = make_common_states(robo_facility_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -204,6 +206,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-pylon",
+        icon_id = 156,
         picture = create_layered_anim(pylon_main, {"main", "teamcolor", "emissive"}),
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 300,   -- +300 shields
@@ -219,6 +222,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-assimilator",
+        icon_id = 157,
         picture = create_layered_anim(assimilator_main, {"main", "teamcolor", "emissive"}),
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 450,   -- +450 shields
@@ -232,6 +236,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-observatory",
+        icon_id = 159,
         pictures = make_common_states(observatory_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -247,6 +252,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-gateway",
+        icon_id = 160,
         pictures = make_common_states(gateway_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -262,6 +268,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     protossify_prototype(make_functional_turret{
         name = "starcraft-cannon",
+        icon_id = 162,
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 100,   -- +100 shields
@@ -315,6 +322,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-citadel",
+        icon_id = 163,
         pictures = make_common_states(citadel_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -330,6 +338,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-cyber-core",
+        icon_id = 164,
         animation = {
             -- idle
             create_layered_anim(cyber_core_main, {"main", "teamcolor", "emissive"}),
@@ -368,6 +377,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-archives",
+        icon_id = 165,
         pictures = make_common_states(archives_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -383,6 +393,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-forge",
+        icon_id = 166,
         animation = {   -- idle
             create_layered_anim(forge_main, {"main", "teamcolor", "emissive"}),
             {   -- working anim
@@ -420,6 +431,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-stargate",
+        icon_id = 167,
         animation = {
             {   -- idle
                 layers = {
@@ -458,6 +470,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-stasis-cell",
+        icon_id = 168,
         picture = create_layered_anim({
             name = "main_203",
             size = { 240, 304 },
@@ -477,6 +490,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-fleet-beacon",
+        icon_id = 169,
         pictures = make_common_states(fleet_beacon_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -492,6 +506,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-tribunal",
+        icon_id = 170,
         pictures = make_common_states(tribunal_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -507,6 +522,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-robotics-support-bay",
+        icon_id = 171,
         pictures = make_common_states(robotics_support_main),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
@@ -522,6 +538,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-shield-battery",
+        icon_id = 172,
         animation = {
             {  -- idle
                 layers = {
@@ -559,6 +576,8 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-khaydarin-crystal-formation",
+        icon_id = 173,
+        icon_size = 116,
         picture = create_layered_anim({
             name = "main_178",
             size = { 259, 256 },
@@ -579,6 +598,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-protoss-temple",
+        icon_id = 174,
         picture = create_layered_anim({
             name = "main_207",
             size = { 451, 308 },
@@ -599,6 +619,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-xel-naga-temple",
+        icon_id = 175,
         picture = create_layered_anim({
             name = "main_937",
             size = { 385, 520 },
@@ -619,6 +640,7 @@ data:extend({
 --------------------------------------------------------------------------------------------------
     make_protoss_structure{
         name = "starcraft-warp-gate",
+        icon_id = 189,
         animation = {
             layers = {
                 create_layered_anim({

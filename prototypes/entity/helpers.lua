@@ -102,8 +102,8 @@ local function make_common_structure(data)
 
     --------------------------------------------------------------------
     -- Entity
-    icon = "__base__/graphics/icons/info.png",
-    icon_size = 64,
+    icon = data.icon or "__base__/graphics/icons/info.png",
+    icon_size = data.icon_size or 64,
 
     allow_copy_paste = false,
     build_sound = data.build_sound,
@@ -165,6 +165,11 @@ local function make_common_structure(data)
       type = "script",
       effect_id = data.dying_script
     }
+  end
+
+  if data.icon_id then
+    result.icon = "__starcraft__/graphics/cmdicons/" .. tostring(data.icon_id) .. ".png"
+    result.icon_size = data.icon_size or 128
   end
 
   return result

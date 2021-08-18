@@ -99,6 +99,7 @@ local function make_common_structure(data)
     max_health = data.max_health,
     repair_speed_modifier = data.repair_speed_modifier,
     resistances = make_resistances("large", data.armor),
+    create_ghost_on_death = false,
 
     --------------------------------------------------------------------
     -- Entity

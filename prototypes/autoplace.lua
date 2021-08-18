@@ -19,7 +19,7 @@ data:extend({
     type = "autoplace-control",
     name = "starcraft-resources",
     category = "resource",
-    localised_name = {"", "[entity=starcraft-mineral-field][entity=starcraft-vespene-geyser] ", {"entity-name.starcraft-mineral-field"}},
+    localised_name = {"", "[entity=starcraft-mineral-field][entity=starcraft-vespene-geyser] ", {"starcraft-gluall.scoreRESOURCES"}},
     richness = true,
     order = "c-sc-c"
   }

@@ -21,7 +21,8 @@ data:extend({
         tile_height = 6,
         tile_width = 8,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -7/16
     },
     make_zerg_structure{
         name = "starcraft-lair",
@@ -43,7 +44,8 @@ data:extend({
         tile_height = 6,
         tile_width = 8,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -7/16
     },
     make_zerg_structure{
         name = "starcraft-hive",
@@ -65,7 +67,8 @@ data:extend({
         tile_height = 6,
         tile_width = 8,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -7/16
     },
     make_zerg_structure{
         name = "starcraft-nydus",
@@ -85,7 +88,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        vshift = -5/16
     },
     make_zerg_structure{
         name = "starcraft-hydra-den",
@@ -105,7 +109,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 40, 24},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -9/16
     },
     make_zerg_structure{
         name = "starcraft-defiler-mound",
@@ -145,7 +150,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        vshift = -10/16
     },
     make_zerg_structure{
         name = "starcraft-queens-nest",
@@ -165,7 +171,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{38, 28, 32, 28},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -11/16
     },
     make_zerg_structure{
         name = "starcraft-evo-chamber",
@@ -185,7 +192,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{44, 32, 32, 20},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -5/16
     },
     make_zerg_structure{
         name = "starcraft-ultra-cavern",
@@ -205,7 +213,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -6/16
     },
     make_zerg_structure{
         name = "starcraft-spire",
@@ -225,7 +234,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        vshift = -10/16
     },
     make_zerg_structure{
         name = "starcraft-spawning-pool",
@@ -245,7 +255,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{36, 28, 40, 18},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -1/16
     },
     make_zerg_structure{
         name = "starcraft-creep-colony",
@@ -267,7 +278,8 @@ data:extend({
         tile_height = 4,
         tile_width = 4,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -11/16
     },
     make_zerg_structure{
         name = "starcraft-spore-colony",
@@ -289,7 +301,8 @@ data:extend({
         tile_height = 4,
         tile_width = 4,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -11/16
     },
     make_zerg_structure{
         name = "starcraft-sunken-colony",
@@ -313,7 +326,8 @@ data:extend({
         tile_height = 4,
         tile_width = 4,
         created_script = "on_creep_provider_created",
-        dying_script = "on_creep_provider_destroyed"
+        dying_script = "on_creep_provider_destroyed",
+        vshift = -3/16
     },
     make_zerg_structure{
         name = "starcraft-overmind",    -- with shell
@@ -333,7 +347,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
-        tile_width = 10
+        tile_width = 10,
+        vshift = -3/16
     },
     make_zerg_structure{
         name = "starcraft-overmind-2",  -- without shell
@@ -353,7 +368,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
-        tile_width = 10
+        tile_width = 10,
+        vshift = -3/16
     },
     make_zerg_structure{
         name = "starcraft-overmind-cocoon",
@@ -373,7 +389,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 47, 31},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -7/16
     },
     make_zerg_structure{
         -- TODO: gas overlays
@@ -414,7 +431,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
-        tile_width = 4
+        tile_width = 4,
+        vshift = -11/16
     },
     make_zerg_structure{
         name = "starcraft-cerebrate",
@@ -434,7 +452,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -2/16
     },
     make_zerg_structure{
         name = "starcraft-daggoth",
@@ -454,7 +473,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
-        tile_width = 6
+        tile_width = 6,
+        vshift = -2/16
     },
 
 })

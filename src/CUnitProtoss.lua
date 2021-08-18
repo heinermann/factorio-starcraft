@@ -2,6 +2,7 @@ local CUnitProtoss = {}
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Position = require('__stdlib__/stdlib/area/position')
+local math = require('__stdlib__/stdlib/utils/math')
 
 local ForceTile = require('src.ForceTile')
 
@@ -177,6 +178,42 @@ local function InitShields(entity)
     end
 
     Entity.set_data(entity, data)
+end
+
+function CUnitProtoss.get_shields(entity)
+    local data = Entity.get_data(entity) or {}
+    return data.shields or 0
+end
+
+function CUnitProtoss.max_shields(entity)
+    local data = Entity.get_data(entity) or {}
+    return data.max_shields or 0
+end
+
+function CUnitProtoss.add_shields(entity, amount)
+    local data = Entity.get_data(entity) or {}
+
+    if data.max_shields then
+        data.shields = math.clamp(data.shields + amount, 0, data.max_shields)
+        Entity.set_data(entity, data)
+    end
+end
+
+function CUnitProtoss.set_shields(entity, amount)
+    local data = Entity.get_data(entity) or {}
+
+    if data.max_shields then
+        data.shields = math.clamp(amount, 0, data.max_shields)
+        Entity.set_data(entity, data)
+    end
+end
+
+function CUnitProtoss.get_shield_ratio(entity)
+    local data = Entity.get_data(entity) or {}
+
+    if data.max_shields then
+        return data.shields / data.max_shields
+    end
 end
 
 

@@ -136,3 +136,15 @@ script.on_event(defines.events.on_script_trigger_effect, function(event)
   end
 end)
 
+---------------------------------------------------------------------------------------------------------------------
+-- Shield interface
+---------------------------------------------------------------------------------------------------------------------
+remote.add_interface("shields",
+  {
+    get_shields = CUnitProtoss.get_shields,
+    max_shields = CUnitProtoss.max_shields,
+    add_shields = CUnitProtoss.add_shields,
+    set_shields = CUnitProtoss.set_shields,
+    get_shield_ratio = CUnitProtoss.get_shield_ratio
+  }
+)

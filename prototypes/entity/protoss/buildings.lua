@@ -577,7 +577,6 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-khaydarin-crystal-formation",
         icon_id = 173,
-        icon_size = 116,
         picture = create_layered_anim({
             name = "main_178",
             size = { 259, 256 },

@@ -347,7 +347,6 @@ data:extend({
     make_zerg_structure{
         name = "starcraft-overmind",    -- with shell
         icon_id = 147,
-        icon_size = 124,
         animation = create_layered_anim({
             name = "main_088",
             size = { 414, 286 },
@@ -370,7 +369,6 @@ data:extend({
     make_zerg_structure{
         name = "starcraft-overmind-2",  -- without shell
         icon_id = 148,
-        icon_size = 124,
         animation = create_layered_anim({
             name = "main_089",
             size = { 414, 258 },
@@ -393,7 +391,6 @@ data:extend({
     make_zerg_structure{
         name = "starcraft-overmind-cocoon",
         icon_id = 201,
-        icon_size = 76,
         animation = create_layered_anim({
             name = "main_923",
             size = { 288, 195 },

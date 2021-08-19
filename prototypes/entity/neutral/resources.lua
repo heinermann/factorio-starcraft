@@ -162,8 +162,6 @@ data:extend({
     minable = {
       mining_time = (75 * 42)/1000 /10,-- / 60, -- ((75 frames * 42ms/frame) / 1000ms/s) / 60ticks/s
       results = {
-        { "starcraft-vespene-gas-orb", 8 },
-        { "starcraft-vespene-gas-sac", 8 },
         { "starcraft-vespene-gas-tank", 8 }
       }
     },

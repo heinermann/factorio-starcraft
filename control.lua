@@ -125,6 +125,8 @@ local script_lookup = {
   ["on_protoss_powered_bldg_created"] = CUnitProtoss.on_powered_bldg_created,
   ["on_creep_provider_created"] = CUnitZerg.on_creep_provider_created,
   ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
+  ["on_creep_bldg_created"] = CUnitZerg.on_creep_bldg_created,
+  ["on_creep_bldg_destroyed"] = CUnitZerg.on_creep_bldg_destroyed
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

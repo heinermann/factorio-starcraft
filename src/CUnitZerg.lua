@@ -1,12 +1,14 @@
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Surface = require('__stdlib__/stdlib/area/surface')
 local table = require('__stdlib__/stdlib/utils/table')
+local Area = require('__stdlib__/stdlib/area/area')
+local Position = require('__stdlib__/stdlib/area/position')
 
 local CUnitZerg = {
     creep_entities = {}
 }
 
--- TODO: Move this all to creep.lua
+-- TODO: Move this all to creep.lua ?
 
 local function has_collision_nearby(x, y, surface, mask)
     return surface.count_tiles_filtered{
@@ -66,7 +68,7 @@ local function set_tile_creep(position, surface)
     )
 end
 
--- TODO: optimize/rework algorithm (this is a copy of Starcraft's algorithm)
+-- TODO: optimize/rework algorithm (this is a copy of Starcraft's algorithm, and is extremely taxing on Factorio)
 local function spread_creep(x, y, surface)
     local best_spread_neighbours = 0
     local spread_candidates = {}
@@ -101,11 +103,34 @@ local function spread_creep(x, y, surface)
     set_tile_creep(spread_target, surface)
 end
 
+local function make_creep_below_structure(entity)
+    local bounds = Area.offset(entity.prototype.map_generator_bounding_box, entity.position)
+    local surface = entity.surface
+
+    local tiles_to_change = {}
+
+    for pos in Area.iterate(bounds, true, true) do
+        if not is_creep(pos.x, pos.y, surface) and tile_can_have_creep(pos.x, pos.y, surface) then
+            surface.set_hidden_tile(pos, surface.get_tile(pos.x, pos.y).name)
+            table.insert(tiles_to_change, { position = pos, name = "zerg-creep" })
+        end
+    end
+
+    surface.set_tiles(tiles_to_change,
+        true,   -- correct_tiles
+        false,  -- remove_colliding_entities
+        true,   -- remove_colliding_decoratives
+        true    -- raise_event
+    )
+end
+
 local function register_creep_provider(entity)
     CUnitZerg.creep_entities[entity] = true
 end
 
 function CUnitZerg.on_creep_provider_created(entity)
+    make_creep_below_structure(entity)
+
     local data = Entity.get_data(entity) or {}
 
     -- 15 starcraft ticks, but there are 4 factorio tiles in 1 starcraft tile
@@ -117,6 +142,13 @@ end
 
 function CUnitZerg.on_creep_provider_destroyed(entity)
     CUnitZerg.creep_entities[entity] = nil
+end
+
+function CUnitZerg.on_creep_bldg_created(entity)
+    make_creep_below_structure(entity)
+end
+
+function CUnitZerg.on_creep_bldg_destroyed(entity)
 end
 
 function CUnitZerg.on_update()

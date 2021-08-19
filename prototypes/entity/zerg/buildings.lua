@@ -93,6 +93,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
         tile_width = 4,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -5/16
     },
     make_zerg_structure{
@@ -115,6 +117,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 32, 40, 24},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -9/16
     },
     make_zerg_structure{
@@ -136,7 +140,9 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 48, 4},
         tile_height = 4,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
     },
     make_zerg_structure{
         name = "starcraft-greater-spire",
@@ -158,6 +164,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
         tile_width = 4,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -10/16
     },
     make_zerg_structure{
@@ -180,6 +188,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{38, 28, 32, 28},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -11/16
     },
     make_zerg_structure{
@@ -202,6 +212,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{44, 32, 32, 20},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -5/16
     },
     make_zerg_structure{
@@ -224,6 +236,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -6/16
     },
     make_zerg_structure{
@@ -246,6 +260,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{28, 32, 28, 24},
         tile_height = 4,
         tile_width = 4,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -10/16
     },
     make_zerg_structure{
@@ -268,6 +284,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{36, 28, 40, 18},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -1/16
     },
     make_zerg_structure{
@@ -364,6 +382,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
         tile_width = 10,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -3/16
     },
     make_zerg_structure{
@@ -386,6 +406,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
         tile_height = 6,
         tile_width = 10,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -3/16
     },
     make_zerg_structure{
@@ -408,6 +430,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{48, 32, 47, 31},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -7/16
     },
     make_zerg_structure{
@@ -452,6 +476,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
         tile_height = 4,
         tile_width = 4,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -11/16
     },
     make_zerg_structure{
@@ -474,6 +500,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -2/16
     },
     make_zerg_structure{
@@ -496,6 +524,8 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
         tile_height = 4,
         tile_width = 6,
+        created_script = "on_creep_bldg_created",
+        dying_script = "on_creep_bldg_destroyed",
         vshift = -2/16
     },
 

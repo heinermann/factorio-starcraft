@@ -4,6 +4,8 @@
 --
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
+local Surface = require('__stdlib__/stdlib/area/surface')
+
 local iscript = require("iscript.iscript")
 local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 
@@ -123,6 +125,7 @@ local script_lookup = {
   ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
   ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
   ["on_protoss_powered_bldg_created"] = CUnitProtoss.on_powered_bldg_created,
+  ["on_protoss_bldg_created"] = CUnitProtoss.on_bldg_created,
   ["on_creep_provider_created"] = CUnitZerg.on_creep_provider_created,
   ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
   ["on_creep_bldg_created"] = CUnitZerg.on_creep_bldg_created,
@@ -141,12 +144,92 @@ end)
 ---------------------------------------------------------------------------------------------------------------------
 -- Shield interface
 ---------------------------------------------------------------------------------------------------------------------
+-- TODO: Move to separate shield management mod
 remote.add_interface("shields",
   {
     get_shields = CUnitProtoss.get_shields,
     max_shields = CUnitProtoss.max_shields,
     add_shields = CUnitProtoss.add_shields,
+    subtract_shields = CUnitProtoss.subtract_shields, -- Returns remaining damage not applied to shields
     set_shields = CUnitProtoss.set_shields,
-    get_shield_ratio = CUnitProtoss.get_shield_ratio
+    get_shield_ratio = CUnitProtoss.get_shield_ratio,
+    -- apply_resistance_to_shields (global)
+    -- apply_resistance_to_entity_shields
+    -- set_max_shields
   }
 )
+
+---------------------------------------------------------------------------------------------------------------------
+-- Shield management
+---------------------------------------------------------------------------------------------------------------------
+-- TODO: Move to separate shield management mod
+
+local function on_entity_damaged(event)
+  if event.original_damage_amount < 0 or CUnitProtoss.max_shields(event.entity) == 0 or CUnitProtoss.get_shields(event.entity) == 0 then
+    return
+  end
+
+  local remaining_damage = CUnitProtoss.subtract_shields(event.entity, event.original_damage_amount or 0.5)
+  event.entity.health = event.entity.health + event.final_damage_amount
+  event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
+end
+
+script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
+  --{filter = "type", type = "accumulator"},
+  --{filter = "type", type = "artillery-turret"},
+  --{filter = "type", type = "beacon"},
+  --{filter = "type", type = "boiler"},
+  --{filter = "type", type = "burner-generator"},
+  --{filter = "type", type = "arithmetic-combinator"},
+  --{filter = "type", type = "decider-combinator"},
+  --{filter = "type", type = "constant-combinator"},
+  --{filter = "type", type = "container"},
+  --{filter = "type", type = "logistic-container"},
+  --{filter = "type", type = "infinity-container"},
+  --{filter = "type", type = "assembling-machine"},
+  --{filter = "type", type = "rocket-silo"},
+  --{filter = "type", type = "furnace"},
+  --{filter = "type", type = "electric-energy-interface"},
+  --{filter = "type", type = "electric-pole"},
+  --{filter = "type", type = "unit-spawner"},
+  --{filter = "type", type = "fish"},
+  --{filter = "type", type = "combat-robot"},
+  --{filter = "type", type = "construction-robot"},
+  --{filter = "type", type = "logistic-robot"},
+  --{filter = "type", type = "gate"},
+  --{filter = "type", type = "generator"},
+  --{filter = "type", type = "heat-interface"},
+  --{filter = "type", type = "heat-pipe"},
+  --{filter = "type", type = "inserter"},
+  --{filter = "type", type = "lab"},
+  --{filter = "type", type = "lamp"},
+  --{filter = "type", type = "land-mine"},
+  --{filter = "type", type = "linked-container"},
+  --{filter = "type", type = "market"},
+  --{filter = "type", type = "mining-drill"},
+  --{filter = "type", type = "offshore-pump"},
+  --{filter = "type", type = "pipe"},
+  --{filter = "type", type = "infinity-pipe"},
+  --{filter = "type", type = "pipe-to-ground"},
+  --{filter = "type", type = "player-port"},
+  --{filter = "type", type = "power-switch"},
+  --{filter = "type", type = "programmable-speaker"},
+  --{filter = "type", type = "pump"},
+  --{filter = "type", type = "radar"},
+  --{filter = "type", type = "rail-chain-signal"},
+  --{filter = "type", type = "rail-signal"},
+  --{filter = "type", type = "reactor"},
+  --{filter = "type", type = "roboport"},
+  --{filter = "type", type = "simple-entity"},
+  --{filter = "type", type = "simple-entity-with-owner"},
+  {filter = "type", type = "simple-entity-with-force"},
+  --{filter = "type", type = "solar-panel"},
+  --{filter = "type", type = "storage-tank"},
+  --{filter = "type", type = "train-stop"},
+  {filter = "type", type = "turret"},
+  --{filter = "type", type = "ammo-turret"},
+  --{filter = "type", type = "electric-turret"},
+  --{filter = "type", type = "fluid-turret"},
+  --{filter = "type", type = "unit"},
+  --{filter = "type", type = "wall"}
+})

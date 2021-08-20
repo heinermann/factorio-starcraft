@@ -4,13 +4,22 @@ local table = require('__stdlib__/stdlib/utils/table')
 local Area = require('__stdlib__/stdlib/area/area')
 local Position = require('__stdlib__/stdlib/area/position')
 
+local ForceTile = require('src.ForceTile')
+
 local CUnitZerg = {
     creep_entities = {}
 }
 
+------------------------------------------------------------------------------------------------------------------------------------------
+-- CREEP MANAGEMENT
+------------------------------------------------------------------------------------------------------------------------------------------
 -- TODO: Move this all to creep.lua ?
 
+local CREEP_CANDIDATE_KEY = "creep_candidate"
+local CREEP_PARTITION_KEY = "creep_partition_id"
+
 local function has_collision_nearby(pos, surface, mask)
+    -- TODO: Look into `find_non_colliding_position_in_box`
     return surface.count_tiles_filtered{
         area = Area.expand(Position.to_tile_area(pos), 1),
         limit = 1,
@@ -130,6 +139,10 @@ end
 local function register_creep_provider(entity)
     CUnitZerg.creep_entities[entity] = true
 end
+
+------------------------------------------------------------------------------------------------------------------------------------------
+-- INTERFACE
+------------------------------------------------------------------------------------------------------------------------------------------
 
 function CUnitZerg.on_creep_provider_created(entity)
     make_creep_below_structure(entity)

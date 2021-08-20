@@ -183,7 +183,8 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{56, 39, 56, 39},
         tile_height = 6,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_protoss_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- ROBOTICS FACILITY

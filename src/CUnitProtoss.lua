@@ -170,14 +170,14 @@ local shield_values = {
 
 -- Factorio doesn't support the concept of shields outside of equipment grids, so we'll have to implement it ourselves.
 local function InitShields(entity)
-    local data = Entity.get_data(entity) or {}
-
     if shield_values[entity.name] ~= nil then
+        local data = Entity.get_data(entity) or {}
+
         data.max_shields = shield_values[entity.name]
         data.shields = data.max_shields
-    end
 
-    Entity.set_data(entity, data)
+        Entity.set_data(entity, data)
+    end
 end
 
 function CUnitProtoss.get_shields(entity)
@@ -197,6 +197,17 @@ function CUnitProtoss.add_shields(entity, amount)
         data.shields = math.clamp(data.shields + amount, 0, data.max_shields)
         Entity.set_data(entity, data)
     end
+end
+
+function CUnitProtoss.subtract_shields(entity, amount)
+    local data = Entity.get_data(entity) or {}
+
+    if data.max_shields then
+        data.shields = math.clamp(data.shields - amount, 0, data.max_shields)
+        Entity.set_data(entity, data)
+        return math.max(amount - data.shields, 0)
+    end
+    return 0
 end
 
 function CUnitProtoss.set_shields(entity, amount)
@@ -265,11 +276,17 @@ function CUnitProtoss.on_pylon_destroyed(entity)
 end
 
 function CUnitProtoss.on_pylon_created(entity)
+    InitShields(entity)
     AddPsiField(entity.surface, entity.position, entity.force)
 end
 
 function CUnitProtoss.on_powered_bldg_created(entity)
+    InitShields(entity)
     UpdateProtossPowerSingle(entity)
+end
+
+function CUnitProtoss.on_bldg_created(entity)
+    InitShields(entity)
 end
 
 function CUnitProtoss.on_damaged(entity)

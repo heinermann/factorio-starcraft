@@ -14,7 +14,7 @@ local CUnitZerg = {
 -- CREEP MANAGEMENT
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- TODO: Move this all to creep.lua ?
-local CREEP_CANDIDATE_KEY = "creep_candidate"
+local CREEP_NEIGHBOURS_KEY = "creep_neighbours"
 local CREEP_PARTITION_KEY = "creep_partition_id"
 local UNDER_CREEP_TILE_KEY = "under_creep_tile"
 
@@ -57,24 +57,51 @@ end
 
 -- TODO: optimize this by assigning neighbor values when creep is created instead to get rid of re-counting in a loop which is expensive
 local function count_neighboring_creep(pos, surface)
-    return surface.count_tiles_filtered{
-        area = Area.expand(Position.to_tile_area(pos), 1),
-        name = "zerg-creep"
-    }
+    return Tile.get_data(surface, CREEP_NEIGHBOURS_KEY, pos) or 0
 end
 
 -- TODO: optimize, queue tile changes and call set_tiles later
-local function set_tile_creep(position, surface)
+local creep_update_cache = {}
+local function queue_tile_creep(position, surface)
+    if creep_update_cache[surface.index] == nil then
+        creep_update_cache[surface.index] = {}
+    end
+
+    table.insert(creep_update_cache[surface.index], { position = position, name = "zerg-creep" })
     Tile.set_data(surface, UNDER_CREEP_TILE_KEY, position, surface.get_tile(position).name)
-    surface.set_tiles(
-        {
-            { position = position, name = "zerg-creep" }
-        },
-        true,   -- correct_tiles
-        false,  -- remove_colliding_entities
-        true,   -- remove_colliding_decoratives
-        true    -- raise_event
-    )
+end
+
+local tile_neighbours = {
+    { x = -1, y = -1 },
+    { x = 0, y = -1 },
+    { x = 1, y = -1 },
+    { x = -1, y = 0 },
+    { x = 1, y = 0 },
+    { x = -1, y = 1 },
+    { x = 0, y = 1 },
+    { x = 1, y = 1 }
+}
+
+local function realize_creep_changes()
+    for surface_id, updates in pairs(creep_update_cache) do
+        local surface = game.surfaces[surface_id]
+        surface.set_tiles(updates,
+            true,   -- correct_tiles
+            false,  -- remove_colliding_entities
+            true,   -- remove_colliding_decoratives
+            true    -- raise_event
+        )
+        creep_update_cache[surface_id] = {}
+
+        for _, update in ipairs(updates) do
+            for _, neighbour in ipairs(tile_neighbours) do
+                local pos = Position.add(update.position, neighbour)
+
+                local neighbour_count = Tile.get_data(surface, CREEP_NEIGHBOURS_KEY, pos) or 0
+                Tile.set_data(surface, CREEP_NEIGHBOURS_KEY, pos, neighbour_count + 1)
+            end
+        end
+    end
 end
 
 -- TODO: optimize/rework algorithm (this is a copy of Starcraft's algorithm, and is extremely taxing on Factorio)
@@ -85,16 +112,15 @@ local function spread_creep(pos, surface)
     -- Find spread candidates
     local bounds = get_max_creep_bounds(pos)
     for ipos in Area.iterate(bounds, true) do
-        if can_spread_creep_to(ipos, surface) and not tile_occupied(ipos, surface) then
-            local check_x = ipos.x - pos.x + 0.5
-            local check_y = ipos.y - pos.y + 0.5
+        local check_x = ipos.x - pos.x + 0.5
+        local check_y = ipos.y - pos.y + 0.5
 
-            -- Is point within ellipse (converted from pixels to tiles, deviating to achieve similar outcome w/ Factorio's different scale)
-            -- (check_x * check_x) / (20.5 * 20.5) + (check_y * check_y) / (13 * 13) <= 1
-            if check_x * check_x * 169 + check_y * check_y * 420.25 <= 71022.25 then
-                local cur_neighbors = count_neighboring_creep(ipos, surface)
-
-                if 1 <= cur_neighbors and cur_neighbors <= 8 and cur_neighbors >= best_spread_neighbours then
+        -- Is point within ellipse (converted from pixels to tiles, deviating to achieve similar outcome w/ Factorio's different scale)
+        -- (check_x * check_x) / (20.5 * 20.5) + (check_y * check_y) / (13 * 13) <= 1
+        if check_x * check_x * 169 + check_y * check_y * 420.25 <= 71022.25 then
+            local cur_neighbors = count_neighboring_creep(ipos, surface)
+            if cur_neighbors >= 1 and cur_neighbors <= 8 and cur_neighbors >= best_spread_neighbours then
+                if can_spread_creep_to(ipos, surface) and not tile_occupied(ipos, surface) then
                     if cur_neighbors > best_spread_neighbours then
                         spread_candidates = {}
                         best_spread_neighbours = cur_neighbors
@@ -112,28 +138,19 @@ local function spread_creep(pos, surface)
 
     local spread_target = spread_candidates[math.random(1, #spread_candidates)]
     -- TODO: figure out wtf Starcraft is doing here
-    set_tile_creep(spread_target, surface)
+    queue_tile_creep(spread_target, surface)
 end
 
 local function make_creep_below_structure(entity)
     local bounds = Area.offset(entity.prototype.map_generator_bounding_box, entity.position)
     local surface = entity.surface
 
-    local tiles_to_change = {}
-
     for pos in Area.iterate(bounds, true, true) do
         if can_spread_creep_to(pos, surface) then
-            Tile.set_data(surface, UNDER_CREEP_TILE_KEY, pos, surface.get_tile(pos).name)
-            table.insert(tiles_to_change, { position = pos, name = "zerg-creep" })
+            queue_tile_creep(pos, surface)
         end
     end
-
-    surface.set_tiles(tiles_to_change,
-        true,   -- correct_tiles
-        false,  -- remove_colliding_entities
-        true,   -- remove_colliding_decoratives
-        true    -- raise_event
-    )
+    realize_creep_changes()
 end
 
 local function register_creep_provider(entity)
@@ -178,6 +195,7 @@ function CUnitZerg.on_update()
         end
         Entity.set_data(entity, data)
     end
+    realize_creep_changes()
 end
 
 local creep_providers = {

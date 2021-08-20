@@ -4,7 +4,7 @@ local table = require('__stdlib__/stdlib/utils/table')
 local Area = require('__stdlib__/stdlib/area/area')
 local Position = require('__stdlib__/stdlib/area/position')
 
-local ForceTile = require('src.ForceTile')
+local Tile = require('Tile')
 
 local CUnitZerg = {
     creep_entities = {}
@@ -14,9 +14,9 @@ local CUnitZerg = {
 -- CREEP MANAGEMENT
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- TODO: Move this all to creep.lua ?
-
 local CREEP_CANDIDATE_KEY = "creep_candidate"
 local CREEP_PARTITION_KEY = "creep_partition_id"
+local UNDER_CREEP_TILE_KEY = "under_creep_tile"
 
 local function has_collision_nearby(pos, surface, mask)
     -- TODO: Look into `find_non_colliding_position_in_box`
@@ -29,7 +29,7 @@ end
 
 local function can_spread_creep_to(pos, surface)
     local tile = surface.get_tile(pos)
-    return tile.name ~= "zerg-creep" and tile.hidden_tile == nil and not has_collision_nearby(pos, surface, "water-tile")
+    return tile.name ~= "zerg-creep" and not has_collision_nearby(pos, surface, "water-tile")
 end
 
 -- TODO Find only structures...
@@ -65,7 +65,7 @@ end
 
 -- TODO: optimize, queue tile changes and call set_tiles later
 local function set_tile_creep(position, surface)
-    surface.set_hidden_tile(position, surface.get_tile(position).name)
+    Tile.set_data(surface, UNDER_CREEP_TILE_KEY, position, surface.get_tile(position).name)
     surface.set_tiles(
         {
             { position = position, name = "zerg-creep" }
@@ -123,7 +123,7 @@ local function make_creep_below_structure(entity)
 
     for pos in Area.iterate(bounds, true, true) do
         if can_spread_creep_to(pos, surface) then
-            surface.set_hidden_tile(pos, surface.get_tile(pos).name)
+            Tile.set_data(surface, UNDER_CREEP_TILE_KEY, pos, surface.get_tile(pos).name)
             table.insert(tiles_to_change, { position = pos, name = "zerg-creep" })
         end
     end

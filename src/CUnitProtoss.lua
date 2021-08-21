@@ -468,7 +468,13 @@ function CUnitProtoss.on_damaged(event)
     local remaining_damage = CUnitProtoss.subtract_shields(event.entity, event.original_damage_amount or 0.5)
     event.entity.health = event.entity.health + event.final_damage_amount
     if remaining_damage > 0 then
-        event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
+        if not event.damage_type then
+            event.entity.damage(remaining_damage, event.force)
+        elseif not event.cause then
+            event.entity.damage(remaining_damage, event.force, event.damage_type.name)
+        else
+            event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
+        end
     else
         update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
     end

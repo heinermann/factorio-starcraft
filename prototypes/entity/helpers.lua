@@ -79,11 +79,6 @@ function sc_pixels_per_frame_to_factorio_tiles_per_tick(value)
   return sc_tiles_per_frame_to_factorio_tiles_per_tick(value / 32)
 end
 
-function sc_attack_range_to_factorio_tiles(value)
-  -- value is in half-tiles in Starcraft, which is equal to full tiles in Factorio so there is no change
-  return value
-end
-
 local function make_common_structure(data)
   local result = {
     --------------------------------------------------------------------

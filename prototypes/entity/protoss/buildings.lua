@@ -297,7 +297,9 @@ data:extend({
 
         attack_parameters = {
             type = "projectile",
-            range = sc_attack_range_to_factorio_tiles(14 + 2),  -- BUG: Added 2 tiles because it doesn't compute from bounding box
+            -- BUG: Added 2 tiles because it doesn't compute from bounding box
+            -- +small amount to prevent being outranged by the pistol or spitters
+            range = 14 + 2 + 0.75,
             cooldown = sc_ticks_to_factorio_ticks(22 - 1),
             range_mode = "bounding-box-to-bounding-box",    -- BUG: This is unsupported for turrets
             cooldown_deviation = 0.05,  -- TODO: figure out what this *actually* does??

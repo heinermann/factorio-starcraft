@@ -2,7 +2,9 @@ local CUnitProtoss = {}
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Position = require('__stdlib__/stdlib/area/position')
+local Surface = require('__stdlib__/stdlib/area/surface')
 local math = require('__stdlib__/stdlib/utils/math')
+local table = require('__stdlib__/stdlib/utils/table')
 
 local ForceTile = require('src.ForceTile')
 
@@ -166,10 +168,165 @@ local shield_values = {
     ["starcraft-shield-battery"] = 200
 }
 
--- TODO
+------------------------------------------------------------------------------------------------------------------------------------------
+-- SHIELD BARS
+------------------------------------------------------------------------------------------------------------------------------------------
+
+local BLACK_COLOR = {0, 0, 0}
+local FADED_BLACK_COLOR = {0, 0, 0, 1/3}
+local SHIELD_COLOR = {0, 115, 245}
+local FADED_SHIELD_COLOR = {0, 115/4, 245/4, 1/3}
+local UNFILLED_COLOR = {116, 116, 127}
+local FADED_HEALTH_COLOR = {70/4, 225/4, 0, 1/3}
+
+local function update_shield_bars(entity)
+    local data = Entity.get_data(entity) or {}
+
+    local health_ratio = entity.get_health_ratio()
+    local shield_ratio = CUnitProtoss.get_shield_ratio(entity)
+
+    -- Set colours
+    local should_show_faded_health = health_ratio == 1 and shield_ratio ~= 1
+    rendering.set_visible(data.faded_health_bar_bg, should_show_faded_health)
+    rendering.set_visible(data.faded_health_bar, should_show_faded_health)
+
+    if shield_ratio == 1 then
+        local should_show_faded_shields = health_ratio ~= 1
+        rendering.set_visible(data.shield_bar_bg, should_show_faded_shields)
+        rendering.set_visible(data.shield_bar_filled, should_show_faded_shields)
+        rendering.set_visible(data.shield_bar_empty, should_show_faded_shields)
+
+        if should_show_faded_shields then
+            rendering.set_color(data.shield_bar_bg, FADED_BLACK_COLOR)
+            rendering.set_color(data.shield_bar_filled, FADED_SHIELD_COLOR)
+        end
+    else
+        rendering.set_visible(data.shield_bar_bg, true)
+        rendering.set_visible(data.shield_bar_filled, true)
+        rendering.set_visible(data.shield_bar_empty, true)
+        rendering.set_color(data.shield_bar_bg, BLACK_COLOR)
+        rendering.set_color(data.shield_bar_filled, SHIELD_COLOR)
+    end
+
+    -- Set bar progress
+    local sel = entity.prototype.selection_box
+    local num_boxes = math.floor((sel.right_bottom.x - sel.left_top.x) * 32 / 7)
+    local filled_boxes = math.floor(num_boxes * shield_ratio)
+    local mid_point = sel.left_top.x + 0.005 + filled_boxes * 7/32
+
+    if filled_boxes == 0 then
+        rendering.set_visible(data.shield_bar_filled, false)
+    else
+        rendering.set_to(data.shield_bar_filled, entity, {mid_point - 1/32, sel.right_bottom.y - 1/9 - 0.003})
+    end
+
+    if filled_boxes == num_boxes then
+        rendering.set_visible(data.shield_bar_empty, false)
+    else
+        rendering.set_from(data.shield_bar_empty, entity, {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003})
+    end
+end
+
+-- TODO: Cache to prevent unnecessarily calling this for entities with full hp+shields etc
+local function create_shield_bars(entity)
+    local data = Entity.get_data(entity) or {}
+    local sel = entity.prototype.selection_box
+    local num_boxes = math.floor((sel.right_bottom.x - sel.left_top.x) * 32 / 7)
+    local mid_point = sel.left_top.x + 0.005 + num_boxes * 7/32
+
+    data.shield_bar_bg = rendering.draw_rectangle{
+        color = BLACK_COLOR,
+        filled = true,
+        left_top = entity,
+        left_top_offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 7/32 - 0.001},
+        right_bottom = entity,
+        right_bottom_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32, sel.right_bottom.y - 0.001},
+        surface = entity.surface
+    }
+
+    data.shield_bar_filled = rendering.draw_line{
+        color = SHIELD_COLOR,
+        width = 5,
+        gap_length = 2/32,
+        dash_length = 5/32,
+        from = entity,
+        from_offset = {sel.left_top.x + 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        to = entity,
+        to_offset = {mid_point - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        surface = entity.surface
+    }
+
+    data.shield_bar_empty = rendering.draw_line{
+        color = UNFILLED_COLOR,
+        width = 5,
+        gap_length = 2/32,
+        dash_length = 5/32,
+        from = entity,
+        from_offset = {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        to = entity,
+        to_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32 - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        surface = entity.surface
+    }
+
+    data.faded_health_bar_bg = rendering.draw_rectangle{
+        color = FADED_BLACK_COLOR,
+        filled = true,
+        left_top = entity,
+        left_top_offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 0.001},
+        right_bottom = entity,
+        right_bottom_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32, sel.right_bottom.y + 7/32 - 0.001},
+        surface = entity.surface
+    }
+
+    data.faded_health_bar = rendering.draw_line{
+        color = FADED_HEALTH_COLOR,
+        width = 5,
+        gap_length = 2/32,
+        dash_length = 5/32,
+        from = entity,
+        from_offset = {sel.left_top.x + 1/32, sel.right_bottom.y + 1/9 + 0.003},
+        to = entity,
+        to_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32 - 1/32, sel.right_bottom.y + 1/9 + 0.003},
+        surface = entity.surface
+    }
+
+    Entity.set_data(entity, data)
+    update_shield_bars(entity)
+end
+
+------------------------------------------------------------------------------------------------------------------------------------------
+-- SHIELD TRACKING AND REGEN
+------------------------------------------------------------------------------------------------------------------------------------------
+
+local tracking_shield_entities = {}
+local function register_shield_entity(entity)
+    tracking_shield_entities[entity] = true
+end
+
+local function unregister_shield_entity(entity)
+    tracking_shield_entities[entity] = nil
+end
+
+local function register_all_shield_entities()
+    local entities = Surface.find_all_entities{
+        name = table.keys(shield_values)
+    }
+
+    for _, entity in ipairs(entities) do
+        register_shield_entity(entity)
+    end
+end
+
+local function update_shield_entities()
+    for entity, _ in pairs(tracking_shield_entities) do
+        if entity.valid and CUnitProtoss.add_shields(entity, 0.01085) then
+            update_shield_bars(entity)
+        end
+    end
+end
 
 -- Factorio doesn't support the concept of shields outside of equipment grids, so we'll have to implement it ourselves.
-local function InitShields(entity)
+local function init_shields(entity)
     if shield_values[entity.name] ~= nil then
         local data = Entity.get_data(entity) or {}
 
@@ -177,8 +334,14 @@ local function InitShields(entity)
         data.shields = data.max_shields
 
         Entity.set_data(entity, data)
+        create_shield_bars(entity)
+        register_shield_entity(entity)
     end
 end
+
+------------------------------------------------------------------------------------------------------------------------------------------
+-- SHIELD API
+------------------------------------------------------------------------------------------------------------------------------------------
 
 function CUnitProtoss.get_shields(entity)
     local data = Entity.get_data(entity) or {}
@@ -193,10 +356,12 @@ end
 function CUnitProtoss.add_shields(entity, amount)
     local data = Entity.get_data(entity) or {}
 
-    if data.max_shields then
+    if data.max_shields and data.shields < data.max_shields then
         data.shields = math.clamp(data.shields + amount, 0, data.max_shields)
         Entity.set_data(entity, data)
+        return true
     end
+    return false
 end
 
 function CUnitProtoss.subtract_shields(entity, amount)
@@ -226,7 +391,6 @@ function CUnitProtoss.get_shield_ratio(entity)
         return data.shields / data.max_shields
     end
 end
-
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- PROTOSS SHIELD BATTERY LOGIC
@@ -273,26 +437,50 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------
 function CUnitProtoss.on_pylon_destroyed(entity)
     RemovePsiField(entity.surface, entity.position, entity.force)
+    CUnitProtoss.on_bldg_destroyed(entity)
 end
 
 function CUnitProtoss.on_pylon_created(entity)
-    InitShields(entity)
+    init_shields(entity)
     AddPsiField(entity.surface, entity.position, entity.force)
 end
 
 function CUnitProtoss.on_powered_bldg_created(entity)
-    InitShields(entity)
+    init_shields(entity)
     UpdateProtossPowerSingle(entity)
 end
 
 function CUnitProtoss.on_bldg_created(entity)
-    InitShields(entity)
+    init_shields(entity)
 end
 
-function CUnitProtoss.on_damaged(entity)
-
+function CUnitProtoss.on_bldg_destroyed(entity)
+    unregister_shield_entity(entity)
+    Entity.set_data(entity, nil)
 end
 
+function CUnitProtoss.on_damaged(event)
+    if event.original_damage_amount < 0 or CUnitProtoss.get_shields(event.entity) == 0 then
+        update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+        return
+    end
+
+    local remaining_damage = CUnitProtoss.subtract_shields(event.entity, event.original_damage_amount or 0.5)
+    event.entity.health = event.entity.health + event.final_damage_amount
+    if remaining_damage > 0 then
+        event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
+    else
+        update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+    end
+end
+
+function CUnitProtoss.on_update()
+    update_shield_entities()
+end
+
+function CUnitProtoss.on_load()
+    register_all_shield_entities()
+end
 
 
 return CUnitProtoss

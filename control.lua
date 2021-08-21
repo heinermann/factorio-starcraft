@@ -71,10 +71,12 @@ script.on_nth_tick(1, function(event)
     game_just_loaded = false
     iscript.on_load()
     CUnitZerg.on_load()
+    CUnitProtoss.on_load()
   end
 
   iscript.update()
   CUnitZerg.on_update()
+  CUnitProtoss.on_update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -126,6 +128,7 @@ local script_lookup = {
   ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
   ["on_protoss_powered_bldg_created"] = CUnitProtoss.on_powered_bldg_created,
   ["on_protoss_bldg_created"] = CUnitProtoss.on_bldg_created,
+  ["on_protoss_bldg_destroyed"] = CUnitProtoss.on_bldg_destroyed,
   ["on_creep_provider_created"] = CUnitZerg.on_creep_provider_created,
   ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
   ["on_creep_bldg_created"] = CUnitZerg.on_creep_bldg_created,
@@ -164,17 +167,23 @@ remote.add_interface("shields",
 ---------------------------------------------------------------------------------------------------------------------
 -- TODO: Move to separate shield management mod
 
-local function on_entity_damaged(event)
-  if event.original_damage_amount < 0 or CUnitProtoss.max_shields(event.entity) == 0 or CUnitProtoss.get_shields(event.entity) == 0 then
-    return
-  end
-
-  local remaining_damage = CUnitProtoss.subtract_shields(event.entity, event.original_damage_amount or 0.5)
-  event.entity.health = event.entity.health + event.final_damage_amount
-  event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
-end
-
-script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
+script.on_event(defines.events.on_entity_damaged, CUnitProtoss.on_damaged, {
+  {filter = "name", name = "starcraft-nexus"},
+  {filter = "name", name = "starcraft-robotics-facility"},
+  {filter = "name", name = "starcraft-pylon"},
+  {filter = "name", name = "starcraft-assimilator"},
+  {filter = "name", name = "starcraft-observatory"},
+  {filter = "name", name = "starcraft-gateway"},
+  {filter = "name", name = "starcraft-cannon"},
+  {filter = "name", name = "starcraft-citadel"},
+  {filter = "name", name = "starcraft-cyber-core"},
+  {filter = "name", name = "starcraft-archives"},
+  {filter = "name", name = "starcraft-forge"},
+  {filter = "name", name = "starcraft-stargate"},
+  {filter = "name", name = "starcraft-fleet-beacon"},
+  {filter = "name", name = "starcraft-tribunal"},
+  {filter = "name", name = "starcraft-robotics-support-bay"},
+  {filter = "name", name = "starcraft-shield-battery"},
   --{filter = "type", type = "accumulator"},
   --{filter = "type", type = "artillery-turret"},
   --{filter = "type", type = "beacon"},
@@ -222,11 +231,11 @@ script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   --{filter = "type", type = "roboport"},
   --{filter = "type", type = "simple-entity"},
   --{filter = "type", type = "simple-entity-with-owner"},
-  {filter = "type", type = "simple-entity-with-force"},
+  --{filter = "type", type = "simple-entity-with-force"},
   --{filter = "type", type = "solar-panel"},
   --{filter = "type", type = "storage-tank"},
   --{filter = "type", type = "train-stop"},
-  {filter = "type", type = "turret"},
+  --{filter = "type", type = "turret"},
   --{filter = "type", type = "ammo-turret"},
   --{filter = "type", type = "electric-turret"},
   --{filter = "type", type = "fluid-turret"},

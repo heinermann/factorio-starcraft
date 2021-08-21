@@ -184,6 +184,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{56, 39, 56, 39},
         tile_height = 6,
         tile_width = 8,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -200,6 +201,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{36, 16, 40, 20},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -230,7 +232,9 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{48, 32, 48, 24},
         tile_height = 4,
-        tile_width = 8
+        tile_width = 8,
+        dying_script = "on_protoss_bldg_destroyed",
+        created_script = "on_protoss_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
 -- OBSERVATORY
@@ -246,6 +250,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{44, 16, 44, 28},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -262,6 +267,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{48, 32, 48, 40},
         tile_height = 6,
         tile_width = 8,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -316,6 +322,7 @@ data:extend({
                 }
             }
         },
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     }),
 --------------------------------------------------------------------------------------------------
@@ -332,6 +339,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{24, 24, 40, 24},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -371,6 +379,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 24, 40, 24},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -387,6 +396,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{32, 24, 32, 24},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -425,6 +435,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{36, 24, 36, 20},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -464,6 +475,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{48, 40, 48, 32},
         tile_height = 6,
         tile_width = 8,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -500,6 +512,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{40, 32, 47, 24},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -516,6 +529,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{44, 28, 44, 28},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -532,6 +546,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{32, 32, 32, 20},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------
@@ -570,6 +585,7 @@ data:extend({
         collision_box = sc_bounds_to_factorio{32, 16, 32, 16},
         tile_height = 4,
         tile_width = 6,
+        dying_script = "on_protoss_bldg_destroyed",
         created_script = "on_protoss_powered_bldg_created"
     },
 --------------------------------------------------------------------------------------------------

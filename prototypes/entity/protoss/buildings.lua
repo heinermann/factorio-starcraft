@@ -18,11 +18,10 @@ local nexus_overlay = {
 
 local nexus_shadow = {
     filename = "nexus_shad",
-    size = { 491, 311 },
-    hr_size = { 981, 622 },
-    draw_as_shadow = true,
+    size = { 392, 311 },
+    hr_size = { 785, 622 },
     vshift = -4/16,
-    hshift = 399/64 / 2
+    hshift = 203/64 / 2
 }
 
 local robo_facility_main = {
@@ -37,6 +36,14 @@ local pylon_main = {
     size = { 112, 129 },
     hr_size = { 223, 258 },
     vshift = -11/16
+}
+
+local pylon_shadow = {
+    filename = "pylon_shad",
+    size = { 155, 54 },
+    hr_size = { 310, 107 },
+    vshift = 258 / 2 / 64 - 10/16,
+    hshift = 310 / 64 / 2 + 1/16
 }
 
 local assimilator_main = {
@@ -224,7 +231,12 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-pylon",
         icon_id = 156,
-        picture = create_layered_anim(pylon_main, {"main", "teamcolor", "emissive"}),
+        picture = {
+            layers = {
+                create_layered_anim(pylon_main, {"main", "teamcolor", "emissive"}),
+                create_shadow_anim(pylon_shadow)
+            }
+        },
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 300,   -- +300 shields
         armor = 0,

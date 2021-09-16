@@ -330,6 +330,8 @@ function create_shadow_anim(data)
   local result = create_anim(data)
   result.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. ".png"
   result.hr_version.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. "_hr.png"
+  result.draw_as_shadow = true
+  result.hr_version.draw_as_shadow = true
   return result
 end
 

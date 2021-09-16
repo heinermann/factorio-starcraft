@@ -16,6 +16,15 @@ local nexus_overlay = {
     vshift = -4/16
 }
 
+local nexus_shadow = {
+    filename = "nexus_shad",
+    size = { 491, 311 },
+    hr_size = { 981, 622 },
+    draw_as_shadow = true,
+    vshift = -4/16,
+    hshift = 399/64 / 2
+}
+
 local robo_facility_main = {
     name = "main_192",
     size = { 193, 256 },
@@ -160,7 +169,8 @@ data:extend({
             {   -- idle
                 layers = {
                     create_layered_anim(nexus_main, {"main", "teamcolor", "emissive"}),
-                    create_anim(nexus_overlay)
+                    create_anim(nexus_overlay),
+                    create_shadow_anim(nexus_shadow)
                 }
             },
             {   -- working anim
@@ -172,6 +182,10 @@ data:extend({
                     create_anim(table.dictionary_merge(nexus_overlay, {
                         frame_count = 5,
                         frame_sequence = { 2, 3, 4, 5 },
+                        animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
+                    })),
+                    create_shadow_anim(table.dictionary_merge(nexus_shadow, {
+                        repeat_count = 4,
                         animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
                     }))
                 }

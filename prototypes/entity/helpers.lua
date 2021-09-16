@@ -319,10 +319,17 @@ function create_anim(data)
     }
   }
 
-  if data.vshift ~= nil then
-    result.shift = { 0, data.vshift }
+  if data.vshift ~= nil or data.hshift ~= nil then
+    result.shift = { data.hshift or 0, data.vshift or 0 }
     result.hr_version.shift = result.shift
   end
+  return result
+end
+
+function create_shadow_anim(data)
+  local result = create_anim(data)
+  result.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. ".png"
+  result.hr_version.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. "_hr.png"
   return result
 end
 

@@ -512,12 +512,22 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-stasis-cell",
         icon_id = 168,
-        picture = create_layered_anim({
-            name = "main_203",
-            size = { 240, 304 },
-            hr_size = { 480, 608 }
-        }, {"main", "emissive"}),
-
+        picture = {
+            layers = {
+                create_layered_anim({
+                    name = "main_203",
+                    size = { 240, 304 },
+                    hr_size = { 480, 608 }
+                }, {"main", "emissive"}),
+                create_shadow_anim({
+                    filename = "stasis_cell_shad",
+                    size = { 365, 109 },
+                    hr_size = { 731, 219 },
+                    vshift = 68 / 64,
+                    hshift = (731 - 480) / 2 / 64
+                })
+            }
+        },
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 2000,

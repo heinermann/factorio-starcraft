@@ -59,6 +59,14 @@ local observatory_main = {
     vshift = -8/16
 }
 
+local observatory_shadow = {
+    filename = "observatory_shad",
+    size = { 300, 190 },
+    hr_size = { 600, 380 },
+    vshift = -8/16,
+    hshift = (600 - 390) / 2 / 64
+}
+
 local gateway_main = {
     name = "main_171",
     size = { 253, 248 },
@@ -157,11 +165,31 @@ local function make_photon_cannon_anim(frame_seq)
     }, {"main", "teamcolor", "emissive"})
 end
 
-local function make_common_states(data)
+local function make_common_states(data, shadow_data)
+    local shadow_anim = nil
+    if shadow_data then
+        shadow_anim = create_shadow_anim(shadow_data)
+    end
+
     return {
-        create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- idle
-        create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- working
-        create_layered_anim(data, {"main", "teamcolor"})                  -- disabled
+        {
+            layers = {
+                create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- idle
+                shadow_anim
+            }
+        },
+        {
+            layers = {
+                create_layered_anim(data, {"main", "teamcolor", "emissive"}),     -- working
+                shadow_anim
+            }
+        },
+        {
+            layers = {
+                create_layered_anim(data, {"main", "teamcolor"}),                  -- disabled
+                shadow_anim
+            }
+        }
     }
 end
 
@@ -268,7 +296,7 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-observatory",
         icon_id = 159,
-        pictures = make_common_states(observatory_main),
+        pictures = make_common_states(observatory_main, observatory_shadow),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 250,   -- +250 shields

@@ -460,8 +460,13 @@ function CUnitProtoss.on_bldg_destroyed(entity)
 end
 
 function CUnitProtoss.on_damaged(event)
-    if event.original_damage_amount < 0 or CUnitProtoss.get_shields(event.entity) == 0 then
+    if event.original_damage_amount <= 0 or CUnitProtoss.get_shields(event.entity) == 0 then
         update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+
+        -- Enable the entity in case it's unpowered, so that it can die
+        if event.entity.health == 0 then
+            event.entity.active = true
+        end
         return
     end
 

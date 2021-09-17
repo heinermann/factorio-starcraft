@@ -718,13 +718,23 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-xel-naga-temple",
         icon_id = 175,
-        picture = create_layered_anim({
-            name = "main_937",
-            size = { 385, 520 },
-            hr_size = { 769, 1040 },
-            vshift = -16/16
-        }, {"main", "emissive"}),
-
+        picture = {
+            layers = {
+                create_layered_anim({
+                    name = "main_937",
+                    size = { 385, 520 },
+                    hr_size = { 769, 1040 },
+                    vshift = -16/16
+                }, {"main", "emissive"}),
+                create_shadow_anim({
+                    filename = "xelnaga_shad",
+                    size = { 522, 262 },
+                    hr_size = { 1043, 523 },
+                    vshift = 106 / 64 - 16/16,
+                    hshift = (1043 - 769) / 2 / 64
+                })
+            }
+        },
         corpse = "starcraft-p_bldg_rubble_lrg",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 5000,

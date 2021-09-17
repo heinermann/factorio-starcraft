@@ -138,6 +138,14 @@ local robotics_support_main = {
     vshift = -6/16
 }
 
+local robotics_support_shadow = {
+    filename = "robo_support_shad",
+    size = { 275, 213 },
+    hr_size = { 550, 427 },
+    vshift = -6/16,
+    hshift = (550 - 403) / 2 / 64
+}
+
 local shield_battery_main = {
     name = "main_195",
     size = { 169, 118 },
@@ -604,7 +612,7 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-robotics-support-bay",
         icon_id = 171,
-        pictures = make_common_states(robotics_support_main),
+        pictures = make_common_states(robotics_support_main, robotics_support_shadow),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 450,   -- +450 shields

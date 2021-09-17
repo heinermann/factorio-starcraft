@@ -126,9 +126,17 @@ local fleet_beacon_main = {
 
 local tribunal_main = {
     name = "main_186",
-    size = { 186, 172 },
+    size = { 186, 171 },
     hr_size = { 373, 342 },
     vshift = -4/16
+}
+
+local tribunal_shadow = {
+    filename = "tribunal_shad",
+    size = { 225, 171 },
+    hr_size = { 450, 342 },
+    vshift = -4/16,
+    hshift = (450 - 373) / 2 / 64
 }
 
 local robotics_support_main = {
@@ -595,7 +603,7 @@ data:extend({
     make_protoss_structure{
         name = "starcraft-tribunal",
         icon_id = 170,
-        pictures = make_common_states(tribunal_main),
+        pictures = make_common_states(tribunal_main, tribunal_shadow),
         corpse = "starcraft-p_bldg_rubble_sml",
         dying_explosion = "starcraft-p_explode_death_xlrg",
         max_health = 500,   -- +500 shields

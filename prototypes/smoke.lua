@@ -1,10 +1,11 @@
 require("prototypes.entity.helpers")
 
+-- time_between_frames is in Starcraft ticks
 local function make_simple_smoke(table)
   --anim_speed = (1000/(42 * (table.time_between_frames or 1)))/60  -- ((1000ms/s / 42ms/frame) / 60t/s)/2
-  num_ticks_per_frame = math.ceil(60/(1000/(42 * (table.time_between_frames or 1))))
+  local num_ticks_per_frame = math.ceil(60/(1000/(42 * (table.time_between_frames or 1))))
 
-  frame_sequence = {}
+  local frame_sequence = {}
   for frame = 1, table.frame_count do
     for i = 1, num_ticks_per_frame do
       frame_sequence[#frame_sequence + 1] = frame
@@ -15,6 +16,7 @@ local function make_simple_smoke(table)
     type = "trivial-smoke",
     name = table.name,
     animation = {
+      -- TODO: HD/SD difference
       filename = table.filename,
       size = table.size,
       scale = 0.5,
@@ -35,11 +37,11 @@ local function make_simple_smoke(table)
   }
 end
 
-local function make_simple_smoke2(data)
+local function make_simple_smoke_anim(data)
   return {
     type = "trivial-smoke",
     name = data.name,
-    animation = data.animation,
+    animation = create_anim(data.anim),
     duration = data.duration,
     affected_by_wind = false,
     show_when_smoke_off = true,
@@ -48,7 +50,39 @@ local function make_simple_smoke2(data)
   }
 end
 
--- time_between_frames is in Starcraft ticks
+local function make_shield_hit(index)
+  local num_ticks_per_frame = math.ceil(60/(1000/42))
+
+  -- TODO: refactor this part out of here
+  local frame_sequence = {}
+  for frame = 1, 4 do
+    for i = 1, num_ticks_per_frame do
+      frame_sequence[#frame_sequence + 1] = frame
+    end
+  end
+
+
+  local hr_filename = index <= 27 and "main_424_diffuse_1.png" or "main_424_diffuse_2.png"
+
+  local anim_data = {
+    hr_filename = hr_filename,
+    low_filename = "main_424_diffuse.png",
+    size = { 114, 147 },
+    hr_size = { 229, 294 },
+    frame_count = 4,
+    line_length = 4,
+    draw_as_glow = true,
+    frame_sequence = frame_sequence,
+    y = 147 * ((index - 1) % 27),
+    hr_y = 294 * ((index - 1) % 27)
+  }
+
+  return make_simple_smoke_anim({
+    name = "starcraft-shield-hit-" .. tostring(index),
+    anim = anim_data,
+    duration = num_ticks_per_frame * 4,
+  })
+end
 
 data:extend({
   make_simple_smoke{
@@ -99,9 +133,9 @@ data:extend({
     time_between_frames = 2,
     draw_as_glow = true
   },
-  make_simple_smoke2{
+  make_simple_smoke_anim{
     name = "starcraft-dragbull_explode",
-    animation = create_anim{
+    anim = {
       filename = "main_427_diffuse.png",
       size = { 118, 121 },
       hr_size = { 237, 243 },
@@ -112,3 +146,10 @@ data:extend({
     duration = 2.52 * 14
   }
 })
+
+-- Shield hit overlays
+for i = 1, 32 do
+  data:extend({
+    make_shield_hit(i)
+  })
+end

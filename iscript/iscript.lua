@@ -13013,32 +13013,6 @@ end
 
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
--- 424 Shield Overlay (thingy\pshield.grp)
-iscript[276] = {
-  IsId =          	276,
-  Type =          	1,
-  Init =          	ShieldOverlayInit,
-  Death =         	ShieldOverlayDeath
-}
--- ----------------------------------------------------------------------------- --
-
-function ShieldOverlayInit()
-	playfram(0x00)	-- Frame set 0
-	wait(1) 
-	playfram(0x11)	-- Frame set 1
-	wait(1) 
-	playfram(0x22)	-- Frame set 2
-	wait(1) 
-	playfram(0x33)	-- Frame set 3
-	ShieldOverlayDeath()
-end
-
-function ShieldOverlayDeath()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
 -- 426 Double Explosion (thingy\dbl_exp.grp)
 iscript[278] = {
   IsId =          	278,

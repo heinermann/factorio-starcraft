@@ -8,6 +8,8 @@ local table = require('__stdlib__/stdlib/utils/table')
 
 local ForceTile = require('src.ForceTile')
 
+local lo_data = require("__starcraft__/unit/lo")
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL CONSTANTS
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -149,7 +151,7 @@ end
 -- PROTOSS SHIELD LOGIC
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-local shield_values = {
+local SHIELD_VALUES = {
     ["starcraft-nexus"] = 750,
     ["starcraft-robotics-facility"] = 500,
     ["starcraft-pylon"] = 300,
@@ -166,6 +168,31 @@ local shield_values = {
     ["starcraft-tribunal"] = 500,
     ["starcraft-robotics-support-bay"] = 450,
     ["starcraft-shield-battery"] = 200
+}
+
+-- Default is 2 for omitted items
+local SHIELD_SIZES = {
+    ["starcraft-nexus"] = 3
+}
+
+-- Copy of vertical offset from entity anim definitions to include in shield hit overlays
+-- 0 if omitted
+local SHIELD_VOFFSETS = {
+    ["starcraft-nexus"] = -4/16,
+    ["starcraft-robotics-facility"] = -8/16,
+    ["starcraft-pylon"] = -11/16,
+    ["starcraft-observatory"] = -8/16,
+    ["starcraft-gateway"] = -11/16,
+    ["starcraft-cannon"] = -2/16,
+    ["starcraft-citadel"] = -13/16,
+    ["starcraft-cyber-core"] = -1/16,
+    ["starcraft-archives"] = -5/16,
+    ["starcraft-forge"] = -1/16,
+    ["starcraft-stargate"] = -16/16,
+    ["starcraft-fleet-beacon"] = -7/16,
+    ["starcraft-tribunal"] = -4/16,
+    ["starcraft-robotics-support-bay"] = -6/16,
+    ["starcraft-shield-battery"] = -3/16
 }
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -309,7 +336,7 @@ end
 
 local function register_all_shield_entities()
     local entities = Surface.find_all_entities{
-        name = table.keys(shield_values)
+        name = table.keys(SHIELD_VALUES)
     }
 
     for _, entity in ipairs(entities) do
@@ -327,10 +354,10 @@ end
 
 -- Factorio doesn't support the concept of shields outside of equipment grids, so we'll have to implement it ourselves.
 local function init_shields(entity)
-    if shield_values[entity.name] ~= nil then
+    if SHIELD_VALUES[entity.name] ~= nil then
         local data = Entity.get_data(entity) or {}
 
-        data.max_shields = shield_values[entity.name]
+        data.max_shields = SHIELD_VALUES[entity.name]
         data.shields = data.max_shields
 
         Entity.set_data(entity, data)
@@ -390,6 +417,46 @@ function CUnitProtoss.get_shield_ratio(entity)
     if data.max_shields then
         return data.shields / data.max_shields
     end
+end
+
+------------------------------------------------------------------------------------------------------------------------------------------
+-- SHIELD HIT OVERLAY
+------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Gets the angle in radians between two positions
+-- Note that Position.angle in Factorio stdlib is bugged and doesn't work (produces NaN)
+local function get_positions_angle(pos1, pos2)
+    local dx = pos2.x - pos1.x
+    local dy = pos2.y - pos1.y
+
+    local dist = math.sqrt(dx * dx + dy * dy)
+    local angle_rad = math.atan2(dy / dist, dx / dist) + math.pi/2
+    if angle_rad < 0 then
+        angle_rad = angle_rad + 2 * math.pi
+    end
+    return angle_rad
+end
+
+-- Create a shield overlay on `entity` from the direction of `source`
+-- NOTE: The actual algorithm uses the facing direction of the bullet, which doesn't appear doable
+local function create_shield_overlay(entity, source)
+    local source_direction = 0
+    if source ~= nil then
+        local angle_rad = get_positions_angle(entity.position, source.position)
+        source_direction = (math.floor(angle_rad / (2 * math.pi) * 32) + 32) % 32 + 1
+    end
+
+    local shield_size = SHIELD_SIZES[entity.name] or 2
+    local shield_pos = lo_data.get_shield_offset(shield_size, { orientation = source_direction })
+
+    -- TODO: Precompute these divisions into lo.lua
+    local x = entity.position.x + shield_pos[1] / 16
+    local y = entity.position.y + shield_pos[2] / 16 + (SHIELD_VOFFSETS[entity.name] or 0)
+    entity.surface.create_trivial_smoke{
+        -- NOTE: Not a bug, Starcraft only uses the up-facing shield, whoops
+        name = "starcraft-shield-hit-1",
+        position = { x, y }
+    }
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -471,6 +538,10 @@ function CUnitProtoss.on_damaged(event)
     end
 
     local remaining_damage = CUnitProtoss.subtract_shields(event.entity, event.original_damage_amount or 0.5)
+    if remaining_damage == 0 then
+        create_shield_overlay(event.entity, event.cause)
+    end
+
     event.entity.health = event.entity.health + event.final_damage_amount
     if remaining_damage >= 0 then
         if not event.damage_type then

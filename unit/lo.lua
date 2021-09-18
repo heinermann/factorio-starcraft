@@ -2293,16 +2293,16 @@ local lo_shield_data = {
 
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
-
 local function get_shield_offset(size, table)
-  direction = 0
+  local direction = 0
   if table.direction ~= nil then
     direction = math.floor(32 / ((table.direction - 1) / 8)) + 1
   elseif table.orientation ~= nil then
-    direction = math.floor(32 / table.orientation) + 1
+    direction = table.orientation
   end
 
   if direction > 32 then direction = 32 end
+  if direction < 1 then direction = 1 end
 
   return lo_shield_data[size][direction]
 end

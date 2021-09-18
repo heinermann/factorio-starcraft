@@ -283,7 +283,7 @@ end
 
 function create_anim(data)
   local result = {
-      filename = "__starcraft__/graphics/low/" .. data.filename,
+      filename = "__starcraft__/graphics/low/" .. (data.low_filename or data.filename),
       line_length = data.line_length or data.frame_count or 1,
       size = data.size,
       frame_count = data.frame_count or 1,
@@ -298,9 +298,10 @@ function create_anim(data)
       repeat_count = data.repeat_count,
       direction_count = 1,
       shift = data.shift,
+      y = data.y,
 
       hr_version = {
-          filename = "__starcraft__/graphics/hd/" .. data.filename,
+          filename = "__starcraft__/graphics/hd/" .. (data.hr_filename or data.filename),
           line_length = data.hr_line_length or data.frame_count or 1,
           size = data.hr_size,
           scale = 0.5,
@@ -315,7 +316,8 @@ function create_anim(data)
           blend_mode = data.blend_mode,
           repeat_count = data.repeat_count,
           direction_count = 1,
-          shift = data.shift
+          shift = data.shift,
+          y = data.hr_y
     }
   }
 

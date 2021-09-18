@@ -1,7 +1,10 @@
 # factorio-starcraft
-A mod that brings a 1:1 Starcraft simulation to Factorio.
+A mod that brings a 1:1 Starcraft simulation to Factorio. The goal is to introduce all 3 races as unique, separate, AI controlled factions pitted against the player, biters, and each other.
 
-Note: This mod only includes Starcraft's units and behaviours, it does not allow you to control them and there is no plan to.
+## Dependencies
+- base >= 1.1
+- stdlib >= 1.4.6
+- (optional) alien-biomes
 
 ## V0 Target (Beta)
 v0 will **include**:
@@ -11,10 +14,10 @@ v0 will **include**:
 - Weapons
 - Creep
 - Pylon power
-- Basic AI behaviours (unit responses and worker harvesting)
+- Basic AI behaviours (unit responses and worker harvesting, simple build orders)
 - Names
 - Multiplayer
-- Setup tool
+- Setup tool (pulls data from Starcraft: Remastered)
 
 v0 will **exclude** the following:
 - Terran
@@ -27,38 +30,27 @@ v0 will **exclude** the following:
 
 ## V1 Target
 v1 will **include**:
-- SFX
-- Units/structures
-- IScript (image script)
-- Orders
-- Weapons
-- Creep
-- Pylon power
+- All Terran, Protoss, and Zerg units/structures
 - Unit special abilities (cloak, burrow, siege, etc)
 - Powerups and Special Buildings
-- Basic AI behaviours (unit responses and worker harvesting)
-- Names (+Translations)
-- Multiplayer
-- Setup tool (to pull data from Starcraft: Remastered)
+- Critters
+- Some doodads (some rocks and structures)
+- Better AI behaviours
+- Translations
 
-This will not release without all of the above.
-
-v1 will **exclude** the following:
-- What/Piss/Yes SFX
-- Title demos
-- Doodads
-- Terrain
-- Portraits
-- Supply
-- Ore/Gas tracking and costs
-- Unit/Structure requirements
-- Scores (kills, deaths, etc)
-- Upgrades (no upgrades for now)
-- Technologies (they will be automatically researched for now)
-- Advisor alerts (i.e. nuclear launch detected)
+V1 will mark the official release, but **exclude** everything in V2.
 
 ## V2 Target
-v2 will likely include most of what v1 is excluding.
+v2 will **include**:
+- Title demos
+- More Doodads (rocks, trees, structures)
+- Supply limit enforcement
+- Ore/Gas tracking and costs
+- Unit/Structure requirements enforced
+- Upgrades
+- Technologies
+- *Maybe* some additional terrain tiles
+- Optional Space Exploration dependency additions
 
 ## Important
 While some things may be implemented later, this mod will **never** include the following:
@@ -66,9 +58,10 @@ While some things may be implemented later, this mod will **never** include the 
 - Assets without the setup tool (the setup tool will **always** be required)
 - Music replacements
 - Maps/triggers
-- Unit control
-- Special menus, buttons, or displays (i.e. action card, HUD, Starcraft-themed menu, ore/gas/supply display -- not happening)
+- Player unit control
+- Special menus, buttons, or displays (i.e. action card, HUD, Starcraft-themed menu, ore/gas/supply display)
 - Fonts
 - Game types or win conditions
-- The ability to hold any Starcraft units (besides powerups) in your inventory
-- Any major changes to the original Starcraft unit mechanics.
+- The ability to hold any Starcraft units/structures (besides powerups) in your inventory
+- Any major changes to the original Starcraft unit mechanics (with the exception of major balancing issues in the Factorio universe).
+

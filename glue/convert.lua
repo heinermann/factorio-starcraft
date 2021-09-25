@@ -26,7 +26,6 @@ register_unit_map(188, "starcraft-vespene-geyser")
 ------- Map image types <-> Factorio names, types vary
 ------------------------------------------------------------------------------------
 register_image_map(344, "starcraft-vespene-geyser", "resource")
-register_image_map(346, "starcraft-vespene-geyser-shadow", "sprite")
 register_image_map(347, "starcraft-mineral-field", "resource")
 register_image_map(430, "starcraft-vespene-smoke-1", "trivial-smoke")
 register_image_map(431, "starcraft-vespene-smoke-2", "trivial-smoke")

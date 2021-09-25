@@ -132,6 +132,7 @@ local function make_common_structure(data)
     subgroup = data.subgroup,
     tile_height = data.tile_height,
     tile_width = data.tile_width,
+    -- created_smoke = nil  -- TODO: hide placement smoke
 
     -- trigger_target_mask
   }
@@ -410,16 +411,9 @@ end
 function protossify_prototype(data)
   data.subgroup = "starcraft-protoss-buildings"
 
-  -- TODO: Protoss shields
-
   data.flags = {
     "not-repairable",
     table.unpack(data.flags)
-  }
-
-  data.damaged_trigger_effect = {
-    type = "script",
-    effect_id = "on_protoss_bldg_dmg" -- Used to update overlays
   }
   return data
 end

@@ -72,5 +72,20 @@ data:extend({
             }
         }
     },
-    
+    {
+        type = "explosion",
+        name = "starcraft-warp-anchor-death",
+        animations = create_anim{
+            filename = "main_211_diffuse.png",
+            frame_count = 14,
+            line_length = 13,
+            size = { 298, 300 },
+            hr_line_length = 6,
+            hr_size = { 596, 599 },
+            draw_as_glow = true,
+
+            frame_sequence = { 8, 7, 6, 5, 4, 3 },
+            animation_speed = 1/5 -- 84 ms per frame
+        }
+    },
 })

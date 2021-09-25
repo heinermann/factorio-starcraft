@@ -1,6 +1,9 @@
 require("prototypes.entity.helpers")
 
 data:extend({
+--------------------------------------------------------------------------------------------------
+-- HATCHERY
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-hatchery",
         icon_id = 131,
@@ -25,6 +28,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -7/16
     },
+--------------------------------------------------------------------------------------------------
+-- LAIR
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-lair",
         icon_id = 132,
@@ -49,6 +55,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -7/16
     },
+--------------------------------------------------------------------------------------------------
+-- HIVE
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-hive",
         icon_id = 133,
@@ -73,6 +82,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -7/16
     },
+--------------------------------------------------------------------------------------------------
+-- NYDUS CANAL
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-nydus",
         icon_id = 134,
@@ -97,6 +109,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -5/16
     },
+--------------------------------------------------------------------------------------------------
+-- HYDRALISK DEN
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-hydra-den",
         icon_id = 135,
@@ -121,6 +136,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -9/16
     },
+--------------------------------------------------------------------------------------------------
+-- DEFILER MOUND
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-defiler-mound",
         icon_id = 136,
@@ -144,6 +162,9 @@ data:extend({
         created_script = "on_creep_bldg_created",
         dying_script = "on_creep_bldg_destroyed",
     },
+--------------------------------------------------------------------------------------------------
+-- GREATER SPIRE
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-greater-spire",
         icon_id = 137,
@@ -168,6 +189,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -10/16
     },
+--------------------------------------------------------------------------------------------------
+-- QUEEN'S NEST
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-queens-nest",
         icon_id = 138,
@@ -192,6 +216,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -11/16
     },
+--------------------------------------------------------------------------------------------------
+-- EVOLUTION CHAMBER
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-evo-chamber",
         icon_id = 139,
@@ -216,6 +243,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -5/16
     },
+--------------------------------------------------------------------------------------------------
+-- ULTRALISK CAVERN
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-ultra-cavern",
         icon_id = 140,
@@ -240,6 +270,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -6/16
     },
+--------------------------------------------------------------------------------------------------
+-- SPIRE
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-spire",
         icon_id = 141,
@@ -264,6 +297,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -10/16
     },
+--------------------------------------------------------------------------------------------------
+-- SPAWNING POOL
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-spawning-pool",
         icon_id = 142,
@@ -288,6 +324,9 @@ data:extend({
         dying_script = "on_creep_bldg_destroyed",
         vshift = -1/16
     },
+--------------------------------------------------------------------------------------------------
+-- CREEP COLONY
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-creep-colony",
         icon_id = 143,
@@ -312,6 +351,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -11/16
     },
+--------------------------------------------------------------------------------------------------
+-- SPORE COLONY
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-spore-colony",
         icon_id = 144,
@@ -336,6 +378,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -11/16
     },
+--------------------------------------------------------------------------------------------------
+-- SUNKEN COLONY
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         name = "starcraft-sunken-colony",
         icon_id = 146,
@@ -362,78 +407,9 @@ data:extend({
         dying_script = "on_creep_provider_destroyed",
         vshift = -3/16
     },
-    make_zerg_structure{
-        name = "starcraft-overmind",    -- with shell
-        icon_id = 147,
-        animation = create_layered_anim({
-            name = "main_088",
-            size = { 414, 286 },
-            hr_size = { 827, 572 },
-
-            frame_count = 4,
-            frame_sequence = { 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 2, 2, 1, 1, 1 },
-            animation_speed = 1/2.5 -- 42ms in SC (1 ticks) -- because there's a wait 7 between frame 4 and 2 above
-        }, {"main", "teamcolor", "emissive"}),
-
-        corpse = "starcraft-z_bldg_rubble_lrg", -- TODO - two-stage death anim
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 5000,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
-        tile_height = 6,
-        tile_width = 10,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -3/16
-    },
-    make_zerg_structure{
-        name = "starcraft-overmind-2",  -- without shell
-        icon_id = 148,
-        animation = create_layered_anim({
-            name = "main_089",
-            size = { 414, 258 },
-            hr_size = { 827, 516 },
-
-            frame_count = 4,
-            frame_sequence = { 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 2, 2, 1, 1, 1 },
-            animation_speed = 1/2.5 -- 42ms in SC (1 ticks) -- because there's a wait 7 between frame 4 and 2 above
-        }, {"main", "emissive"}),
-
-        corpse = "starcraft-z_bldg_rubble_lrg",
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 2500,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{80, 32, 79, 40},
-        tile_height = 6,
-        tile_width = 10,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -3/16
-    },
-    make_zerg_structure{
-        name = "starcraft-overmind-cocoon",
-        icon_id = 201,
-        animation = create_layered_anim({
-            name = "main_923",
-            size = { 288, 195 },
-            hr_size = { 576, 392 },
-
-            frame_count = 4,
-            frame_sequence = { 1, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 4, 2, 2, 1, 1, 1 },
-            animation_speed = 1/2.5 -- 42ms in SC (1 ticks) -- because there's a wait 7 between frame 4 and 2 above
-        }, {"main", "emissive"}),
-
-        corpse = "starcraft-z_bldg_rubble_lrg",
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 2500,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{48, 32, 47, 31},
-        tile_height = 4,
-        tile_width = 6,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -7/16
-    },
+--------------------------------------------------------------------------------------------------
+-- EXTRACTOR
+--------------------------------------------------------------------------------------------------
     make_zerg_structure{
         -- TODO: gas overlays
         name = "starcraft-extractor",
@@ -455,78 +431,5 @@ data:extend({
         collision_box = sc_bounds_to_factorio{64, 32, 63, 31},
         tile_height = 4,
         tile_width = 8
-    },
-    make_zerg_structure{
-        name = "starcraft-mature_chrysalis",
-        icon_id = 150,
-        animation = create_layered_anim({
-            name = "main_078",
-            size = { 89, 106 },
-            hr_size = { 179, 210 },
-
-            frame_count = 4,
-            frame_sequence = { 1, 2, 3, 4 },
-            animation_speed = 1/5 -- 84ms in SC (2 ticks)
-        }, {"main"}),
-
-        corpse = "starcraft-z_bldg_rubble_sml",
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 250,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{32, 32, 31, 31},
-        tile_height = 4,
-        tile_width = 4,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -11/16
-    },
-    make_zerg_structure{
-        name = "starcraft-cerebrate",
-        icon_id = 151,
-        animation = create_layered_anim({
-            name = "main_061",
-            size = { 205, 125 },
-            hr_size = { 409, 252 },
-
-            frame_count = 5,
-            frame_sequence = { 1, 2, 3, 4, 5 },
-            animation_speed = 1/5 -- 84ms in SC (2 ticks)
-        }, {"main", "teamcolor"}),
-
-        corpse = "starcraft-z_bldg_rubble_sml",
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 1500,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
-        tile_height = 4,
-        tile_width = 6,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -2/16
-    },
-    make_zerg_structure{
-        name = "starcraft-daggoth",
-        icon_id = 152,
-        animation = create_layered_anim({
-            name = "main_061",
-            size = { 205, 125 },
-            hr_size = { 409, 252 },
-
-            frame_count = 5,
-            frame_sequence = { 1, 2, 3, 4, 5 },
-            animation_speed = 1/5 -- 84ms in SC (2 ticks)
-        }, {"main", "teamcolor"}),
-
-        corpse = "starcraft-z_bldg_rubble_sml",
-        dying_explosion = "starcraft-z_bldg_death_sml",
-        max_health = 1500,
-        armor = 1,
-        collision_box = sc_bounds_to_factorio{40, 32, 32, 31},
-        tile_height = 4,
-        tile_width = 6,
-        created_script = "on_creep_bldg_created",
-        dying_script = "on_creep_bldg_destroyed",
-        vshift = -2/16
-    },
-
+    }
 })

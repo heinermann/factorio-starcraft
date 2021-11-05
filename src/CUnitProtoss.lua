@@ -325,27 +325,16 @@ end
 -- SHIELD TRACKING AND REGEN
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-local tracking_shield_entities = {}
 local function register_shield_entity(entity)
-    tracking_shield_entities[entity] = true
+    global.tracking_shield_entities[entity.unit_number] = entity
 end
 
 local function unregister_shield_entity(entity)
-    tracking_shield_entities[entity] = nil
-end
-
-local function register_all_shield_entities()
-    local entities = Surface.find_all_entities{
-        name = table.keys(SHIELD_VALUES)
-    }
-
-    for _, entity in ipairs(entities) do
-        register_shield_entity(entity)
-    end
+    global.tracking_shield_entities[entity.unit_number] = nil
 end
 
 local function update_shield_entities()
-    for entity, _ in pairs(tracking_shield_entities) do
+    for _, entity in pairs(global.tracking_shield_entities) do
         if entity.valid and CUnitProtoss.add_shields(entity, 0.01085) then
             update_shield_bars(entity)
         end
@@ -551,17 +540,17 @@ function CUnitProtoss.on_damaged(event)
         else
             event.entity.damage(remaining_damage, event.force, event.damage_type.name, event.cause)
         end
-    else
-        update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
     end
+
+    update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+end
+
+function CUnitProtoss.on_init()
+    global.tracking_shield_entities = {}
 end
 
 function CUnitProtoss.on_update()
     update_shield_entities()
-end
-
-function CUnitProtoss.on_load()
-    register_all_shield_entities()
 end
 
 

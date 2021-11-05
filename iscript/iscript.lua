@@ -39,9 +39,7 @@ local function bounding_box_to_xy(bounding_box)
 end
 
 
-local iscript = {
-	iscript_tracking_entities = {}
-}
+local iscript = {}
 local scripts = {}
 
 local function image_create(img, x, y, render_layer)
@@ -18911,16 +18909,17 @@ function iscript.advance(obj)
   iscript.set_obj_data(obj, iscript.edata)
 end
 
+-- TODO: Remove from iscript_tracking_entities on death
 function iscript.register_entity(entity)
-	iscript.iscript_tracking_entities[entity] = true
+	table.insert(global.iscript_tracking_entities, entity)
 	iscript.init_obj_data(entity)
 	iscript.play_anim(entity, "Init")	-- TODO: only if anim is not already playing (to fix on_load)
 	Log.log("Registered " .. entity.name .. " for iscript")
 end
 
 function iscript.update()
-	for entity, _ in pairs(iscript.iscript_tracking_entities) do
-		if entity ~= nil then
+	for _, entity in ipairs(global.iscript_tracking_entities) do
+		if entity ~= nil and entity.valid then
 			iscript.advance(entity)
 		end
 	end
@@ -18930,16 +18929,12 @@ iscript.supported_entity_names = {
 	"starcraft-vespene-geyser"
 }
 
-function iscript.on_load()
-	-- Reassign iscripts to entities
-	Log.log("Iscript on_load")
-	local entities = Surface.find_all_entities{name = iscript.supported_entity_names}
-	table.each(entities, iscript.register_entity)
-end
-
 function iscript.on_init()
 	Log.log("Iscript on_init")
 	global.iscript_tracking_objects = {}
+	global.iscript_tracking_entities = {}
+
+	-- TODO: Redo how vespene geysers get assigned an iscript
 end
 
 return iscript

@@ -14,15 +14,12 @@ local Forces = require('src.forces')
 local CUnitProtoss = require('src.CUnitProtoss')
 local CUnitZerg = require('src.CUnitZerg')
 
-local game_just_loaded = false
-
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
 ---------------------------------------------------------------------------------------------------------------------
 -- Called once every time the game is loaded, but not when it's first started
 -- Should never modify `global`
 script.on_load(function()
-  game_just_loaded = true
 end)
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -32,6 +29,8 @@ end)
 script.on_init(function()
   Forces.on_init()
   iscript.on_init()
+  CUnitProtoss.on_init()
+  CUnitZerg.on_init()
 end)
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -67,13 +66,6 @@ end
 -- ON_NTH_TICK
 ---------------------------------------------------------------------------------------------------------------------
 script.on_nth_tick(1, function(event)
-  if game_just_loaded then
-    game_just_loaded = false
-    iscript.on_load()
-    CUnitZerg.on_load()
-    CUnitProtoss.on_load()
-  end
-
   iscript.update()
   CUnitZerg.on_update()
   CUnitProtoss.on_update()

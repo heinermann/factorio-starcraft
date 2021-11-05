@@ -6,10 +6,6 @@ local Position = require('__stdlib__/stdlib/area/position')
 
 local Tile = require('Tile')
 
-local CUnitZerg = {
-    creep_entities = {}
-}
-
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- CREEP MANAGEMENT
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -154,12 +150,14 @@ local function make_creep_below_structure(entity)
 end
 
 local function register_creep_provider(entity)
-    CUnitZerg.creep_entities[entity] = true
+    global.creep_entities[entity.unit_number] = entity
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- INTERFACE
 ------------------------------------------------------------------------------------------------------------------------------------------
+
+local CUnitZerg = {}
 
 function CUnitZerg.on_creep_provider_created(entity)
     make_creep_below_structure(entity)
@@ -174,7 +172,7 @@ function CUnitZerg.on_creep_provider_created(entity)
 end
 
 function CUnitZerg.on_creep_provider_destroyed(entity)
-    CUnitZerg.creep_entities[entity] = nil
+    global.creep_entities[entity.unit_number] = nil
 end
 
 function CUnitZerg.on_creep_bldg_created(entity)
@@ -185,7 +183,7 @@ function CUnitZerg.on_creep_bldg_destroyed(entity)
 end
 
 function CUnitZerg.on_update()
-    for entity, _ in pairs(CUnitZerg.creep_entities) do
+    for _, entity in pairs(global.creep_entities) do
         local data = Entity.get_data(entity) or {}
         if data.creep_timer > 0 then
             data.creep_timer = data.creep_timer - 1
@@ -207,9 +205,8 @@ local creep_providers = {
     "starcraft-spore-colony",
 }
 
-function CUnitZerg.on_load()
-	local entities = Surface.find_all_entities{name = creep_providers}
-	table.each(entities, register_creep_provider)
+function CUnitZerg.on_init()
+    global.creep_entities = {}
 end
 
 return CUnitZerg

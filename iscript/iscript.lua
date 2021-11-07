@@ -1,8 +1,6 @@
 -- WARNING: Scripts need modification to run outside of coroutines or moved into native Factorio facilities (i.e. smoke overlays)
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
-local Surface = require('__stdlib__/stdlib/area/surface')
-local table = require('__stdlib__/stdlib/utils/table')
 
 local lo_data = require("__starcraft__/unit/lo")
 local convert = require("__starcraft__/glue/convert")

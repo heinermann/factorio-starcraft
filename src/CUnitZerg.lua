@@ -1,6 +1,5 @@
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Surface = require('__stdlib__/stdlib/area/surface')
-local table = require('__stdlib__/stdlib/utils/table')
 local Area = require('__stdlib__/stdlib/area/area')
 local Position = require('__stdlib__/stdlib/area/position')
 

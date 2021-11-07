@@ -4,7 +4,6 @@ local Entity = require('__stdlib__/stdlib/entity/entity')
 local Position = require('__stdlib__/stdlib/area/position')
 local Surface = require('__stdlib__/stdlib/area/surface')
 local math = require('__stdlib__/stdlib/utils/math')
-local table = require('__stdlib__/stdlib/utils/table')
 
 local ForceTile = require('src.ForceTile')
 

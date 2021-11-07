@@ -279,7 +279,7 @@ function make_functional_structure(data)
   --  }
   --end
 
-  return table.dictionary_merge(result, amendments);
+  return table.dictionary_merge(result, amendments)
 end
 
 function create_anim(data)

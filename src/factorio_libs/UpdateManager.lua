@@ -1,19 +1,15 @@
-local UpdateManager = {}
-UpdateManager.__index = UpdateManager
+require("__starcraft__/class/class")
 
-function UpdateManager:create(identifier)
-    local manager = {}
-    setmetatable(manager, UpdateManager)
+UpdateManager = class()
 
-    manager.identifier = "update_mgr_" .. identifier
+function UpdateManager:init(identifier)
+    self.identifier = "update_mgr_" .. identifier
 
-    if global[manager.identifier] == nil then
-        global[manager.identifier] = {}
+    if global[self.identifier] == nil then
+        global[self.identifier] = {}
     end
 
-    manager.data = global[manager.identifier]
-
-    return manager
+    self.data = global[self.identifier]
 end
 
 function UpdateManager:add(item, target_frame)
@@ -28,10 +24,8 @@ function UpdateManager:add(item, target_frame)
     table.insert(self.data[target_frame], item)
 end
 
-function UpdateManager:get_current()
+function UpdateManager:pop_current_tick()
     local result = self.data[game.tick]
     self.data[game.tick] = nil
     return result
 end
-
-return UpdateManager

@@ -12,6 +12,7 @@ local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 local Resources = require('src.resources')
 local Forces = require('src.forces')
 local CUnitProtoss = require('src.CUnitProtoss')
+local CUnitPBuild = require('src.CUnitPBuild')
 local CUnitZerg = require('src.CUnitZerg')
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -69,6 +70,7 @@ script.on_nth_tick(1, function(event)
   iscript.update()
   CUnitZerg.on_update()
   CUnitProtoss.on_update()
+  CUnitPBuild.update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -114,6 +116,10 @@ end)
 ---------------------------------------------------------------------------------------------------------------------
 -- https://lua-api.factorio.com/latest/events.html#on_script_trigger_effect
 -- TODO
+local function warp_anchor_placed(entity)
+  CUnitPBuild.add_warp_anchor(entity)
+  CUnitProtoss.on_bldg_created(entity)
+end
 
 local script_lookup = {
   ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
@@ -124,7 +130,8 @@ local script_lookup = {
   ["on_creep_provider_created"] = CUnitZerg.on_creep_provider_created,
   ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
   ["on_creep_bldg_created"] = CUnitZerg.on_creep_bldg_created,
-  ["on_creep_bldg_destroyed"] = CUnitZerg.on_creep_bldg_destroyed
+  ["on_creep_bldg_destroyed"] = CUnitZerg.on_creep_bldg_destroyed,
+  ["on_warp_anchor_placed"] = warp_anchor_placed
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)
@@ -161,76 +168,51 @@ remote.add_interface("shields",
 
 script.on_event(defines.events.on_entity_damaged, CUnitProtoss.on_damaged, {
   {filter = "name", name = "starcraft-nexus"},
+  {filter = "name", name = "starcraft-nexus-warp-anchor"},
+  {filter = "name", name = "starcraft-nexus-warp-fade"},
   {filter = "name", name = "starcraft-robotics-facility"},
+  {filter = "name", name = "starcraft-robotics-facility-warp-anchor"},
+  {filter = "name", name = "starcraft-robotics-facility-warp-fade"},
   {filter = "name", name = "starcraft-pylon"},
+  {filter = "name", name = "starcraft-pylon-warp-anchor"},
+  {filter = "name", name = "starcraft-pylon-warp-fade"},
   {filter = "name", name = "starcraft-assimilator"},
+  {filter = "name", name = "starcraft-assimilator-warp-anchor"},
+  {filter = "name", name = "starcraft-assimilator-warp-fade"},
   {filter = "name", name = "starcraft-observatory"},
+  {filter = "name", name = "starcraft-observatory-warp-anchor"},
+  {filter = "name", name = "starcraft-observatory-warp-fade"},
   {filter = "name", name = "starcraft-gateway"},
+  {filter = "name", name = "starcraft-gateway-warp-anchor"},
+  {filter = "name", name = "starcraft-gateway-warp-fade"},
   {filter = "name", name = "starcraft-cannon"},
+  {filter = "name", name = "starcraft-cannon-warp-anchor"},
+  {filter = "name", name = "starcraft-cannon-warp-fade"},
   {filter = "name", name = "starcraft-citadel"},
+  {filter = "name", name = "starcraft-citadel-warp-anchor"},
+  {filter = "name", name = "starcraft-citadel-warp-fade"},
   {filter = "name", name = "starcraft-cyber-core"},
+  {filter = "name", name = "starcraft-cyber-core-warp-anchor"},
+  {filter = "name", name = "starcraft-cyber-core-warp-fade"},
   {filter = "name", name = "starcraft-archives"},
+  {filter = "name", name = "starcraft-archives-warp-anchor"},
+  {filter = "name", name = "starcraft-archives-warp-fade"},
   {filter = "name", name = "starcraft-forge"},
+  {filter = "name", name = "starcraft-forge-warp-anchor"},
+  {filter = "name", name = "starcraft-forge-warp-fade"},
   {filter = "name", name = "starcraft-stargate"},
+  {filter = "name", name = "starcraft-stargate-warp-anchor"},
+  {filter = "name", name = "starcraft-stargate-warp-fade"},
   {filter = "name", name = "starcraft-fleet-beacon"},
+  {filter = "name", name = "starcraft-fleet-beacon-warp-anchor"},
+  {filter = "name", name = "starcraft-fleet-beacon-warp-fade"},
   {filter = "name", name = "starcraft-tribunal"},
+  {filter = "name", name = "starcraft-tribunal-warp-anchor"},
+  {filter = "name", name = "starcraft-tribunal-warp-fade"},
   {filter = "name", name = "starcraft-robotics-support-bay"},
+  {filter = "name", name = "starcraft-robotics-support-bay-warp-anchor"},
+  {filter = "name", name = "starcraft-robotics-support-bay-warp-fade"},
   {filter = "name", name = "starcraft-shield-battery"},
-  --{filter = "type", type = "accumulator"},
-  --{filter = "type", type = "artillery-turret"},
-  --{filter = "type", type = "beacon"},
-  --{filter = "type", type = "boiler"},
-  --{filter = "type", type = "burner-generator"},
-  --{filter = "type", type = "arithmetic-combinator"},
-  --{filter = "type", type = "decider-combinator"},
-  --{filter = "type", type = "constant-combinator"},
-  --{filter = "type", type = "container"},
-  --{filter = "type", type = "logistic-container"},
-  --{filter = "type", type = "infinity-container"},
-  --{filter = "type", type = "assembling-machine"},
-  --{filter = "type", type = "rocket-silo"},
-  --{filter = "type", type = "furnace"},
-  --{filter = "type", type = "electric-energy-interface"},
-  --{filter = "type", type = "electric-pole"},
-  --{filter = "type", type = "unit-spawner"},
-  --{filter = "type", type = "fish"},
-  --{filter = "type", type = "combat-robot"},
-  --{filter = "type", type = "construction-robot"},
-  --{filter = "type", type = "logistic-robot"},
-  --{filter = "type", type = "gate"},
-  --{filter = "type", type = "generator"},
-  --{filter = "type", type = "heat-interface"},
-  --{filter = "type", type = "heat-pipe"},
-  --{filter = "type", type = "inserter"},
-  --{filter = "type", type = "lab"},
-  --{filter = "type", type = "lamp"},
-  --{filter = "type", type = "land-mine"},
-  --{filter = "type", type = "linked-container"},
-  --{filter = "type", type = "market"},
-  --{filter = "type", type = "mining-drill"},
-  --{filter = "type", type = "offshore-pump"},
-  --{filter = "type", type = "pipe"},
-  --{filter = "type", type = "infinity-pipe"},
-  --{filter = "type", type = "pipe-to-ground"},
-  --{filter = "type", type = "player-port"},
-  --{filter = "type", type = "power-switch"},
-  --{filter = "type", type = "programmable-speaker"},
-  --{filter = "type", type = "pump"},
-  --{filter = "type", type = "radar"},
-  --{filter = "type", type = "rail-chain-signal"},
-  --{filter = "type", type = "rail-signal"},
-  --{filter = "type", type = "reactor"},
-  --{filter = "type", type = "roboport"},
-  --{filter = "type", type = "simple-entity"},
-  --{filter = "type", type = "simple-entity-with-owner"},
-  --{filter = "type", type = "simple-entity-with-force"},
-  --{filter = "type", type = "solar-panel"},
-  --{filter = "type", type = "storage-tank"},
-  --{filter = "type", type = "train-stop"},
-  --{filter = "type", type = "turret"},
-  --{filter = "type", type = "ammo-turret"},
-  --{filter = "type", type = "electric-turret"},
-  --{filter = "type", type = "fluid-turret"},
-  --{filter = "type", type = "unit"},
-  --{filter = "type", type = "wall"}
+  {filter = "name", name = "starcraft-shield-battery-warp-anchor"},
+  {filter = "name", name = "starcraft-shield-battery-warp-fade"}
 })

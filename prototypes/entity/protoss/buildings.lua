@@ -374,6 +374,8 @@ local warp_fade_anim_lookup = {
 }
 
 local function create_warpin_building(proto_data)
+    proto_data.fast_replaceable_group = proto_data.name
+
     -- Warp anchor prototype
     local warp_anchor = table.deep_copy(proto_data)
     warp_anchor.name = proto_data.name .. "-warp-anchor"
@@ -394,6 +396,11 @@ local function create_warpin_building(proto_data)
         create_anim(table.dictionary_merge(warp_anchor_anim, {
             frame_sequence = { 9, 10, 11, 12, 13, 14 },
             animation_speed = 1/2.5 -- 42 ms per frame
+        })),
+        -- WarpAnchorFlash
+        create_anim(table.dictionary_merge(warp_anchor_anim, {
+            frame_sequence = { 1, 2 },
+            animation_speed = 1/5 -- 84 ms per frame
         }))
     }
     warp_anchor.build_sound = warp_anchor_create_sfx
@@ -408,7 +415,7 @@ local function create_warpin_building(proto_data)
     warp_fade.name = proto_data.name .. "-warp-fade"
     warp_fade.localised_name = {"entity-name." .. proto_data.name}
     warp_fade.dying_script = nil
-    warp_fade.created_script = "on_warp_fade_created"
+    warp_fade.created_script = nil
     warp_fade.picture = nil
     warp_fade.pictures = nil
     warp_fade.animation = create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name],

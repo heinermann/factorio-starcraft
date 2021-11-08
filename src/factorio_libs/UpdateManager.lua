@@ -1,4 +1,4 @@
-require("__starcraft__/class/class")
+require("__starcraft__/external/class/class")
 
 UpdateManager = class()
 
@@ -8,24 +8,20 @@ function UpdateManager:init(identifier)
     if global[self.identifier] == nil then
         global[self.identifier] = {}
     end
-
-    self.data = global[self.identifier]
 end
 
-function UpdateManager:add(item, target_frame)
-    if target_frame == nil or target_frame <= game.tick then
-        target_frame = game.tick + 1
+function UpdateManager:add(item, ticks_from_current)
+    local target_frame = game.tick + ticks_from_current
+
+    if global[self.identifier][target_frame] == nil then
+        global[self.identifier][target_frame] = {}
     end
 
-    if self.data[target_frame] == nil then
-        self.data[target_frame] = {}
-    end
-
-    table.insert(self.data[target_frame], item)
+    table.insert(global[self.identifier][target_frame], item)
 end
 
 function UpdateManager:pop_current_tick()
-    local result = self.data[game.tick]
-    self.data[game.tick] = nil
+    local result = global[self.identifier][game.tick]
+    global[self.identifier][game.tick] = nil
     return result
 end

@@ -112,6 +112,7 @@ local function make_common_structure(data)
       "water-tile"
     },
 
+    fast_replaceable_group = data.fast_replaceable_group,
     flags = {
       "not-rotatable",
       "not-blueprintable",
@@ -266,6 +267,7 @@ function make_functional_structure(data)
     animations = data.animation,
     picture = data.picture,
     pictures = data.pictures,
+    random_animation_offset = false,
     random_variation_on_create = false
   }
 

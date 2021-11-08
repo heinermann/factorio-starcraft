@@ -152,46 +152,110 @@ end
 
 local SHIELD_VALUES = {
     ["starcraft-nexus"] = 750,
+    ["starcraft-nexus-warp-anchor"] = 750,
+    ["starcraft-nexus-warp-fade"] = 750,
     ["starcraft-robotics-facility"] = 500,
+    ["starcraft-robotics-facility-warp-anchor"] = 500,
+    ["starcraft-robotics-facility-warp-fade"] = 500,
     ["starcraft-pylon"] = 300,
+    ["starcraft-pylon-warp-anchor"] = 300,
+    ["starcraft-pylon-warp-fade"] = 300,
     ["starcraft-assimilator"] = 450,
+    ["starcraft-assimilator-warp-anchor"] = 450,
+    ["starcraft-assimilator-warp-fade"] = 450,
     ["starcraft-observatory"] = 250,
+    ["starcraft-observatory-warp-anchor"] = 250,
+    ["starcraft-observatory-warp-fade"] = 250,
     ["starcraft-gateway"] = 500,
+    ["starcraft-gateway-warp-anchor"] = 500,
+    ["starcraft-gateway-warp-fade"] = 500,
     ["starcraft-cannon"] = 100,
+    ["starcraft-cannon-warp-anchor"] = 100,
+    ["starcraft-cannon-warp-fade"] = 100,
     ["starcraft-citadel"] = 450,
+    ["starcraft-citadel-warp-anchor"] = 450,
+    ["starcraft-citadel-warp-fade"] = 450,
     ["starcraft-cyber-core"] = 500,
+    ["starcraft-cyber-core-warp-anchor"] = 500,
+    ["starcraft-cyber-core-warp-fade"] = 500,
     ["starcraft-archives"] = 500,
+    ["starcraft-archives-warp-anchor"] = 500,
+    ["starcraft-archives-warp-fade"] = 500,
     ["starcraft-forge"] = 500,
+    ["starcraft-forge-warp-anchor"] = 500,
+    ["starcraft-forge-warp-fade"] = 500,
     ["starcraft-stargate"] = 600,
+    ["starcraft-stargate-warp-anchor"] = 600,
+    ["starcraft-stargate-warp-fade"] = 600,
     ["starcraft-fleet-beacon"] = 500,
+    ["starcraft-fleet-beacon-warp-anchor"] = 500,
+    ["starcraft-fleet-beacon-warp-fade"] = 500,
     ["starcraft-tribunal"] = 500,
+    ["starcraft-tribunal-warp-anchor"] = 500,
+    ["starcraft-tribunal-warp-fade"] = 500,
     ["starcraft-robotics-support-bay"] = 450,
-    ["starcraft-shield-battery"] = 200
+    ["starcraft-robotics-support-bay-warp-anchor"] = 450,
+    ["starcraft-robotics-support-bay-warp-fade"] = 450,
+    ["starcraft-shield-battery"] = 200,
+    ["starcraft-shield-battery-warp-anchor"] = 200,
+    ["starcraft-shield-battery-warp-fade"] = 200
 }
 
 -- Default is 2 for omitted items
 local SHIELD_SIZES = {
-    ["starcraft-nexus"] = 3
+    ["starcraft-nexus"] = 3,
+    ["starcraft-nexus-warp-anchor"] = 3,
+    ["starcraft-nexus-warp-fade"] = 3
 }
 
 -- Copy of vertical offset from entity anim definitions to include in shield hit overlays
 -- 0 if omitted
 local SHIELD_VOFFSETS = {
     ["starcraft-nexus"] = -4/16,
+    ["starcraft-nexus-warp-anchor"] = -4/16,
+    ["starcraft-nexus-warp-fade"] = -4/16,
     ["starcraft-robotics-facility"] = -8/16,
+    ["starcraft-robotics-facility-warp-anchor"] = -8/16,
+    ["starcraft-robotics-facility-warp-fade"] = -8/16,
     ["starcraft-pylon"] = -11/16,
+    ["starcraft-pylon-warp-anchor"] = -11/16,
+    ["starcraft-pylon-warp-fade"] = -11/16,
     ["starcraft-observatory"] = -8/16,
+    ["starcraft-observatory-warp-anchor"] = -8/16,
+    ["starcraft-observatory-warp-fade"] = -8/16,
     ["starcraft-gateway"] = -11/16,
+    ["starcraft-gateway-warp-anchor"] = -11/16,
+    ["starcraft-gateway-warp-fade"] = -11/16,
     ["starcraft-cannon"] = -2/16,
+    ["starcraft-cannon-warp-anchor"] = -2/16,
+    ["starcraft-cannon-warp-fade"] = -2/16,
     ["starcraft-citadel"] = -13/16,
+    ["starcraft-citadel-warp-anchor"] = -13/16,
+    ["starcraft-citadel-warp-fade"] = -13/16,
     ["starcraft-cyber-core"] = -1/16,
+    ["starcraft-cyber-core-warp-anchor"] = -1/16,
+    ["starcraft-cyber-core-warp-fade"] = -1/16,
     ["starcraft-archives"] = -5/16,
+    ["starcraft-archives-warp-anchor"] = -5/16,
+    ["starcraft-archives-warp-fade"] = -5/16,
     ["starcraft-forge"] = -1/16,
+    ["starcraft-forge-warp-anchor"] = -1/16,
+    ["starcraft-forge-warp-fade"] = -1/16,
     ["starcraft-stargate"] = -16/16,
+    ["starcraft-stargate-warp-anchor"] = -16/16,
+    ["starcraft-stargate-warp-fade"] = -16/16,
     ["starcraft-fleet-beacon"] = -7/16,
+    ["starcraft-fleet-beacon-warp-anchor"] = -7/16,
+    ["starcraft-fleet-beacon-warp-fade"] = -7/16,
     ["starcraft-tribunal"] = -4/16,
+    ["starcraft-tribunal-warp-anchor"] = -4/16,
+    ["starcraft-tribunal-warp-fade"] = -4/16,
     ["starcraft-robotics-support-bay"] = -6/16,
-    ["starcraft-shield-battery"] = -3/16
+    ["starcraft-robotics-support-bay-warp-anchor"] = -6/16,
+    ["starcraft-robotics-support-bay-warp-fade"] = -6/16,
+    ["starcraft-shield-battery"] = -3/16,
+    ["starcraft-shield-battery-warp-anchor"] = -3/16,
+    ["starcraft-shield-battery-warp-fade"] = -3/16
 }
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -206,7 +270,9 @@ local UNFILLED_COLOR = {116, 116, 127}
 local FADED_HEALTH_COLOR = {70/4, 225/4, 0, 1/3}
 
 local function update_shield_bars(entity)
-    local data = Entity.get_data(entity) or {}
+    if not entity.valid then return end
+    local data = Entity.get_data(entity)
+    if data == nil then return end
 
     local health_ratio = entity.get_health_ratio()
     local shield_ratio = CUnitProtoss.get_shield_ratio(entity)
@@ -515,6 +581,9 @@ function CUnitProtoss.on_bldg_destroyed(entity)
 end
 
 function CUnitProtoss.on_damaged(event)
+    if global.tracking_shield_entities[event.entity.unit_number] == nil then return end
+    if not event.entity.valid then return end
+
     if event.original_damage_amount <= 0 or CUnitProtoss.get_shields(event.entity) == 0 then
         update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
 

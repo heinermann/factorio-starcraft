@@ -423,13 +423,30 @@ local function create_warpin_building(proto_data)
     warp_fade.localised_name = {"entity-name." .. proto_data.name}
     warp_fade.dying_script = "on_protoss_bldg_destroyed"
     warp_fade.created_script = "on_protoss_bldg_created"
-    warp_fade.picture = nil
-    warp_fade.pictures = nil
-    if proto_data.shadow ~= nil then
-        warp_fade.animation = create_shadow_anim(proto_data.shadow)
-    else
-        warp_fade.animation = blank_anim
+
+    if warp_fade.picture ~= nil then
+        warp_fade.pictures = {
+            blank_anim,
+            warp_fade.picture
+        }
+        warp_fade.picture = nil
+    elseif warp_fade.pictures ~= nil then
+        warp_fade.pictures = {
+            blank_anim,
+            warp_fade.pictures[1]
+        }
+    elseif warp_fade.animation ~= nil then
+        warp_fade.animation = {
+            blank_anim,
+            warp_fade.animation[1]
+        }
+    elseif warp_fade.folded_animation ~= nil then
+        warp_fade.animation = {
+            blank_anim,
+            warp_fade.folded_animation
+        }
     end
+
     warp_fade.build_sound = warp_in_sfx
 
     local warp_fade_animation = table.dictionary_merge(create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name],
@@ -480,18 +497,6 @@ local function create_warpin_building(proto_data)
     --        animation_speed = 1/5 -- 84 ms per frame
     --    }
     --}
-    local warp_fade_in_explosion = {
-        type = "explosion",
-        name = proto_data.name .. "-warp-fade-in",
-        fade_out_duration = 120,
-        render_layer = "higher-object-under",
-        animations = create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name], {
-            frame_count = 37,
-            frame_sequence = { 21 },
-            repeat_count = 121,
-            draw_as_glow = true
-        }))
-    }
     --------------------------------------------------
 
     local main_structure = nil
@@ -505,8 +510,7 @@ local function create_warpin_building(proto_data)
         make_protoss_structure(warp_anchor),
         make_protoss_structure(warp_fade),
         warp_fade_animation,
-        main_structure,
-        warp_fade_in_explosion
+        main_structure
     })
 end
 
@@ -542,7 +546,6 @@ create_warpin_building{
             }
         }
     },
-    shadow = nexus_shadow,
     corpse = "starcraft-p_bldg_rubble_lrg",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 750,   -- +750 shields
@@ -584,7 +587,6 @@ create_warpin_building{
             create_shadow_anim(pylon_shadow)
         }
     },
-    shadow = pylon_shadow,
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 300,   -- +300 shields
     armor = 0,
@@ -617,7 +619,6 @@ create_warpin_building{
     name = "starcraft-observatory",
     icon_id = 159,
     pictures = make_common_states(observatory_main, observatory_shadow),
-    shadow = observatory_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 250,   -- +250 shields
@@ -880,7 +881,6 @@ create_warpin_building{
     name = "starcraft-tribunal",
     icon_id = 170,
     pictures = make_common_states(tribunal_main, tribunal_shadow),
-    shadow = tribunal_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 500,   -- +500 shields
@@ -898,7 +898,6 @@ create_warpin_building{
     name = "starcraft-robotics-support-bay",
     icon_id = 171,
     pictures = make_common_states(robotics_support_main, robotics_support_shadow),
-    shadow = robotics_support_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 450,   -- +450 shields

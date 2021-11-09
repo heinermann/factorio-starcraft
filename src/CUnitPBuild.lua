@@ -79,6 +79,9 @@ local VARIATION_WARP_ANCHOR_INIT = 1
 local VARIATION_WARP_ANCHOR_SHOWN = 2
 local VARIATION_WARP_ANCHOR_HIDDEN = 3
 
+local VARIATION_FADE_GFX_HIDDEN = 1
+local VARIATION_FADE_GFX_SHOWN = 2
+
 local STATE_ANCHOR_WARP_IN = 0
 local STATE_ANCHOR_WAIT_BUILD = 1
 local STATE_ANCHOR_WARP_FLASH = 2
@@ -160,40 +163,50 @@ local function play_warpin_anim(entity)
     }
 end
 
-local function update_entity_progress(entity)
-    if entity == nil or not entity.valid then return end
-    local data = Entity.get_data(entity) or {}
+local function play_entity_sound(entity, sound)
+    entity.surface.play_sound{
+        path = sound,
+        position = entity.position
+    }
+end
 
-    if data.order_state == STATE_ANCHOR_WARP_IN then
+local order_state_fns = {
+    [STATE_ANCHOR_WARP_IN] = function(entity)
         entity.graphics_variation = VARIATION_WARP_ANCHOR_SHOWN
         add_next_update(entity, STATE_ANCHOR_WAIT_BUILD, build_times[entity.name])
-    elseif data.order_state == STATE_ANCHOR_WAIT_BUILD then
+    end,
+
+    [STATE_ANCHOR_WAIT_BUILD] = function(entity)
         entity.graphics_variation = VARIATION_WARP_ANCHOR_HIDDEN
         entity.surface.create_trivial_smoke{
             name = "starcraft-warp-anchor-flash",
             position = entity.position
         }
         add_next_update(entity, STATE_ANCHOR_WARP_FLASH, WARP_FLASH_DELAY)
-    elseif data.order_state == STATE_ANCHOR_WARP_FLASH then
+    end,
+
+    [STATE_ANCHOR_WARP_FLASH] = function(entity)
         entity = progress_replace_entity(entity)
         play_warpin_anim(entity)
+        play_entity_sound(entity, "entity-build/" .. entity.name)
         add_next_update(entity, STATE_WARP_FADE_IN_TEXTURE, FADE_IN_DELAY)
-        entity.surface.play_sound{
-            path = "entity-build/" .. entity.name,
-            position = entity.position
-        }
-    elseif data.order_state == STATE_WARP_FADE_IN_TEXTURE then
-        global.tracking_fade_in_overlays[entity.unit_number] = entity.surface.create_entity{
-            name = entity.name .. "-in",
-            position = entity.position,
-            force = entity.force,
-            raise_built = false,
-            create_build_effect_smoke = false
-        }
+    end,
+
+    [STATE_WARP_FADE_IN_TEXTURE] = function(entity)
+        entity.graphics_variation = VARIATION_FADE_GFX_SHOWN
         add_next_update(entity, STATE_WARP_FADE_OUT, FADE_OUT_DELAY)
-    elseif data.order_state == STATE_WARP_FADE_OUT then
+    end,
+
+    [STATE_WARP_FADE_OUT] = function(entity)
         progress_replace_entity(entity)
-    end
+    end,
+}
+
+local function update_entity_progress(entity)
+    if entity == nil or not entity.valid then return end
+    local data = Entity.get_data(entity)
+
+    order_state_fns[data.order_state](entity)
 end
 
 function CUnitPBuild.on_update()
@@ -215,13 +228,9 @@ end
 
 function CUnitPBuild.add_warp_anchor(entity)
     add_next_update(entity, STATE_ANCHOR_WARP_IN, WARP_ANCHOR_CREATED_DELAY)
-    entity.surface.play_sound{
-        path = "entity-build/" .. entity.name,
-        position = entity.position
-    }
+    play_entity_sound(entity, "entity-build/" .. entity.name)
 
     local data = Entity.get_data(entity) or {}
-
     local build_time = build_times[entity.name]
 
     entity.health = entity.prototype.max_health / 10
@@ -229,7 +238,6 @@ function CUnitPBuild.add_warp_anchor(entity)
 
     data.hp_gain = get_hp_gain(entity.prototype.max_health, build_time)
     data.shield_gain = get_shield_gain(data.max_shields, build_time)
-
     Entity.set_data(entity, data)
 
     global.tracking_protoss_constructions[entity.unit_number] = entity
@@ -237,16 +245,10 @@ end
 
 function CUnitPBuild.destroy_warp_anchor(entity)
     global.tracking_protoss_constructions[entity.unit_number] = nil
-    local explosion = global.tracking_fade_in_overlays[entity.unit_number]
-    if explosion ~= nil and explosion.valid then
-        explosion.destroy()
-        global.tracking_fade_in_overlays[entity.unit_number] = nil
-    end
 end
 
 function CUnitPBuild.on_init()
     global.tracking_protoss_constructions = {}
-    global.tracking_fade_in_overlays = {}
 end
 
 return CUnitPBuild

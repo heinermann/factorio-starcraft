@@ -83,9 +83,15 @@ data:extend({
             hr_line_length = 6,
             hr_size = { 596, 599 },
             draw_as_glow = true,
-
-            frame_sequence = { 8, 7, 6, 5, 4, 3 },
-            animation_speed = 1/5 -- 84 ms per frame
+            frame_sequence = {
+                8, 8, 8, 8, 8,
+                7, 7, 7, 7, 7,
+                6, 6, 6, 6, 6,
+                5, 5, 5, 5, 5,
+                4, 4, 4, 4, 4,
+                3, 3, 3, 3, 3
+            },
+            --animation_speed = 1/5 -- 84 ms per frame
         }
     },
 })

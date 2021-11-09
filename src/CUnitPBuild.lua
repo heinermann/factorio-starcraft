@@ -71,8 +71,8 @@ local build_times = {
 -- State 2: warp in and fade - 173 ticks
 
 local WARP_ANCHOR_CREATED_DELAY = 28
-local WARP_IN_DELAY = 172
-local WARP_FLASH_DELAY = 8
+local WARP_IN_DELAY = 170
+local WARP_FLASH_DELAY = 5
 
 local VARIATION_WARP_ANCHOR_INIT = 1
 local VARIATION_WARP_ANCHOR_SHOWN = 2

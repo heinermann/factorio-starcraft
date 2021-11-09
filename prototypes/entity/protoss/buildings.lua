@@ -456,7 +456,7 @@ local function create_warpin_building(proto_data)
                 36, 36, 36,
                 37, 37, 37
             },
-            --animation_speed = 1/2, --1/2.5, -- 42 ms per frame
+            --animation_speed = 1/2.5, -- 42 ms per frame
             draw_as_glow = true
         })
     ), {

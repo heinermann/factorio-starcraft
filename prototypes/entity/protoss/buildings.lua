@@ -179,6 +179,12 @@ local warp_anchor_anim = {
     draw_as_glow = true
 }
 
+local blank_anim = {
+    filename = "__starcraft__/graphics2/blank.png",
+    frame_count = 1,
+    size = {1, 1}
+}
+
 local warp_anchor_create_sfx = {
     filename = "__starcraft__/sound/protoss/shuttle/pshbld00.wav",
     aggregation = {
@@ -376,32 +382,34 @@ local warp_fade_anim_lookup = {
 local function create_warpin_building(proto_data)
     proto_data.fast_replaceable_group = proto_data.name
 
+    --------------------------------------------------
     -- Warp anchor prototype
     local warp_anchor = table.deep_copy(proto_data)
     warp_anchor.name = proto_data.name .. "-warp-anchor"
     warp_anchor.localised_name = {"entity-name." .. proto_data.name}
     warp_anchor.corpse = nil
     warp_anchor.dying_explosion = "starcraft-warp-anchor-death"
-    warp_anchor.dying_script = nil
+    warp_anchor.dying_script = "on_warp_anchor_destroyed"
     warp_anchor.created_script = "on_warp_anchor_placed"
     warp_anchor.picture = nil
     warp_anchor.pictures = nil
     warp_anchor.animation = {
-        -- WarpAnchorInit
         create_anim(table.dictionary_merge(warp_anchor_anim, {
-            frame_sequence = { 3, 4, 5, 6, 7, 8 },
-            animation_speed = 1/5 -- 84 ms per frame
+            frame_sequence = { 
+                3, 3, 3, 3, 3,
+                4, 4, 4, 4, 4,
+                5, 5, 5, 5, 5,
+                6, 6, 6, 6, 6,
+                7, 7, 7, 7, 7,
+                8, 8, 8, 8, 8
+            }
         })),
         -- WarpAnchorRepeat
         create_anim(table.dictionary_merge(warp_anchor_anim, {
             frame_sequence = { 9, 10, 11, 12, 13, 14 },
             animation_speed = 1/2.5 -- 42 ms per frame
         })),
-        -- WarpAnchorFlash
-        create_anim(table.dictionary_merge(warp_anchor_anim, {
-            frame_sequence = { 1, 2 },
-            animation_speed = 1/5 -- 84 ms per frame
-        }))
+        blank_anim
     }
     warp_anchor.build_sound = warp_anchor_create_sfx
     warp_anchor.working_sound = {
@@ -409,19 +417,25 @@ local function create_warpin_building(proto_data)
         idle_sound = warp_anchor_loop_sfx
     }
     --------------------------------------------------
-
     -- Warp flash & fade prototype
     local warp_fade = table.deep_copy(proto_data)
     warp_fade.name = proto_data.name .. "-warp-fade"
     warp_fade.localised_name = {"entity-name." .. proto_data.name}
-    warp_fade.dying_script = nil
-    warp_fade.created_script = nil
+    warp_fade.dying_script = "on_protoss_bldg_destroyed"
+    warp_fade.created_script = "on_protoss_bldg_created"
     warp_fade.picture = nil
     warp_fade.pictures = nil
-    warp_fade.animation = create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name],
+    if proto_data.shadow ~= nil then
+        warp_fade.animation = create_shadow_anim(proto_data.shadow)
+    else
+        warp_fade.animation = blank_anim
+    end
+    warp_fade.build_sound = warp_in_sfx
+
+    local warp_fade_animation = table.dictionary_merge(create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name],
         {
             frame_count = 37,
-            frame_sequence = {
+            frame_sequence = {  -- 69 frames
                 -- Warp-in
                 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
                 -- Fade
@@ -442,12 +456,30 @@ local function create_warpin_building(proto_data)
                 36, 36, 36,
                 37, 37, 37
             },
-            animation_speed = 1/2.5, -- 42 ms per frame
+            --animation_speed = 1/2, --1/2.5, -- 42 ms per frame
             draw_as_glow = true
         })
-    )
-    warp_fade.build_sound = warp_in_sfx
+    ), {
+        type = "animation",
+        name = proto_data.name .. "-warp-fade",
+    })
     --------------------------------------------------
+    --local warp_anchor_death = {
+    --    type = "explosion",
+    --    name = "starcraft-warp-anchor-death",
+    --    render_layer = "object",
+    --    animations = create_anim{
+    --        filename = "main_211_diffuse.png",
+    --        frame_count = 14,
+    --        line_length = 13,
+    --        size = { 298, 300 },
+    --        hr_line_length = 6,
+    --        hr_size = { 596, 599 },
+    --        draw_as_glow = true,
+    --        frame_sequence = { 8, 7, 6, 5, 4, 3 },
+    --        animation_speed = 1/5 -- 84 ms per frame
+    --    }
+    --}
 
     local main_structure = nil
     if proto_data.attack_parameters then
@@ -459,6 +491,7 @@ local function create_warpin_building(proto_data)
     data:extend({
         make_protoss_structure(warp_anchor),
         make_protoss_structure(warp_fade),
+        warp_fade_animation,
         main_structure
     })
 end
@@ -495,6 +528,7 @@ create_warpin_building{
             }
         }
     },
+    shadow = nexus_shadow,
     corpse = "starcraft-p_bldg_rubble_lrg",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 750,   -- +750 shields
@@ -536,6 +570,7 @@ create_warpin_building{
             create_shadow_anim(pylon_shadow)
         }
     },
+    shadow = pylon_shadow,
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 300,   -- +300 shields
     armor = 0,
@@ -568,6 +603,7 @@ create_warpin_building{
     name = "starcraft-observatory",
     icon_id = 159,
     pictures = make_common_states(observatory_main, observatory_shadow),
+    shadow = observatory_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 250,   -- +250 shields
@@ -830,6 +866,7 @@ create_warpin_building{
     name = "starcraft-tribunal",
     icon_id = 170,
     pictures = make_common_states(tribunal_main, tribunal_shadow),
+    shadow = tribunal_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 500,   -- +500 shields
@@ -847,6 +884,7 @@ create_warpin_building{
     name = "starcraft-robotics-support-bay",
     icon_id = 171,
     pictures = make_common_states(robotics_support_main, robotics_support_shadow),
+    shadow = robotics_support_shadow,
     corpse = "starcraft-p_bldg_rubble_sml",
     dying_explosion = "starcraft-p_explode_death_xlrg",
     max_health = 450,   -- +450 shields

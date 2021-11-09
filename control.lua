@@ -32,6 +32,7 @@ script.on_init(function()
   iscript.on_init()
   CUnitProtoss.on_init()
   CUnitZerg.on_init()
+  CUnitPBuild.on_init()
 end)
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -70,7 +71,7 @@ script.on_nth_tick(1, function(event)
   iscript.update()
   CUnitZerg.on_update()
   CUnitProtoss.on_update()
-  CUnitPBuild.update()
+  CUnitPBuild.on_update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -117,8 +118,13 @@ end)
 -- https://lua-api.factorio.com/latest/events.html#on_script_trigger_effect
 -- TODO
 local function warp_anchor_placed(entity)
-  CUnitPBuild.add_warp_anchor(entity)
   CUnitProtoss.on_bldg_created(entity)
+  CUnitPBuild.add_warp_anchor(entity) -- Must be after on_bldg_created
+end
+
+local function warp_anchor_destroyed(entity)
+  CUnitPBuild.destroy_warp_anchor(entity)
+  CUnitProtoss.on_bldg_destroyed(entity)
 end
 
 local script_lookup = {
@@ -131,7 +137,8 @@ local script_lookup = {
   ["on_creep_provider_destroyed"] = CUnitZerg.on_creep_provider_destroyed,
   ["on_creep_bldg_created"] = CUnitZerg.on_creep_bldg_created,
   ["on_creep_bldg_destroyed"] = CUnitZerg.on_creep_bldg_destroyed,
-  ["on_warp_anchor_placed"] = warp_anchor_placed
+  ["on_warp_anchor_placed"] = warp_anchor_placed,
+  ["on_warp_anchor_destroyed"] = warp_anchor_destroyed,
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

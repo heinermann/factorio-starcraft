@@ -269,7 +269,7 @@ local FADED_SHIELD_COLOR = {0, 115/4, 245/4, 1/3}
 local UNFILLED_COLOR = {116, 116, 127}
 local FADED_HEALTH_COLOR = {70/4, 225/4, 0, 1/3}
 
-local function update_shield_bars(entity)
+function CUnitProtoss.update_shield_bars(entity)
     if not entity.valid then return end
     local data = Entity.get_data(entity)
     if data == nil then return end
@@ -383,7 +383,7 @@ local function create_shield_bars(entity)
     }
 
     Entity.set_data(entity, data)
-    update_shield_bars(entity)
+    CUnitProtoss.update_shield_bars(entity)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -401,7 +401,7 @@ end
 local function update_shield_entities()
     for _, entity in pairs(global.tracking_shield_entities) do
         if entity.valid and CUnitProtoss.add_shields(entity, 0.01085) then
-            update_shield_bars(entity)
+            CUnitProtoss.update_shield_bars(entity)
         end
     end
 end
@@ -411,10 +411,12 @@ local function init_shields(entity)
     if SHIELD_VALUES[entity.name] ~= nil then
         local data = Entity.get_data(entity) or {}
 
-        data.max_shields = SHIELD_VALUES[entity.name]
-        data.shields = data.max_shields
+        if data.max_shields == nil then
+            data.max_shields = SHIELD_VALUES[entity.name]
+            data.shields = data.max_shields
 
-        Entity.set_data(entity, data)
+            Entity.set_data(entity, data)
+        end
         create_shield_bars(entity)
         register_shield_entity(entity)
     end
@@ -585,7 +587,7 @@ function CUnitProtoss.on_damaged(event)
     if not event.entity.valid then return end
 
     if event.original_damage_amount <= 0 or CUnitProtoss.get_shields(event.entity) == 0 then
-        update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+        CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
 
         -- Enable the entity in case it's unpowered, so that it can die
         if event.entity.health == 0 then
@@ -610,7 +612,7 @@ function CUnitProtoss.on_damaged(event)
         end
     end
 
-    update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+    CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
 end
 
 function CUnitProtoss.on_init()

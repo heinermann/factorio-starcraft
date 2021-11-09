@@ -46,7 +46,7 @@ local function make_simple_smoke_anim(data)
     affected_by_wind = false,
     show_when_smoke_off = true,
     movement_slow_down_factor = 0,
-    color = {1, 1, 1, 0.9}
+    color = {1, 1, 1, 1}
   }
 end
 
@@ -144,7 +144,24 @@ data:extend({
       animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
     },
     duration = 2.52 * 14
-  }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-warp-anchor-flash",
+    anim = {
+      filename = "main_211_diffuse.png",
+      frame_count = 14,
+      line_length = 13,
+      size = { 298, 300 },
+      hr_line_length = 6,
+      hr_size = { 596, 599 },
+      draw_as_glow = true,
+      frame_sequence = {
+        1, 1, 1, 1, 1,
+        2, 2, 2, 2, 2,
+      }
+    },
+    duration = 5 * 2
+  },
 })
 
 -- Shield hit overlays

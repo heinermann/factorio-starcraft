@@ -1,6 +1,7 @@
 require("factorio_libs.UpdateManager")
 local table = require('__stdlib__/stdlib/utils/table')
 local Entity = require('__stdlib__/stdlib/entity/entity')
+local CUnitProtoss = require("CUnitProtoss")
 
 local CUnitPBuild = {}
 local update_tracker = UpdateManager:new("CUnitPBuild")
@@ -69,13 +70,40 @@ local build_times = {
 -- State 1: warp anchor - See build_times
 -- State 2: warp in and fade - 173 ticks
 
-local WARP_ANCHOR_CREATED_DELAY = 29
-local WARP_IN_DELAY = 138
-local WARP_FLASH_DELAY = 9
+local WARP_ANCHOR_CREATED_DELAY = 28
+local WARP_IN_DELAY = 172
+local WARP_FLASH_DELAY = 8
 
-local VARIATION_WARP_IN = 1
-local VARIATION_WARP_REPEAT = 2
-local VARIATION_WARP_FLASH = 3
+local VARIATION_WARP_ANCHOR_INIT = 1
+local VARIATION_WARP_ANCHOR_SHOWN = 2
+local VARIATION_WARP_ANCHOR_HIDDEN = 3
+
+-- hp / 10 = starting hp amount
+-- shields / 10 = starting shield amount
+local function get_hp_gain(hp, buildtime)
+    hp = hp * 256
+    if buildtime ~= 0 then
+        local result = (hp - hp / 10 + buildtime - 1) / buildtime
+        if result ~= 0 then
+            return result / 256
+        end
+    end
+    -- 1/256 of a hit point every 1 starcraft tick (2.52 Factorio ticks)
+    return 1 / 256 / 2.52
+end
+
+local function get_shield_gain(shields, buildtime)
+    --shields = shields / 256
+    if shields ~= 0 then
+        if buildtime ~= 0 then
+            local result = (shields - shields / 10) / buildtime
+            if result ~= 0 then
+                return result
+            end
+        end
+    end
+    return 1 / 256 / 2.52
+end
 
 local function add_next_update(entity, order_state, ticks)
     local data = Entity.get_data(entity) or {}
@@ -85,20 +113,43 @@ local function add_next_update(entity, order_state, ticks)
     update_tracker:add(entity, ticks)
 end
 
--- TODO: Copy hp/shields
+local function inherit_data(entity, src_data)
+    local data = Entity.get_data(entity) or {}
+    data.max_shields = src_data.max_shields
+    data.shields = src_data.shields
+    Entity.set_data(entity, data)
+end
+
 local function progress_replace_entity(entity)
+    global.tracking_protoss_constructions[entity.unit_number] = nil
+    local old_data = Entity.get_data(entity)
+    local old_health = entity.health
     local result = entity.surface.create_entity{
         name = entity_progress_table[entity.name],
         position = entity.position,
         direction = entity.direction,
         force = entity.force,
-        --fast_replace = true,
-        --spill = false,
+        fast_replace = true,
+        spill = false,
         create_build_effect_smoke = false,
         move_stuck_players = false
     }
-    entity.destroy()
+    result.health = old_health
+    inherit_data(result, old_data)
     return result
+end
+
+local function play_warpin_anim(entity)
+    -- Thanks to Honktown
+    local anim_speed = 1/2.5
+    rendering.draw_animation{
+        animation = entity.name,
+        render_layer = "object",
+        animation_speed = anim_speed,
+        animation_offset = -((game.tick % (69 / anim_speed)) * anim_speed),
+        target = entity,
+        surface = entity.surface
+    }
 end
 
 local function update_entity_progress(entity)
@@ -106,13 +157,18 @@ local function update_entity_progress(entity)
     local data = Entity.get_data(entity) or {}
 
     if data.order_state == 0 then
-        entity.graphics_variation = VARIATION_WARP_REPEAT
+        entity.graphics_variation = VARIATION_WARP_ANCHOR_SHOWN
         add_next_update(entity, 1, build_times[entity.name])
     elseif data.order_state == 1 then
-        entity.graphics_variation = VARIATION_WARP_FLASH
+        entity.graphics_variation = VARIATION_WARP_ANCHOR_HIDDEN
+        entity.surface.create_trivial_smoke{
+            name = "starcraft-warp-anchor-flash",
+            position = entity.position
+        }
         add_next_update(entity, 2, WARP_FLASH_DELAY)
     elseif data.order_state == 2 then
         entity = progress_replace_entity(entity)
+        play_warpin_anim(entity)
         add_next_update(entity, 3, WARP_IN_DELAY)
         entity.surface.play_sound{
             path = "entity-build/" .. entity.name,
@@ -123,13 +179,21 @@ local function update_entity_progress(entity)
     end
 end
 
-function CUnitPBuild.update()
+function CUnitPBuild.on_update()
     local advances = update_tracker:pop_current_tick()
     if advances ~= nil then
         table.each(advances, update_entity_progress)
     end
 
-    -- TODO ind. frame updates for hp/shields gaining from 1 to max
+    for _, entity in pairs(global.tracking_protoss_constructions) do
+        if entity.valid then
+            local data = Entity.get_data(entity) or {}
+            entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
+            data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
+            Entity.set_data(entity, data)
+            CUnitProtoss.update_shield_bars(entity) -- TODO: Queue up
+        end
+    end
 end
 
 function CUnitPBuild.add_warp_anchor(entity)
@@ -138,6 +202,28 @@ function CUnitPBuild.add_warp_anchor(entity)
         path = "entity-build/" .. entity.name,
         position = entity.position
     }
+
+    local data = Entity.get_data(entity) or {}
+
+    local build_time = build_times[entity.name]
+
+    entity.health = entity.prototype.max_health / 10
+    data.shields = data.max_shields / 10
+
+    data.hp_gain = get_hp_gain(entity.prototype.max_health, build_time)
+    data.shield_gain = get_shield_gain(data.max_shields, build_time)
+
+    Entity.set_data(entity, data)
+
+    global.tracking_protoss_constructions[entity.unit_number] = entity
+end
+
+function CUnitPBuild.destroy_warp_anchor(entity)
+    global.tracking_protoss_constructions[entity.unit_number] = nil
+end
+
+function CUnitPBuild.on_init()
+    global.tracking_protoss_constructions = {}
 end
 
 return CUnitPBuild

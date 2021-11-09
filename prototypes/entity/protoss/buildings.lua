@@ -480,6 +480,19 @@ local function create_warpin_building(proto_data)
     --        animation_speed = 1/5 -- 84 ms per frame
     --    }
     --}
+    local warp_fade_in_explosion = {
+        type = "explosion",
+        name = proto_data.name .. "-warp-fade-in",
+        fade_out_duration = 120,
+        render_layer = "higher-object-under",
+        animations = create_anim(table.dictionary_merge(warp_fade_anim_lookup[proto_data.name], {
+            frame_count = 37,
+            frame_sequence = { 21 },
+            repeat_count = 121,
+            draw_as_glow = true
+        }))
+    }
+    --------------------------------------------------
 
     local main_structure = nil
     if proto_data.attack_parameters then
@@ -492,7 +505,8 @@ local function create_warpin_building(proto_data)
         make_protoss_structure(warp_anchor),
         make_protoss_structure(warp_fade),
         warp_fade_animation,
-        main_structure
+        main_structure,
+        warp_fade_in_explosion
     })
 end
 

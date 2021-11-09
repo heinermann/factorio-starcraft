@@ -71,12 +71,19 @@ local build_times = {
 -- State 2: warp in and fade - 173 ticks
 
 local WARP_ANCHOR_CREATED_DELAY = 28
-local WARP_IN_DELAY = 170
+local FADE_IN_DELAY = 52
+local FADE_OUT_DELAY = 120
 local WARP_FLASH_DELAY = 5
 
 local VARIATION_WARP_ANCHOR_INIT = 1
 local VARIATION_WARP_ANCHOR_SHOWN = 2
 local VARIATION_WARP_ANCHOR_HIDDEN = 3
+
+local STATE_ANCHOR_WARP_IN = 0
+local STATE_ANCHOR_WAIT_BUILD = 1
+local STATE_ANCHOR_WARP_FLASH = 2
+local STATE_WARP_FADE_IN_TEXTURE = 3
+local STATE_WARP_FADE_OUT = 4
 
 -- hp / 10 = starting hp amount
 -- shields / 10 = starting shield amount
@@ -121,7 +128,8 @@ local function inherit_data(entity, src_data)
 end
 
 local function progress_replace_entity(entity)
-    global.tracking_protoss_constructions[entity.unit_number] = nil
+    CUnitPBuild.destroy_warp_anchor(entity)
+
     local old_data = Entity.get_data(entity)
     local old_health = entity.health
     local result = entity.surface.create_entity{
@@ -156,25 +164,34 @@ local function update_entity_progress(entity)
     if entity == nil or not entity.valid then return end
     local data = Entity.get_data(entity) or {}
 
-    if data.order_state == 0 then
+    if data.order_state == STATE_ANCHOR_WARP_IN then
         entity.graphics_variation = VARIATION_WARP_ANCHOR_SHOWN
-        add_next_update(entity, 1, build_times[entity.name])
-    elseif data.order_state == 1 then
+        add_next_update(entity, STATE_ANCHOR_WAIT_BUILD, build_times[entity.name])
+    elseif data.order_state == STATE_ANCHOR_WAIT_BUILD then
         entity.graphics_variation = VARIATION_WARP_ANCHOR_HIDDEN
         entity.surface.create_trivial_smoke{
             name = "starcraft-warp-anchor-flash",
             position = entity.position
         }
-        add_next_update(entity, 2, WARP_FLASH_DELAY)
-    elseif data.order_state == 2 then
+        add_next_update(entity, STATE_ANCHOR_WARP_FLASH, WARP_FLASH_DELAY)
+    elseif data.order_state == STATE_ANCHOR_WARP_FLASH then
         entity = progress_replace_entity(entity)
         play_warpin_anim(entity)
-        add_next_update(entity, 3, WARP_IN_DELAY)
+        add_next_update(entity, STATE_WARP_FADE_IN_TEXTURE, FADE_IN_DELAY)
         entity.surface.play_sound{
             path = "entity-build/" .. entity.name,
             position = entity.position
         }
-    elseif data.order_state == 3 then
+    elseif data.order_state == STATE_WARP_FADE_IN_TEXTURE then
+        global.tracking_fade_in_overlays[entity.unit_number] = entity.surface.create_entity{
+            name = entity.name .. "-in",
+            position = entity.position,
+            force = entity.force,
+            raise_built = false,
+            create_build_effect_smoke = false
+        }
+        add_next_update(entity, STATE_WARP_FADE_OUT, FADE_OUT_DELAY)
+    elseif data.order_state == STATE_WARP_FADE_OUT then
         progress_replace_entity(entity)
     end
 end
@@ -197,7 +214,7 @@ function CUnitPBuild.on_update()
 end
 
 function CUnitPBuild.add_warp_anchor(entity)
-    add_next_update(entity, 0, WARP_ANCHOR_CREATED_DELAY)
+    add_next_update(entity, STATE_ANCHOR_WARP_IN, WARP_ANCHOR_CREATED_DELAY)
     entity.surface.play_sound{
         path = "entity-build/" .. entity.name,
         position = entity.position
@@ -220,10 +237,16 @@ end
 
 function CUnitPBuild.destroy_warp_anchor(entity)
     global.tracking_protoss_constructions[entity.unit_number] = nil
+    local explosion = global.tracking_fade_in_overlays[entity.unit_number]
+    if explosion ~= nil and explosion.valid then
+        explosion.destroy()
+        global.tracking_fade_in_overlays[entity.unit_number] = nil
+    end
 end
 
 function CUnitPBuild.on_init()
     global.tracking_protoss_constructions = {}
+    global.tracking_fade_in_overlays = {}
 end
 
 return CUnitPBuild

@@ -133,7 +133,9 @@ local function make_common_structure(data)
     subgroup = data.subgroup,
     tile_height = data.tile_height,
     tile_width = data.tile_width,
-    -- created_smoke = nil  -- TODO: hide placement smoke
+    created_smoke = {
+      smoke_name = "starcraft-smokeless"
+    }
 
     -- trigger_target_mask
   }

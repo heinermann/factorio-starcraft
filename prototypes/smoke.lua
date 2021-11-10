@@ -162,6 +162,17 @@ data:extend({
     },
     duration = 5 * 2
   },
+  {
+    type = "trivial-smoke",
+    name = "starcraft-smokeless",
+    duration = 1,
+    cyclic = true,
+    animation = {
+      filename = "__starcraft__/graphics2/blank.png",
+      frame_count = 1,
+      size = {1, 1}
+    }
+  }
 })
 
 -- Shield hit overlays

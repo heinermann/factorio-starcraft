@@ -218,13 +218,15 @@ function CUnitPBuild.on_update()
         table.each(advances, update_entity_progress)
     end
 
-    for _, entity in tracking_protoss_constructions:pairs() do
+    for id, entity in tracking_protoss_constructions:pairs() do
         if entity.valid then
             local data = Entity.get_data(entity) or {}
             entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
             data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
             Entity.set_data(entity, data)
-            CUnitProtoss.update_shield_bars(entity) -- TODO: Queue up
+            CUnitProtoss.queue_update_shield_bar(entity)
+        else
+            tracking_protoss_constructions:remove_id(id)
         end
     end
 end

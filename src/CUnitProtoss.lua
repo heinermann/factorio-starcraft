@@ -12,6 +12,7 @@ local lo_data = require("__starcraft__/unit/lo")
 
 local CUnitProtoss = {}
 local tracking_shield_entities = EntitySet:new("CUnitProtoss_ShieldEntities")
+local shield_bar_updates = EntitySet:new("CUnitProtoss_ShieldUpdates")
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL CONSTANTS
@@ -273,10 +274,12 @@ local FADED_SHIELD_COLOR = {0, 115/4, 245/4, 1/3}
 local UNFILLED_COLOR = {116, 116, 127}
 local FADED_HEALTH_COLOR = {70/4, 225/4, 0, 1/3}
 
-function CUnitProtoss.update_shield_bars(entity)
-    if not entity.valid then return end
+function CUnitProtoss.queue_update_shield_bar(entity)
+    shield_bar_updates:insert(entity)
+end
+
+local function update_shield_bar(entity)
     local data = Entity.get_data(entity)
-    if data == nil then return end
 
     local health_ratio = entity.get_health_ratio()
     local shield_ratio = CUnitProtoss.get_shield_ratio(entity)
@@ -321,6 +324,15 @@ function CUnitProtoss.update_shield_bars(entity)
     else
         rendering.set_from(data.shield_bar_empty, entity, {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003})
     end
+end
+
+local function update_shield_bars()
+    for _, entity in shield_bar_updates:pairs() do
+        if entity.valid then
+            update_shield_bar(entity)
+        end
+    end
+    shield_bar_updates:clear()
 end
 
 -- TODO: Cache to prevent unnecessarily calling this for entities with full hp+shields etc
@@ -387,7 +399,7 @@ local function create_shield_bars(entity)
     }
 
     Entity.set_data(entity, data)
-    CUnitProtoss.update_shield_bars(entity)
+    CUnitProtoss.queue_update_shield_bar(entity)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -400,12 +412,14 @@ end
 
 local function unregister_shield_entity(entity)
     tracking_shield_entities:remove(entity)
+    shield_bar_updates:remove(entity)
 end
 
 local function update_shield_entities()
     for _, entity in tracking_shield_entities:pairs() do
+        -- TODO: Move to every other or every third update for performance?
         if entity.valid and CUnitProtoss.add_shields(entity, 0.01085) then
-            CUnitProtoss.update_shield_bars(entity)
+            CUnitProtoss.queue_update_shield_bar(entity)
         end
     end
 end
@@ -591,7 +605,7 @@ function CUnitProtoss.on_damaged(event)
     if not tracking_shield_entities:contains(event.entity) then return end
 
     if event.original_damage_amount <= 0 or CUnitProtoss.get_shields(event.entity) == 0 then
-        CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+        CUnitProtoss.queue_update_shield_bar(event.entity)
 
         -- Enable the entity in case it's unpowered, so that it can die
         if event.entity.health == 0 then
@@ -616,11 +630,14 @@ function CUnitProtoss.on_damaged(event)
         end
     end
 
-    CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
+    if event.entity.valid then
+        CUnitProtoss.queue_update_shield_bar(event.entity)
+    end
 end
 
 function CUnitProtoss.on_update()
     update_shield_entities()
+    update_shield_bars()
 end
 
 

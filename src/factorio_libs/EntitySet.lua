@@ -18,8 +18,16 @@ function EntitySet:remove(entity)
     global[self.identifier][entity.unit_number] = nil
 end
 
+function EntitySet:remove_id(id)
+    global[self.identifier][id] = nil
+end
+
 function EntitySet:pairs()
     return pairs(global[self.identifier])
+end
+
+function EntitySet:clear()
+    global[self.identifier] = {}
 end
 
 function EntitySet:table()

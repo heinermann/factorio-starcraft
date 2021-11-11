@@ -1,9 +1,14 @@
+require("factorio_libs.EntitySet")
+
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Surface = require('__stdlib__/stdlib/area/surface')
 local Area = require('__stdlib__/stdlib/area/area')
 local Position = require('__stdlib__/stdlib/area/position')
 
 local Tile = require('Tile')
+
+
+local creep_entities = EntitySet:new("CUnitZerg_CreepEntities")
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- CREEP MANAGEMENT
@@ -149,7 +154,7 @@ local function make_creep_below_structure(entity)
 end
 
 local function register_creep_provider(entity)
-    global.creep_entities[entity.unit_number] = entity
+    creep_entities:insert(entity)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -171,7 +176,7 @@ function CUnitZerg.on_creep_provider_created(entity)
 end
 
 function CUnitZerg.on_creep_provider_destroyed(entity)
-    global.creep_entities[entity.unit_number] = nil
+    creep_entities:remove(entity)
 end
 
 function CUnitZerg.on_creep_bldg_created(entity)
@@ -182,7 +187,7 @@ function CUnitZerg.on_creep_bldg_destroyed(entity)
 end
 
 function CUnitZerg.on_update()
-    for _, entity in pairs(global.creep_entities) do
+    for _, entity in creep_entities:pairs() do
         local data = Entity.get_data(entity) or {}
         if data.creep_timer > 0 then
             data.creep_timer = data.creep_timer - 1
@@ -203,9 +208,5 @@ local creep_providers = {
     "starcraft-sunken-colony",
     "starcraft-spore-colony",
 }
-
-function CUnitZerg.on_init()
-    global.creep_entities = {}
-end
 
 return CUnitZerg

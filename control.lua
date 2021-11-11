@@ -30,9 +30,6 @@ end)
 script.on_init(function()
   Forces.on_init()
   iscript.on_init()
-  CUnitProtoss.on_init()
-  CUnitZerg.on_init()
-  CUnitPBuild.on_init()
 end)
 
 ---------------------------------------------------------------------------------------------------------------------

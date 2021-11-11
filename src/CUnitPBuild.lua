@@ -1,10 +1,13 @@
 require("factorio_libs.UpdateManager")
+require("factorio_libs.EntitySet")
+
 local table = require('__stdlib__/stdlib/utils/table')
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local CUnitProtoss = require("CUnitProtoss")
 
 local CUnitPBuild = {}
 local update_tracker = UpdateManager:new("CUnitPBuild")
+local tracking_protoss_constructions = EntitySet:new("CUnitPBuild")
 
 local entity_progress_table = {
     ["starcraft-nexus-warp-anchor"] = "starcraft-nexus-warp-fade",
@@ -215,7 +218,7 @@ function CUnitPBuild.on_update()
         table.each(advances, update_entity_progress)
     end
 
-    for _, entity in pairs(global.tracking_protoss_constructions) do
+    for _, entity in tracking_protoss_constructions:pairs() do
         if entity.valid then
             local data = Entity.get_data(entity) or {}
             entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
@@ -240,15 +243,11 @@ function CUnitPBuild.add_warp_anchor(entity)
     data.shield_gain = get_shield_gain(data.max_shields, build_time)
     Entity.set_data(entity, data)
 
-    global.tracking_protoss_constructions[entity.unit_number] = entity
+    tracking_protoss_constructions:insert(entity)
 end
 
 function CUnitPBuild.destroy_warp_anchor(entity)
-    global.tracking_protoss_constructions[entity.unit_number] = nil
-end
-
-function CUnitPBuild.on_init()
-    global.tracking_protoss_constructions = {}
+    tracking_protoss_constructions:remove(entity)
 end
 
 return CUnitPBuild

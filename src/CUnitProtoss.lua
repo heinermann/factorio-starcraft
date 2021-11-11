@@ -1,4 +1,4 @@
-local CUnitProtoss = {}
+require("factorio_libs.EntitySet")
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Position = require('__stdlib__/stdlib/area/position')
@@ -8,6 +8,10 @@ local math = require('__stdlib__/stdlib/utils/math')
 local ForceTile = require('src.ForceTile')
 
 local lo_data = require("__starcraft__/unit/lo")
+
+
+local CUnitProtoss = {}
+local tracking_shield_entities = EntitySet:new("CUnitProtoss_ShieldEntities")
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL CONSTANTS
@@ -391,15 +395,15 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 local function register_shield_entity(entity)
-    global.tracking_shield_entities[entity.unit_number] = entity
+    tracking_shield_entities:insert(entity)
 end
 
 local function unregister_shield_entity(entity)
-    global.tracking_shield_entities[entity.unit_number] = nil
+    tracking_shield_entities:remove(entity)
 end
 
 local function update_shield_entities()
-    for _, entity in pairs(global.tracking_shield_entities) do
+    for _, entity in tracking_shield_entities:pairs() do
         if entity.valid and CUnitProtoss.add_shields(entity, 0.01085) then
             CUnitProtoss.update_shield_bars(entity)
         end
@@ -583,8 +587,8 @@ function CUnitProtoss.on_bldg_destroyed(entity)
 end
 
 function CUnitProtoss.on_damaged(event)
-    if global.tracking_shield_entities[event.entity.unit_number] == nil then return end
     if not event.entity.valid then return end
+    if not tracking_shield_entities:contains(event.entity) then return end
 
     if event.original_damage_amount <= 0 or CUnitProtoss.get_shields(event.entity) == 0 then
         CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
@@ -613,10 +617,6 @@ function CUnitProtoss.on_damaged(event)
     end
 
     CUnitProtoss.update_shield_bars(event.entity)    -- TODO: Make this queued for on_update
-end
-
-function CUnitProtoss.on_init()
-    global.tracking_shield_entities = {}
 end
 
 function CUnitProtoss.on_update()

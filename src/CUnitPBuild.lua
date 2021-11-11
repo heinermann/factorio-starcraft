@@ -3,7 +3,7 @@ require("factorio_libs.EntitySet")
 
 local table = require('__stdlib__/stdlib/utils/table')
 local Entity = require('__stdlib__/stdlib/entity/entity')
-local CUnitProtoss = require("CUnitProtoss")
+local ShieldManager = require("ShieldManager")
 
 local CUnitPBuild = {}
 local update_tracker = UpdateManager:new("CUnitPBuild")
@@ -224,7 +224,7 @@ function CUnitPBuild.on_update()
             entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
             data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
             Entity.set_data(entity, data)
-            CUnitProtoss.queue_update_shield_bar(entity)
+            ShieldManager.queue_update_shield_bar(entity)
         else
             tracking_protoss_constructions:remove_id(id)
         end

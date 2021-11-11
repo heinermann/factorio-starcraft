@@ -14,6 +14,7 @@ local Forces = require('src.forces')
 local CUnitProtoss = require('src.CUnitProtoss')
 local CUnitPBuild = require('src.CUnitPBuild')
 local CUnitZerg = require('src.CUnitZerg')
+local ShieldManager = require('ShieldManager')
 
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
@@ -170,7 +171,7 @@ remote.add_interface("shields",
 ---------------------------------------------------------------------------------------------------------------------
 -- TODO: Move to separate shield management mod
 
-script.on_event(defines.events.on_entity_damaged, CUnitProtoss.on_damaged, {
+script.on_event(defines.events.on_entity_damaged, ShieldManager.on_damaged, {
   {filter = "name", name = "starcraft-nexus"},
   {filter = "name", name = "starcraft-nexus-warp-anchor"},
   {filter = "name", name = "starcraft-nexus-warp-fade"},

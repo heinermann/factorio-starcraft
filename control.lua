@@ -67,6 +67,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 script.on_nth_tick(1, function(event)
   iscript.update()
+  Resources.on_update()
   CUnitZerg.on_update()
   CUnitProtoss.on_update()
   CUnitPBuild.on_update()
@@ -137,6 +138,7 @@ local script_lookup = {
   ["on_creep_bldg_destroyed"] = CUnitZerg.on_creep_bldg_destroyed,
   ["on_warp_anchor_placed"] = warp_anchor_placed,
   ["on_warp_anchor_destroyed"] = warp_anchor_destroyed,
+  ["on_vespene_geyser_created"] = Resources.register_gas_building,
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

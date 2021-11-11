@@ -166,6 +166,16 @@ data:extend({
       }
     },
     remove_decoratives = "true",
-    resource_patch_search_radius = 16
+    resource_patch_search_radius = 16,
+    created_effect = {
+      type = "direct",
+      action_delivery = {
+        type = "instant",
+        target_effects = {
+          type = "script",
+          effect_id = "on_vespene_geyser_created"
+        }
+      }
+    }
   }
 })

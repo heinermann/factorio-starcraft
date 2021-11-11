@@ -80,6 +80,30 @@ local bPsiFieldMask = {
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 }
 
+-- Higher performance of the above for the sake of the algorithm
+local bPsiFieldRange = {
+    { 12, 21 },
+    { 9, 24 },
+    { 6, 27 },
+    { 5, 28 },
+    { 4, 29 },
+    { 3, 30 },
+    { 2, 31 },
+    { 2, 31 },
+    { 1, 32 },
+    { 1, 32 },
+    { 1, 32 },
+    { 1, 32 },
+    { 2, 31 },
+    { 2, 31 },
+    { 3, 30 },
+    { 4, 29 },
+    { 5, 28 },
+    { 6, 27 },
+    { 9, 24 },
+    { 12, 21 }
+}
+
 -- width: 32 (+-16)
 -- height: 20 (+-10)
 
@@ -116,21 +140,21 @@ end
 local function ModifyPsiField(surface, position, force, change)
     local pos = Position.floor(position)
 
+    -- TODO: This might be incorrect because of 1-based indexing
     pos.x = pos.x - 16
     pos.y = pos.y - 10
 
     for psi_y = 1, 20 do
-        for psi_x = 1, 32 do
-            if bPsiFieldMask[psi_y][psi_x] == 1 then
-                local target_pos = Position.add(pos, {x = psi_x, y = psi_y})
-                local power = powered_tiles:get_data(surface, force, target_pos) or 0
+        local x_range = bPsiFieldRange[psi_y]
+        for psi_x = x_range[1], x_range[2] do
+            local target_pos = Position.add(pos, {x = psi_x, y = psi_y})
+            local power = powered_tiles:get_data(surface, force, target_pos) or 0
 
-                power = power + change
-                if power <= 0 then
-                    power = nil
-                end
-                powered_tiles:set_data(surface, force, target_pos, power)
+            power = power + change
+            if power <= 0 then
+                power = nil
             end
+            powered_tiles:set_data(surface, force, target_pos, power)
         end
     end
 

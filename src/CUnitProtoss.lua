@@ -1,11 +1,12 @@
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local Position = require('__stdlib__/stdlib/area/position')
 
-local ForceTile = require('src.ForceTile')
+require('factorio_libs.ForceTileData')
 local ShieldManager = require("ShieldManager")
 
 
 local CUnitProtoss = {}
+local powered_tiles = ForceTileData:new("PylonPower")
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- LOCAL CONSTANTS
@@ -83,7 +84,7 @@ local bPsiFieldMask = {
 -- height: 20 (+-10)
 
 local function IsCellPowered(surface, position, force)
-    return (ForceTile.get_data(surface, force, POWER_KEY, position) or 0) > 0
+    return (powered_tiles:get_data(surface, force, position) or 0) > 0
 end
 
 local function UpdateProtossPowerSingle(entity)
@@ -122,13 +123,13 @@ local function ModifyPsiField(surface, position, force, change)
         for psi_x = 1, 32 do
             if bPsiFieldMask[psi_y][psi_x] == 1 then
                 local target_pos = Position.add(pos, {x = psi_x, y = psi_y})
-                local power = ForceTile.get_data(surface, force, POWER_KEY, target_pos) or 0
+                local power = powered_tiles:get_data(surface, force, target_pos) or 0
 
                 power = power + change
                 if power <= 0 then
                     power = nil
                 end
-                ForceTile.set_data(surface, force, POWER_KEY, target_pos, power)
+                powered_tiles:set_data(surface, force, target_pos, power)
             end
         end
     end

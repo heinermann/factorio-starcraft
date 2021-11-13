@@ -430,6 +430,7 @@ data:extend({
         armor = 1,
         collision_box = sc_bounds_to_factorio{64, 32, 63, 31},
         tile_height = 4,
-        tile_width = 8
+        tile_width = 8,
+        created_script = "on_extractor_created"
     }
 })

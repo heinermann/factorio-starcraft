@@ -610,7 +610,7 @@ create_warpin_building{
     tile_height = 4,
     tile_width = 8,
     dying_script = "on_protoss_bldg_destroyed",
-    created_script = "on_protoss_bldg_created"
+    created_script = "on_assimilator_created"
 }
 --------------------------------------------------------------------------------------------------
 -- OBSERVATORY

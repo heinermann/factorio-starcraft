@@ -101,7 +101,7 @@ local function creategasoverlays(entity, num)
         entity_pos.y + to_tiles(overlay_positions[num][2]),
     }
 
-    if entity.amount == 0 then
+    if entity.type == "resource" and entity.amount == 0 then
         entity.surface.create_trivial_smoke{
             name = "starcraft-vespene-smoke-depleted",
             position = target_position
@@ -163,7 +163,8 @@ local initial_wait_fns = {
 }
 
 local function advance_gas_anim(entity)
-    local data = Entity.get_data(entity) or { gas_state = 1 }
+    if not entity.valid then return end
+    local data = Entity.get_data(entity)
     local overlay_indices = gas_overlay_anim_indices[entity.name]
 
     creategasoverlays(entity, overlay_indices[data.gas_state])
@@ -219,9 +220,7 @@ local function setup_vespene_geyser(entity)
 end
 
 function Resources.setup_resource(entity)
-    if not entity.valid then
-        return
-    end
+    if not entity.valid then return end
 
     entity.surface.destroy_decoratives{area = entity.selection_box}
 
@@ -231,6 +230,10 @@ function Resources.setup_resource(entity)
 end
 
 function Resources.register_gas_building(entity)
+    local data = Entity.get_data(entity) or {}
+    data.gas_state = 1
+    Entity.set_data(entity, data)
+
     init_gas_overlays(entity)
 end
 

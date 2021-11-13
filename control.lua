@@ -126,6 +126,11 @@ local function warp_anchor_destroyed(entity)
   CUnitProtoss.on_bldg_destroyed(entity)
 end
 
+local function assimilator_created(entity)
+  Resources.register_gas_building(entity)
+  CUnitProtoss.on_bldg_created(entity)
+end
+
 local script_lookup = {
   ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
   ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
@@ -139,6 +144,8 @@ local script_lookup = {
   ["on_warp_anchor_placed"] = warp_anchor_placed,
   ["on_warp_anchor_destroyed"] = warp_anchor_destroyed,
   ["on_vespene_geyser_created"] = Resources.register_gas_building,
+  ["on_assimilator_created"] = assimilator_created,
+  ["on_extractor_created"] = Resources.register_gas_building,
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

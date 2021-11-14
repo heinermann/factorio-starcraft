@@ -91,6 +91,7 @@ data:extend({
                 4, 4, 4, 4, 4,
                 3, 3, 3, 3, 3
             },
+            vshift = 1
             --animation_speed = 1/5 -- 84 ms per frame
         }
     },

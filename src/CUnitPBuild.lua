@@ -218,17 +218,13 @@ function CUnitPBuild.on_update()
         table.each(advances, update_entity_progress)
     end
 
-    for id, entity in tracking_protoss_constructions:pairs() do
-        if entity.valid then
-            local data = Entity.get_data(entity) or {}
-            entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
-            data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
-            Entity.set_data(entity, data)
-            ShieldManager.queue_update_shield_bar(entity)
-        else
-            tracking_protoss_constructions:remove_id(id)
-        end
-    end
+    tracking_protoss_constructions:foreach(function(entity)
+        local data = Entity.get_data(entity) or {}
+        entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
+        data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
+        Entity.set_data(entity, data)
+        ShieldManager.queue_update_shield_bar(entity)
+    end)
 end
 
 function CUnitPBuild.add_warp_anchor(entity)

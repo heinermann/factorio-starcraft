@@ -273,12 +273,12 @@ function ShieldManager.unregister_shield_entity(entity)
 end
 
 function ShieldManager.update_shield_entities()
-    for _, entity in tracking_shield_entities:pairs() do
+    tracking_shield_entities:foreach(function(entity)
         -- TODO: Move to every other or every third update for performance?
         if entity.valid and ShieldManager.add_shields(entity, 0.01085) then
             ShieldManager.queue_update_shield_bar(entity)
         end
-    end
+    end)
 end
 
 -- Factorio doesn't support the concept of shields outside of equipment grids, so we'll have to implement it ourselves.

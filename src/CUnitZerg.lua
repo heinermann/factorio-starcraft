@@ -187,7 +187,7 @@ function CUnitZerg.on_creep_bldg_destroyed(entity)
 end
 
 function CUnitZerg.on_update()
-    for _, entity in creep_entities:pairs() do
+    creep_entities:foreach(function(entity)
         local data = Entity.get_data(entity) or {}
         if data.creep_timer > 0 then
             data.creep_timer = data.creep_timer - 1
@@ -196,7 +196,7 @@ function CUnitZerg.on_update()
             spread_creep(entity.position, entity.surface)
         end
         Entity.set_data(entity, data)
-    end
+    end)
     realize_creep_changes()
 end
 

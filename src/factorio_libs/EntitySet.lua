@@ -37,3 +37,13 @@ end
 function EntitySet:contains(entity)
     return global[self.identifier][entity.unit_number] ~= nil
 end
+
+function EntitySet:foreach(fn)
+    for id, entity in self:pairs() do
+        if entity.valid then
+            fn(entity)
+        else
+            self:remove_id(id)
+        end
+    end
+end

@@ -165,6 +165,96 @@ data:extend({
       frame_time = 5.04
     }
   },
+  make_simple_smoke_anim{
+    name = "starcraft-landing-dust1",
+    anim = {
+      filename = "main_494_diffuse.png",
+      frame_count = 10,
+      size = { 61, 48 },
+      hr_size = { 122, 97 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-landing-dust2",
+    anim = {
+      filename = "main_495_diffuse.png",
+      frame_count = 8,
+      size = { 77, 97 },
+      hr_size = { 156, 194 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-landing-dust3",
+    anim = {
+      filename = "main_496_diffuse.png",
+      frame_count = 10,
+      size = { 61, 44 },
+      hr_size = { 124, 87 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-landing-dust4",
+    anim = {
+      filename = "main_497_diffuse.png",
+      frame_count = 8,
+      size = { 106, 102 },
+      hr_size = { 213, 204 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-landing-dust5",
+    anim = {
+      filename = "main_498_diffuse.png",
+      frame_count = 8,
+      size = { 106, 99 },
+      hr_size = { 211, 197 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-liftoff-dust1",
+    anim = {
+      filename = "main_499_diffuse.png",
+      frame_count = 10,
+      size = { 58, 87 },
+      hr_size = { 116, 174 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-liftoff-dust2",
+    anim = {
+      filename = "main_500_diffuse.png",
+      frame_count = 10,
+      size = { 51, 76 },
+      hr_size = { 103, 154 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-liftoff-dust3",
+    anim = {
+      filename = "main_501_diffuse.png",
+      frame_count = 10,
+      size = { 62, 78 },
+      hr_size = { 122, 155 },
+      frame_time = 7.56
+    }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-liftoff-dust4",
+    anim = {
+      filename = "main_502_diffuse.png",
+      frame_count = 10,
+      size = { 76, 80 },
+      hr_size = { 152, 159 },
+      frame_time = 7.56
+    }
+  },
   {
     type = "trivial-smoke",
     name = "starcraft-smokeless",

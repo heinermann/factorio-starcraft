@@ -14,7 +14,8 @@ local Forces = require('src.forces')
 local CUnitProtoss = require('src.CUnitProtoss')
 local CUnitPBuild = require('src.CUnitPBuild')
 local CUnitZerg = require('src.CUnitZerg')
-local ShieldManager = require('ShieldManager')
+local ShieldManager = require('src.ShieldManager')
+local BldgFireManager = require('src.BldgFireManager')
 
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
@@ -176,11 +177,18 @@ remote.add_interface("shields",
 )
 
 ---------------------------------------------------------------------------------------------------------------------
--- Shield management
+-- On entity damaged, handling shields and damage overlays
 ---------------------------------------------------------------------------------------------------------------------
--- TODO: Move to separate shield management mod
+-- TODO: Move shields logic to separate shield management mod?
 
-script.on_event(defines.events.on_entity_damaged, ShieldManager.on_damaged, {
+local function on_entity_damaged(event)
+  ShieldManager.on_damaged(event)
+  if event.entity.valid then
+    BldgFireManager.update_overlays(event.entity)
+  end
+end
+
+script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   {filter = "name", name = "starcraft-nexus"},
   {filter = "name", name = "starcraft-nexus-warp-anchor"},
   {filter = "name", name = "starcraft-nexus-warp-fade"},
@@ -228,5 +236,45 @@ script.on_event(defines.events.on_entity_damaged, ShieldManager.on_damaged, {
   {filter = "name", name = "starcraft-robotics-support-bay-warp-fade"},
   {filter = "name", name = "starcraft-shield-battery"},
   {filter = "name", name = "starcraft-shield-battery-warp-anchor"},
-  {filter = "name", name = "starcraft-shield-battery-warp-fade"}
+  {filter = "name", name = "starcraft-shield-battery-warp-fade"},
+  {filter = "name", name = "starcraft-khaydarin-crystal-formation"},
+
+  {filter = "name", name = "starcraft-cerebrate"},
+  {filter = "name", name = "starcraft-daggoth"},
+  {filter = "name", name = "starcraft-infested-command-center"},
+  {filter = "name", name = "starcraft-spawning-pool"},
+  {filter = "name", name = "starcraft-evo-chamber"},
+  {filter = "name", name = "starcraft-creep-colony"},
+  {filter = "name", name = "starcraft-hatchery"},
+  {filter = "name", name = "starcraft-hive"},
+  {filter = "name", name = "starcraft-lair"},
+  {filter = "name", name = "starcraft-sunken-colony"},
+  {filter = "name", name = "starcraft-greater-spire"},
+  {filter = "name", name = "starcraft-defiler-mound"},
+  {filter = "name", name = "starcraft-queens-nest"},
+  {filter = "name", name = "starcraft-nydus"},
+  {filter = "name", name = "starcraft-ultra-cavern"},
+  {filter = "name", name = "starcraft-extractor"},
+  {filter = "name", name = "starcraft-hydra-den"},
+  {filter = "name", name = "starcraft-spire"},
+  {filter = "name", name = "starcraft-spore-colony"},
+  {filter = "name", name = "starcraft-academy"},
+  {filter = "name", name = "starcraft-barracks"},
+  {filter = "name", name = "starcraft-armory"},
+  {filter = "name", name = "starcraft-comsat"},
+  {filter = "name", name = "starcraft-command-center"},
+  {filter = "name", name = "starcraft-depot"},
+  {filter = "name", name = "starcraft-control-tower"},
+  {filter = "name", name = "starcraft-factory"},
+  {filter = "name", name = "starcraft-covert-ops"},
+  {filter = "name", name = "starcraft-machine-shop"},
+  {filter = "name", name = "starcraft-turret"},
+  {filter = "name", name = "starcraft-crashed-norad"},
+  {filter = "name", name = "starcraft-physics-lab"},
+  {filter = "name", name = "starcraft-bunker"},
+  {filter = "name", name = "starcraft-refinery"},
+  {filter = "name", name = "starcraft-science-facility"},
+  {filter = "name", name = "starcraft-nuke-silo"},
+  {filter = "name", name = "starcraft-starport"},
+  {filter = "name", name = "starcraft-engineering-bay"},
 })

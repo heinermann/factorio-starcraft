@@ -12497,34 +12497,6 @@ end
 
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
--- 423 Burrowing Dust (thingy\bDust.grp)
-iscript[274] = {
-  IsId =          	274,
-  Type =          	1,
-  Init =          	BurowingDustInit,
-  Death =         	ScourgeExplosionDeath
-}
--- ----------------------------------------------------------------------------- --
-
-function BurowingDustInit()
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
 -- 426 Double Explosion (thingy\dbl_exp.grp)
 iscript[278] = {
   IsId =          	278,

@@ -1,11 +1,8 @@
+-- UPDATE: This file will NOT be used. It is only here to transcribe scripts to Factorio logic.
+--
 -- WARNING: Scripts need modification to run outside of coroutines or moved into native Factorio facilities (i.e. smoke overlays)
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
-
-local lo_data = require("__starcraft__/unit/lo")
 local convert = require("__starcraft__/glue/convert")
-local images = require("__starcraft__/arr/images")
-
 local Log = require('__stdlib__/stdlib/misc/logger').new("iscript")
 
 -- Convert a BW pixel to Factorio tile
@@ -38,7 +35,6 @@ end
 
 
 local iscript = {}
-local scripts = {}
 
 local function image_create(img, x, y, render_layer)
   if iscript.entity == nil then
@@ -221,67 +217,6 @@ local function turnrand(amount)
   end
 end
 
--- TODO: turn into native code
---function liftoffcondjmp()
---end
-
--- TODO: turn into native code
---function trgtarccondjmp()
---end
-
-local gasoverlays = {
-  "starcraft-vespene-smoke-1",
-  "starcraft-vespene-smoke-2",
-  "starcraft-vespene-smoke-3",
-  "starcraft-vespene-smoke-4",
-  "starcraft-vespene-smoke-5"
-}
-local function creategasoverlays(num)
-  Log.log("creategasoverlays(" .. num .. ")")
-
-  if iscript.entity == nil then
-    Log.log("WARNING: iscript.entity is nil")
-    return
-  end
-
-  num = num + 1 -- Lua uses 1-indexing
-
-  -- TODO: refinery state
-  local img_type = convert.image.from_name(iscript.entity.name)
-  local overlay_positions = lo_data.get_gas_overlays(img_type)
-
-  Log.log("imgid " .. tostring(img_type))
-  Log.write()
-  local entity_position = iscript.entity.position
-  local target_position = {
-    entity_position.x + to_tiles(overlay_positions[num][1]),
-    entity_position.y + to_tiles(overlay_positions[num][2]),
-  }
-
-  local anim_info = {
-    render_layer = "higher-object-above",
-    target = target_position,
-    surface = iscript.entity.surface
-  }
-  if iscript.entity.amount == 0 then
-    anim_info.animation = "starcraft-vespene-smoke-depleted"
-    anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 5
-
-    --rendering.draw_animation(anim_info)
-  else
-    anim_info.animation = gasoverlays[num]
-    anim_info.time_to_live = math.ceil(60/(1000/(42 * 2))) * 8
-
-    --Log.log("Created " .. anim_info.animation .. " which expires in " .. anim_info.time_to_live)
-    --rendering.draw_animation(anim_info)
-    iscript.entity.surface.create_trivial_smoke{
-      name = gasoverlays[num],
-      position = target_position
-    }
-
-  end
-end
-
 local function imgolorig(imgid)
   -- TODO
 end
@@ -330,15 +265,6 @@ local function followmaingraphic()
   -- TODO
 end
 
-local function warpoverlay(frame)
-  -- TODO ?????
-  -- Warp overlay might not be doable, we can pre-process the overlay per unit though
-end
-
--- Not doable. Will replace Vespene Geysers with different variants on placement.
---function playframtile()
---end
-
 local function pwrupcondjmp(jmp)
   -- TODO? Logic is specific to carryables which will be getting different logic
 end
@@ -359,17 +285,9 @@ local function engset(frame)
   -- TODO
 end
 
-local function imguluselo(img, x, y)
-  -- TODO
-end
-
 local function setflipstate(flipped)
   -- TODO
 end
-
--- only used for psi field overlay which we can remove
---function setpos(x, y)
---end
 
 local function setspawnframe(direction)
   -- TODO? Only used for floor missile traps
@@ -386,11 +304,6 @@ end
 local function dogrddamage()
   -- TODO
 end
-
--- Only used for a twilight doodad which we won't be including
---function sethorpos()
---end
-
 
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
@@ -3311,12 +3224,6 @@ iscript[56] = {
   SpecialState1 = 	nil,
   SpecialState2 = 	nil,
   AlmostBuilt =   	ExtractorAlmostBuilt,
-  Built =         	ExtractorBuilt,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	ExtractorIsWorking,
-  WorkingToIdle = 	ExtractorIsWorking,
-  WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -3334,43 +3241,7 @@ end
 
 function ExtractorAlmostBuilt()
 	imgol(109, 0, 0)	-- Zerg Building Spawn (Large) (zerg\zSpawn03.grp)
-	ExtractorBuilt()
-end
-
-function ExtractorBuilt()
-	playfram(0x00)	-- Frame set 0
-	waitrand(1, 5) 
-	ExtractorIsWorking()
-end
-
-function ExtractorIsWorking()
-::ExtractorIsWorking_label::
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	creategasoverlays(0) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	goto ExtractorIsWorking_label
+	--ExtractorBuilt()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7694,7 +7565,6 @@ end
 iscript[125] = {
   IsId =          	125,
   Type =          	20,
-  Init =          	RefineryInit,
   Death =         	RefineryDeath,
   GndAttkInit =   	nil,
   AirAttkInit =   	nil,
@@ -7719,32 +7589,6 @@ iscript[125] = {
 }
 -- ----------------------------------------------------------------------------- --
 
-function RefineryInit()
-	imgul(308, 0, 0)	-- Refinery Shadow (terran\treShad.grp)
-	playfram(1)	-- Frame set 0,  direction 1
-	RefineryLocal00()
-end
-
-function RefineryLocal00()
-::RefineryLocal00_label::
-	wait(5) 
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(1) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(1) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	goto RefineryLocal00_label
-end
-
 function RefineryDeath()
 	playsnd(7)	-- Misc\ExploLrg.wav
 	sprol(272, 0, 0)	-- Building Explosion (Large) (thingy\tBangX.grp)
@@ -7753,17 +7597,17 @@ end
 
 function RefinerySpecialState1()
 	playfram(2)	-- Frame set 0,  direction 2
-	RefineryLocal00()
+	--RefineryLocal00()
 end
 
 function RefinerySpecialState2()
 	playfram(3)	-- Frame set 0,  direction 3
-	RefineryLocal00()
+	--RefineryLocal00()
 end
 
 function RefineryAlmostBuilt()
 	playfram(4)	-- Frame set 0,  direction 4
-	RefineryLocal00()
+	--RefineryLocal00()
 end
 
 function RefineryBuilt()
@@ -7774,7 +7618,7 @@ end
 
 function RefineryLocal01()
 ::RefineryLocal01_label::
-	creategasoverlays(0) 
+	--creategasoverlays(0) 
 	wait(20) 
 	waitrand(5, 100) 
 	goto RefineryLocal01_label
@@ -10356,269 +10200,6 @@ end
 function ObserverWarpIn()
 	imgol(150, 0, 0)	-- Observer Warp Flash (protoss\witness.grp)
 	ScourgeLocal00()
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 158 Assimilator (protoss\assim.grp)
-iscript[167] = {
-  IsId =          	167,
-  Type =          	27,
-  Init =          	AssimilatorInit,
-  Death =         	AssimilatorDeath,
-  GndAttkInit =   	nil,
-  AirAttkInit =   	nil,
-  Unused1 =       	nil,
-  GndAttkRpt =    	nil,
-  AirAttkRpt =    	nil,
-  CastSpell =     	nil,
-  GndAttkToIdle = 	nil,
-  AirAttkToIdle = 	nil,
-  Unused2 =       	nil,
-  Walking =       	nil,
-  WalkingToIdle = 	nil,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	AssimilatorBuilt,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	AssimilatorBuilt,
-  WorkingToIdle = 	AssimilatorBuilt,
-  WarpIn =        	AssimilatorWarpIn,
-  Unused3 =       	nil,
-  StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
-  Burrow =        	nil,
-  UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
-}
--- ----------------------------------------------------------------------------- --
-
-function AssimilatorInit()
-	imgul(160, 0, 0)	-- Assimilator Shadow (protoss\pasShad.grp)
-	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
-end
-
-function AssimilatorDeath()
-	playsnd(7)	-- Misc\ExploLrg.wav
-	sprol(222, 0, 0)	-- Explosion (Large) (thingy\tBangX.grp)
-	wait(3) 
-end
-
-function AssimilatorBuilt()
-::AssimilatorBuilt_label::
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(3) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(3) 
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	goto AssimilatorBuilt_label
-end
-
-function AssimilatorWarpIn()
-	imgol(159, 0, 0)	-- Assimilator Warp Flash (protoss\assim.grp)
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(3) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	creategasoverlays(3) 
-	waitrand(5, 50) 
-	creategasoverlays(0) 
-	waitrand(5, 50) 
-	creategasoverlays(2) 
-	waitrand(5, 50) 
-	AssimilatorBuilt()
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 211 Warp Anchor (protoss\pb1Glow.grp)
-iscript[191] = {
-  IsId =          	191,
-  Type =          	13,
-  Init =          	WarpAnchorInit,
-  Death =         	WarpAnchorDeath,
-  GndAttkInit =   	nil,
-  AirAttkInit =   	nil,
-  Unused1 =       	nil,
-  GndAttkRpt =    	nil,
-  AirAttkRpt =    	nil,
-  CastSpell =     	nil,
-  GndAttkToIdle = 	nil,
-  AirAttkToIdle = 	nil,
-  Unused2 =       	nil,
-  Walking =       	nil,
-  WalkingToIdle = 	nil,
-  SpecialState1 = 	WarpAnchorSpecialState1
-}
--- ----------------------------------------------------------------------------- --
-
-function WarpAnchorInit()
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-	playfram(7)	-- Frame set 0,  direction 7
-	wait(2) 
-	WarpAnchorLocal00()
-end
-
-function WarpAnchorLocal00()
-::WarpAnchorLocal00_label::
-	playfram(8)	-- Frame set 0,  direction 8
-	wait(1) 
-	playfram(9)	-- Frame set 0,  direction 9
-	wait(1) 
-	playfram(10)	-- Frame set 0,  direction 10
-	wait(1) 
-	playfram(11)	-- Frame set 0,  direction 11
-	wait(1) 
-	playfram(12)	-- Frame set 0,  direction 12
-	wait(1) 
-	playfram(13)	-- Frame set 0,  direction 13
-	wait(1) 
-	goto WarpAnchorLocal00_label
-end
-
-function WarpAnchorDeath()
-	playfram(7)	-- Frame set 0,  direction 7
-	wait(2) 
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-end
-
-function WarpAnchorSpecialState1()
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	sigorder(1) 
-	ScourgeLocal00()
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 156 Templar Archives Warp Flash (protoss\archives.grp)
--- 159 Assimilator Warp Flash (protoss\assim.grp)
--- 162 Observatory Warp Flash (protoss\beacon.grp)
--- 165 Citadel of Adun Warp Flash (protoss\citadel.grp)
--- 169 Forge Warp Flash (protoss\forge.grp)
--- 172 Gateway Warp Flash (protoss\gateway.grp)
--- 175 Cybernetics Core Warp Flash (protoss\gencore.grp)
--- 180 Nexus Warp Flash (protoss\nexus.grp)
--- 185 Photon Cannon Warp Flash (protoss\photon.grp)
--- 187 Arbiter Tribunal Warp Flash (protoss\prism.grp)
--- 190 Pylon Warp Flash (protoss\pylon.grp)
--- 193 Robotics Facility Warp Flash (protoss\robotic.grp)
--- 197 Shileld Battery Warp Flash (protoss\sbattery.grp)
--- 201 Stargate Warp Flash (protoss\stargate.grp)
--- 205 Robotics Support Bay Warp Flash (protoss\stasis.grp)
--- 209 Fleet Beacon Warp Flash (protoss\warp.grp)
-iscript[192] = {
-  IsId =          	192,
-  Type =          	1,
-  Init =          	WarpFlashHeaderInit,
-  Death =         	WarpFlashHeaderDeath
-}
--- ----------------------------------------------------------------------------- --
-
-function WarpFlashHeaderInit()
-	playfram(0x00)	-- Frame set 0
-	wait(1) 
-	followmaingraphic()
-	ScourgeLocal00()
-end
-
-function WarpFlashHeaderDeath()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 210 Warp Texture (protoss\texture.grp)
-iscript[193] = {
-  IsId =          	193,
-  Type =          	1,
-  Init =          	WarpTextureInit,
-  Death =         	WarpTextureDeath
-}
--- ----------------------------------------------------------------------------- --
-
-function WarpTextureInit()
-	warpoverlay(0x00)	-- Frame set 0
-	wait(1) 
-	warpoverlay(1)	-- Frame set 0,  direction 1
-	wait(1) 
-	warpoverlay(2)	-- Frame set 0,  direction 2
-	wait(1) 
-	warpoverlay(3)	-- Frame set 0,  direction 3
-	wait(1) 
-	warpoverlay(4)	-- Frame set 0,  direction 4
-	wait(1) 
-	warpoverlay(5)	-- Frame set 0,  direction 5
-	wait(1) 
-	warpoverlay(6)	-- Frame set 0,  direction 6
-	wait(1) 
-	warpoverlay(7)	-- Frame set 0,  direction 7
-	wait(1) 
-	warpoverlay(8)	-- Frame set 0,  direction 8
-	wait(1) 
-	warpoverlay(9)	-- Frame set 0,  direction 9
-	wait(1) 
-	warpoverlay(10)	-- Frame set 0,  direction 10
-	wait(1) 
-	warpoverlay(11)	-- Frame set 0,  direction 11
-	wait(1) 
-	warpoverlay(12)	-- Frame set 0,  direction 12
-	wait(1) 
-	warpoverlay(13)	-- Frame set 0,  direction 13
-	wait(1) 
-	warpoverlay(14)	-- Frame set 0,  direction 14
-	wait(1) 
-	warpoverlay(15)	-- Frame set 0,  direction 15
-	wait(1) 
-	warpoverlay(16)	-- Frame set 0,  direction 16
-	wait(1) 
-	warpoverlay(0x11)	-- Frame set 1
-	wait(1) 
-	warpoverlay(18)	-- Frame set 1,  direction 1
-	wait(1) 
-	warpoverlay(19)	-- Frame set 1,  direction 2
-	sigorder(1) 
-	wait(1) 
-	ScourgeLocal00()
-end
-
-function WarpTextureDeath()
-	imgol(332, 0, 0)	-- Explosion2 (Small) (thingy\tBangS.grp)
-	wait(3) 
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14363,252 +13944,6 @@ function HallucinationDeathInit()
 	wait(3) 
 	playfram(12)	-- Frame set 0,  direction 12
 	wait(3) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 450 Flames1   Type =1 (Small) (thingy\oFireC.grp)
--- 451 Flames1   Type =2 (Small) (thingy\oFireF.grp)
--- 452 Flames1   Type =3 (Small) (thingy\oFireV.grp)
--- 453 Flames2   Type =3 (Small) (thingy\oFireV.grp)
--- 454 Flames3   Type =3 (Small) (thingy\oFireV.grp)
--- 455 Flames4   Type =3 (Small) (thingy\oFireV.grp)
--- 456 Flames5   Type =3 (Small) (thingy\oFireV.grp)
--- 457 Flames6   Type =3 (Small) (thingy\oFireV.grp)
--- 466 Flames2   Type =1 (Small) (thingy\oFireC.grp)
--- 467 Flames2   Type =2 (Small) (thingy\oFireF.grp)
--- 468 Flames7   Type =3 (Small) (thingy\oFireV.grp)
--- 469 Flames3   Type =1 (Small) (thingy\oFireC.grp)
--- 470 Flames3   Type =2 (Small) (thingy\oFireF.grp)
--- 471 Flames8   Type =3 (Small) (thingy\oFireV.grp)
-iscript[322] = {
-  IsId =          	322,
-  Type =          	1,
-  Init =          	Flames_Small_Init,
-  Death =         	Flames_Small_Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Flames_Small_Init()
-::Flames_Small_Init_label::
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-	playfram(7)	-- Frame set 0,  direction 7
-	wait(2) 
-	playfram(8)	-- Frame set 0,  direction 8
-	wait(2) 
-	playfram(9)	-- Frame set 0,  direction 9
-	wait(2) 
-	playfram(10)	-- Frame set 0,  direction 10
-	wait(2) 
-	playfram(11)	-- Frame set 0,  direction 11
-	wait(2) 
-	goto Flames_Small_Init_label
-end
-
-function Flames_Small_Death()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 458 Bleeding Variant1   Type =1 (Small) (thingy\bblood01.grp)
--- 459 Bleeding Variant1   Type =2 (Small) (thingy\bblood02.grp)
--- 460 Bleeding Variant1   Type =3 (Small) (thingy\bblood03.grp)
--- 461 Bleeding Variant1   Type =4 (Small) (thingy\bblood04.grp)
-iscript[324] = {
-  IsId =          	324,
-  Type =          	1,
-  Init =          	Bleeding_Small_Variant1Init,
-  Death =         	Bleeding_Small_Variant1Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Bleeding_Small_Variant1Init()
-::Bleeding_Small_Variant1Init_label::
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	goto Bleeding_Small_Variant1Init_label
-end
-
-function Bleeding_Small_Variant1Death()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 462 Bleeding Variant2   Type =1 (Small) (thingy\bblood01.grp)
--- 463 Bleeding Variant2   Type =2 (Small) (thingy\bblood02.grp)
--- 464 Bleeding Variant2   Type =3 (Small) (thingy\bblood03.grp)
--- 465 Bleeding Variant2   Type =4 (Small) (thingy\bblood04.grp)
-iscript[325] = {
-  IsId =          	325,
-  Type =          	1,
-  Init =          	Bleeding_Small_Variant2Init,
-  Death =         	Bleeding_Small_Variant1Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Bleeding_Small_Variant2Init()
-	setflipstate(1) 
-	playfram(0x00)	-- Frame set 0
-	wait(2) 
-	playfram(1)	-- Frame set 0,  direction 1
-	wait(2) 
-	playfram(2)	-- Frame set 0,  direction 2
-	wait(2) 
-	playfram(3)	-- Frame set 0,  direction 3
-	wait(2) 
-	playfram(4)	-- Frame set 0,  direction 4
-	wait(2) 
-	playfram(5)	-- Frame set 0,  direction 5
-	wait(2) 
-	Bleeding_Small_Variant1Init()
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 472 Flames1   Type =1 (Large) (thingy\oFireC.grp)
--- 473 Flames1   Type =2 (Large) (thingy\oFireF.grp)
--- 474 Flames1   Type =3 (Large) (thingy\oFireV.grp)
--- 475 Flames2   Type =3 (Large) (thingy\oFireV.grp)
--- 476 Flames3   Type =3 (Large) (thingy\oFireV.grp)
--- 477 Flames4   Type =3 (Large) (thingy\oFireV.grp)
--- 478 Flames5   Type =3 (Large) (thingy\oFireV.grp)
--- 479 Flames6   Type =3 (Large) (thingy\oFireV.grp)
--- 488 Flames2   Type =1 (Large) (thingy\oFireC.grp)
--- 489 Flames2   Type =2 (Large) (thingy\oFireF.grp)
--- 490 Flames7   Type =3 (Large) (thingy\oFireV.grp)
--- 491 Flames3   Type =1 (Large) (thingy\oFireC.grp)
--- 492 Flames3   Type =2 (Large) (thingy\oFireF.grp)
--- 493 Flames8   Type =3 (Large) (thingy\oFireV.grp)
-iscript[326] = {
-  IsId =          	326,
-  Type =          	1,
-  Init =          	Flames_Large_Init,
-  Death =         	Flames_Large_Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Flames_Large_Init()
-::Flames_Large_Init_label::
-	playfram(12)	-- Frame set 0,  direction 12
-	wait(2) 
-	playfram(13)	-- Frame set 0,  direction 13
-	wait(2) 
-	playfram(14)	-- Frame set 0,  direction 14
-	wait(2) 
-	playfram(15)	-- Frame set 0,  direction 15
-	wait(2) 
-	playfram(16)	-- Frame set 0,  direction 16
-	wait(2) 
-	playfram(0x11)	-- Frame set 1
-	wait(2) 
-	playfram(18)	-- Frame set 1,  direction 1
-	wait(2) 
-	playfram(19)	-- Frame set 1,  direction 2
-	wait(2) 
-	playfram(20)	-- Frame set 1,  direction 3
-	wait(2) 
-	playfram(21)	-- Frame set 1,  direction 4
-	wait(2) 
-	playfram(22)	-- Frame set 1,  direction 5
-	wait(2) 
-	playfram(23)	-- Frame set 1,  direction 6
-	wait(2) 
-	goto Flames_Large_Init_label
-end
-
-function Flames_Large_Death()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 480 Bleeding Variant1   Type =1 (Large) (thingy\bblood01.grp)
--- 481 Bleeding Variant1   Type =2 (Large) (thingy\bblood02.grp)
--- 482 Bleeding Variant1   Type =3 (Large) (thingy\bblood03.grp)
--- 483 Bleeding Variant1   Type =4 (Large) (thingy\bblood04.grp)
-iscript[328] = {
-  IsId =          	328,
-  Type =          	1,
-  Init =          	Bleeding_Large_Variant1Init,
-  Death =         	Bleeding_Large_Variant1Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Bleeding_Large_Variant1Init()
-::Bleeding_Large_Variant1Init_label::
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-	playfram(7)	-- Frame set 0,  direction 7
-	wait(2) 
-	playfram(8)	-- Frame set 0,  direction 8
-	wait(2) 
-	playfram(9)	-- Frame set 0,  direction 9
-	wait(2) 
-	playfram(10)	-- Frame set 0,  direction 10
-	wait(2) 
-	playfram(11)	-- Frame set 0,  direction 11
-	wait(2) 
-	goto Bleeding_Large_Variant1Init_label
-end
-
-function Bleeding_Large_Variant1Death()
-	wait(1) 
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 484 Bleeding Variant2   Type =1 (Large) (thingy\bblood01.grp)
--- 485 Bleeding Variant2   Type =3 (Large) (thingy\bblood02.grp)
--- 486 Bleeding Variant3   Type =3 (Large) (thingy\bblood03.grp)
--- 487 Bleeding Variant2   Type =4 (Large) (thingy\bblood04.grp)
-iscript[329] = {
-  IsId =          	329,
-  Type =          	1,
-  Init =          	Bleeding_Large_Variant2Init,
-  Death =         	Bleeding_Large_Variant1Death
-}
--- ----------------------------------------------------------------------------- --
-
-function Bleeding_Large_Variant2Init()
-	setflipstate(1) 
-	playfram(6)	-- Frame set 0,  direction 6
-	wait(2) 
-	playfram(7)	-- Frame set 0,  direction 7
-	wait(2) 
-	playfram(8)	-- Frame set 0,  direction 8
-	wait(2) 
-	playfram(9)	-- Frame set 0,  direction 9
-	wait(2) 
-	playfram(10)	-- Frame set 0,  direction 10
-	wait(2) 
-	playfram(11)	-- Frame set 0,  direction 11
-	wait(2) 
-	Bleeding_Large_Variant1Init()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -18741,133 +18076,3 @@ end
 -- ----------------------------------------------------------------------------- --
 -- ----------------------------------------------------------------------------- --
 -- ----------------------------------------------------------------------------- --
-
-function iscript.get_obj_data(obj)
-  if type(obj) == "table" then
-    return Entity.get_data(obj)
-  elseif type(obj) == "number" then
-    return global.iscript_tracking_objects[obj]
-  end
-end
-
-function iscript.set_obj_data(obj, data)
-  if type(obj) == "table" then
-    Entity.set_data(obj, data)
-  elseif type(obj) == "number" then
-    global.iscript_tracking_objects[obj] = data
-  end
-end
-
-function iscript.play_anim(obj, anim_name)
-  local data = iscript.get_obj_data(obj)
-
-  if data.no_break_code_section then return end
-
-  local imgid = convert.image.from_name(obj.name)
-  local iscriptid = images[imgid+1].IscriptID
-  Log.log("SCRIPT NAME: " .. tostring(iscript[iscriptid][anim_name]))
-  Log.write()
-
-
-  data.anim_name = anim_name
-  data.script_name = iscript[iscriptid][anim_name]
-  data.script_index = 1
-  data.wait_ticks = 0
-  iscript.set_obj_data(obj, data)
-end
-
-function iscript.init_obj_data(obj)
-  local data = iscript.get_obj_data(obj) or {}
-
-  data.anim_name = "Init"
-  data.script_name = nil
-  data.script_index = 1
-  data.wait_ticks = 0
-  data.no_break_code_section = false
-
-  iscript.set_obj_data(obj, data)
-end
-
-function iscript.set_tracking_object(obj)
-  if type(obj) == "table" then
-    iscript.entity = obj
-    iscript.anim = nil
-  else
-    iscript.entity = nil
-    iscript.anim = obj
-  end
-
-  iscript.edata = iscript.get_obj_data(obj)
-  --Log.log("edata = " .. tostring(iscript.edata))
-end
-
-function iscript.advance(obj)
-  iscript.set_tracking_object(obj)
-  --Log.log("Advancing script for " .. obj.name)
-  Log.write()
-
-  if iscript.edata.wait_ticks > 0 then
-    iscript.edata.wait_ticks = iscript.edata.wait_ticks - 1
-    return
-  end
-
-  repeat
-    if iscript.edata.script_name == nil or scripts[iscript.edata.script_name] == nil then
-      Log.log("script_name is nil")
-      return
-    end
-    if iscript.edata.script_index > #scripts[iscript.edata.script_name] then
-      Log.log("script_index out of range")
-      return
-    end
-
-    --Log.log("Script " .. iscript.edata.script_name .. " @ " .. iscript.edata.script_index)
-    --Log.write()
-    local operation = scripts[iscript.edata.script_name][iscript.edata.script_index]
-    if type(operation) == "function" then
-      Log.log("calling operation")
-
-      operation()
-      iscript.edata.script_index = iscript.edata.script_index + 1
-    elseif type(operation) == "string" then
-      Log.log("goto " .. operation)
-
-      iscript.edata.script_name = operation
-      iscript.edata.script_index = 1
-    else
-      Log.log("WARNING: Unsupported type - " .. type(operation))
-    end
-  until iscript.edata.wait_ticks > 0
-
-  iscript.set_obj_data(obj, iscript.edata)
-end
-
--- TODO: Remove from iscript_tracking_entities on death
-function iscript.register_entity(entity)
-	table.insert(global.iscript_tracking_entities, entity)
-	iscript.init_obj_data(entity)
-	iscript.play_anim(entity, "Init")	-- TODO: only if anim is not already playing (to fix on_load)
-	Log.log("Registered " .. entity.name .. " for iscript")
-end
-
-function iscript.update()
-	for _, entity in ipairs(global.iscript_tracking_entities) do
-		if entity ~= nil and entity.valid then
-			iscript.advance(entity)
-		end
-	end
-end
-
-iscript.supported_entity_names = {
-	"starcraft-vespene-geyser"
-}
-
-function iscript.on_init()
-	Log.log("Iscript on_init")
-	global.iscript_tracking_objects = {}
-	global.iscript_tracking_entities = {}
-
-	-- TODO: Redo how vespene geysers get assigned an iscript
-end
-
-return iscript

@@ -6,7 +6,6 @@
 
 local Surface = require('__stdlib__/stdlib/area/surface')
 
-local iscript = require("iscript.iscript")
 local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 
 local Resources = require('src.resources')
@@ -31,7 +30,6 @@ end)
 -- Called once when the game is originally created or mod injected, never after even if the game is loaded
 script.on_init(function()
   Forces.on_init()
-  iscript.on_init()
 end)
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -67,7 +65,6 @@ end
 -- ON_NTH_TICK
 ---------------------------------------------------------------------------------------------------------------------
 script.on_nth_tick(1, function(event)
-  iscript.update()
   Resources.on_update()
   CUnitZerg.on_update()
   CUnitProtoss.on_update()
@@ -90,7 +87,7 @@ script.on_event(defines.events.on_chunk_generated, function(event)
   }
 
   for _, entity in ipairs(resources) do
-    Resources.setup_resource(entity, iscript)
+    Resources.setup_resource(entity)
   end
 end)
 

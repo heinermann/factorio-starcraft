@@ -61,14 +61,17 @@ local SHIELD_VALUES = {
     ["starcraft-robotics-support-bay-warp-fade"] = 450,
     ["starcraft-shield-battery"] = 200,
     ["starcraft-shield-battery-warp-anchor"] = 200,
-    ["starcraft-shield-battery-warp-fade"] = 200
+    ["starcraft-shield-battery-warp-fade"] = 200,
+
+    ["starcraft-probe"] = 20,
 }
 
 -- Default is 2 for omitted items
 local SHIELD_SIZES = {
     ["starcraft-nexus"] = 3,
     ["starcraft-nexus-warp-anchor"] = 3,
-    ["starcraft-nexus-warp-fade"] = 3
+    ["starcraft-nexus-warp-fade"] = 3,
+    ["starcraft-probe"] = 1
 }
 
 -- Copy of vertical offset from entity anim definitions to include in shield hit overlays
@@ -118,7 +121,9 @@ local SHIELD_VOFFSETS = {
     ["starcraft-robotics-support-bay-warp-fade"] = -6/16,
     ["starcraft-shield-battery"] = -3/16,
     ["starcraft-shield-battery-warp-anchor"] = -3/16,
-    ["starcraft-shield-battery-warp-fade"] = -3/16
+    ["starcraft-shield-battery-warp-fade"] = -3/16,
+
+    ["starcraft-probe"] = -6/16,
 }
 
 ------------------------------------------------------------------------------------------------------------------------------------------

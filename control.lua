@@ -5,6 +5,7 @@
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
 local Surface = require('__stdlib__/stdlib/area/surface')
+local Entity = require('__stdlib__/stdlib/entity/entity')
 
 local Log = require('__stdlib__/stdlib/misc/logger').new("control")
 
@@ -129,6 +130,27 @@ local function assimilator_created(entity)
   CUnitProtoss.on_bldg_created(entity)
 end
 
+local function init_starcraft_actor(entity)
+  local actor = entity.surface.create_entity{
+    name = "starcraft-actor",
+    position = entity.position,
+    force = entity.force,
+    create_build_effect_smoke = false
+  }
+
+  entity.set_driver(actor)
+end
+
+local function on_protoss_unit_created(entity)
+  init_starcraft_actor(entity)
+  ShieldManager.init_shields(entity) -- TODO: Move to equipment grid for performance? Still need shield overlays though
+end
+
+local function on_protoss_unit_destroyed(entity)
+  ShieldManager.unregister_shield_entity(entity)
+  entity.get_driver().destroy()
+end
+
 local script_lookup = {
   ["on_protoss_pylon_destroyed"] = CUnitProtoss.on_pylon_destroyed,
   ["on_protoss_pylon_created"] = CUnitProtoss.on_pylon_created,
@@ -144,6 +166,8 @@ local script_lookup = {
   ["on_vespene_geyser_created"] = Resources.register_gas_building,
   ["on_assimilator_created"] = assimilator_created,
   ["on_extractor_created"] = Resources.register_gas_building,
+  ["on_protoss_unit_created"] = on_protoss_unit_created,
+  ["on_protoss_unit_destroyed"] = on_protoss_unit_destroyed,
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)
@@ -236,6 +260,8 @@ script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   {filter = "name", name = "starcraft-shield-battery-warp-fade"},
   {filter = "name", name = "starcraft-khaydarin-crystal-formation"},
 
+  {filter = "name", name = "starcraft-probe"},
+
   {filter = "name", name = "starcraft-cerebrate"},
   {filter = "name", name = "starcraft-daggoth"},
   {filter = "name", name = "starcraft-infested-command-center"},
@@ -255,6 +281,7 @@ script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   {filter = "name", name = "starcraft-hydra-den"},
   {filter = "name", name = "starcraft-spire"},
   {filter = "name", name = "starcraft-spore-colony"},
+
   {filter = "name", name = "starcraft-academy"},
   {filter = "name", name = "starcraft-barracks"},
   {filter = "name", name = "starcraft-armory"},

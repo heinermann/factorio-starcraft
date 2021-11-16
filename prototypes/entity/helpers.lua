@@ -54,8 +54,127 @@ local function make_resistances(unit_size_type, armor_amount)
   return result
 end
 
-function create_ground_unit(data)
-  
+local function make_common_unit(data)
+  local result = {
+    --------------------------------------------------------------------
+    -- PrototypeBase
+    type = "car",
+    name = data.name,
+
+    --------------------------------------------------------------------
+    -- Entity
+    icon = data.icon or "__base__/graphics/icons/info.png",
+    icon_size = data.icon_size or 64,
+    allow_copy_paste = false,
+    build_sound = data.build_sound,
+    collision_box = data.collision_box,
+    collision_mask = {"player-layer", "train-layer", "consider-tile-transitions"},
+
+    fast_replaceable_group = data.fast_replaceable_group,
+    flags = {
+      "not-rotatable",
+      "not-blueprintable",
+      "not-deconstructable",
+      "hidden",
+      "not-flammable",
+      "no-automated-item-removal",
+      "no-automated-item-insertion",
+      "no-copy-paste",
+      "not-upgradable",
+      "player-creation",
+      "placeable-off-grid"
+    },
+
+    selection_box = data.collision_box, -- TODO: Make this larger
+    shooting_cursor_size = -data.collision_box[1][1] + data.collision_box[2][1] + 1,
+    subgroup = data.subgroup,
+    created_smoke = {
+      smoke_name = "starcraft-smokeless"
+    },
+
+    --------------------------------------------------------------------
+    -- EntityWithHealth
+    corpse = data.corpse,
+    dying_explosion = data.dying_explosion,
+    healing_per_tick = data.healing_per_tick,
+    hide_resistances = false,
+    max_health = data.max_health,
+    repair_speed_modifier = data.repair_speed_modifier,
+    resistances = make_resistances(data.size_type, data.armor),
+    create_ghost_on_death = false,
+
+    --------------------------------------------------------------------
+    -- Vehicle
+    braking_force = data.braking_force,
+    energy_per_hit_point = 1e309,
+    friction_force = data.friction_force or 1,
+    weight = data.weight or 1,
+    allow_passengers = true,
+    equipment_grid = nil,
+    crash_trigger = nil,
+    stop_trigger = nil,
+    terrain_friction_modifier = data.terrain_friction_modifier,
+
+    --------------------------------------------------------------------
+    -- Car
+    animation = data.animation,
+    energy_source = {
+      type = "void",
+      render_no_power_icon = false,
+      render_no_network_icon = false
+    },
+    consumption = "0W",
+    effectivity = 0,
+    inventory_size = 0,
+    rotation_speed = data.rotation_speed,
+    guns = data.guns,
+    has_belt_immunity = data.has_belt_immunity,
+    immune_to_tree_impacts = true,
+    immune_to_rock_impacts = true,
+    render_layer = "object",
+  }
+
+  if data.created_script then
+    result.created_effect = {
+      type = "direct",
+      action_delivery = {
+        type = "instant",
+        target_effects = {
+          type = "script",
+          effect_id = data.created_script
+        }
+      }
+    }
+  end
+
+  if data.damaged_script then
+    result.damaged_trigger_effect = {
+      type = "script",
+      effect_id = data.damaged_script
+    }
+  end
+
+  if data.dying_script then
+    result.dying_trigger_effect = {
+      type = "script",
+      effect_id = data.dying_script
+    }
+  end
+
+  if data.icon_id then
+    result.icon = "__starcraft__/graphics/cmdicons/" .. tostring(data.icon_id) .. ".png"
+    result.icon_size = data.icon_size or 128
+  end
+
+  result.animation.direction_count = data.direction_count or 32
+
+  return result
+end
+
+function make_protoss_unit(data)
+  local result = make_common_unit(data)
+  protossify_prototype(result)
+  return result
 end
 
 function sc_ticks_to_factorio_ticks(value)
@@ -413,7 +532,7 @@ function make_zerg_structure(data)
 end
 
 function protossify_prototype(data)
-  data.subgroup = "starcraft-protoss-buildings"
+  data.subgroup = data.subgroup or "starcraft-protoss-buildings"
 
   data.flags = {
     "not-repairable",

@@ -106,8 +106,10 @@ local function make_common_unit(data)
     --------------------------------------------------------------------
     -- Vehicle
     braking_force = data.braking_force,
+    braking_power = data.braking_power,
     energy_per_hit_point = 1e309,
-    friction_force = data.friction_force or 1,
+    friction_force = data.friction_force,
+    friction = data.friction,
     weight = data.weight or 1,
     allow_passengers = true,
     equipment_grid = nil,
@@ -123,8 +125,8 @@ local function make_common_unit(data)
       render_no_power_icon = false,
       render_no_network_icon = false
     },
-    consumption = "0W",
-    effectivity = 0,
+    consumption = data.consumption,
+    effectivity = data.effectivity,
     inventory_size = 0,
     rotation_speed = data.rotation_speed,
     guns = data.guns,
@@ -165,8 +167,6 @@ local function make_common_unit(data)
     result.icon = "__starcraft__/graphics/cmdicons/" .. tostring(data.icon_id) .. ".png"
     result.icon_size = data.icon_size or 128
   end
-
-  result.animation.direction_count = data.direction_count or 32
 
   return result
 end
@@ -420,7 +420,7 @@ function create_anim(data)
       apply_runtime_tint = data.apply_runtime_tint,
       blend_mode = data.blend_mode,
       repeat_count = data.repeat_count,
-      direction_count = 1,
+      direction_count = data.direction_count or 1,
       shift = data.shift,
       y = data.y,
 
@@ -439,7 +439,7 @@ function create_anim(data)
           apply_runtime_tint = data.apply_runtime_tint,
           blend_mode = data.blend_mode,
           repeat_count = data.repeat_count,
-          direction_count = 1,
+          direction_count = data.direction_count or 1,
           shift = data.shift,
           y = data.hr_y
     }
@@ -473,7 +473,8 @@ function create_layered_anim(data, layers)
     animation_speed = data.animation_speed,
     repeat_count = data.repeat_count,
     shift = data.shift,
-    vshift = data.vshift
+    vshift = data.vshift,
+    direction_count = data.direction_count,
   }
 
   return {

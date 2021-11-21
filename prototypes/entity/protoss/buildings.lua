@@ -679,7 +679,7 @@ create_warpin_building{
         range = 14 + 2 + 0.75,
         cooldown = sc_ticks_to_factorio_ticks(22 - 1),
         range_mode = "bounding-box-to-bounding-box",    -- BUG: This is unsupported for turrets
-        cooldown_deviation = 0.05,  -- TODO: figure out what this *actually* does??
+        cooldown_deviation = 0.15,  -- TODO: figure out what this *actually* does??
         warmup = sc_ticks_to_factorio_ticks(2),
         sound = {
             filename = "__starcraft__/sound/bullet/dragbull.wav",

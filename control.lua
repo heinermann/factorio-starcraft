@@ -65,6 +65,7 @@ end
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_NTH_TICK
 ---------------------------------------------------------------------------------------------------------------------
+
 script.on_nth_tick(1, function(event)
   Resources.on_update()
   CUnitZerg.on_update()
@@ -141,6 +142,10 @@ local function init_starcraft_actor(entity)
   entity.set_driver(actor)
 end
 
+local function remove_starcraft_actor(entity)
+  entity.get_driver().destroy()
+end
+
 local function on_protoss_unit_created(entity)
   init_starcraft_actor(entity)
   ShieldManager.init_shields(entity) -- TODO: Move to equipment grid for performance? Still need shield overlays though
@@ -148,7 +153,7 @@ end
 
 local function on_protoss_unit_destroyed(entity)
   ShieldManager.unregister_shield_entity(entity)
-  entity.get_driver().destroy()
+  remove_starcraft_actor(entity)
 end
 
 local script_lookup = {

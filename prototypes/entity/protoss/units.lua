@@ -26,24 +26,28 @@ data:extend({
         max_health = 20,
         size_type = "small",
 
-        braking_force = 1,
-        friction_force = 1,
+        rotation_speed = 0.015,
+        braking_force = 1,      -- or braking_power
+        terrain_friction_modifier = 0,
+        friction_force = 0.09733887815,
         weight = 1,
-        terrain_friction_modifier = 1,
-        rotation_speed = 1,
+        effectivity = 1,
+        consumption = tostring(32.8868891*60) .. "W",
 
         animation = make_common_states(
             {
                 name = "main_137",
                 size = { 66, 66 },
                 hr_size = { 132, 132 },
-                vshift = -6/16
+                vshift = -6/16,
+                direction_count = 32
             },
             {
                 filename = "main_137_shadow.png",
                 size = { 92, 52 },
                 hr_size = { 184, 105 },
-                vshift = -6/16
+                vshift = -6/16,
+                direction_count = 32
             }
         ),
         has_belt_immunity = true,

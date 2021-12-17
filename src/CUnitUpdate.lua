@@ -25,7 +25,7 @@ end
 
 -- CUnitOrder.cpp
 local function EndDispatchOrder(entity, data)
-    -- if there's an queued order link
+    -- if there's a queued order link
     -- or user flag to 1
     -- call ProgressQueuedOrder
 
@@ -135,8 +135,8 @@ local order_dispatch_functions = {
     end,
     [ORD_NOTHING0] = function(entity, data)
     end,
-    [ORD_POWERUP0] = function(entity, data)
-    end,
+    --[ORD_POWERUP0] = function(entity, data)
+    --end,
     [ORD_TOWER_GUARD] = function(entity, data)
     end,
     [ORD_TOWER_ATTACK] = function(entity, data)
@@ -293,8 +293,8 @@ local order_dispatch_functions = {
     end,
     [ORD_PICK_UP_UNK] = function(entity, data)
     end,
-    [ORD_POWERUP] = function(entity, data)
-    end,
+    --[ORD_POWERUP] = function(entity, data)
+    --end,
     [ORD_SIEGEMODE] = function(entity, data)
     end,
     [ORD_TANKMODE] = function(entity, data)
@@ -442,10 +442,10 @@ local order_dispatch_functions = {
     end,
     [ORD_REVEAL_TRAP] = function(entity, data)
     end,
-    [ORD_ENABLE_DOODAD] = function(entity, data)
-    end,
-    [ORD_DISABLE_DOODAD] = function(entity, data)
-    end,
+    --[ORD_ENABLE_DOODAD] = function(entity, data)
+    --end,
+    --[ORD_DISABLE_DOODAD] = function(entity, data)
+    --end,
     [ORD_PROTOSS_WARP_IN] = function(entity, data)
     end,
     [ORD_MEDIC] = function(entity, data)
@@ -474,10 +474,10 @@ local order_dispatch_functions = {
     end,
     [ORD_JUNK_YARD_DOG] = function(entity, data)
     end,
-    [ORD_FATAL] = function(entity, data)
-    end,
-    [ORD_NONE] = function(entity, data)
-    end,
+    --[ORD_FATAL] = function(entity, data)
+    --end,
+    --[ORD_NONE] = function(entity, data)
+    --end,
 }
 
 local function RunOrders(entity)

@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <deque>
 #include <map>
+#include <list>
 #include <iterator>
 #include <limits>
 #include <array>
@@ -664,7 +665,7 @@ namespace bwgame {
 	using int_bits = std::integral_constant<size_t, std::numeric_limits<T>::digits + std::is_signed<T>::value>;
 
 	template<typename T>
-	using is_native_fast_int = std::integral_constant<bool, std::is_integral<T>::value&& std::is_literal_type<T>::value && sizeof(T) <= sizeof(void*)>;
+	using is_native_fast_int = std::integral_constant<bool, std::is_integral<T>::value && sizeof(T) <= sizeof(void*)>;
 
 	template<size_t t_integer_bits, size_t t_fractional_bits, bool t_is_signed, bool t_exact_integer_bits = false>
 	struct fixed_point {
@@ -6164,6 +6165,7 @@ namespace bwgame {
 				if (~u->pathing_flags & 1 || !is_reachable(u->sprite->position, target->sprite->position)) return false;
 				return true;
 				});*/
+			return nullptr;
 		}
 
 		bool unit_is_hatchery(unit_type_autocast ut) const {
@@ -13945,3 +13947,5 @@ namespace bwgame {
 
 	};
 }
+
+int main() {}

@@ -42,52 +42,6 @@ namespace bwgame {
 		typedef T* pointer;
 		typedef const T* const_pointer;
 
-		class const_iterator {
-		public:
-			typedef std::bidirectional_iterator_tag iterator_category;
-			typedef typename intrusive_list::value_type value_type;
-			typedef typename intrusive_list::difference_type difference_type;
-			typedef typename intrusive_list::const_pointer pointer;
-			typedef typename intrusive_list::const_reference reference;
-		private:
-			typedef const_iterator this_t;
-			pointer ptr = nullptr;
-		public:
-			const_iterator() = default;
-			explicit const_iterator(pointer ptr) : ptr(ptr) {}
-			explicit const_iterator(reference v) : ptr(&v) {}
-			reference operator*() const {
-				return *ptr;
-			}
-			pointer operator->() const {
-				return ptr;
-			}
-			this_t& operator++() {
-				ptr = link_f()(ptr)->second;
-				return *this;
-			}
-			this_t operator++(int) {
-				auto r = *this;
-				ptr = link_f()(ptr)->second;
-				return r;
-			}
-			this_t& operator--() {
-				ptr = link_f()(ptr)->first;
-				return *this;
-			}
-			this_t operator--(int) {
-				auto r = *this;
-				ptr = link_f()(ptr)->first;
-				return r;
-			}
-			bool operator==(const this_t& rhs) const {
-				return ptr == rhs.ptr;
-			}
-			bool operator!=(const this_t& rhs) const {
-				return !(*this == rhs);
-			}
-		};
-
 		class iterator {
 		public:
 			typedef std::bidirectional_iterator_tag iterator_category;
@@ -126,16 +80,11 @@ namespace bwgame {
 				ptr = link_f()(ptr)->first;
 				return r;
 			}
-			bool operator==(const this_t& rhs) const {
-				return ptr == rhs.ptr;
-			}
-			bool operator!=(const this_t& rhs) const {
-				return !(*this == rhs);
-			}
+			bool operator==(const this_t& rhs) const = default;
+			bool operator!=(const this_t& rhs) const = default;
 		};
 
 		typedef std::reverse_iterator<iterator> reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
 	private:
 		std::pair<T*, T*> header = { &*end(), &*end() };
@@ -185,44 +134,12 @@ namespace bwgame {
 		iterator begin() {
 			return iterator(ptr_begin());
 		}
-		const_iterator begin() const {
-			return const_iterator(ptr_begin());
-		}
-		const_iterator cbegin() const {
-			return const_iterator(ptr_begin());
-		}
 		iterator end() {
 			return iterator(ptr_end());
-		}
-		const_iterator end() const {
-			return const_iterator(ptr_end());
-		}
-		const_iterator cend() const {
-			return const_iterator(ptr_end());
-		}
-		reverse_iterator rbegin() {
-			return reverse_iterator(end());
-		}
-		const_reverse_iterator rbegin() const {
-			return reverse_iterator(end());
-		}
-		const_reverse_iterator crbegin() const {
-			return reverse_iterator(end());
-		}
-		reverse_iterator rend() {
-			return reverse_iterator(begin());
-		}
-		const_reverse_iterator rend() const {
-			return reverse_iterator(begin());
-		}
-		const_reverse_iterator crend() const {
-			return reverse_iterator(begin());
 		}
 		bool empty() const {
 			return ptr_begin() == ptr_end();
 		}
-		size_type size() const = delete;
-		constexpr size_type max_size() const = delete;
 		void clear() {
 			header = { ptr_end(), ptr_end() };
 		}
@@ -258,34 +175,6 @@ namespace bwgame {
 		void pop_front() {
 			erase(iterator(front()));
 		}
-		void swap(intrusive_list& n) noexcept {
-			if (empty()) {
-				if (n.empty()) return;
-				header = n.header;
-				n.clear();
-				link_f()(ptr_front())->first = ptr_end();
-				link_f()(ptr_back())->second = ptr_end();
-			}
-			else if (n.empty()) {
-				n.header = header;
-				clear();
-				link_f()(n.ptr_front())->first = n.ptr_end();
-				link_f()(n.ptr_back())->second = n.ptr_end();
-			}
-			else {
-				std::swap(header, n.header);
-				link_f()(n.ptr_front())->first = n.ptr_end();
-				link_f()(n.ptr_back())->second = n.ptr_end();
-				link_f()(ptr_front())->first = ptr_end();
-				link_f()(ptr_back())->second = ptr_end();
-			}
-		}
-		iterator iterator_to(reference v) {
-			return iterator(v);
-		}
-		static iterator s_iterator_to(reference v) {
-			return iterator(v);
-		}
 	};
 
 }
@@ -298,28 +187,9 @@ namespace bwgame {
 		utype y{};
 		xy_t() = default;
 		xy_t(utype x, utype y) : x(x), y(y) {}
-		bool operator<(const xy_t& n) const {
-			if (y == n.y) return x < n.x;
-			return y < n.y;
-		}
-		bool operator>(const xy_t& n) const {
-			if (y == n.y) return x > n.x;
-			return y > n.y;
-		}
-		bool operator<=(const xy_t& n) const {
-			if (y == n.y) return x <= n.x;
-			return y <= n.y;
-		}
-		bool operator>=(const xy_t& n) const {
-			if (y == n.y) return x >= n.x;
-			return y >= n.y;
-		}
-		bool operator==(const xy_t& n) const {
-			return x == n.x && y == n.y;
-		}
-		bool operator!=(const xy_t& n) const {
-			return x != n.x || y != n.y;
-		}
+
+		auto operator<=>(const xy_t& other) const = default;
+
 		xy_t operator-(const xy_t& n) const {
 			xy_t r(*this);
 			return r -= n;
@@ -329,9 +199,8 @@ namespace bwgame {
 			y -= n.y;
 			return *this;
 		}
-		xy_t operator+(const xy_t& n) const {
-			xy_t r(*this);
-			return r += n;
+		xy_t operator+(xy_t n) const {
+			return n += *this;
 		}
 		xy_t& operator+=(const xy_t& n) {
 			x += n.x;
@@ -341,15 +210,6 @@ namespace bwgame {
 		xy_t operator -() const {
 			return xy_t(-x, -y);
 		}
-		xy_t operator/(const xy_t& n) const {
-			xy_t r(*this);
-			return r /= n;
-		}
-		xy_t& operator/=(const xy_t& n) {
-			x /= n.x;
-			y /= n.y;
-			return *this;
-		}
 		template<typename T>
 		xy_t operator/(T&& v) const {
 			return xy_t(*this) /= v;
@@ -358,15 +218,6 @@ namespace bwgame {
 		xy_t& operator/=(T&& v) {
 			x /= v;
 			y /= v;
-			return *this;
-		}
-		xy_t operator*(const xy_t& n) const {
-			xy_t r(*this);
-			return r *= n;
-		}
-		xy_t& operator*=(const xy_t& n) {
-			x *= n.x;
-			y *= n.y;
 			return *this;
 		}
 		template<typename T>
@@ -387,29 +238,6 @@ namespace bwgame {
 		T to;
 		rect_t() = default;
 		rect_t(T from, T to) : from(from), to(to) {}
-		bool operator==(const rect_t& n) const {
-			return from == n.from && to == n.to;
-		}
-
-		rect_t operator+(const rect_t& n) const {
-			return { from + n.from, to + n.to };
-		}
-
-		int x() {
-			return std::min(from.x, to.x);
-		}
-
-		int y() {
-			return std::min(from.y, to.y);
-		}
-
-		int width() {
-			return std::abs(to.x - from.x);
-		}
-
-		int height() {
-			return std::abs(to.y - from.y);
-		}
 	};
 
 	template<typename iter_T>
@@ -539,70 +367,6 @@ namespace bwgame {
 		return make_iterators_range(begin, make_transform_iterator(r.end(), std::forward<transform_F>(f)));
 	}
 
-	template<typename iterator_T, typename predicate_F>
-	struct filter_iterator {
-	private:
-		typedef filter_iterator this_t;
-		iterator_T ptr;
-		iterator_T end_ptr;
-		predicate_F f;
-	public:
-		using iterator_category = std::forward_iterator_tag;
-		using reference = typename std::iterator_traits<iterator_T>::reference;
-		using value_type = typename std::iterator_traits<iterator_T>::value_type;
-		using difference_type = typename std::iterator_traits<iterator_T>::difference_type;
-		using pointer = value_type*;
-
-		template<typename arg_iterator_T, typename arg_predicate_F>
-		filter_iterator(arg_iterator_T&& ptr, arg_iterator_T&& end_ptr, arg_predicate_F&& f) : ptr(std::forward<arg_iterator_T>(ptr)), end_ptr(std::forward<arg_iterator_T>(end_ptr)), f(std::forward<arg_predicate_F>(f)) {
-			if (ptr != end_ptr && !f(*ptr))++* this;
-		}
-
-		reference operator*() const {
-			return *ptr;
-		}
-		this_t& operator++() {
-			do {
-				++ptr;
-			} while (ptr != end_ptr && !f(*ptr));
-			return *this;
-		}
-		this_t operator++(int) {
-			auto r = *this;
-			++* this;
-			return r;
-		}
-		bool operator==(const this_t& rhs) const {
-			return ptr == rhs.ptr;
-		}
-		bool operator!=(const this_t& rhs) const {
-			return ptr != rhs.ptr;
-		}
-		bool operator<(const this_t& rhs) const {
-			return ptr < rhs.ptr;
-		}
-		bool operator<=(const this_t& rhs) const {
-			return ptr <= rhs.ptr;
-		}
-		bool operator>(const this_t& rhs) const {
-			return ptr > rhs.ptr;
-		}
-		bool operator>=(const this_t& rhs) const {
-			return ptr >= rhs.ptr;
-		}
-	};
-
-	template<typename iterator_T, typename predicate_F>
-	auto make_filter_iterator(iterator_T&& c, iterator_T&& end, predicate_F&& f) {
-		return filter_iterator<iterator_T, predicate_F>(std::forward<iterator_T>(c), std::forward<iterator_T>(end), std::forward<predicate_F>(f));
-	}
-
-	template<typename range_T, typename predicate_F>
-	auto make_filter_range(range_T&& r, predicate_F&& f) {
-		auto begin = make_filter_iterator(r.begin(), r.end(), std::forward<predicate_F>(f));
-		return make_iterators_range(begin, make_filter_iterator(r.end(), r.end(), std::forward<predicate_F>(f)));
-	}
-
 	template<typename range_T>
 	auto ptr(range_T&& r) {
 		return make_transform_range(r, [](auto& ref) {
@@ -613,12 +377,6 @@ namespace bwgame {
 	template<typename range_T>
 	auto reverse(range_T&& r) {
 		return make_iterators_range(std::make_reverse_iterator(r.end()), std::make_reverse_iterator(r.begin()));
-	}
-
-	template<typename range_T>
-	auto range_size(range_T&& r) {
-		auto rv = std::distance(r.begin(), r.end());
-		return (typename std::make_unsigned<decltype(rv)>::type)rv;
 	}
 
 	struct identity {
@@ -743,24 +501,7 @@ namespace bwgame {
 			return fixed_point<integer_bits, fractional_bits, false, exact_integer_bits>::from_raw(raw_value);
 		}
 
-		bool operator==(const fixed_point& n) const {
-			return raw_value == n.raw_value;
-		}
-		bool operator!=(const fixed_point& n) const {
-			return raw_value != n.raw_value;
-		}
-		bool operator<(const fixed_point& n) const {
-			return raw_value < n.raw_value;
-		}
-		bool operator<=(const fixed_point& n) const {
-			return raw_value <= n.raw_value;
-		}
-		bool operator>(const fixed_point& n) const {
-			return raw_value > n.raw_value;
-		}
-		bool operator>=(const fixed_point& n) const {
-			return raw_value >= n.raw_value;
-		}
+		auto operator<=>(const fixed_point& other) const = default;
 
 		fixed_point operator-() const {
 			static_assert(is_signed, "fixed_point: cannot negate an unsigned number");
@@ -861,8 +602,6 @@ namespace bwgame {
 	using fp1 = fixed_point<31, 1, true>;
 	using fp8 = fixed_point<24, 8, true>;
 	using ufp8 = fixed_point<24, 8, false>;
-	using fp16 = fixed_point<16, 16, true>;
-	using ufp16 = fixed_point<16, 16, false>;
 	using direction_t = fixed_point<0, 8, true, true>;
 
 	using xy = xy_t<int>;
@@ -892,7 +631,6 @@ namespace bwgame {
 		using pointer = value_type*;
 		using const_pointer = const value_type*;
 		using iterator = typename arr_T::iterator;
-		using const_iterator = typename arr_T::const_iterator;
 		using reverse_iterator = typename arr_T::reverse_iterator;
 		using const_reverse_iterator = typename arr_T::const_reverse_iterator;
 
@@ -929,20 +667,8 @@ namespace bwgame {
 		iterator begin() noexcept {
 			return arr.begin();
 		}
-		const_iterator begin() const noexcept {
-			return arr.begin();
-		}
-		const_iterator cbegin() const noexcept {
-			return arr.cbegin();
-		}
 		iterator end() noexcept {
 			return arr.end();
-		}
-		const_iterator end() const noexcept {
-			return arr.end();
-		}
-		const_iterator cend() const noexcept {
-			return arr.cend();
 		}
 		bool empty() const noexcept {
 			return arr.empty();
@@ -960,22 +686,6 @@ namespace bwgame {
 			arr.swap(n.arr);
 		}
 	};
-
-	template<typename T, typename std::enable_if<std::is_unsigned<T>::value>::type* = nullptr>
-	T isqrt(T n) {
-		T r = 0;
-		T p = (T)1 << (8 * sizeof(T) - 2);
-		while (p > n) p /= 4u;
-		while (p) {
-			if (n >= r + p) {
-				n -= r + p;
-				r += 2u * p;
-			}
-			r /= 2u;
-			p /= 4u;
-		}
-		return r;
-	}
 }
 
 
@@ -989,7 +699,6 @@ namespace bwgame {
 	struct sprite_type_t;
 	struct image_type_t;
 	struct order_type_t;
-
 
 	template<typename T>
 	struct type_container {
@@ -1061,7 +770,6 @@ namespace bwgame {
 			flag_flying_building = 0x20,
 			flag_hero = 0x40,
 			flag_regens_hp = 0x80,
-			flag_100 = 0x100,
 
 			flag_two_units_in_one_egg = 0x400,
 			flag_powerup = 0x800,
@@ -1081,7 +789,6 @@ namespace bwgame {
 			flag_can_turn = 0x10000000,
 			flag_invincible = 0x20000000,
 			flag_mechanical = 0x40000000,
-			flag_80000000 = 0x80000000,
 		};
 
 		UnitTypes id;
@@ -1205,16 +912,6 @@ namespace bwgame {
 
 	struct upgrade_type_t {
 		UpgradeTypes id;
-
-		int mineral_cost_base;
-		int mineral_cost_factor;
-		int gas_cost_base;
-		int gas_cost_factor;
-		int time_cost_base;
-		int time_cost_factor;
-		int race;
-		int max_level;
-		bool is_broodwar;
 	};
 
 	using upgrade_types_t = type_container<upgrade_type_t>;
@@ -1222,12 +919,7 @@ namespace bwgame {
 	struct tech_type_t {
 		TechTypes id;
 
-		int mineral_cost;
-		int gas_cost;
-		int research_time;
 		int energy_cost;
-		int race;
-		int flags;
 	};
 
 	using tech_types_t = type_container<tech_type_t>;
@@ -1249,7 +941,6 @@ namespace bwgame {
 		SpriteTypes id;
 
 		type_id<image_type_t> image;
-		int health_bar_size;
 		bool visible;
 	};
 
@@ -1258,17 +949,8 @@ namespace bwgame {
 	struct image_type_t {
 		ImageTypes id;
 
-		bool has_directional_frames;
-		bool is_clickable;
-		bool has_iscript_animations;
 		bool always_visible;
 		int modifier;
-		int color_shift;
-		int iscript_id;
-		int shield_filename_index;
-		int attack_filename_index;
-		int damage_filename_index;
-		int special_filename_index;
 		int landing_dust_filename_index;
 		int lift_off_filename_index;
 	};
@@ -1279,13 +961,10 @@ namespace bwgame {
 		Orders id;
 
 		bool targets_enemies;
-		int background;
 		bool valid_for_turret;
 		bool can_be_interrupted;
 		bool unk7;
-		bool can_be_queued;
 		int unk9;
-		bool can_be_obstructed;
 		int unk11;
 		WeaponTypes weapon;    // weapon and tech_type could be pointers, but then order_types would 
 		TechTypes tech_type;   // need to live in game_state
@@ -1644,7 +1323,6 @@ namespace bwgame {
 			status_flag_passively_cloaked = 0x800,
 			status_flag_order_not_interruptible = 0x1000,
 			status_flag_iscript_nobrk = 0x2000,
-			status_flag_4000 = 0x4000,
 			status_flag_cannot_attack = 0x8000,
 			status_flag_can_turn = 0x10000,
 			status_flag_can_move = 0x20000,
@@ -1652,7 +1330,6 @@ namespace bwgame {
 			status_flag_immovable = 0x80000,
 			status_flag_ground_unit = 0x100000,
 			status_flag_no_collide = 0x200000,
-			status_flag_400000 = 0x400000,
 			status_flag_gathering = 0x800000,
 			status_flag_turret_walking = 0x1000000,
 
@@ -1976,10 +1653,6 @@ namespace bwgame {
 		weapon_types_t weapon_types;
 		upgrade_types_t upgrade_types;
 		tech_types_t tech_types;
-
-		std::array<type_indexed_array<bool, UnitTypes>, 12> unit_type_allowed;
-		std::array<type_indexed_array<int, UpgradeTypes>, 12> max_upgrade_levels;
-		std::array<type_indexed_array<bool, TechTypes>, 12> tech_available;
 
 		int max_unit_width;
 		int max_unit_height;
@@ -3023,9 +2696,6 @@ namespace bwgame {
 			if (target == u) return false;
 			if (~target->pathing_flags & 1) return false;
 			if (u_no_collide(target)) return false;
-			if (u_status_flag(target, unit_t::status_flag_400000)) {
-				if (unit_target_is_enemy(u, target)) return false;
-			}
 			if (u_gathering(u) && !u_grounded_building(target)) {
 				if (!u_gathering(target)) return false;
 				if (u->order_type->id == Orders::ReturnGas) return false;
@@ -5186,11 +4856,12 @@ namespace bwgame {
 		}
 
 		auto loaded_units(const unit_t* u) const {
-			return make_filter_range(make_transform_range(u->loaded_units, [this](auto uid) {
-				return this->get_unit(uid);
-				}), [](unit_t* u) {
-					return u != nullptr;
-				});
+			std::vector<unit_t*> result;
+			for (auto uid : u->loaded_units) {
+				unit_t* u = this->get_unit(uid);
+				if (u != nullptr) result.emplace_back(u);
+			}
+			return result;
 		}
 
 		size_t unit_space_occupied(const unit_t* u) const {
@@ -6795,9 +6466,9 @@ namespace bwgame {
 		}
 
 
-		bool unit_tech_target_valid(const unit_t* u, const tech_type_t* tech, const unit_t* target) const {
+		bool unit_tech_target_valid(const unit_t* u, const TechTypes tech, const unit_t* target) const {
 			if (target->stasis_timer) return false;
-			switch (tech->id) {
+			switch (tech) {
 			case TechTypes::Feedback:
 				if (ut_building(target)) return false;
 				if (!ut_has_energy(target)) return false;
@@ -6932,7 +6603,7 @@ namespace bwgame {
 
 		void apply_unit_effects(unit_t* u) {
 			if (u->defensive_matrix_timer) {
-				if (u_invincible(u) || !unit_tech_target_valid(u, get_tech_type(TechTypes::Defensive_Matrix), u)) {
+				if (u_invincible(u) || !unit_tech_target_valid(u, TechTypes::Defensive_Matrix, u)) {
 					u->defensive_matrix_hp = 0_fp8;
 					u->defensive_matrix_timer = 0;
 				}
@@ -9143,7 +8814,7 @@ namespace bwgame {
 		}
 
 		int player_max_upgrade_level(int owner, UpgradeTypes upgrade_id) const {
-			return game_st.max_upgrade_levels.at(owner).at(upgrade_id);
+			return 3;
 		}
 		void order_Upgrade(unit_t* u) {
 			auto* upgrade = u->building.upgrading_type;
@@ -9424,7 +9095,7 @@ namespace bwgame {
 		}
 
 		bool player_tech_available(int owner, TechTypes tech_id) const {
-			return game_st.tech_available.at(owner).at(tech_id);
+			return true;
 		}
 		bool unit_is_marine(unit_type_autocast ut) const {
 			if (unit_is(ut, UnitTypes::Terran_Marine)) return true;
@@ -9453,13 +9124,13 @@ namespace bwgame {
 			return u->vulture.spider_mine_count;
 		}
 
-		bool unit_can_use_tech(const unit_t* u, const tech_type_t* tech) const {
+		bool unit_can_use_tech(const unit_t* u, const TechTypes tech) const {
 			if (!u_completed(u)) return false;
 			if (u_hallucination(u)) return false;
 			if (unit_is_disabled(u)) return false;
 			int owner = u->owner;
-			if (!player_tech_available(owner, tech->id)) return false;
-			switch (tech->id) {
+			if (!player_tech_available(owner, tech)) return false;
+			switch (tech) {
 			case TechTypes::Stim_Packs:
 				if (!ut_hero(u) && !player_has_researched(owner, TechTypes::Stim_Packs)) return false;
 				if (!unit_is_marine(u) && !unit_is_firebat(u)) return false;
@@ -9608,7 +9279,7 @@ namespace bwgame {
 				u->order_state = 1;
 			}
 			else {
-				if (!unit_can_use_tech(u, get_tech_type(TechTypes::Spider_Mines)) || (unit_is_at_move_target(u) && u_immovable(u))) {
+				if (!unit_can_use_tech(u, TechTypes::Spider_Mines) || (unit_is_at_move_target(u) && u_immovable(u))) {
 					order_done(u);
 					return;
 				}
@@ -10443,7 +10114,7 @@ namespace bwgame {
 		}
 
 		unit_t* find_medic_target(const unit_t* u) const {
-			if (!unit_can_use_tech(u, get_tech_type(TechTypes::Healing))) return nullptr;
+			if (!unit_can_use_tech(u, TechTypes::Healing)) return nullptr;
 			return find_nearest_unit(u, square_at(u->sprite->position, 160), [&](unit_t* target) {
 				if (target->is_being_healed) return false;
 				return medic_can_heal_target(u, target);
@@ -10628,7 +10299,7 @@ namespace bwgame {
 				return true;
 			default:
 				if (!u->order_target.unit || u_invincible(u->order_target.unit)) return false;
-				return unit_tech_target_valid(u, get_tech_type(u->order_type->tech_type), u->order_target.unit);
+				return unit_tech_target_valid(u, u->order_type->tech_type, u->order_target.unit);
 			}
 		}
 
@@ -10832,7 +10503,7 @@ namespace bwgame {
 		}
 
 		int medic_try_heal(unit_t* u) {
-			if (!unit_can_use_tech(u, get_tech_type(TechTypes::Healing))) return 0;
+			if (!unit_can_use_tech(u, TechTypes::Healing)) return 0;
 			unit_t* target = u->order_target.unit;
 			if (!target || !medic_can_heal_target(u, target)) return 0;
 			if (target->is_being_healed) {

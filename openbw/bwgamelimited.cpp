@@ -1678,8 +1678,6 @@ namespace bwgame {
 		fp8 shield_points;
 		const unit_type_t* unit_type;
 
-		std::pair<unit_t*, unit_t*> player_units_link;
-
 		unit_t* subunit;
 		intrusive_list<order_t, default_link_f> order_queue;
 		unit_t* auto_target_unit;
@@ -2003,20 +2001,6 @@ namespace bwgame {
 		std::array<type_indexed_array<bool, TechTypes>, 12> tech_researched;
 		std::array<type_indexed_array<bool, TechTypes>, 12> tech_researching;
 
-		std::array<type_indexed_array<int, UnitTypes>, 12> unit_counts;
-		std::array<type_indexed_array<int, UnitTypes>, 12> completed_unit_counts;
-
-		std::array<int, 12> factory_counts;
-		std::array<int, 12> building_counts;
-		std::array<int, 12> non_building_counts;
-
-		std::array<int, 12> completed_factory_counts;
-		std::array<int, 12> completed_building_counts;
-		std::array<int, 12> completed_non_building_counts;
-
-		std::array<int, 12> total_buildings_ever_completed;
-		std::array<int, 12> total_non_buildings_ever_completed;
-
 		std::array<std::array<fp1, 3>, 12> supply_used;
 		std::array<std::array<fp1, 3>, 12> supply_available;
 
@@ -2025,8 +2009,6 @@ namespace bwgame {
 		std::vector<bool> draw_creep_over;
 
 		size_t active_orders_size;
-		size_t active_bullets_size;
-		size_t active_thingies_size;
 
 		std::vector<uint8_t> repulse_field;
 
@@ -2044,22 +2026,11 @@ namespace bwgame {
 		intrusive_list<unit_t, default_link_f> visible_units;
 		intrusive_list<unit_t, default_link_f> hidden_units;
 
-		std::array<intrusive_list<unit_t, void, &unit_t::player_units_link>, 12> player_units;
-
 		object_container<unit_t, 1700, 17> units_container;
 
 		intrusive_list<bullet_t, default_link_f> active_bullets;
-		object_container<bullet_t, 100, 10> bullets_container;
-
-		object_container<sprite_t, 2500, 25> sprites_container;
-
-		object_container<image_t, 5000, 50> images_container;
 
 		object_container<order_t, 2000, 20> orders_container;
-
-		intrusive_list<thingy_t, default_link_f> active_thingies;
-		intrusive_list<thingy_t, default_link_f> free_thingies;
-		std::list<thingy_t> thingies;
 
 		const unit_t* consider_collision_with_unit_bug;
 		const unit_t* prev_bullet_source_unit;
@@ -4751,8 +4722,7 @@ namespace bwgame {
 		}
 
 		void destroy_image(image_t* image) {
-			image->sprite->images.remove(*image);
-			st.images_container.push(image);
+			// TODO: RIP image
 		}
 
 		void destroy_image_from_to(sprite_t* sprite, ImageTypes first_id, ImageTypes last_id) {
@@ -5072,7 +5042,7 @@ namespace bwgame {
 
 		bool unit_is_under_dark_swarm(const unit_t* u) const {
 			if (ut_building(u)) return false;
-			if (st.completed_unit_counts[11][UnitTypes::Spell_Dark_Swarm] == 0) return false;
+			//if (st.completed_unit_counts[11][UnitTypes::Spell_Dark_Swarm] == 0) return false;
 			return find_unit(unit_sprite_inner_bounding_box(u), [&](const unit_t* n) {
 				return unit_is(n, UnitTypes::Spell_Dark_Swarm);
 				}) != nullptr;
@@ -5199,10 +5169,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_egg(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Zerg_Egg)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Cocoon)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Lurker_Egg)) return true;
-			return false;
+			return unit_is(ut, UnitTypes::Zerg_Egg) || unit_is(ut, UnitTypes::Zerg_Cocoon) || unit_is(ut, UnitTypes::Zerg_Lurker_Egg);
 		}
 
 		int visible_hp_plus_shields(const unit_t* u) const {
@@ -7189,7 +7156,7 @@ namespace bwgame {
 			else u->order_type = get_order_type(Orders::Nothing);
 			set_secondary_order(u, get_order_type(Orders::Nothing));
 			u->unit_finder_bounding_box = { {-1, -1}, {-1, -1} };
-			st.player_units[owner].push_front(*u);
+			//st.player_units[owner].push_front(*u);
 
 			if (u_grounded_building(u)) {
 				//unit_finder_insert(u);
@@ -7527,9 +7494,10 @@ namespace bwgame {
 			for (size_t i = 0; removed_flags; ++i) {
 				if (removed_flags & (1 << i)) {
 					removed_flags &= ~(1 << i);
-					for (unit_t* nu : ptr(st.player_units.at(i))) {
+					// TODO: Remove all references to `this` from all other units
+					/*for (unit_t* nu : ptr(st.player_units.at(i))) {
 						remove_target_references(nu, u);
-					}
+					}*/
 				}
 			}
 		}
@@ -8554,61 +8522,9 @@ namespace bwgame {
 			return &global_st.sprite_types.vec[(size_t)id];
 		}
 
-		thingy_t* new_thingy() {
-			if (!st.free_thingies.empty()) {
-				thingy_t* r = &st.free_thingies.front();
-				st.free_thingies.pop_front();
-				return r;
-			}
-			if (st.thingies.size() >= 500) return nullptr;
-			return &*st.thingies.emplace(st.thingies.end());
-		}
-
-		bool initialize_sprite(sprite_t* sprite, const sprite_type_t* sprite_type, xy pos, int owner) {
-			sprite->owner = owner;
-			sprite->sprite_type = sprite_type;
-			sprite->flags = 0;
-			sprite->position = pos;
-			sprite->visibility_flags = ~0;
-			sprite->elevation_level = 4;
-			sprite->images.clear();
-			if (!sprite_type->visible) {
-				sprite->flags |= sprite_t::flag_hidden;
-				set_sprite_visibility(sprite, 0);
-			}
-			// TODO
-			return true;
-		}
-
-		sprite_t* create_sprite(const sprite_type_t* sprite_type, xy pos, int owner) {
-			sprite_t* sprite = st.sprites_container.top();
-			if (!sprite) return nullptr;
-			st.sprites_container.pop();
-
-			if (!initialize_sprite(sprite, sprite_type, pos, owner)) {
-				st.sprites_container.push(sprite);
-				return nullptr;
-			}
-			return sprite;
-		}
-
-		bool initialize_thingy(thingy_t* t, const sprite_type_t* sprite_type, xy pos, int owner) {
-			t->hp = 1_fp8;
-			t->sprite = create_sprite(sprite_type, pos, owner);
-			if (!t->sprite) return false;
-			return true;
-		}
-
-		thingy_t* create_thingy(const sprite_type_t* sprite_type, xy pos, int owner) {
-			thingy_t* t = new_thingy();
-			if (!t) return nullptr;
-			if (!initialize_thingy(t, sprite_type, pos, owner)) {
-				st.free_thingies.push_front(*t);
-				return nullptr;
-			}
-			++st.active_thingies_size;
-			bw_insert_list(st.active_thingies, *t);
-			return t;
+		thingy_t* create_thingy_ex(const sprite_type_t* sprite_type, xy pos, int owner, int elevation) {
+			// TODO: Factorio spawn simple smoke or whatever
+			return nullptr;
 		}
 
 		uint8_t tile_visibility(xy pos) const {
@@ -8640,7 +8556,7 @@ namespace bwgame {
 			}
 			else {
 				partially_refund_unit_costs(u->owner, u);
-				--st.total_non_buildings_ever_completed[u->owner];
+				//--st.total_non_buildings_ever_completed[u->owner];
 				auto prev_hp = fp8::integer(u->previous_hp);
 				if (unit_is(u, UnitTypes::Zerg_Extractor)) {
 					unit_t* drone = create_unit(UnitTypes::Zerg_Drone, u->sprite->position, u->owner);
@@ -8652,11 +8568,7 @@ namespace bwgame {
 					kill_unit(u);
 				}
 				else {
-					thingy_t* t = create_thingy(get_sprite_type(SpriteTypes::SPRITEID_Zerg_Building_Spawn_Small), u->sprite->position, 0);
-					if (t) {
-						t->sprite->elevation_level = u->sprite->elevation_level + 1;
-						if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-					}
+					create_thingy_ex(get_sprite_type(SpriteTypes::SPRITEID_Zerg_Building_Spawn_Small), u->sprite->position, 0, u->sprite->elevation_level + 1);
 					const unit_type_t* build_type = u->unit_type;
 					morph_unit(u, get_unit_type(UnitTypes::Zerg_Drone));
 					finish_building_unit(u);
@@ -8778,9 +8690,10 @@ namespace bwgame {
 		}
 
 		void apply_upgrades_to_player_units(int owner) {
-			for (unit_t* u : ptr(st.player_units[owner])) {
-				update_unit_speed_upgrades(u);
-			}
+			// TODO: Apply upgrades to all owned units
+			//for (unit_t* u : ptr(st.player_units[owner])) {
+			//	update_unit_speed_upgrades(u);
+			//}
 		}
 
 		void give_unit_to(unit_t* u, int new_owner) {
@@ -9014,14 +8927,10 @@ namespace bwgame {
 				xy offset = get_image_lo_offset(sprite->main_image, lo_index, i);
 				if (offset.x != 127 && offset.y != 127) {
 					// TODO: Factorio Create dust simple-smoke
-					auto* t = create_thingy(get_sprite_type(sprite_id), sprite->position + offset, 0);
-					if (t) {
-						t->sprite->elevation_level = sprite->elevation_level + 1;
-						if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-						if (flipped) {
-							for (auto* image : ptr(t->sprite->images)) {
-								set_image_frame_index_offset(image, image->frame_index_offset, true);
-							}
+					auto* t = create_thingy_ex(get_sprite_type(sprite_id), sprite->position + offset, 0, sprite->elevation_level + 1);
+					if (t && flipped) {
+						for (auto* image : ptr(t->sprite->images)) {
+							set_image_frame_index_offset(image, image->frame_index_offset, true);
 						}
 					}
 				}
@@ -9895,10 +9804,8 @@ namespace bwgame {
 				heading = direction_from_index(16 * 2 * index);
 			}
 			xy offset = get_image_lo_offset(u->connected_unit->sprite->main_image, 0, index);
-			auto* t = create_thingy(sprite, u->sprite->position + offset, 0);
+			auto* t = create_thingy_ex(sprite, u->sprite->position + offset, 0, u->sprite->elevation_level + 1);
 			if (t) {
-				t->sprite->elevation_level = u->sprite->elevation_level + 1;
-				if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
 				// TODO: Image heading/direction
 			}
 		}
@@ -11071,12 +10978,13 @@ namespace bwgame {
 			stop_unit(u);
 			if (!is_facing_next_target_waypoint(u, 1_fp8)) return;
 			unit_t* silo = nullptr;
-			for (unit_t* n : ptr(st.player_units[u->owner])) {
+			// TODO: Find any available nuke silo containing a nuke
+			/*for (unit_t* n : ptr(st.player_units[u->owner])) {
 				if (unit_is(n, UnitTypes::Terran_Nuclear_Silo) && n->building.silo.nuke && n->building.silo.ready) {
 					silo = n;
 					break;
 				}
-			}
+			}*/
 			if (!silo) {
 				order_done(u);
 				return;
@@ -11162,12 +11070,7 @@ namespace bwgame {
 				sprite_run_anim(u->sprite, iscript_anims::SpecialState1);
 				xy pos;
 				if (u->connected_unit) pos = u->connected_unit->order_target.pos;
-				thingy_t* t = create_thingy(get_sprite_type(SpriteTypes::SPRITEID_Nuke_Target_Dot), pos, u->owner);
-				u->ghost.nuke_dot = t;
-				if (t) {
-					t->sprite->elevation_level = u->sprite->elevation_level + 1;
-					if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-				}
+				u->ghost.nuke_dot = create_thingy_ex(get_sprite_type(SpriteTypes::SPRITEID_Nuke_Target_Dot), pos, u->owner, u->sprite->elevation_level + 1);
 				u->order_state = 6;
 			}
 			else if (u->order_state == 6) {
@@ -12144,11 +12047,7 @@ namespace bwgame {
 				}
 				u->energy -= fp8::integer(get_tech_type(TechTypes::Recall)->energy_cost);
 				if (u->order_target.unit) u->order_target.pos = u->order_target.unit->sprite->position;
-				thingy_t* t = create_thingy(get_sprite_type(SpriteTypes::SPRITEID_Recall_Field), u->order_target.pos, 0);
-				if (t) {
-					t->sprite->elevation_level = u->sprite->elevation_level + 1;
-					if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-				}
+				thingy_t* t = create_thingy_ex(get_sprite_type(SpriteTypes::SPRITEID_Recall_Field), u->order_target.pos, 0, u->sprite->elevation_level + 1);
 				//play_sound(550 + lcg_rand(17) % 2, u->order_target.pos);
 				u->main_order_timer = 22;
 				u->order_state = 1;
@@ -12193,11 +12092,7 @@ namespace bwgame {
 					move_unit(target, r.second);
 					refresh_unit_position(target);
 					if (!unit_is(target, UnitTypes::Zerg_Cocoon)) set_unit_order(target, target->unit_type->return_to_idle);
-					thingy_t* t = create_thingy(get_sprite_type(SpriteTypes::SPRITEID_Recall_Field), r.second, 0);
-					if (t) {
-						t->sprite->elevation_level = target->sprite->elevation_level + 1;
-						if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-					}
+					create_thingy_ex(get_sprite_type(SpriteTypes::SPRITEID_Recall_Field), r.second, 0, target->sprite->elevation_level + 1);
 					if (unit_is_ghost(target) && target->connected_unit && unit_is(target->connected_unit, UnitTypes::Terran_Nuclear_Missile)) {
 						target->connected_unit->connected_unit = nullptr;
 						target->connected_unit = nullptr;
@@ -12500,14 +12395,7 @@ namespace bwgame {
 			if (ut_addon(u)) return false;
 			if (u->owner == new_owner) return false;
 			if (u_completed(u) && unit_is_refinery(u)) {
-				for (unit_t* n : ptr(st.player_units[u->owner])) {
-					if (!ut_worker(n)) continue;
-					if (!us_hidden(n)) continue;
-					if (n->order_type->id != Orders::HarvestGas) continue;
-					if (n->order_target.unit != u) continue;
-					give_unit_to(n, new_owner);
-					break;
-				}
+				// TODO: Give all units inside this refinery to new_owner
 			}
 			give_unit_to(u, new_owner);
 			if (unit_provides_space(u)) {
@@ -12754,11 +12642,7 @@ namespace bwgame {
 					//play_sound(1061, target);
 					if (unit_dying(target)) {
 						SpriteTypes sprite_id = (SpriteTypes)((int)SpriteTypes::SPRITEID_Feedback_Hit_Small + unit_sprite_size(target));
-						thingy_t* t = create_thingy(get_sprite_type(sprite_id), u->sprite->position, 0);
-						if (t) {
-							t->sprite->elevation_level = u->sprite->elevation_level + 1;
-							if (!us_hidden(t)) set_sprite_visibility(t->sprite, tile_visibility(t->sprite->position));
-						}
+						create_thingy_ex(get_sprite_type(sprite_id), u->sprite->position, 0, u->sprite->elevation_level + 1);
 					}
 					else {
 						create_sized_image(u, ImageTypes::IMAGEID_Feedback_Small);

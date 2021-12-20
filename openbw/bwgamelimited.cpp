@@ -1025,16 +1025,9 @@ namespace bwgame {
 		bool operator==(const unit_id_t& n) const {
 			return raw_value == n.raw_value;
 		}
-		size_t index() const {
-			return raw_value & 0x7ff;
-		}
-		unsigned int generation() const {
-			return raw_value >> 11;
-		}
 	};
 
 	using unit_id = unit_id_t<uint16_t>;
-	using unit_id_32 = unit_id_t<uint32_t>;
 
 	struct default_link_f {
 		template<typename T>
@@ -2353,19 +2346,9 @@ namespace bwgame {
 			return false;
 		}
 
-		bool can_fit_at(xy pos, std::array<int, 4> inner) const {
+		bool unit_type_can_fit_at(const unit_type_t* unit_type, xy pos) const {
 			// TODO: Factorio version
 			return true;
-		}
-
-		bool unit_type_can_fit_at(const unit_type_t* unit_type, xy pos) const {
-			if (!is_walkable(pos)) return false;
-			std::array<int, 4> inner;
-			inner[0] = unit_type->dimensions.from.y;
-			inner[1] = -unit_type->dimensions.to.x;
-			inner[2] = -unit_type->dimensions.to.y;
-			inner[3] = unit_type->dimensions.from.x;
-			return can_fit_at(pos, inner);
 		}
 
 		std::pair<bool, unit_t*> is_blocked(const unit_t* u, xy pos) const {

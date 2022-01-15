@@ -40,7 +40,7 @@ def_size_sticker{
   -- TODO: disable parent entity while sticker attached
   -- TODO: init animation: { 1, 2, 3, 4, 5, 6, 7 }
   --    Could do blank frames at the start instead of having to track and lua-reappear the sticker.
-  --    Use simple-smoke for timed anim.
+  --    Use simple-smoke or another sticker for timed startup anim.
   -- TODO: end animation: { 14 }
   --    Add a timed anim/picture w/ target when the sticker dies
   name = "starcraft-lockdown",
@@ -148,11 +148,14 @@ register_sticker{
   -- TODO: Irradiate logic
   name = "starcraft-irradiate",
   duration_in_ticks = 1512,
-  --damage_interval = 2,
-  --damage_per_tick = {
-  --  amount = (249.0 / 25.2) * 2.0 / 60,  -- TODO: find actual value
-  --  type = "poison"
-  --},
+  -- Once every 336ms -> 336 / (1000 / 60) -> once every 20 factorio ticks
+  damage_interval = 20,
+  damage_per_tick = {
+    amount = 853 / 256,
+    -- TODO: Use special damage type and apply splash damage
+    -- https://wiki.factorio.com/Prototype/DamageType
+    type = "poison"
+  },
   anim = {
     filename = "main_380_diffuse.png",
     frame_count = 6,
@@ -166,11 +169,14 @@ def_size_sticker{
   -- TODO: Custom damage per tick logic
   name = "starcraft-plague",
   duration_in_ticks = 1512,
-  --damage_interval = 2,
-  --damage_per_tick = (249.0 / 25.2) * 2.0 / 60,
-  -- TODO: find actual value, also this should not impact shields
-  -- Use special damage type and capture it in a filter, skip shields and prevent death
-  -- https://wiki.factorio.com/Prototype/DamageType
+  -- Once every 336ms -> 336 / (1000 / 60) -> once every 20 factorio ticks
+  damage_interval = 20,
+  damage_per_tick = {
+    amount = 1010 / 256,
+    -- TODO: Use special damage type and capture it in a filter, skip shields and prevent death
+    -- https://wiki.factorio.com/Prototype/DamageType
+    type = "poison"
+  },
   anim_common = {
     frame_count = 4,
     -- NOTE: Creation has waitrand(1, 3) 

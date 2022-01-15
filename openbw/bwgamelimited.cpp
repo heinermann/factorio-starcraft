@@ -1467,19 +1467,14 @@ namespace bwgame {
 		int remove_timer;
 		fp8 defensive_matrix_hp;
 		int defensive_matrix_timer;
-		int stim_timer;
-		int ensnare_timer;
-		int lockdown_timer;
 		int irradiate_timer;
-		int stasis_timer;
-		int plague_timer;
 		int storm_timer;
 		unit_t* irradiated_by;
 		int irradiate_owner;
 		int parasite_flags;
 		int cycle_counter;
 		int blinded_by;
-		int maelstrom_timer;
+
 		int acid_spore_count;
 		std::array<int, 9> acid_spore_time;
 
@@ -1962,7 +1957,6 @@ namespace bwgame {
 		void set_unit_move_target(unit_t* u, xy move_target) {
 			if (u->move_target.pos == move_target) return;
 			if (u->path) u->path->state_flags |= 1;
-			move_target = move_target;
 			set_flingy_move_target(u, move_target);
 			if (u_immovable(u)) u_unset_status_flag(u, unit_t::status_flag_immovable);
 			u->move_target_timer = 15;
@@ -4042,9 +4036,9 @@ namespace bwgame {
 		}
 		bool unit_is_disabled(const unit_t* u) const {
 			if (u_disabled(u)) return true;
-			if (u->lockdown_timer) return true;
-			if (u->stasis_timer) return true;
-			if (u->maelstrom_timer) return true;
+			//if (u->lockdown_timer) return true;
+			//if (u->stasis_timer) return true;
+			//if (u->maelstrom_timer) return true;
 			return false;
 		}
 
@@ -4296,21 +4290,15 @@ namespace bwgame {
 			u->order_process_timer = 15;
 		}
 
-		void remove_stasis(unit_t* u) {
-			u->stasis_timer = 0;
-			u_set_status_flag(u, unit_t::status_flag_invincible, ut_invincible(u));
-			disable_effect_end(u, ImageTypes::IMAGEID_Stasis_Field_Small, ImageTypes::IMAGEID_Stasis_Field_Large);
-		}
-
 		bool u_speed_upgrade(const unit_t* u) const {
 			return u_status_flag(u, unit_t::status_flag_speed_upgrade);
 		}
 		fp8 get_modified_unit_acceleration(const unit_t* u, fp8 base_acceleration) const {
 			ufp8 acceleration = base_acceleration.as_unsigned();
 			int mod = 0;
-			if (u->stim_timer) ++mod;
+			//if (u->stim_timer) ++mod;
 			if (u_speed_upgrade(u)) ++mod;
-			if (u->ensnare_timer) --mod;
+			// TODO if (u->ensnare_timer) --mod;
 			if (mod < 0) acceleration -= acceleration / 4u;
 			if (mod > 0) acceleration *= 2u;
 			return acceleration.as_signed();
@@ -4322,9 +4310,9 @@ namespace bwgame {
 		fp8 get_modified_unit_speed(const unit_t* u, fp8 base_speed) const {
 			ufp8 speed = base_speed.as_unsigned();
 			int mod = 0;
-			if (u->stim_timer) ++mod;
+			//if (u->stim_timer) ++mod;
 			if (u_speed_upgrade(u)) ++mod;
-			if (u->ensnare_timer) --mod;
+			// TODO if (u->ensnare_timer) --mod;
 			if (mod < 0) speed /= 2u;
 			if (mod > 0) {
 				if (unit_is_scout(u)) {
@@ -4342,9 +4330,9 @@ namespace bwgame {
 		fp8 get_modified_unit_turn_rate(const unit_t* u, fp8 base_turn_rate) const {
 			ufp8 turn_rate = base_turn_rate.as_unsigned();
 			int mod = 0;
-			if (u->stim_timer) ++mod;
+			//if (u->stim_timer) ++mod;
 			if (u_speed_upgrade(u)) ++mod;
-			if (u->ensnare_timer) --mod;
+			// TODO if (u->ensnare_timer) --mod;
 			if (mod < 0) turn_rate -= turn_rate / 4u;
 			if (mod > 0) turn_rate *= 2u;
 			return turn_rate.as_signed();
@@ -4374,52 +4362,10 @@ namespace bwgame {
 
 		}
 
-		void destroy_image(image_t* image) {
-			// TODO: RIP image
-		}
-
-		void destroy_image_from_to(sprite_t* sprite, ImageTypes first_id, ImageTypes last_id) {
-			image_t* image = find_image(sprite, first_id, last_id);
-			if (image) destroy_image(image);
-		}
-
-		void destroy_image_from_to(unit_t* u, ImageTypes first_id, ImageTypes last_id) {
-			destroy_image_from_to(u->sprite, first_id, last_id);
-			if (u->subunit) destroy_image_from_to(u->subunit->sprite, first_id, last_id);
-		}
-
-		void remove_irradiate(unit_t* u) {
-			u->irradiate_timer = 0;
-			u->irradiated_by = 0;
-			u->irradiate_owner = 8;
-			destroy_image_from_to(u, ImageTypes::IMAGEID_Irradiate_Small, ImageTypes::IMAGEID_Irradiate_Large);
-		}
-
-		void remove_ensnare(unit_t* u) {
-			u->ensnare_timer = 0;
-			destroy_image_from_to(u, ImageTypes::IMAGEID_Ensnare_Overlay_Small, ImageTypes::IMAGEID_Ensnare_Overlay_Large);
-			update_unit_speed(u);
-		}
-
-		void remove_lockdown(unit_t* u) {
-			u->lockdown_timer = 0;
-			disable_effect_end(u, ImageTypes::IMAGEID_Lockdown_Field_Small, ImageTypes::IMAGEID_Lockdown_Field_Large);
-		}
-
-		void remove_plague(unit_t* u) {
-			u->plague_timer = 0;
-			destroy_image_from_to(u, ImageTypes::IMAGEID_Plague_Overlay_Small, ImageTypes::IMAGEID_Plague_Overlay_Large);
-		}
-
-		void remove_maelstrom(unit_t* u) {
-			u->maelstrom_timer = 0;
-			disable_effect_end(u, ImageTypes::IMAGEID_Maelstorm_Overlay_Small, ImageTypes::IMAGEID_Maelstorm_Overlay_Large);
-		}
-
 		void remove_acid_spores(unit_t* u) {
 			u->acid_spore_count = 0;
 			u->acid_spore_time = {};
-			destroy_image_from_to(u, ImageTypes::IMAGEID_Acid_Spores_1_Overlay_Small, ImageTypes::IMAGEID_Acid_Spores_6_9_Overlay_Large);
+			//destroy_image_from_to(u, ImageTypes::IMAGEID_Acid_Spores_1_Overlay_Small, ImageTypes::IMAGEID_Acid_Spores_6_9_Overlay_Large);
 		}
 
 		image_t* create_sized_image(unit_t* u, ImageTypes small_image) {
@@ -4433,8 +4379,8 @@ namespace bwgame {
 			else {
 				u->defensive_matrix_hp = 0_fp8;
 				u->defensive_matrix_timer = 0;
-				destroy_image_from_to(u, ImageTypes::IMAGEID_Defensive_Matrix_Front_Small, ImageTypes::IMAGEID_Defensive_Matrix_Front_Large);
-				destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Defensive_Matrix_Back_Small, ImageTypes::IMAGEID_Defensive_Matrix_Back_Large);
+				//destroy_image_from_to(u, ImageTypes::IMAGEID_Defensive_Matrix_Front_Small, ImageTypes::IMAGEID_Defensive_Matrix_Front_Large);
+				//destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Defensive_Matrix_Back_Small, ImageTypes::IMAGEID_Defensive_Matrix_Back_Large);
 			}
 			if (u->defensive_matrix_timer && !u_burrowed(u)) {
 				create_sized_image(u, ImageTypes::IMAGEID_Defensive_Matrix_Hit_Small);
@@ -4710,7 +4656,7 @@ namespace bwgame {
 
 		void on_hit_change_target(unit_t* u, unit_t* target) {
 			if (unit_is(u, UnitTypes::Zerg_Larva)) return;
-			if (u_burrowed(u) && !unit_is(u, UnitTypes::Zerg_Lurker) && u->irradiate_timer == 0) {
+			if (u_burrowed(u) && !unit_is(u, UnitTypes::Zerg_Lurker) /*&& u->irradiate_timer == 0 TODO*/) {
 				if (ut_can_burrow(u)) unburrow_unit(u);
 				return;
 			}
@@ -4908,6 +4854,7 @@ namespace bwgame {
 			return { pos - xy(half_width, half_width), pos + xy(half_width, half_width) };
 		}
 
+		// TODO: Sticker and DamageType stuff
 		void deal_irradiate_damage(unit_t* source_unit) {
 			auto damage = [&](unit_t* target) {
 				if (!ut_organic(target)) return;
@@ -4920,7 +4867,7 @@ namespace bwgame {
 					if (!unit_target_in_range(source_unit, target, 32)) return;
 				}
 				auto* w = get_weapon_type(WeaponTypes::Irradiate);
-				weapon_deal_damage(w, fp8::integer(w->damage_amount) / w->cooldown, 1, target, 0_dir, source_unit->irradiated_by, source_unit->irradiate_owner);
+				weapon_deal_damage(w, fp8::integer(w->damage_amount) / w->cooldown , 1, target, 0_dir, source_unit->irradiated_by, source_unit->irradiate_owner);
 			};
 			if (u_burrowed(source_unit)) {
 				damage(source_unit);
@@ -4948,31 +4895,14 @@ namespace bwgame {
 		void update_acid_spore_image(unit_t* u) {
 			ImageTypes image_id = acid_spore_image(u);
 			if (!find_image(u, image_id, image_id)) {
-				destroy_image_from_to(u, ImageTypes::IMAGEID_Acid_Spores_1_Overlay_Small, ImageTypes::IMAGEID_Acid_Spores_6_9_Overlay_Large);
+				//destroy_image_from_to(u, ImageTypes::IMAGEID_Acid_Spores_1_Overlay_Small, ImageTypes::IMAGEID_Acid_Spores_6_9_Overlay_Large);
 				// TODO
 				//create_image(get_image_type(image_id), (u->subunit ? u->subunit : u)->sprite, {}, image_order_top);
 			}
 		}
 
+// TODO: This should be replaced by Factorio sticker system
 		void update_unit_status_timers(unit_t* u) {
-			if (u->stasis_timer) {
-				--u->stasis_timer;
-				if (!u->stasis_timer) {
-					remove_stasis(u);
-				}
-			}
-			if (u->stim_timer) {
-				--u->stim_timer;
-				if (!u->stim_timer) {
-					update_unit_speed(u);
-				}
-			}
-			if (u->ensnare_timer) {
-				--u->ensnare_timer;
-				if (!u->ensnare_timer) {
-					remove_ensnare(u);
-				}
-			}
 			if (u->defensive_matrix_timer) {
 				--u->defensive_matrix_timer;
 				if (!u->defensive_matrix_timer) {
@@ -4983,29 +4913,7 @@ namespace bwgame {
 				--u->irradiate_timer;
 				deal_irradiate_damage(u);
 				if (!u->irradiate_timer) {
-					remove_irradiate(u);
-				}
-			}
-			if (u->lockdown_timer) {
-				--u->lockdown_timer;
-				if (!u->lockdown_timer) {
-					remove_lockdown(u);
-				}
-			}
-			if (u->maelstrom_timer) {
-				--u->maelstrom_timer;
-				if (!u->maelstrom_timer) {
-					remove_maelstrom(u);
-				}
-			}
-			if (u->plague_timer) {
-				--u->plague_timer;
-				if (!u_invincible(u)) {
-					auto damage = fp8::integer(get_weapon_type(WeaponTypes::Plague)->damage_amount) / 76;
-					if (u->hp > damage) unit_deal_damage(u, damage, nullptr, ~0, true);
-				}
-				if (!u->plague_timer) {
-					remove_plague(u);
+					// TODO: sticker mechanic expires
 				}
 			}
 			if (u->storm_timer) --u->storm_timer;
@@ -5581,9 +5489,9 @@ namespace bwgame {
 		}
 
 		void destroy_carrying_images(const unit_t* u) {
-			destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Mineral_Chunk_Shadow, ImageTypes::IMAGEID_Psi_Emitter_Shadow_Carried);
-			destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Flag, ImageTypes::IMAGEID_Terran_Gas_Tank_Type2);
-			destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Uraj, ImageTypes::IMAGEID_Khalis);
+			//destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Mineral_Chunk_Shadow, ImageTypes::IMAGEID_Psi_Emitter_Shadow_Carried);
+			//destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Flag, ImageTypes::IMAGEID_Terran_Gas_Tank_Type2);
+			//destroy_image_from_to(u->sprite, ImageTypes::IMAGEID_Uraj, ImageTypes::IMAGEID_Khalis);
 		}
 
 		void unit_gather_resources_from(unit_t* u, unit_t* resource) {
@@ -6450,7 +6358,7 @@ namespace bwgame {
 
 
 		bool unit_tech_target_valid(const unit_t* u, const TechTypes tech, const unit_t* target) const {
-			if (target->stasis_timer) return false;
+			//if (target->stasis_timer) return false; TODO: has stasis
 			switch (tech) {
 			case TechTypes::Feedback:
 				if (ut_building(target)) return false;
@@ -6517,23 +6425,6 @@ namespace bwgame {
 			iscript_run_to_idle(u);
 		}
 
-		void lockdown_unit(unit_t* u) {
-			if (u->lockdown_timer == 0) {
-				create_sized_image(u, ImageTypes::IMAGEID_Lockdown_Field_Small);
-			}
-			if (u->lockdown_timer < 131) u->lockdown_timer = 131;
-			set_unit_disabled(u);
-		}
-
-		void maelstrom_unit(unit_t* u) {
-			if (u->maelstrom_timer == 0) {
-				create_sized_image(u, ImageTypes::IMAGEID_Maelstorm_Overlay_Small);
-			}
-			if (u->maelstrom_timer < 22) u->maelstrom_timer = 22;
-			set_unit_disabled(u);
-		}
-
-
 		bool ut_mechanical(unit_type_autocast ut) const {
 			return ut_flag(ut, unit_type_t::flag_mechanical);
 		}
@@ -6542,9 +6433,10 @@ namespace bwgame {
 		}
 		void irradiate_unit(unit_t* u, unit_t* source_unit, int source_owner) {
 			if (u->irradiate_timer == 0 && !u_burrowed(u)) {
-				create_sized_image(u, ImageTypes::IMAGEID_Irradiate_Small);
+				//create_sized_image(u, ImageTypes::IMAGEID_Irradiate_Small);
+				// TODO: Create irradiate sticker (and possibly hidden variant)
 			}
-			u->irradiate_timer = get_weapon_type(WeaponTypes::Irradiate)->cooldown;
+			u->irradiate_timer = 75; //get_weapon_type(WeaponTypes::Irradiate)->cooldown;
 			u->irradiated_by = source_unit;
 			u->irradiate_owner = source_owner;
 		}
@@ -6560,29 +6452,6 @@ namespace bwgame {
 			if (weapon->target_flags & 0x80 && !ut_mechanical(target) && !ut_organic(target)) return false;
 			return true;
 		}
-		void ensnare_unit(unit_t* u) {
-			if (!u->ensnare_timer && !u_burrowed(u)) {
-				create_sized_image(u, ImageTypes::IMAGEID_Ensnare_Overlay_Small);
-			}
-			u->ensnare_timer = 75;
-			update_unit_speed(u);
-		}
-
-		void stasis_unit(unit_t* u) {
-			if (u->stasis_timer == 0) {
-				create_sized_image(u, ImageTypes::IMAGEID_Stasis_Field_Small);
-				u_set_status_flag(u, unit_t::status_flag_invincible);
-			}
-			if (u->stasis_timer < 131) u->stasis_timer = 131;
-			set_unit_disabled(u);
-		}
-
-		void plague_unit(unit_t* u) {
-			if (!u->plague_timer && !u_burrowed(u)) {
-				create_sized_image(u, ImageTypes::IMAGEID_Plague_Overlay_Small);
-			}
-			u->plague_timer = 75;
-		}
 
 		void apply_unit_effects(unit_t* u) {
 			if (u->defensive_matrix_timer) {
@@ -6595,18 +6464,6 @@ namespace bwgame {
 				}
 			}
 
-			if (u->lockdown_timer) {
-				auto timer = u->lockdown_timer;
-				u->lockdown_timer = 0;
-				lockdown_unit(u);
-				u->lockdown_timer = timer;
-			}
-			if (u->maelstrom_timer) {
-				auto timer = u->maelstrom_timer;
-				u->maelstrom_timer = 0;
-				maelstrom_unit(u);
-				u->maelstrom_timer = timer;
-			}
 			if (u->irradiate_timer) {
 				if (!weapon_can_target_unit(get_weapon_type(WeaponTypes::Irradiate), u)) {
 					u->irradiate_timer = 0;
@@ -6618,24 +6475,6 @@ namespace bwgame {
 					irradiate_unit(u, u->irradiated_by, u->irradiate_owner);
 					u->irradiate_timer = timer;
 				}
-			}
-			if (u->ensnare_timer) {
-				auto timer = u->ensnare_timer;
-				u->ensnare_timer = 0;
-				ensnare_unit(u);
-				u->ensnare_timer = timer;
-			}
-			if (u->stasis_timer) {
-				auto timer = u->stasis_timer;
-				u->stasis_timer = 0;
-				stasis_unit(u);
-				u->stasis_timer = timer;
-			}
-			if (u->plague_timer) {
-				auto timer = u->plague_timer;
-				u->plague_timer = 0;
-				plague_unit(u);
-				u->plague_timer = timer;
 			}
 			if (u->acid_spore_count) {
 				// TODO
@@ -6714,11 +6553,7 @@ namespace bwgame {
 		}
 
 		void replace_sprite_images(sprite_t* sprite, const image_type_t* new_image_type, direction_t heading) {
-			for (auto i = sprite->images.begin(); i != sprite->images.end();) {
-				image_t* image = &*i++;
-				destroy_image(image);
-			}
-
+			// Destroy all images for sprite
 			// TODO
 			//create_image(new_image_type, sprite, {}, image_order_above);
 			// TODO: Image heading/direction
@@ -6780,19 +6615,13 @@ namespace bwgame {
 			u->remove_timer = 0;
 			u->defensive_matrix_hp = 0_fp8;
 			u->defensive_matrix_timer = 0;
-			u->stim_timer = 0;
-			u->ensnare_timer = 0;
-			u->lockdown_timer = 0;
 			u->irradiate_timer = 0;
-			u->stasis_timer = 0;
-			u->plague_timer = 0;
 			u->storm_timer = 0;
 			u->irradiated_by = nullptr;
 			u->irradiate_owner = 0;
 			u->parasite_flags = 0;
 			u->cycle_counter = 0;
 			u->blinded_by = 0;
-			u->maelstrom_timer = 0;
 			u->acid_spore_count = 0;
 			u->acid_spore_time = {};
 			u->status_flags = 0;
@@ -7103,7 +6932,9 @@ namespace bwgame {
 		}
 
 		uint32_t unit_calculate_detected_flags(const unit_t* u) const {
-			if (u->defensive_matrix_hp != 0_fp8 || u->lockdown_timer || u->maelstrom_timer || u->irradiate_timer || u->ensnare_timer || u->stasis_timer || u->plague_timer || u->acid_spore_count) {
+			// TODO: If unit has any revealing stickers
+			//if (u->defensive_matrix_hp != 0_fp8 || u->lockdown_timer || u->maelstrom_timer || u->irradiate_timer || u->ensnare_timer || u->stasis_timer || u->plague_timer || u->acid_spore_count) {
+			if (false) {// TODO
 				return 0xff;
 			}
 			else if (visible_to_everyone(u)) {
@@ -7717,14 +7548,15 @@ namespace bwgame {
 		}
 
 		int get_modified_weapon_cooldown(const unit_t* u, const weapon_type_t* weapon) const {
+			// TODO: Handle in Factorio
 			int cooldown = weapon->cooldown;
 			if (u->acid_spore_count) {
 				cooldown += std::max(cooldown / 8, 3) * u->acid_spore_count;
 			}
 			int mod = 0;
-			if (u->stim_timer) ++mod;
+			//if (u->stim_timer) ++mod;
 			if (u_cooldown_upgrade(u)) ++mod;
-			if (u->ensnare_timer) --mod;
+			// if (u->ensnare_timer) --mod;	// TODO: If has ensnare sticker
 			if (mod > 0) cooldown /= 2;
 			if (mod < 0) cooldown += cooldown / 4;
 			if (cooldown > 250) cooldown = 250;
@@ -7900,7 +7732,7 @@ namespace bwgame {
 
 		void order_Repair(unit_t* u) {
 			unit_t* target = u->order_target.unit;
-			if (!target || target->hp >= target->unit_type->hitpoints || target->stasis_timer || u_loaded(target) || !ut_mechanical(target) || !u_completed(target)) {
+			if (!target || target->hp >= target->unit_type->hitpoints || /* TODO target->stasis_timer ||*/ u_loaded(target) || !ut_mechanical(target) || !u_completed(target)) {
 				sprite_run_anim(u->sprite, iscript_anims::WalkingToIdle);
 				order_done(u);
 				if (target && !u_loaded(target)) target->connected_unit = nullptr;
@@ -10836,22 +10668,23 @@ namespace bwgame {
 		}
 
 		void copy_status_effects(unit_t* to, unit_t* from) {
+			// TODO: Copy stickers
 			to->remove_timer = from->remove_timer;
 			to->defensive_matrix_hp = from->defensive_matrix_hp;
 			to->defensive_matrix_timer = from->defensive_matrix_timer;
-			to->stim_timer = from->stim_timer;
-			to->ensnare_timer = from->ensnare_timer;
-			to->lockdown_timer = from->lockdown_timer;
+			//to->stim_timer = from->stim_timer;
+			//to->ensnare_timer = from->ensnare_timer;
+			//to->lockdown_timer = from->lockdown_timer;
 			to->irradiate_timer = from->irradiate_timer;
-			to->stasis_timer = from->stasis_timer;
-			to->plague_timer = from->plague_timer;
+			//to->stasis_timer = from->stasis_timer;
+			//to->plague_timer = from->plague_timer;
 			to->storm_timer = from->storm_timer;
 			to->irradiated_by = from->irradiated_by;
 			to->irradiate_owner = from->irradiate_owner;
 			to->parasite_flags = from->parasite_flags;
 			to->cycle_counter = from->cycle_counter;
 			to->blinded_by = from->blinded_by;
-			to->maelstrom_timer = from->maelstrom_timer;
+			//to->maelstrom_timer = from->maelstrom_timer;
 			to->acid_spore_count = from->acid_spore_count;
 			to->acid_spore_time = from->acid_spore_time;
 			apply_unit_effects(to);
@@ -11039,9 +10872,9 @@ namespace bwgame {
 				if (u->remaining_build_time < build_type->build_time * 3 / 4) ++u->order_state;
 			}
 			else if (u->order_state == 1) {
-				if (unit_is(u, UnitTypes::Zerg_Extractor)) {
-					destroy_image_from_to(u, ImageTypes::IMAGEID_Vespene_Geyser2, ImageTypes::IMAGEID_Vespene_Geyser2);
-				}
+				//if (unit_is(u, UnitTypes::Zerg_Extractor)) {
+				//	destroy_image_from_to(u, ImageTypes::IMAGEID_Vespene_Geyser2, ImageTypes::IMAGEID_Vespene_Geyser2);
+				//}
 				sprite_run_anim(u->sprite, iscript_anims::SpecialState1);
 				++u->order_state;
 			}
@@ -11144,16 +10977,7 @@ namespace bwgame {
 					set_unit_burrowed(u);
 					set_secondary_order(u, get_order_type(Orders::Cloak));
 					u->detected_flags = 0x80000000;
-					if (u->defensive_matrix_hp != 0_fp8) {
-						auto hp = u->defensive_matrix_hp;
-						auto time = u->defensive_matrix_timer;
-						deal_defensive_matrix_damage(u, hp);
-						u->defensive_matrix_hp = hp;
-						u->defensive_matrix_timer = time;
-					}
-					if (u->irradiate_timer) destroy_image_from_to(u, ImageTypes::IMAGEID_Irradiate_Small, ImageTypes::IMAGEID_Irradiate_Large);
-					if (u->ensnare_timer) destroy_image_from_to(u, ImageTypes::IMAGEID_Ensnare_Overlay_Small, ImageTypes::IMAGEID_Ensnare_Overlay_Large);
-					if (u->plague_timer) destroy_image_from_to(u, ImageTypes::IMAGEID_Plague_Overlay_Small, ImageTypes::IMAGEID_Plague_Overlay_Large);
+					// TODO: Hide stickers for matrix, irradiate, ensnare, and plague
 					set_unit_order(u, get_order_type(Orders::Burrowed));
 					u_unset_status_flag(u, unit_t::status_flag_order_not_interruptible);
 					order_done(u);
@@ -11569,11 +11393,11 @@ namespace bwgame {
 		void merge_status_effects(unit_t* to, unit_t* from) {
 			to->defensive_matrix_hp = std::max(to->defensive_matrix_hp, from->defensive_matrix_hp);
 			to->defensive_matrix_timer = std::max(to->defensive_matrix_timer, from->defensive_matrix_timer);
-			to->stim_timer = std::max(to->stim_timer, from->stim_timer);
-			to->ensnare_timer = std::max(to->ensnare_timer, from->ensnare_timer);
-			to->lockdown_timer = std::max(to->lockdown_timer, from->lockdown_timer);
-			to->stasis_timer = std::max(to->stasis_timer, from->stasis_timer);
-			to->plague_timer = std::max(to->plague_timer, from->plague_timer);
+			//to->stim_timer = std::max(to->stim_timer, from->stim_timer);
+			//TODO to->ensnare_timer = std::max(to->ensnare_timer, from->ensnare_timer);
+			//to->lockdown_timer = std::max(to->lockdown_timer, from->lockdown_timer);
+			//to->stasis_timer = std::max(to->stasis_timer, from->stasis_timer);
+			//to->plague_timer = std::max(to->plague_timer, from->plague_timer);
 			if (from->irradiate_timer > to->irradiate_timer) {
 				to->irradiate_timer = from->irradiate_timer;
 				to->irradiated_by = from->irradiated_by;
@@ -11581,7 +11405,7 @@ namespace bwgame {
 			}
 			to->parasite_flags |= from->parasite_flags;
 			to->blinded_by |= from->blinded_by;
-			to->maelstrom_timer = std::max(from->maelstrom_timer, to->maelstrom_timer);
+			//to->maelstrom_timer = std::max(from->maelstrom_timer, to->maelstrom_timer);
 			to->acid_spore_count = from->acid_spore_count;
 			to->acid_spore_time = from->acid_spore_time;
 		}
@@ -12261,7 +12085,7 @@ namespace bwgame {
 		}
 
 		void order_RechargeShieldsUnitRemoveOverlay(unit_t* u) {
-			destroy_image_from_to(u, ImageTypes::IMAGEID_Recharge_Shields_Small, ImageTypes::IMAGEID_Recharge_Shields_Large);
+			//destroy_image_from_to(u, ImageTypes::IMAGEID_Recharge_Shields_Small, ImageTypes::IMAGEID_Recharge_Shields_Large);
 			if (u->order_queue.empty()) set_queued_order(u, false, u->unit_type->return_to_idle, {});
 			u_unset_status_flag(u, unit_t::status_flag_order_not_interruptible);
 			order_done(u);
@@ -12747,13 +12571,25 @@ namespace bwgame {
 				order_MoveUnload(u);
 				break;
 			case Orders::FireYamatoGun:
+			case Orders::CastLockdown:
+			case Orders::CastDarkSwarm:
+			case Orders::CastParasite:
+			case Orders::CastSpawnBroodlings:
+			case Orders::CastEMPShockwave:
+			case Orders::CastPsionicStorm:
+			case Orders::CastIrradiate:
+			case Orders::CastPlague:
+			case Orders::CastConsume:
+			case Orders::CastEnsnare:
+			case Orders::CastStasisField:
+			case Orders::CastRestoration:
+			case Orders::CastDisruptionWeb:
+			case Orders::CastOpticalFlare:
+			case Orders::CastMaelstrom:
 				order_Spell(u);
 				break;
 			case Orders::MoveToFireYamatoGun:
 				order_MoveToTargetOrder(u);
-				break;
-			case Orders::CastLockdown:
-				order_Spell(u);
 				break;
 			case Orders::Burrowing:
 				order_Burrowing(u);
@@ -12763,18 +12599,6 @@ namespace bwgame {
 				break;
 			case Orders::Unburrowing:
 				order_Unburrowing(u);
-				break;
-			case Orders::CastDarkSwarm:
-				order_Spell(u);
-				break;
-			case Orders::CastParasite:
-				order_Spell(u);
-				break;
-			case Orders::CastSpawnBroodlings:
-				order_Spell(u);
-				break;
-			case Orders::CastEMPShockwave:
-				order_Spell(u);
 				break;
 			case Orders::NukeLaunch:
 				order_NukeLaunch(u);
@@ -12817,24 +12641,6 @@ namespace bwgame {
 			case Orders::CastDefensiveMatrix:
 				order_CastDefensiveMatrix(u);
 				break;
-			case Orders::CastPsionicStorm:
-				order_Spell(u);
-				break;
-			case Orders::CastIrradiate:
-				order_Spell(u);
-				break;
-			case Orders::CastPlague:
-				order_Spell(u);
-				break;
-			case Orders::CastConsume:
-				order_Spell(u);
-				break;
-			case Orders::CastEnsnare:
-				order_Spell(u);
-				break;
-			case Orders::CastStasisField:
-				order_Spell(u);
-				break;
 			case Orders::CastHallucination:
 				order_CastHallucination(u);
 				break;
@@ -12842,55 +12648,29 @@ namespace bwgame {
 				order_Patrol(u);
 				break;
 			case Orders::CTFCOPInit:
-				break;
 			case Orders::CTFCOP2:
-				break;
 			case Orders::ComputerAI:
-				break;
 			case Orders::AtkMoveEP:
-				break;
 			case Orders::HarassMove:
-				break;
 			case Orders::AIPatrol:
-				break;
 			case Orders::GuardPost:
-				break;
 			case Orders::ComputerReturn:
-				break;
 			case Orders::HiddenGun:
-				break;
 			case Orders::OpenDoor:
-				break;
 			case Orders::CloseDoor:
-				break;
 			case Orders::HideTrap:
-				break;
 			case Orders::RevealTrap:
-				break;
 			case Orders::EnableDoodad:
-				break;
 			case Orders::WarpIn:
 				break;
 			case Orders::MedicIdle:
 				order_MedicIdle(u);
-				break;
-			case Orders::CastRestoration:
-				order_Spell(u);
-				break;
-			case Orders::CastDisruptionWeb:
-				order_Spell(u);
 				break;
 			case Orders::CastMindControl:
 				order_CastMindControl(u);
 				break;
 			case Orders::CastFeedback:
 				order_Feedback(u);
-				break;
-			case Orders::CastOpticalFlare:
-				order_Spell(u);
-				break;
-			case Orders::CastMaelstrom:
-				order_Spell(u);
 				break;
 			default:
 				break;
@@ -13182,7 +12962,7 @@ namespace bwgame {
 
 		void execute_secondary_order(unit_t* u) {
 			if (u->secondary_order_type->id == Orders::Hallucination2) {
-				if (u->defensive_matrix_hp != 0_fp8 || u->stim_timer || u->ensnare_timer || u->lockdown_timer || u->irradiate_timer || u->stasis_timer || u->parasite_flags || u->storm_timer || u->plague_timer || u->blinded_by || u->maelstrom_timer) {
+				if (false/* has any stickers */) {
 					kill_unit(u);
 				}
 				return;

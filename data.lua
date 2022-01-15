@@ -14,6 +14,7 @@ require("prototypes.equipment-grid")
 require("prototypes.item")
 require("prototypes.animation")
 require("prototypes.smoke")
+require("prototypes.stickers")
 require("prototypes.unit")
 
 require("prototypes.entity.corpse")

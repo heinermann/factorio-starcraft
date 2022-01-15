@@ -105,379 +105,193 @@ local order_dispatch_functions = {
         }
         EndDispatchOrder(entity, data)
     end,
-    [ORD_GUARD] = function(entity, data)
-    end,
-    [ORD_GUARD_PLAY] = function(entity, data)
-    end,
-    [ORD_TURRET_GUARD] = function(entity, data)
-    end,
-    [ORD_GUARD_BUNKER] = function(entity, data)
-    end,
-    [ORD_IGNORE] = function(entity, data)
-    end,
-    [ORD_TRILOBYTE_STOP] = function(entity, data)
-    end,
-    [ORD_ATTACK] = function(entity, data)
-    end,
-    [ORD_MOVE_ATTACK_UNIT] = function(entity, data)
-    end,
-    [ORD_ATTACK_UNIT] = function(entity, data)
-    end,
-    [ORD_ATTACK_FIXED_RNGE] = function(entity, data)
-    end,
-    [ORD_ATTACK_TILE] = function(entity, data)
-    end,
-    [ORD_ATTACK_HOVER] = function(entity, data)
-    end,
-    [ORD_ATTACK_MOVE] = function(entity, data)
-    end,
-    [ORD_DRONE_INFEST0] = function(entity, data)
-    end,
-    [ORD_NOTHING0] = function(entity, data)
-    end,
-    --[ORD_POWERUP0] = function(entity, data)
-    --end,
-    [ORD_TOWER_GUARD] = function(entity, data)
-    end,
-    [ORD_TOWER_ATTACK] = function(entity, data)
-    end,
-    [ORD_VULTURE_MINE] = function(entity, data)
-    end,
-    [ORD_STAY_IN_RANGE] = function(entity, data)
-    end,
-    [ORD_TURRET_ATTACK] = function(entity, data)
-    end,
-    [ORD_NOTHING] = function(entity, data)
-    end,
-    [ORD_NOTHING2] = function(entity, data)
-    end,
-    [ORD_DRONE_START_BUILD] = function(entity, data)
-    end,
-    [ORD_DRONE_BUILD] = function(entity, data)
-    end,
-    [ORD_DRONE_INFEST] = function(entity, data)
-    end,
-    [ORD_DRONE_INFEST2] = function(entity, data)
-    end,
-    [ORD_QUEEN_INFEST] = function(entity, data)
-    end,
-    [ORD_BUILD] = function(entity, data)
-    end,
-    [ORD_BUILDPROTOSS] = function(entity, data)
-    end,
-    [ORD_PYLON_BUILD] = function(entity, data)
-    end,
-    [ORD_CONSTRUCT_BLDG] = function(entity, data)
-    end,
-    [ORD_REPAIR] = function(entity, data)
-    end,
-    [ORD_REPAIR_MOVE] = function(entity, data)
-    end,
-    [ORD_PLACE_ADDON] = function(entity, data)
-    end,
-    [ORD_BUILD_ADDON] = function(entity, data)
-    end,
-    [ORD_TRAIN] = function(entity, data)
-    end,
-    [ORD_RALLY_POINT] = function(entity, data)
-    end,
-    [ORD_RALLY_POINT_TILE] = function(entity, data)
-    end,
-    [ORD_ZERG_BIRTH] = function(entity, data)
-    end,
-    [ORD_MORPH] = function(entity, data)
-    end,
-    [ORD_ZERG_BLDG_MORPH] = function(entity, data)
-    end,
-    [ORD_BUILDSELF] = function(entity, data)
-    end,
-    [ORD_BUILDSELFZERG] = function(entity, data)
-    end,
-    [ORD_BUILDNYDUS] = function(entity, data)
-    end,
-    [ORD_ENTER_NYDUS] = function(entity, data)
-    end,
-    --[ORD_BUILDSELFPROTOSS] outsourced to CUnitPBuild.lua
-    [ORD_FOLLOW] = function(entity, data)
-    end,
-    [ORD_CARRIER] = function(entity, data)
-    end,
-    [ORD_CARRIER_IGNORE] = function(entity, data)
-    end,
-    [ORD_CARRIER_STOP] = function(entity, data)
-    end,
-    [ORD_CARRIER_ATTACK] = function(entity, data)
-    end,
-    [ORD_CARRIER_ATTACK_MOVE] = function(entity, data)
-    end,
-    [ORD_CARRIER_IGNORE2] = function(entity, data)
-    end,
-    [ORD_CARRIER_FIGHT] = function(entity, data)
-    end,
-    [ORD_CARRIER_HOLDPOS] = function(entity, data)
-    end,
-    [ORD_REAVER] = function(entity, data)
-    end,
-    [ORD_REAVER_ATTACK] = function(entity, data)
-    end,
-    [ORD_REAVER_ATTACK_MOVE] = function(entity, data)
-    end,
-    [ORD_REAVER_FIGHT] = function(entity, data)
-    end,
-    [ORD_REAVER_HOLD] = function(entity, data)
-    end,
-    [ORD_TRAIN_FIGHTER] = function(entity, data)
-    end,
-    [ORD_STRAFE_UNIT] = function(entity, data)
-    end,
-    [ORD_STRAFE_UNIT_SCARAB] = function(entity, data)
-    end,
-    [ORD_RECHARGE_UNIT] = function(entity, data)
-    end,
-    [ORD_RECHARGE] = function(entity, data)
-    end,
-    [ORD_SHIELD_BATTERY] = function(entity, data)
-    end,
-    [ORD_RETURN] = function(entity, data)
-    end,
-    [ORD_DRONE_LAND] = function(entity, data)
-    end,
-    [ORD_BLDG_LAND] = function(entity, data)
-    end,
-    [ORD_BLDG_LIFT_OFF] = function(entity, data)
-    end,
-    [ORD_DRONE_LIFT_OFF] = function(entity, data)
-    end,
-    [ORD_LIFT_OFF] = function(entity, data)
-    end,
-    [ORD_RESEARCH_TECH] = function(entity, data)
-    end,
-    [ORD_UPGRADE] = function(entity, data)
-    end,
+    [ORD_GUARD] = UNIMPLEMENTED,
+    [ORD_GUARD_PLAY] = UNIMPLEMENTED,
+    [ORD_TURRET_GUARD] = UNIMPLEMENTED,
+    [ORD_GUARD_BUNKER] = UNIMPLEMENTED,
+    [ORD_IGNORE] = UNIMPLEMENTED,
+    [ORD_TRILOBYTE_STOP] = UNIMPLEMENTED,
+    [ORD_ATTACK] = UNIMPLEMENTED,
+    [ORD_MOVE_ATTACK_UNIT] = UNIMPLEMENTED,
+    [ORD_ATTACK_UNIT] = UNIMPLEMENTED,
+    [ORD_ATTACK_FIXED_RNGE] = UNIMPLEMENTED,
+    [ORD_ATTACK_TILE] = UNIMPLEMENTED,
+    [ORD_ATTACK_HOVER] = UNIMPLEMENTED,
+    [ORD_ATTACK_MOVE] = UNIMPLEMENTED,
+    [ORD_DRONE_INFEST0] = UNIMPLEMENTED,
+    [ORD_NOTHING0] = UNIMPLEMENTED,
+    [ORD_POWERUP0] = UNIMPLEMENTED,
+    [ORD_TOWER_GUARD] = UNIMPLEMENTED,
+    [ORD_TOWER_ATTACK] = UNIMPLEMENTED,
+    [ORD_VULTURE_MINE] = UNIMPLEMENTED,
+    [ORD_STAY_IN_RANGE] = UNIMPLEMENTED,
+    [ORD_TURRET_ATTACK] = UNIMPLEMENTED,
+    [ORD_NOTHING] = UNIMPLEMENTED,
+    [ORD_NOTHING2] = UNIMPLEMENTED,
+    [ORD_DRONE_START_BUILD] = UNIMPLEMENTED,
+    [ORD_DRONE_BUILD] = UNIMPLEMENTED,
+    [ORD_DRONE_INFEST] = UNIMPLEMENTED,
+    [ORD_DRONE_INFEST2] = UNIMPLEMENTED,
+    [ORD_QUEEN_INFEST] = UNIMPLEMENTED,
+    [ORD_BUILD] = UNIMPLEMENTED,
+    [ORD_BUILDPROTOSS] = UNIMPLEMENTED,
+    [ORD_PYLON_BUILD] = UNIMPLEMENTED,
+    [ORD_CONSTRUCT_BLDG] = UNIMPLEMENTED,
+    [ORD_REPAIR] = UNIMPLEMENTED,
+    [ORD_REPAIR_MOVE] = UNIMPLEMENTED,
+    [ORD_PLACE_ADDON] = UNIMPLEMENTED,
+    [ORD_BUILD_ADDON] = UNIMPLEMENTED,
+    [ORD_TRAIN] = UNIMPLEMENTED,
+    [ORD_RALLY_POINT] = UNIMPLEMENTED,
+    [ORD_RALLY_POINT_TILE] = UNIMPLEMENTED,
+    [ORD_ZERG_BIRTH] = UNIMPLEMENTED,
+    [ORD_MORPH] = UNIMPLEMENTED,
+    [ORD_ZERG_BLDG_MORPH] = UNIMPLEMENTED,
+    [ORD_BUILDSELF] = UNIMPLEMENTED,
+    [ORD_BUILDSELFZERG] = UNIMPLEMENTED,
+    [ORD_BUILDNYDUS] = UNIMPLEMENTED,
+    [ORD_ENTER_NYDUS] = UNIMPLEMENTED,
+    [ORD_BUILDSELFPROTOSS] = UNIMPLEMENTED, -- outsourced to CUnitPBuild.lua
+    [ORD_FOLLOW] = UNIMPLEMENTED,
+    [ORD_CARRIER] = UNIMPLEMENTED,
+    [ORD_CARRIER_IGNORE] = UNIMPLEMENTED,
+    [ORD_CARRIER_STOP] = UNIMPLEMENTED,
+    [ORD_CARRIER_ATTACK] = UNIMPLEMENTED,
+    [ORD_CARRIER_ATTACK_MOVE] = UNIMPLEMENTED,
+    [ORD_CARRIER_IGNORE2] = UNIMPLEMENTED,
+    [ORD_CARRIER_FIGHT] = UNIMPLEMENTED,
+    [ORD_CARRIER_HOLDPOS] = UNIMPLEMENTED,
+    [ORD_REAVER] = UNIMPLEMENTED,
+    [ORD_REAVER_ATTACK] = UNIMPLEMENTED,
+    [ORD_REAVER_ATTACK_MOVE] = UNIMPLEMENTED,
+    [ORD_REAVER_FIGHT] = UNIMPLEMENTED,
+    [ORD_REAVER_HOLD] = UNIMPLEMENTED,
+    [ORD_TRAIN_FIGHTER] = UNIMPLEMENTED,
+    [ORD_STRAFE_UNIT] = UNIMPLEMENTED,
+    [ORD_STRAFE_UNIT_SCARAB] = UNIMPLEMENTED,
+    [ORD_RECHARGE_UNIT] = UNIMPLEMENTED,
+    [ORD_RECHARGE] = UNIMPLEMENTED,
+    [ORD_SHIELD_BATTERY] = UNIMPLEMENTED,
+    [ORD_RETURN] = UNIMPLEMENTED,
+    [ORD_DRONE_LAND] = UNIMPLEMENTED,
+    [ORD_BLDG_LAND] = UNIMPLEMENTED,
+    [ORD_BLDG_LIFT_OFF] = UNIMPLEMENTED,
+    [ORD_DRONE_LIFT_OFF] = UNIMPLEMENTED,
+    [ORD_LIFT_OFF] = UNIMPLEMENTED,
+    [ORD_RESEARCH_TECH] = UNIMPLEMENTED,
+    [ORD_UPGRADE] = UNIMPLEMENTED,
     [ORD_LARVA] = DispatchLarva,
-    [ORD_SPAWN_LARVA] = function(entity, data)
-    end,
-    [ORD_HARVEST] = function(entity, data)
-    end,
-    [ORD_HARVEST_MOVE] = function(entity, data)
-    end,
-    [ORD_HARVEST_GAS] = function(entity, data)
-    end,
-    [ORD_ENTER_GAS] = function(entity, data)
-    end,
-    [ORG_IN_GAS] = function(entity, data)
-    end,
-    [ORD_RETURN_GAS] = function(entity, data)
-    end,
-    [ORD_HARVEST_MINERALS] = function(entity, data)
-    end,
-    [ORD_HARVEST_MINERALS_WAIT] = function(entity, data)
-    end,
-    [ORD_HARVESTING_MINERALS] = function(entity, data)
-    end,
-    [ORG_HARVEST_INTERRUPT] = function(entity, data)
-    end,
-    [ORD_HARVEST4] = function(entity, data)
-    end,
-    [ORD_RETURN_MINERALS] = function(entity, data)
-    end,
-    [ORG_HARVEST_INTERRUPT2] = function(entity, data)
-    end,
-    [ORD_ENTER_TRANSPORT] = function(entity, data)
-    end,
-    [ORD_PICK_UP] = function(entity, data)
-    end,
-    [ORD_PICK_UP_MOBILE] = function(entity, data)
-    end,
-    [ORD_PICK_UP_STATIONARY] = function(entity, data)
-    end,
-    [ORD_PICK_UP_UNK] = function(entity, data)
-    end,
-    --[ORD_POWERUP] = function(entity, data)
-    --end,
-    [ORD_SIEGEMODE] = function(entity, data)
-    end,
-    [ORD_TANKMODE] = function(entity, data)
-    end,
-    [ORD_WATCHTARGET] = function(entity, data)
-    end,
-    [ORD_INIT_SPREAD_CREEP] = function(entity, data)
-    end,
-    [ORD_SPREAD_CREEP] = function(entity, data)
-    end,
-    [ORD_STOP_SPREAD_CREEP] = function(entity, data)
-    end,
-    [ORD_GUARDIANASPECT] = function(entity, data)
-    end,
-    [ORD_SUMMON_ARCHON] = function(entity, data)
-    end,
-    [ORD_SUMMON_COMPLETE] = function(entity, data)
-    end,
-    [ORD_HOLDPOS] = function(entity, data)
-    end,
-    [ORD_HOLDPOS_QUEEN] = function(entity, data)
-    end,
-    [ORD_CLOAK] = function(entity, data)
-    end,
-    [ORD_DECLOAK] = function(entity, data)
-    end,
-    [ORD_UNLOAD] = function(entity, data)
-    end,
-    [ORD_MOVE_UNLOAD] = function(entity, data)
-    end,
-    [ORD_YAMATO] = function(entity, data)
-    end,
-    [ORD_YAMATO_MOVE] = function(entity, data)
-    end,
-    [ORD_MAGNAPULSE] = function(entity, data)
-    end,
-    [ORD_BURROW] = function(entity, data)
-    end,
-    [ORD_BURROWED] = function(entity, data)
-    end,
-    [ORD_DEBURROW] = function(entity, data)
-    end,
-    [ORD_DARK_SWARM] = function(entity, data)
-    end,
-    [ORD_CAST_PARASITE] = function(entity, data)
-    end,
-    [ORD_SUMMON_BROODLINGS] = function(entity, data)
-    end,
-    [ORD_EMP_SHOCKWAVE] = function(entity, data)
-    end,
-    [ORD_NUKE_WAIT] = function(entity, data)
-    end,
-    [ORD_NUKE_TRAIN] = function(entity, data)
-    end,
-    [ORD_NUKE_LAUNCH] = function(entity, data)
-    end,
-    [ORD_NUKE_PAINT] = function(entity, data)
-    end,
-    [ORD_NUKE_UNIT] = function(entity, data)
-    end,
-    [ORD_NUKE_GROUND] = function(entity, data)
-    end,
-    [ORD_NUKE_TRACK] = function(entity, data)
-    end,
-    [ORD_ARBITER] = function(entity, data)
-    end,
-    [ORD_CLOAK_NEIGHBORS] = function(entity, data)
-    end,
-    [ORD_PLACE_MINE] = function(entity, data)
-    end,
-    [ORD_RCLICK] = function(entity, data)
-    end,
-    [ORD_SAP_UNIT] = function(entity, data)
-    end,
-    [ORD_SAP_LOC] = function(entity, data)
-    end,
-    [ORD_SAP_HOLDPOS] = function(entity, data)
-    end,
-    [ORD_TELEPORT] = function(entity, data)
-    end,
-    [ORD_TELEPORT_LOC] = function(entity, data)
-    end,
-    [ORD_PLACE_SCANNER] = function(entity, data)
-    end,
-    [ORD_SCANNER] = function(entity, data)
-    end,
-    [ORD_DEF_MAT] = function(entity, data)
-    end,
-    [ORD_PSI_STORM] = function(entity, data)
-    end,
-    [ORD_IRRADIATE] = function(entity, data)
-    end,
-    [ORD_PLAGUE] = function(entity, data)
-    end,
-    [ORD_CONSUME] = function(entity, data)
-    end,
-    [ORD_ENSNARE] = function(entity, data)
-    end,
-    [ORD_STASIS] = function(entity, data)
-    end,
-    [ORD_HALLUCINATE] = function(entity, data)
-    end,
-    [ORD_HALLUCINATION] = function(entity, data)
-    end,
-    [ORD_UNDO_FLYER] = function(entity, data)
-    end,
-    [ORD_UNDO_TRANSPARENT_WORKER] = function(entity, data)
-    end,
-    [ORD_PATROL] = function(entity, data)
-    end,
-    [ORD_CTF_COP_INIT] = function(entity, data)
-    end,
-    [ORD_CTF_COP] = function(entity, data)
-    end,
-    [ORD_CTF_COP_2] = function(entity, data)
-    end,
+    [ORD_SPAWN_LARVA] = UNIMPLEMENTED,
+    [ORD_HARVEST] = UNIMPLEMENTED,
+    [ORD_HARVEST_MOVE] = UNIMPLEMENTED,
+    [ORD_HARVEST_GAS] = UNIMPLEMENTED,
+    [ORD_ENTER_GAS] = UNIMPLEMENTED,
+    [ORG_IN_GAS] = UNIMPLEMENTED,
+    [ORD_RETURN_GAS] = UNIMPLEMENTED,
+    [ORD_HARVEST_MINERALS] = UNIMPLEMENTED,
+    [ORD_HARVEST_MINERALS_WAIT] = UNIMPLEMENTED,
+    [ORD_HARVESTING_MINERALS] = UNIMPLEMENTED,
+    [ORG_HARVEST_INTERRUPT] = UNIMPLEMENTED,
+    [ORD_HARVEST4] = UNIMPLEMENTED,
+    [ORD_RETURN_MINERALS] = UNIMPLEMENTED,
+    [ORG_HARVEST_INTERRUPT2] = UNIMPLEMENTED,
+    [ORD_ENTER_TRANSPORT] = UNIMPLEMENTED,
+    [ORD_PICK_UP] = UNIMPLEMENTED,
+    [ORD_PICK_UP_MOBILE] = UNIMPLEMENTED,
+    [ORD_PICK_UP_STATIONARY] = UNIMPLEMENTED,
+    [ORD_PICK_UP_UNK] = UNIMPLEMENTED,
+    [ORD_POWERUP] = UNIMPLEMENTED,
+    [ORD_SIEGEMODE] = UNIMPLEMENTED,
+    [ORD_TANKMODE] = UNIMPLEMENTED,
+    [ORD_WATCHTARGET] = UNIMPLEMENTED,
+    [ORD_INIT_SPREAD_CREEP] = UNIMPLEMENTED,
+    [ORD_SPREAD_CREEP] = UNIMPLEMENTED,
+    [ORD_STOP_SPREAD_CREEP] = UNIMPLEMENTED,
+    [ORD_GUARDIANASPECT] = UNIMPLEMENTED,
+    [ORD_SUMMON_ARCHON] = UNIMPLEMENTED,
+    [ORD_SUMMON_COMPLETE] = UNIMPLEMENTED,
+    [ORD_HOLDPOS] = UNIMPLEMENTED,
+    [ORD_HOLDPOS_QUEEN] = UNIMPLEMENTED,
+    [ORD_CLOAK] = UNIMPLEMENTED,
+    [ORD_DECLOAK] = UNIMPLEMENTED,
+    [ORD_UNLOAD] = UNIMPLEMENTED,
+    [ORD_MOVE_UNLOAD] = UNIMPLEMENTED,
+    [ORD_YAMATO] = UNIMPLEMENTED,
+    [ORD_YAMATO_MOVE] = UNIMPLEMENTED,
+    [ORD_MAGNAPULSE] = UNIMPLEMENTED,
+    [ORD_BURROW] = UNIMPLEMENTED,
+    [ORD_BURROWED] = UNIMPLEMENTED,
+    [ORD_DEBURROW] = UNIMPLEMENTED,
+    [ORD_DARK_SWARM] = UNIMPLEMENTED,
+    [ORD_CAST_PARASITE] = UNIMPLEMENTED,
+    [ORD_SUMMON_BROODLINGS] = UNIMPLEMENTED,
+    [ORD_EMP_SHOCKWAVE] = UNIMPLEMENTED,
+    [ORD_NUKE_WAIT] = UNIMPLEMENTED,
+    [ORD_NUKE_TRAIN] = UNIMPLEMENTED,
+    [ORD_NUKE_LAUNCH] = UNIMPLEMENTED,
+    [ORD_NUKE_PAINT] = UNIMPLEMENTED,
+    [ORD_NUKE_UNIT] = UNIMPLEMENTED,
+    [ORD_NUKE_GROUND] = UNIMPLEMENTED,
+    [ORD_NUKE_TRACK] = UNIMPLEMENTED,
+    [ORD_ARBITER] = UNIMPLEMENTED,
+    [ORD_CLOAK_NEIGHBORS] = UNIMPLEMENTED,
+    [ORD_PLACE_MINE] = UNIMPLEMENTED,
+    [ORD_RCLICK] = UNIMPLEMENTED,
+    [ORD_SAP_UNIT] = UNIMPLEMENTED,
+    [ORD_SAP_LOC] = UNIMPLEMENTED,
+    [ORD_SAP_HOLDPOS] = UNIMPLEMENTED,
+    [ORD_TELEPORT] = UNIMPLEMENTED,
+    [ORD_TELEPORT_LOC] = UNIMPLEMENTED,
+    [ORD_PLACE_SCANNER] = UNIMPLEMENTED,
+    [ORD_SCANNER] = UNIMPLEMENTED,
+    [ORD_DEF_MAT] = UNIMPLEMENTED,
+    [ORD_PSI_STORM] = UNIMPLEMENTED,
+    [ORD_IRRADIATE] = UNIMPLEMENTED,
+    [ORD_PLAGUE] = UNIMPLEMENTED,
+    [ORD_CONSUME] = UNIMPLEMENTED,
+    [ORD_ENSNARE] = UNIMPLEMENTED,
+    [ORD_STASIS] = UNIMPLEMENTED,
+    [ORD_HALLUCINATE] = UNIMPLEMENTED,
+    [ORD_HALLUCINATION] = UNIMPLEMENTED,
+    [ORD_UNDO_FLYER] = UNIMPLEMENTED,
+    [ORD_UNDO_TRANSPARENT_WORKER] = UNIMPLEMENTED,
+    [ORD_PATROL] = UNIMPLEMENTED,
+    [ORD_CTF_COP_INIT] = UNIMPLEMENTED,
+    [ORD_CTF_COP] = UNIMPLEMENTED,
+    [ORD_CTF_COP_2] = UNIMPLEMENTED,
     [ORD_COMP_AI] = DispatchComputerAI,
-    [ORD_ATTACK_MOVE_EP] = function(entity, data)
-    end,
-    [ORD_HARASS_MOVE_EP] = function(entity, data)
-    end,
-    [ORD_AI_PATROL] = function(entity, data)
-    end,
-    [ORD_GUARD_POST] = function(entity, data)
-    end,
-    [ORD_RESCUE_PASSIVE] = function(entity, data)
-    end,
-    [ORD_NEUTRAL] = function(entity, data)
-    end,
-    [ORD_COMP_RETURN] = function(entity, data)
-    end,
-    [ORD_JUICE_INIT] = function(entity, data)
-    end,
-    [ORD_SELF_DESTRUCT] = function(entity, data)
-    end,
-    [ORD_CRITTER] = function(entity, data)
-    end,
-    [ORD_HIDDEN_GUN] = function(entity, data)
-    end,
-    [ORD_OPEN_DOOR] = function(entity, data)
-    end,
-    [ORD_CLOSE_DOOR] = function(entity, data)
-    end,
-    [ORD_HIDE_TRAP] = function(entity, data)
-    end,
-    [ORD_REVEAL_TRAP] = function(entity, data)
-    end,
-    --[ORD_ENABLE_DOODAD] = function(entity, data)
-    --end,
-    --[ORD_DISABLE_DOODAD] = function(entity, data)
-    --end,
-    [ORD_PROTOSS_WARP_IN] = function(entity, data)
-    end,
-    [ORD_MEDIC] = function(entity, data)
-    end,
-    [ORD_MEDIC_HEAL] = function(entity, data)
-    end,
-    [ORD_MEDIC_HEALMOVE] = function(entity, data)
-    end,
-    [ORD_MEDIC_HOLDPOS] = function(entity, data)
-    end,
-    [ORD_MEDIC_RETURN_TO_IDLE] = function(entity, data)
-    end,
-    [ORD_MEDIC_CURE] = function(entity, data)
-    end,
-    [ORD_CAST_DISRUPTOR] = function(entity, data)
-    end,
-    [ORD_MINDCONTROL] = function(entity, data)
-    end,
-    [ORD_SUMMON_DARCHON] = function(entity, data)
-    end,
-    [ORD_PSYFEEDBACK] = function(entity, data)
-    end,
-    [ORD_MYOPIA] = function(entity, data)
-    end,
-    [ORD_PARALIZE] = function(entity, data)
-    end,
-    [ORD_JUNK_YARD_DOG] = function(entity, data)
-    end,
-    --[ORD_FATAL] = function(entity, data)
-    --end,
-    --[ORD_NONE] = function(entity, data)
-    --end,
+    [ORD_ATTACK_MOVE_EP] = UNIMPLEMENTED,
+    [ORD_HARASS_MOVE_EP] = UNIMPLEMENTED,
+    [ORD_AI_PATROL] = UNIMPLEMENTED,
+    [ORD_GUARD_POST] = UNIMPLEMENTED,
+    [ORD_RESCUE_PASSIVE] = UNIMPLEMENTED,
+    [ORD_NEUTRAL] = UNIMPLEMENTED,
+    [ORD_COMP_RETURN] = UNIMPLEMENTED,
+    [ORD_JUICE_INIT] = UNIMPLEMENTED,
+    [ORD_SELF_DESTRUCT] = UNIMPLEMENTED,
+    [ORD_CRITTER] = UNIMPLEMENTED,
+    [ORD_HIDDEN_GUN] = UNIMPLEMENTED,
+    [ORD_OPEN_DOOR] = UNIMPLEMENTED,
+    [ORD_CLOSE_DOOR] = UNIMPLEMENTED,
+    [ORD_HIDE_TRAP] = UNIMPLEMENTED,
+    [ORD_REVEAL_TRAP] = UNIMPLEMENTED,
+    [ORD_ENABLE_DOODAD] = UNIMPLEMENTED,
+    [ORD_DISABLE_DOODAD] = UNIMPLEMENTED,
+    [ORD_PROTOSS_WARP_IN] = UNIMPLEMENTED,
+    [ORD_MEDIC] = UNIMPLEMENTED,
+    [ORD_MEDIC_HEAL] = UNIMPLEMENTED,
+    [ORD_MEDIC_HEALMOVE] = UNIMPLEMENTED,
+    [ORD_MEDIC_HOLDPOS] = UNIMPLEMENTED,
+    [ORD_MEDIC_RETURN_TO_IDLE] = UNIMPLEMENTED,
+    [ORD_MEDIC_CURE] = UNIMPLEMENTED,
+    [ORD_CAST_DISRUPTOR] = UNIMPLEMENTED,
+    [ORD_MINDCONTROL] = UNIMPLEMENTED,
+    [ORD_SUMMON_DARCHON] = UNIMPLEMENTED,
+    [ORD_PSYFEEDBACK] = UNIMPLEMENTED,
+    [ORD_MYOPIA] = UNIMPLEMENTED,
+    [ORD_PARALIZE] = UNIMPLEMENTED,
+    [ORD_JUNK_YARD_DOG] = UNIMPLEMENTED,
+    [ORD_FATAL] = UNIMPLEMENTED
 }
 
 local function RunOrders(entity)

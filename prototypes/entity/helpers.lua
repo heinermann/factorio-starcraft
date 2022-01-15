@@ -406,6 +406,7 @@ function make_functional_structure(data)
 end
 
 function create_anim(data)
+  if data == nil then return nil end
   local result = {
       filename = "__starcraft__/graphics/low/" .. (data.low_filename or data.filename),
       line_length = data.line_length or data.frame_count or 1,

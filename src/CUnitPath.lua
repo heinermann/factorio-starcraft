@@ -1,41 +1,5 @@
 require("CUnit")
-
-UM_Init          = 0
-UM_InitSeq       = 1
-UM_Lump          = 2
-UM_Turret        = 3
-UM_Bunker        = 4
-UM_BldgTurret    = 5
-UM_Hidden        = 6
-UM_Flyer         = 7
-UM_FakeFlyer     = 8
-UM_AtRest        = 9
-UM_Dormant       = 10
-UM_AtMoveTarget  = 11
-UM_CheckIllegal  = 12
-UM_MoveToLegal   = 13
-UM_LumpWannabe   = 14
-UM_FailedPath    = 15
-UM_RetryPath     = 16
-UM_StartPath     = 17
-UM_UIOrderDelay  = 18
-UM_TurnAndStart  = 19
-UM_FaceTarget    = 20
-UM_NewMoveTarget = 21
-UM_AnotherPath   = 22
-UM_Repath        = 23
-UM_RepathMovers  = 24
-UM_FollowPath    = 25
-UM_ScoutPath     = 26
-UM_ScoutFree     = 27
-UM_FixCollision  = 28
-UM_WaitFree      = 29
-UM_GetFree       = 30
-UM_SlidePrep     = 31
-UM_SlideFree     = 32
-UM_ForceMoveFree = 33
-UM_FixTerrain    = 34
-UM_TerrainSlide  = 35
+require("PathState")
 
 MF_ORDERED = 1
 MF_ACCELERATING = 2
@@ -191,7 +155,6 @@ function CUnit:PathFlyer(ems)
 end
 
 function CUnit:PathAtRest(ems)
-    
 end
 
 function CUnit:PathDormant(ems)

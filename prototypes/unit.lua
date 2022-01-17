@@ -167,7 +167,7 @@ data:extend({
     -- stop_trigger
     equipment_grid = "starcraft-unit-eg",
     allow_passengers = false,
-    
+
     -----------------------
     -- EntityWithHealth
     -----------------------

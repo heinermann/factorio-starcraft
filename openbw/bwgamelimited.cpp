@@ -1332,7 +1332,6 @@ namespace bwgame {
 			status_flag_speed_upgrade = 0x10000000,
 			status_flag_cooldown_upgrade = 0x20000000,
 			status_flag_hallucination = 0x40000000,
-			status_flag_lifetime_expired = 0x80000000,
 		};
 
 		int owner;
@@ -1755,21 +1754,11 @@ namespace bwgame {
 		}
 
 		void set_flingy_move_target(flingy_t* u, xy target_pos, unit_t* target_unit = nullptr) {
-			if (u->move_target.pos == target_pos && (!target_unit || u->move_target.unit == target_unit)) return;
-			u->move_target.pos = target_pos;
-			u->move_target.unit = target_unit;
-			u->next_movement_waypoint = target_pos;
-			u_unset_movement_flag(u, 4);
-			u_set_movement_flag(u, 1);
+			// PORTED
 		}
 
 		bool u_movement_flag(const flingy_t* u, int flag) const {
 			return (u->movement_flags & flag) != 0;
-		}
-
-		void move_sprite(sprite_t* sprite, xy new_position) {
-			if (sprite->position == new_position) return;
-			sprite->position = new_position;
 		}
 
 		xy get_image_lo_offset(const image_t* image, size_t lo_index, size_t offset_index, bool use_frame_index_offset = false) const {
@@ -1870,7 +1859,6 @@ namespace bwgame {
 			u->next_speed = u->current_speed;
 			u->position = ems.position;
 			u->exact_position = ems.exact_position;
-			move_sprite(u->sprite, u->position);
 			update_unit_heading(u, u->current_velocity_direction);
 			if (ems.stopping_movement) {
 				if (!s_flag(u->sprite, sprite_t::flag_iscript_nobrk)) {
@@ -1989,8 +1977,7 @@ namespace bwgame {
 		}
 
 		void set_next_target_waypoint(flingy_t* u, xy pos) {
-			if (u->next_target_waypoint == pos) return;
-			u->next_target_waypoint = pos;
+			// PORTED
 		}
 
 		void free_path(unit_t* u) {
@@ -2003,7 +1990,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_special_beacon(unit_type_autocast ut) const {
-			return ut->id >= UnitTypes::Special_Zerg_Beacon && ut->id <= UnitTypes::Special_Protoss_Flag_Beacon;
+			// PORTED
 		}
 
 		bool pathfinder_find(pathfinder& pf, bool short_path_only = false) {
@@ -4218,10 +4205,10 @@ namespace bwgame {
 		}
 
 		bool ut_worker(unit_type_autocast ut) const {
-			return ut_flag(ut, unit_type_t::flag_worker);
+			// PORTED
 		}
 		bool ut_resource(unit_type_autocast ut) const {
-			return ut_flag(ut, unit_type_t::flag_resource);
+			// PORTED
 		}
 
 		void remove_one_order(unit_t* u, const order_type_t* order_type) {
@@ -4304,62 +4291,16 @@ namespace bwgame {
 			return acceleration.as_signed();
 		}
 
-		bool unit_is_scout(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Protoss_Scout) || unit_is(ut, UnitTypes::Hero_Mojo) || unit_is(ut, UnitTypes::Hero_Artanis);
-		}
 		fp8 get_modified_unit_speed(const unit_t* u, fp8 base_speed) const {
-			ufp8 speed = base_speed.as_unsigned();
-			int mod = 0;
-			//if (u->stim_timer) ++mod;
-			if (u_speed_upgrade(u)) ++mod;
-			// TODO if (u->ensnare_timer) --mod;
-			if (mod < 0) speed /= 2u;
-			if (mod > 0) {
-				if (unit_is_scout(u)) {
-					speed = ufp8::integer(6) + (ufp8::integer(1) - ufp8::integer(1) / 3u);
-				}
-				else {
-					speed += speed / 2u;
-					ufp8 min_speed = ufp8::integer(3) + ufp8::integer(1) / 3u;
-					if (speed < min_speed) speed = min_speed;
-				}
-			}
-			return speed.as_signed();
+			// PORTED
 		}
 
 		fp8 get_modified_unit_turn_rate(const unit_t* u, fp8 base_turn_rate) const {
-			ufp8 turn_rate = base_turn_rate.as_unsigned();
-			int mod = 0;
-			//if (u->stim_timer) ++mod;
-			if (u_speed_upgrade(u)) ++mod;
-			// TODO if (u->ensnare_timer) --mod;
-			if (mod < 0) turn_rate -= turn_rate / 4u;
-			if (mod > 0) turn_rate *= 2u;
-			return turn_rate.as_signed();
+			// PORTED
 		}
 
 		void update_unit_speed(unit_t* u) {
-
-			if (u->flingy_movement_type == 2) {
-				image_t* image = u->sprite->main_image;
-				fp8 total_distance_moved{};
-				for (int i = 0; i < 32; ++i) {
-					fp8 distance_moved{};
-					// This get_modified_unit_acceleration is very out of place, and
-					// it makes the stored flingy_top_speed value wrong. But BroodWar does it.
-					// It's probably a bug, but the value might not be used for anything
-					// significant.
-					total_distance_moved += get_modified_unit_acceleration(u, distance_moved);
-				}
-				auto avg_distance_moved = total_distance_moved / 32;
-				u->flingy_top_speed = avg_distance_moved;
-			}
-			else {
-				u->flingy_top_speed = get_modified_unit_speed(u, u->flingy_type->top_speed);
-				u->flingy_acceleration = get_modified_unit_acceleration(u, u->flingy_type->acceleration);
-				u->flingy_turn_rate = get_modified_unit_turn_rate(u, u->flingy_type->turn_rate);
-			}
-
+			// PORTED
 		}
 
 		void remove_acid_spores(unit_t* u) {
@@ -4434,9 +4375,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_ultralisk(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Zerg_Ultralisk)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Torrasque)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool player_has_upgrade(int owner, UpgradeTypes upgrade_id) const {
@@ -4479,33 +4418,23 @@ namespace bwgame {
 		}
 
 		bool unit_is_carrier(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Protoss_Carrier) || unit_is(ut, UnitTypes::Hero_Gantrithor);
+			// PORTED
 		}
 
 		bool unit_is_reaver(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Protoss_Reaver) || unit_is(ut, UnitTypes::Hero_Warbringer);
+			// PORTED
 		}
 
 		bool unit_is_queen(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Zerg_Queen) || unit_is(ut, UnitTypes::Hero_Matriarch);
+			// PORTED
 		}
 
-		int max_visible_hp(const unit_t* u) const {
-			int hp = u->unit_type->hitpoints.integer_part();
-			if (hp == 0) hp = u->hp.ceil().integer_part();
-			if (hp == 0) hp = 1;
-			return hp;
-		}
 		int unit_hp_percent(const unit_t* u) const {
-			int max_hp = max_visible_hp(u);
-			int hp = u->hp.ceil().integer_part();
-			return hp * 100 / max_hp;
+			// in Factorio as entity.get_health_ratio * 100
 		}
 
 		bool unit_can_be_infested(const unit_t* u) const {
-			if (!unit_is(u, UnitTypes::Terran_Command_Center)) return false;
-			if (!u_completed(u)) return false;
-			return unit_hp_percent(u) < 50;
+			// PORTED
 		}
 
 		const weapon_type_t* unit_air_weapon(const unit_t* u) const {
@@ -4610,7 +4539,7 @@ namespace bwgame {
 		}
 
 		bool ut_can_burrow(unit_type_autocast ut) const {
-			return ut_flag(ut, unit_type_t::flag_can_burrow);
+			// PORTED
 		}
 
 		void unburrow_unit(unit_t* u) {
@@ -4691,9 +4620,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_arbiter(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Protoss_Arbiter)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Danimoth)) return true;
-			return false;
+			// PORTED
 		}
 
 		const weapon_type_t* unit_or_subunit_ground_weapon(const unit_t* u) const {
@@ -4768,20 +4695,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_egg(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Zerg_Egg) || unit_is(ut, UnitTypes::Zerg_Cocoon) || unit_is(ut, UnitTypes::Zerg_Lurker_Egg);
-		}
-
-		int visible_hp_plus_shields(const unit_t* u) const {
-			int r = 0;
-			if (u->unit_type->has_shield) r += u->shield_points.integer_part();
-			r += u->hp.ceil().integer_part();
-			return r;
-		}
-
-		int max_visible_hp_plus_shields(const unit_t* u) const {
-			int shields = 0;
-			if (u->unit_type->has_shield) shields += u->unit_type->shield_points;
-			return max_visible_hp(u) + shields;
+			// PORTED
 		}
 
 		auto loaded_units(const unit_t* u) const {
@@ -4813,15 +4727,11 @@ namespace bwgame {
 		}
 
 		void drop_carried_items(unit_t* u) {
-			if ((u->carrying_flags & ~3) == 0) return;
+			// TODO (drop powerup)
 		}
 
 		void kill_unit(unit_t* u) {
-			drop_carried_items(u);
-			while (!u->order_queue.empty()) {
-				remove_queued_order(u, &u->order_queue.front());
-			}
-			set_unit_order(u, get_order_type(Orders::Die), u->order_target.pos);
+			// Factorio: just kill it immediately w/ entity.destroy()
 		}
 
 		void unit_deal_damage(unit_t* u, fp8 damage, unit_t* source_unit, int source_owner, bool reveal_source = true) {
@@ -4949,27 +4859,11 @@ namespace bwgame {
 		}
 
 		fp8 unit_cloak_energy_cost(const unit_t* u) const {
-			switch (u->unit_type->id) {
-			case UnitTypes::Terran_Ghost:
-			case UnitTypes::Hero_Sarah_Kerrigan:
-			case UnitTypes::Hero_Alexei_Stukov:
-			case UnitTypes::Hero_Samir_Duran:
-			case UnitTypes::Hero_Infested_Duran:
-			case UnitTypes::Hero_Infested_Kerrigan:
-				return 10_fp8;
-			case UnitTypes::Terran_Wraith:
-			case UnitTypes::Hero_Tom_Kazansky:
-				return 13_fp8;
-			default:
-				return 0_fp8;
-			}
+			// PORTED
 		}
 
 		void set_secondary_order(unit_t* u, const order_type_t* order_type) {
-			if (u->secondary_order_type == order_type) return;
-			u->secondary_order_type = order_type;
-			u->secondary_order_state = 0;
-			u->current_build_unit = nullptr;
+			// PORTED
 		}
 
 		bool ut_hero(unit_type_autocast ut) const {
@@ -5028,7 +4922,7 @@ namespace bwgame {
 		}
 
 		bool ut_flying_building(unit_type_autocast ut) const {
-			return ut_flag(ut, unit_type_t::flag_flying_building);
+			// PORTED
 		}
 		void update_unit_values(unit_t* u) {
 			if (u->main_order_timer) --u->main_order_timer;
@@ -5110,12 +5004,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_ghost(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Ghost)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Sarah_Kerrigan)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Alexei_Stukov)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Samir_Duran)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Infested_Duran)) return true;
-			return false;
+			// PORTED
 		}
 
 		int unit_target_acquisition_range(const unit_t* u) const {
@@ -5324,10 +5213,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_mineral_field(unit_type_autocast ut) const {
-			if (ut->id == UnitTypes::Resource_Mineral_Field) return true;
-			if (ut->id == UnitTypes::Resource_Mineral_Field_Type_2) return true;
-			if (ut->id == UnitTypes::Resource_Mineral_Field_Type_3) return true;
-			return false;
+			// PORTED, N/A, variations
 		}
 
 		bool any_neighbor_tile_unoccupied(const unit_t* u) const {
@@ -5657,12 +5543,7 @@ namespace bwgame {
 		}
 
 		bool unit_type_is_morphing_building(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Zerg_Hive)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Lair)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Greater_Spire)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Spore_Colony)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Sunken_Colony)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool unit_is_morphing_building(const unit_t* u) const {
@@ -5698,10 +5579,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_hatchery(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Zerg_Hatchery)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Lair)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Hive)) return true;
-			return false;
+			// PORTED
 		}
 
 		void order_ReturnMinerals(unit_t* u) {
@@ -5775,19 +5653,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_factory(const unit_t* u) const {
-			if (unit_is(u, UnitTypes::Terran_Command_Center)) return true;
-			if (unit_is(u, UnitTypes::Terran_Barracks)) return true;
-			if (unit_is(u, UnitTypes::Terran_Factory)) return true;
-			if (unit_is(u, UnitTypes::Terran_Starport)) return true;
-			if (unit_is(u, UnitTypes::Zerg_Infested_Command_Center)) return true;
-			if (unit_is(u, UnitTypes::Zerg_Hatchery)) return true;
-			if (unit_is(u, UnitTypes::Zerg_Lair)) return true;
-			if (unit_is(u, UnitTypes::Zerg_Hive)) return true;
-			if (unit_is(u, UnitTypes::Protoss_Nexus)) return true;
-			if (unit_is(u, UnitTypes::Protoss_Gateway)) return true;
-			if (unit_is(u, UnitTypes::Protoss_Stargate)) return true;
-			if (unit_is(u, UnitTypes::Protoss_Robotics_Facility)) return true;
-			return false;
+			//PORTED 
 		}
 
 		void remove_target_references(unit_t* u, const unit_t* target) {
@@ -5922,10 +5788,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_refinery(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Refinery)) return true;
-			if (unit_is(ut, UnitTypes::Protoss_Assimilator)) return true;
-			if (unit_is(ut, UnitTypes::Zerg_Extractor)) return true;
-			return false;
+			//ported
 		}
 
 		unit_t* get_building_at_center_position(xy pos, const unit_type_t* unit_type) const {
@@ -6075,30 +5938,7 @@ namespace bwgame {
 		}
 
 		bool initialize_flingy(flingy_t* f, const flingy_type_t* flingy_type, xy pos, int owner, direction_t heading) {
-			f->flingy_type = flingy_type;
-			f->movement_flags = 0;
-			f->next_speed = 0_fp8;
-			f->flingy_top_speed = flingy_type->top_speed;
-			f->flingy_acceleration = flingy_type->acceleration;
-			f->flingy_turn_rate = flingy_type->turn_rate;
-			f->flingy_movement_type = flingy_type->movement_type;
-
-			f->position = pos;
-			f->exact_position = to_xy_fp8(pos);
-
-			set_flingy_move_target(f, pos);
-			set_next_target_waypoint(f, pos);
-			f->heading = heading;
-			f->next_velocity_direction = heading;
-			f->hp = 1_fp8;
-
-			// TODO
-			//f->sprite = create_sprite(flingy_type->sprite, pos, owner);
-			if (!f->sprite) return false;
-			auto dir = f->heading;
-			// TODO: Image heading/direction
-
-			return true;
+			// PORTED
 		}
 
 		bool ut_flyer(unit_type_autocast ut) const {
@@ -6112,138 +5952,15 @@ namespace bwgame {
 		}
 
 		bool unit_is_vulture(unit_type_autocast ut) const {
-			return unit_is(ut, UnitTypes::Terran_Vulture) || unit_is(ut, UnitTypes::Hero_Jim_Raynor_Vulture);
+			// PORTED
 		}
 
 		bool unit_is_fighter(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Protoss_Interceptor)) return true;
-			if (unit_is(ut, UnitTypes::Protoss_Scarab)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool initialize_unit_type(unit_t* u, const unit_type_t* unit_type, xy pos, int owner) {
-
-			auto ius = make_thingy_setter(iscript_unit, u);
-			if (!initialize_flingy(u, unit_type->flingy, pos, owner, 0_dir)) return false;
-
-			u->owner = owner;
-			u->order_type = get_order_type(Orders::Fatal);
-			u->order_state = 0;
-			u->order_signal = 0;
-			u->order_unit_type = nullptr;
-			u->main_order_timer = 0;
-			u->ground_weapon_cooldown = 0;
-			u->air_weapon_cooldown = 0;
-			u->spell_cooldown = 0;
-			u->order_target = {};
-			u->unit_type = unit_type;
-			u->carrying_flags = 0;
-			u->secondary_order_timer = 0;
-
-			if (!iscript_execute_sprite(u->sprite)) {
-				u->sprite = nullptr;
-				return false;
-			}
-			u->last_attacking_player = 8;
-			//u->shield_points = fp8::integer(u->unit_type->shield_points);
-			if (unit_is(u, UnitTypes::Protoss_Shield_Battery)) u->energy = fp8::integer(100);
-			else u->energy = unit_max_energy(u) / 4;
-
-			u->sprite->elevation_level = unit_type->elevation_level;
-			u_set_status_flag(u, unit_t::status_flag_grounded_building, ut_building(u));
-			u_set_status_flag(u, unit_t::status_flag_flying, ut_flyer(u));
-			u_set_status_flag(u, unit_t::status_flag_can_turn, ut_can_turn(u));
-			u_set_status_flag(u, unit_t::status_flag_can_move, ut_can_move(u));
-			u_set_status_flag(u, unit_t::status_flag_ground_unit, !ut_flyer(u));
-			if (u->unit_type->elevation_level < 12) u->pathing_flags |= 1;
-			else u->pathing_flags &= ~1;
-			u->building.addon = nullptr;
-			u->building.addon_build_type = nullptr;
-			u->building.upgrade_research_time = 0;
-			u->building.researching_type = nullptr;
-			u->building.upgrading_type = nullptr;
-			u->building.larva_timer = 0;
-			u->building.is_landing = false;
-			u->building.creep_timer = 0;
-			u->building.upgrading_level = 0;
-			bool building_union_used = false;
-			if (ut_resource(u)) {
-				building_union_used = true;
-				u->building.resource.resource_count = 0;
-				u->building.resource.resource_iscript = 0;
-				u->building.resource.is_being_gathered = false;
-				u->building.resource.gather_queue.clear();
-			}
-			if (unit_is(u, UnitTypes::Terran_Nuclear_Silo)) {
-				building_union_used = true;
-				u->building.silo = {};
-			}
-			if (unit_is_hatchery(u)) {
-				building_union_used = true;
-				u->building.hatchery.larva_spawn_side_values = {};
-			}
-			if (unit_is_nydus(u)) {
-				building_union_used = true;
-				u->building.nydus.exit = nullptr;
-			}
-			bool unit_union_used = false;
-			if (unit_is_ghost(u)) {
-				unit_union_used = true;
-				u->ghost.nuke_dot = nullptr;
-			}
-			if (unit_is_vulture(u)) {
-				unit_union_used = true;
-				u->vulture.spider_mine_count = 0;
-			}
-			if (unit_is_carrier(u)) {
-				unit_union_used = true;
-				u->carrier.inside_units.clear();
-				u->carrier.outside_units.clear();
-				u->carrier.inside_count = 0;
-				u->carrier.outside_count = 0;
-			}
-			if (unit_is_reaver(u)) {
-				unit_union_used = true;
-				u->reaver.inside_units.clear();
-				u->reaver.outside_units.clear();
-				u->reaver.inside_count = 0;
-				u->reaver.outside_count = 0;
-			}
-			if (unit_is_fighter(u)) {
-				unit_union_used = true;
-				u->fighter.parent = nullptr;
-				u->fighter.fighter_link = { nullptr, nullptr };
-				u->fighter.is_outside = false;
-			}
-
-			if (ut_worker(u)) {
-				u->worker.powerup = nullptr;
-				u->worker.target_resource_position = {};
-				u->worker.target_resource_unit = nullptr;
-				u->worker.repair_timer = 0;
-				u->worker.is_gathering = false;
-				u->worker.resources_carried = 0;
-				u->worker.gather_target = nullptr;
-			}
-
-			u->path = nullptr;
-			u->movement_state = movement_states::UM_Init;
-			u->move_target_timer = 0;
-			u_set_status_flag(u, unit_t::status_flag_invincible, ut_invincible(u));
-
-			if (u->unit_type->build_time == 0) {
-				u->remaining_build_time = 1;
-				u->hp_construction_rate = 1_fp8;
-			}
-			else {
-				u->remaining_build_time = u->unit_type->build_time;
-				u->hp_construction_rate = (u->unit_type->hitpoints - u->unit_type->hitpoints / 10 + fp8::from_raw(u->unit_type->build_time) - 1_fp8) / u->unit_type->build_time;
-				if (u->hp_construction_rate == 0_fp8) u->hp_construction_rate = 1_fp8;
-			}
-			update_unit_speed_upgrades(u);
-			update_unit_speed(u);
-
-			return true;
+			// PORTED
 		}
 
 		void reinitialize_unit_type(unit_t* u, const unit_type_t* unit_type) {
@@ -6335,7 +6052,6 @@ namespace bwgame {
 		void move_unit(unit_t* u, xy pos) {
 			u->position = pos;
 			u->exact_position = to_xy_fp8(pos);
-			move_sprite(u->sprite, pos);
 			if (u->order_type->id != Orders::Die) {
 				set_unit_move_target(u, pos);
 				set_next_target_waypoint(u, pos);
@@ -6602,67 +6318,7 @@ namespace bwgame {
 			return 32 * u->unit_type->sight_range;
 		}
 		bool initialize_unit(unit_t* u, const unit_type_t* unit_type, xy pos, int owner) {
-
-			u->order_queue.clear();
-
-			u->auto_target_unit = nullptr;
-			u->connected_unit = nullptr;
-
-			u->order_queue_count = 0;
-			u->order_process_timer = 0;
-			u->previous_unit_type = nullptr;
-
-			u->remove_timer = 0;
-			u->defensive_matrix_hp = 0_fp8;
-			u->defensive_matrix_timer = 0;
-			u->irradiate_timer = 0;
-			u->storm_timer = 0;
-			u->irradiated_by = nullptr;
-			u->irradiate_owner = 0;
-			u->parasite_flags = 0;
-			u->cycle_counter = 0;
-			u->blinded_by = 0;
-			u->acid_spore_count = 0;
-			u->acid_spore_time = {};
-			u->status_flags = 0;
-			u->pathing_flags = 0;
-			u->previous_hp = 1;
-
-			if (!initialize_unit_type(u, unit_type, pos, owner)) return false;
-
-			u->build_queue.clear();
-			++u->unit_id_generation;
-			//u->wireframe_randomizer = lcg_rand(15) & 0xff;
-			if (ut_turret(u)) u->hp = 1_fp8;
-			else u->hp = u->unit_type->hitpoints / 10;
-			if (u_grounded_building(u)) u->order_type = u->unit_type->human_ai_idle;
-			else u->order_type = get_order_type(Orders::Nothing);
-			set_secondary_order(u, get_order_type(Orders::Nothing));
-			u->unit_finder_bounding_box = { {-1, -1}, {-1, -1} };
-			//st.player_units[owner].push_front(*u);
-
-			if (u_grounded_building(u)) {
-				//unit_finder_insert(u);
-				set_unit_tiles_occupied(u, u->sprite->position);
-				check_unit_collision(u);
-				if (u_flying(u)) increment_repulse_field(u);
-				set_construction_graphic(u, true);
-				set_sprite_visibility(u->sprite, 0);
-			}
-			else {
-				u->sprite->flags |= sprite_t::flag_hidden;
-				set_sprite_visibility(u->sprite, 0);
-			}
-			u->detected_flags = 0xffffffff;
-			if (ut_turret(u)) {
-				u->sprite->flags |= sprite_t::flag_turret;
-			}
-			
-			if (unit_is_vulture(u)) {
-				u->vulture.spider_mine_count = 3;
-			}
-
-			return true;
+			// PORTED
 		}
 		void destroy_unit(unit_t* u) {
 			// TODO: Handled in factorio
@@ -6808,7 +6464,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_trap_or_door(unit_type_autocast ut) const {
-			return ut->id >= UnitTypes::Special_Floor_Missile_Trap && ut->id <= UnitTypes::Special_Right_Wall_Flame_Trap;
+			// PORTED
 		}
 
 		bool update_thingy_visibility(thingy_t* t, xy size) {
@@ -8360,21 +8016,11 @@ namespace bwgame {
 		}
 
 		void make_unit_neutral(unit_t* u) {
-			if (u->secondary_order_type->id == Orders::BuildAddon && u_grounded_building(u) && u->current_build_unit) {
-				if (!u_completed(u->current_build_unit)) cancel_building_unit(u->current_build_unit);
-			}
-			give_unit_to(u, 11);
-			if (!u_hallucination(u)) set_secondary_order(u, get_order_type(Orders::Nothing));
+			// PORTED
 		}
 
 		void building_abandon_addon(unit_t* u) {
-			unit_t* addon = u->building.addon;
-			if (!addon) return;
-			make_unit_neutral(addon);
-			u->building.addon = nullptr;
-			// todo: callback for sound
-			auto ius = make_thingy_setter(iscript_unit, addon);
-			sprite_run_anim(addon->sprite, iscript_anims::LiftOff);
+			// PORTED
 		}
 
 		xy get_image_map_position(const image_t* image) const {
@@ -8656,9 +8302,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_goliath(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Goliath)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Alan_Schezar)) return true;
-			return false;
+			// PORTED
 		}
 
 		void order_StayInRange(unit_t* u) {
@@ -8723,9 +8367,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_unsieged_tank(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Siege_Tank_Tank_Mode)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Edmund_Duke_Tank_Mode)) return true;
-			return false;
+			// PORTED
 		}
 
 		void order_Sieging(unit_t* u) {
@@ -8784,9 +8426,7 @@ namespace bwgame {
 		}
 
 		bool unit_is_sieged_tank(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Siege_Tank_Siege_Mode)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Edmund_Duke_Siege_Mode)) return true;
-			return false;
+			// PORTED
 		}
 
 		void order_Unsieging(unit_t* u) {
@@ -8904,39 +8544,30 @@ namespace bwgame {
 		}
 
 		bool unit_is_defiler(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Zerg_Defiler)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Unclean_One)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool player_tech_available(int owner, TechTypes tech_id) const {
 			return true;
 		}
 		bool unit_is_marine(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Marine)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Jim_Raynor_Marine)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool unit_is_firebat(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Firebat)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Gui_Montag)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool unit_is_wraith(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Terran_Wraith)) return true;
-			if (unit_is(ut, UnitTypes::Hero_Tom_Kazansky)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool unit_is_tank(unit_type_autocast ut) const {
-			return unit_is_sieged_tank(ut) || unit_is_unsieged_tank(ut);
+			// PORTED
 		}
 
 		size_t unit_spider_mine_count(const unit_t* u) const {
-			if (!unit_is_vulture(u)) return 0;
-			return u->vulture.spider_mine_count;
+			// PORTED
 		}
 
 		bool unit_can_use_tech(const unit_t* u, const TechTypes tech) const {
@@ -9492,18 +9123,11 @@ namespace bwgame {
 		}
 
 		bool unit_is_door(unit_type_autocast ut) const {
-			return ut->id == UnitTypes::Special_Upper_Level_Door || ut->id == UnitTypes::Special_Right_Upper_Level_Door ||
-				ut->id == UnitTypes::Special_Pit_Door || ut->id == UnitTypes::Special_Right_Pit_Door;
+			// PORTED
 		}
 
 		bool unit_is_critter(unit_type_autocast ut) const {
-			if (unit_is(ut, UnitTypes::Critter_Rhynadon)) return true;
-			if (unit_is(ut, UnitTypes::Critter_Bengalaas)) return true;
-			if (unit_is(ut, UnitTypes::Critter_Ragnasaur)) return true;
-			if (unit_is(ut, UnitTypes::Critter_Scantid)) return true;
-			if (unit_is(ut, UnitTypes::Critter_Kakaru)) return true;
-			if (unit_is(ut, UnitTypes::Critter_Ursadon)) return true;
-			return false;
+			// PORTED
 		}
 
 		bool unit_can_hold_position(const unit_t* u) const {
@@ -11079,7 +10703,6 @@ namespace bwgame {
 			if (turret) {
 				turret->exact_position = u->exact_position;
 				turret->position = to_xy(turret->exact_position);
-				move_sprite(turret->sprite, turret->position);
 			}
 			if (us_hidden(u)) {
 				u->sprite->flags &= ~sprite_t::flag_hidden;
@@ -11200,21 +10823,7 @@ namespace bwgame {
 		}
 
 		unit_t* unit_addon(const unit_t* u) const {
-			return ut_building(u) ? u->building.addon : nullptr;
-		}
-
-		bool units_share_unions(unit_type_autocast a, unit_type_autocast b) const {
-			if (unit_is(a, UnitTypes::Protoss_Interceptor) != unit_is(b, UnitTypes::Protoss_Interceptor)) return false;
-			if (unit_is(a, UnitTypes::Protoss_Scarab) != unit_is(b, UnitTypes::Protoss_Scarab)) return false;
-			if (unit_is_carrier(a) != unit_is_carrier(b)) return false;
-			if (unit_is_reaver(a) != unit_is_reaver(b)) return false;
-			if (unit_is_ghost(a) != unit_is_ghost(b)) return false;
-			if (ut_resource(a) != ut_resource(b)) return false;
-			if (unit_is_nydus(a) != unit_is_nydus(b)) return false;
-			if (unit_is(a, UnitTypes::Terran_Nuclear_Silo) != unit_is(b, UnitTypes::Terran_Nuclear_Silo)) return false;
-			if (ut_powerup(a) != ut_powerup(b)) return false;
-			if (unit_is_hatchery(a) != unit_is_hatchery(b)) return false;
-			return true;
+			// PORTED
 		}
 
 		void order_InfestedCommandCenter(unit_t* u) {
@@ -11285,7 +10894,6 @@ namespace bwgame {
 			}
 			if (u->order_state == 2) {
 				if (u->order_signal & 1) {
-					u_set_status_flag(u, unit_t::status_flag_lifetime_expired);
 					kill_unit(u);
 				}
 			}
@@ -11311,7 +10919,6 @@ namespace bwgame {
 			}
 			if (u->order_state == 2) {
 				if (u->order_signal & 1) {
-					u_set_status_flag(u, unit_t::status_flag_lifetime_expired);
 					kill_unit(u);
 				}
 			}
@@ -11376,7 +10983,7 @@ namespace bwgame {
 		}
 
 		void set_unit_shield_points(unit_t* u, fp8 shield_points) {
-			u->shield_points = std::min(shield_points, fp8::integer(u->unit_type->shield_points));
+			// PORTED
 		}
 
 		void order_InitializeArbiter(unit_t* u) {
@@ -12016,7 +11623,6 @@ namespace bwgame {
 			}
 			else if (u->order_state == 6) {
 				if (u->order_signal & 1) {
-					u_set_status_flag(u, unit_t::status_flag_lifetime_expired);
 					kill_unit(u);
 				}
 			}
@@ -13050,7 +12656,6 @@ namespace bwgame {
 				turn_turret(u->subunit, u->next_velocity_direction - prev_velocity_direction);
 				u->subunit->exact_position = u->exact_position;
 				u->subunit->position = to_xy(u->exact_position);
-				move_sprite(u->subunit->sprite, u->subunit->position);
 				//set_image_offset(u->subunit->sprite->main_image, get_image_lo_offset(u->sprite->main_image, 2, 0));
 				auto ius = make_thingy_setter(iscript_unit, u->subunit);
 				if (!u_movement_flag(u, 2)) {

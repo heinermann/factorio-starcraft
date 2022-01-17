@@ -8,6 +8,10 @@ function CThingy:init(entity)
     self:restoreData()
 end
 
+function CThingy:createInit()
+    -- HP and sprite handled by Factorio
+end
+
 function CThingy:restoreData()
     self.data = Entity.get_data(self.entity) or {}
 end

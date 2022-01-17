@@ -86,7 +86,7 @@ data:extend({
 -- MATURE CHRYSALIS
 --------------------------------------------------------------------------------------------------
     make_zerg_structure{
-        name = "starcraft-mature_chrysalis",
+        name = "starcraft-mature-chrysalis",
         icon_id = 150,
         animation = create_layered_anim({
             name = "main_078",

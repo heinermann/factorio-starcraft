@@ -32,7 +32,7 @@ data:extend({
                         smoke_name = "starcraft-dragbull_explode",
                         offsets = {
                             { 0, -sc_pixels_to_factorio_tiles(20)/2 }
-                        }                        
+                        }
                     },
                     {
                         type = "play-sound",

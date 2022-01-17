@@ -107,12 +107,12 @@ data:extend({
   make_recipe("carrier", 2100, "stargate"),
   make_recipe("arbiter", 2400, "stargate"),
   make_recipe("corsair", 600, "stargate"),
-  
+
   make_recipe("darchon", 300, "dark-templar"),
   make_recipe("archon", 300, "high-templar"),
   make_recipe("interceptor", 300, "carrier"),
   make_recipe("scarab", 105, "reaver"),
-  
+
   -- Terran Structures
   make_recipe("command-center", 1800),
   make_recipe("depot", 600),
@@ -133,7 +133,7 @@ data:extend({
   make_recipe("covert-ops", 600, "science-facility"),
   make_recipe("physics-lab", 600, "science-facility"),
   make_recipe("machine-shop", 600, "factory"),
-  
+
   -- Zerg Structures
   make_recipe("hatchery", 1800),
   make_recipe("lair", 1500, "hatchery"),
@@ -178,7 +178,7 @@ data:extend({
   make_recipe("vehicle-weapons", 4000, "armory"),
   make_recipe("ship-plating", 4000, "armory"),
   make_recipe("ship-weapons", 4000, "armory"),
-  
+
   make_recipe("u238-shells", 1500, "academy"),
   make_recipe("caduceus-reactor", 2500, "academy"),
   make_recipe("ion-thrusters", 1500, "machine-shop"),

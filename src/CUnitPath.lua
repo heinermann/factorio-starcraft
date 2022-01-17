@@ -1,120 +1,78 @@
 require("CUnit")
 require("PathState")
 
-MF_ORDERED = 1
-MF_ACCELERATING = 2
-MF_BRAKING = 4
-MF_PAUSED = 8
-MF_LIFTED = 16
-MF_DIRECTION = 32
+-- 1 = pf_collision_check
+-- 2 = pf_illegal
+-- 4 = pf_recheck_legal
 
-function CUnit:hidden()
-    return self.entity.render_to_forces == nil or #self.entity.render_to_forces == 0
+function CUnit:needsMovement()
+    return self.data.movement_flags.accelerating or not self:atMoveTarget()
 end
 
-function CUnit:in_bunker()
-    return self.data.in_bunker
-end
-
-function CUnit:iscript_nobrk()
-    return self.data.is_no_break_code_section
-end
-
-function CUnit:is_turret()
-    return false
-end
-
-function CUnit:needs_movement()
-    return self.data.movement_flags & MF_ACCELERATING ~= 0 or not self:AtMoveTarget()
-end
-
-function CUnit:is_burrowed()
-    return self.data.is_burrowed
-end
-
-function CUnit:can_move()
-    return self.data.can_move
-end
-
-function CUnit:can_turn()
-    return self.data.can_turn
-end
-
-function CUnit:set_current_speed(current_speed)
-    if self.data.current_speed == current_speed then
-        return
+function CUnit:stopMoving()
+    if self.data.pf_illegal then
+        self.data.pf_recheck_legal = true
     end
-    self.data.current_speed = current_speed
-    self.velocty = GetDirectionVector(self.data.current_velocity_direction, self.data.current_speed)
+    self:stopFlingy()
+
+    --self.entity.riding_state = {
+    --    acceleration = defines.riding.acceleration.nothing
+    --}
+    --self.entity.speed = 0
+    self.data.move_target_timer = 15
 end
 
-function CUnit:set_next_speed(next_speed)
-    self.data.next_speed = next_speed
-    self:set_current_speed(next_speed)
+function CUnit:setImmovable()
+    self:setNextSpeed(0)
+    self:stopMoving()
+    self:setMoveTarget(self.entity.position)
+    self.data.sf_immovable = true
 end
 
-function CUnit:stop_moving()
-    self.entity.riding_state = {
-        acceleration = defines.riding.acceleration.nothing
-    }
-    self.entity.speed = 0
-end
-
-function CUnit:set_move_target(target)
-    -- TODO
-end
-
-function CUnit:set_immovable()
-    self:set_next_speed(0)
-    self:stop_moving()
-    self:set_move_target(self.entity.position)
-    self.data.immovable = true
-    self.data.user_flags = self.data.user_flags & ~2
-end
-
-function CUnit:update_movement()    -- CFlingy
+function CUnit:updateMovement()    -- CFlingy
 
 end
 
-function CUnit:finish_movement()
+function CUnit:finishMovement()
 
 end
 
 function CUnit:PathInit(ems)
-    self.data.terrain_no_collision_bounds = {{0, 0}, {0, 0}}
-
-    self.data.pathing_flags = self.data.pathing_flags & ~(1 | 2)
+    self.data.pf_collision_check = false
+    self.data.pf_illegal = false
     if self.data.elevation_level < 12 then
-        self.data.pathing_flags = self.data.pathing_flags | 1
+        self.data.pf_collision_check = true
     end
 
+    self.data.terrain_no_collision_bounds = {{0, 0}, {0, 0}}
+
     local next_state = UM_Lump
-    if self:is_turret() and self:iscript_nobrk() then    -- and is not a subunit
+    if self:isTurret() and self.data.sf_iscript_nobrk then
         next_state = UM_InitSeq
-    elseif self:in_bunker() then
+    elseif self.data.sf_in_bunker then
         next_state = UM_Bunker
-    elseif not self:hidden() then
-        if self:needs_movement() then
-            self:set_immovable()
-            self:update_movement()
-            self:finish_movement()
+    elseif self:hidden() then
+        if self:needsMovement() then
+            self:setImmovable()
+            self:updateMovement()
+            self:finishMovement()
         end
         next_state = UM_Hidden
-    elseif self:is_burrowed() then
+    elseif self.data.sf_burrowed then
         next_state = UM_Lump
-    elseif self:can_move() then
-        if self.data.pathing_flags & 1 ~= 0 then
+    elseif self.data.sf_can_move then
+        if self.data.pf_collision_check then
             next_state = UM_AtRest
         else
             next_state = UM_Flyer
         end
-    elseif self.data.can_turn then
-        if self:is_turret() then
+    elseif self.data.sf_can_turn then
+        if self:isTurret() then
             next_state = UM_Turret
         else
             next_state = UM_BldgTurret
         end
-    elseif self.data.pathing_flags & 1 ~= 0 and self:needs_movement() then
+    elseif self.data.pf_collision_check and self:needsMovement() then
         next_state = UM_LumpWannabe
     end
 
@@ -123,7 +81,7 @@ function CUnit:PathInit(ems)
 end
 
 function CUnit:PathInitSeq(ems)
-    if (self:iscript_nobrk()) then
+    if not self.data.sf_iscript_nobrk then
         return false
     end
 
@@ -132,7 +90,7 @@ function CUnit:PathInitSeq(ems)
 end
 
 function CUnit:PathTurret(ems)
-    self:set_move_target(self.entity.position)
+    --self:set_move_target(self.entity.position)
     -- TODO
 end
 
@@ -181,9 +139,6 @@ end
 function CUnit:PathStartPath(ems)
 end
 
-function CUnit:PathUIOrderDelay(ems)
-end
-
 function CUnit:PathTurnAndStart(ems)
 end
 
@@ -206,11 +161,6 @@ function CUnit:PathFollowPath(ems)
 end
 
 function CUnit:PathScoutPath(ems)
-end
-
-function CUnit:PathScoutFree(ems)
-    self.data.movement_state = UM_FollowPath
-    return true
 end
 
 function CUnit:PathFixCollision(ems)
@@ -237,7 +187,7 @@ end
 function CUnit:PathTerrainSlide(ems)
 end
 
-function CUnit:PathFalse(ems)
+local function UNUSED(unit, ems)
     return false
 end
 
@@ -250,7 +200,7 @@ local path_switch = {
     [UM_BldgTurret] = CUnit.PathBldgTurret,
     [UM_Hidden] = CUnit.PathHidden,
     [UM_Flyer] = CUnit.PathFlyer,
-    [UM_FakeFlyer] = CUnit.PathFalse,
+    [UM_FakeFlyer] = UNUSED,
     [UM_AtRest] = CUnit.PathAtRest,
     [UM_Dormant] = CUnit.PathDormant,
     [UM_AtMoveTarget] = CUnit.PathAtMoveTarget,
@@ -260,7 +210,7 @@ local path_switch = {
     [UM_FailedPath] = CUnit.PathFailedPath,
     [UM_RetryPath] = CUnit.PathRetryPath,
     [UM_StartPath] = CUnit.PathStartPath,
-    [UM_UIOrderDelay] = CUnit.PathUIOrderDelay,
+    [UM_UIOrderDelay] = UNUSED,
     [UM_TurnAndStart] = CUnit.PathTurnAndStart,
     [UM_FaceTarget] = CUnit.PathFaceTarget,
     [UM_NewMoveTarget] = CUnit.PathNewMoveTarget,
@@ -269,7 +219,7 @@ local path_switch = {
     [UM_RepathMovers] = CUnit.PathRepathMovers,
     [UM_FollowPath] = CUnit.PathFollowPath,
     [UM_ScoutPath] = CUnit.PathScoutPath,
-    [UM_ScoutFree] = CUnit.PathScoutFree,
+    [UM_ScoutFree] = UNUSED,
     [UM_FixCollision] = CUnit.PathFixCollision,
     [UM_WaitFree] = CUnit.PathWaitFree,
     [UM_GetFree] = CUnit.PathGetFree,
@@ -287,12 +237,28 @@ function CUnit:PathCalcMove()
         speed = 0,
         position = {0, 0},
         exact_position = {0, 0},
-        pre_movement_flags = 0,
-        post_movement_flags = 0
+        pre_movement_flags = {
+            ordered = false
+            accelerating = false
+            braking = false
+            paused = false
+            lifted = false
+            direction = false
+            ready_to_brake = false
+        },
+        post_movement_flags = {
+            ordered = false
+            accelerating = false
+            braking = false
+            paused = false
+            lifted = false
+            direction = false
+            ready_to_brake = false
+        }
     }
 
     local want_loop = false
     repeat
-        want_loop = path_switch[self.data.movement_state](ems)
+        want_loop = path_switch[self.data.movement_state](self, ems)
     until not want_loop
 end

@@ -2188,11 +2188,6 @@ namespace bwgame {
 		void stop_unit(unit_t* u) {
 			if (u->pathing_flags & 2) u->pathing_flags |= 4;
 			stop_flingy(u);
-			xy move_target = u->move_target.pos;
-			if (u->move_target.pos != move_target) {
-				u->move_target.pos = move_target;
-				u->next_movement_waypoint = move_target;
-			}
 			u->move_target_timer = 15;
 		}
 
@@ -2601,41 +2596,7 @@ namespace bwgame {
 			return u_status_flag(u, unit_t::status_flag_can_move);
 		}
 		bool movement_UM_Init(unit_t* u, execute_movement_struct& ems) {
-			u->pathing_flags &= ~(1 | 2);
-			if (u->sprite->elevation_level < 12) u->pathing_flags |= 1;
-			u->terrain_no_collision_bounds = { {0, 0}, {0, 0} };
-			int next_state = movement_states::UM_Lump;
-			if (!ut_turret(u) && u_iscript_nobrk(u)) {
-				next_state = movement_states::UM_InitSeq;
-			}
-			else if (!u->sprite || unit_dead(u)) {
-				next_state = movement_states::UM_Lump;
-			}
-			else if (u_in_bunker(u)) {
-				next_state = movement_states::UM_Bunker;
-			}
-			else if (us_hidden(u)) {
-				if (u_movement_flag(u, 2) || !unit_is_at_move_target(u)) {
-					set_unit_immovable(u);
-					update_unit_movement_values(u, ems);
-					finish_unit_movement(u, ems);
-				}
-				next_state = movement_states::UM_Hidden;
-			}
-			else if (u_burrowed(u)) {
-				next_state = movement_states::UM_Lump;
-			}
-			else if (u_can_move(u)) {
-				next_state = u->pathing_flags & 1 ? movement_states::UM_AtRest : movement_states::UM_Flyer;
-			}
-			else if (u_can_turn(u)) {
-				next_state = ut_turret(u) ? movement_states::UM_Turret : movement_states::UM_BldgTurret;
-			}
-			else if (u->pathing_flags & 1 && (u_movement_flag(u, 2) || !unit_is_at_move_target(u))) {
-				next_state = movement_states::UM_LumpWannabe;
-			}
-			u->movement_state = next_state;
-			return true;
+			// PORTED
 		}
 
 
@@ -3503,9 +3464,7 @@ namespace bwgame {
 		}
 
 		bool movement_UM_InitSeq(unit_t* u, execute_movement_struct& ems) {
-			if (u_status_flag(u, unit_t::status_flag_iscript_nobrk)) return false;
-			u->movement_state = movement_states::UM_Init;
-			return true;
+			// PORTED
 		}
 
 		bool movement_UM_ForceMoveFree(unit_t* u, execute_movement_struct& ems) {

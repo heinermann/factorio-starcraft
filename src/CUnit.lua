@@ -348,3 +348,12 @@ function CUnit:abandonAddon()
     end
 end
 
+-- Consider hidden if it's only rendered to the neutral force
+function CUnit:hidden()
+    local forces = self.entity.render_to_forces
+    return forces ~= nil and #forces == 1 and forces[1].name == "neutral"
+end
+
+function CUnit:isTurret()
+    return IS_SUBUNIT_TYPE[self.entity.name]
+end

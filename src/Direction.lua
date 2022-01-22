@@ -265,3 +265,22 @@ end
 function GetDirectionVector(dir, length)
     return {DIRECTIONS[dir][1] * length, DIRECTIONS[dir][2] * length}
 end
+
+function PositionToDirection(pos)
+    local x = pos.x or pos[1]
+    local y = pos.y or pos[2]
+    if x == 0 then
+        if y <= 0 then
+            return 0
+        else
+            return -128
+        end
+    end
+    local r = math.atan(y, x) / (math.pi / 2) * 128
+    if x > 0 then
+        r = r + 64
+    else
+        r = r - 64
+    end
+    return r
+end

@@ -1,5 +1,7 @@
 require("CUnit")
 require("PathState")
+local Position = require("factorio_libs.Position")
+
 
 -- 1 = pf_collision_check
 -- 2 = pf_illegal
@@ -29,14 +31,6 @@ function CUnit:setImmovable()
     self.data.sf_immovable = true
 end
 
-function CUnit:updateMovement()    -- CFlingy
-
-end
-
-function CUnit:finishMovement()
-
-end
-
 function CUnit:PathInit(ems)
     self.data.pf_collision_check = false
     self.data.pf_illegal = false
@@ -54,8 +48,8 @@ function CUnit:PathInit(ems)
     elseif self:hidden() then
         if self:needsMovement() then
             self:setImmovable()
-            self:updateMovement()
-            self:finishMovement()
+            self:updateMovementValues(ems)
+            self:finishMovement(ems)
         end
         next_state = UM_Hidden
     elseif self.data.sf_burrowed then
@@ -108,17 +102,68 @@ function CUnit:PathHidden(ems)
     return false
 end
 
+function CUnit:freePath()
+    self.data.path = nil
+end
+
+-- Note: Most of this is just repulse stuff, repulse fields need to be reworked into a RepulseManager
+-- Ignoring it for now
+-- TODO: Expand and simplify?
 function CUnit:PathFlyer(ems)
-    -- TODO
+    self:updateMovementValues(ems)
+    --local being_repulsed = self:applyRepulseField(ems)    -- apply_repulse_field
+    self:finishMovement(ems)
+    --if self.data.sf_can_move and not IS_BUILDING[self.entity.name] and self.entity.name ~= "starcraft-interceptor" then
+    --    -- TODO: Redo how repulse fields work
+    --    local index = self:repulseIndex() -- repulse_index
+    --    if index ~= self.data.repulse_index then
+    --        self:decrementRepulseField()  -- decrement_repulse_field
+    --        self:incrementRepulseField()  -- increment_repulse_field
+    --    end
+    --    if being_repulsed then
+    --        local xdiff = math.abs((self.data.move_target_pos.x or self.data.move_target_pos[1]) - self.entity.position.x)
+    --        local ydiff = math.abs((self.data.move_target_pos.y or self.data.move_target_pos[2]) - self.entity.position.y)
+    --        if math.max(xdiff, ydiff) < (24 / 16) then
+    --            self.data.move_target_pos = self.entity.position
+    --            self.data.next_movement_waypoint = self.entity.position
+    --        end
+    --    end
+    --end
+    return false
 end
 
 function CUnit:PathAtRest(ems)
 end
 
 function CUnit:PathDormant(ems)
+    local rest = false
+    if self.data.sf_collision and self.data.sf_ground_unit then
+        rest = true
+    elseif not self:atMoveTarget() then
+        rest = true
+    elseif not Position.equals(self.entity.position, self.data.next_target_waypoint) then
+        rest = true
+    end
+
+    if rest then
+        self.data.movement_state = UM_AtRest
+        return true
+    end
+    return false
 end
 
 function CUnit:PathAtMoveTarget(ems)
+    self:freePath()
+    if not Position.equals(self.data.next_movement_waypoint, self.data.move_target_pos) then
+        self.data.next_movement_waypoint = Position.copy(self.data.move_target_pos)
+    end
+
+    if not self.data.sf_ground_unit or self.data.movement_flags.braking then
+        self.data.movement_state = UM_AtRest
+    else
+        self.data.movement_state = UM_CheckIllegal
+    end
+    return true
 end
 
 function CUnit:PathCheckIllegal(ems)
@@ -236,7 +281,6 @@ function CUnit:PathCalcMove()
         stopping_movement = false,
         speed = 0,
         position = {0, 0},
-        exact_position = {0, 0},
         pre_movement_flags = {
             ordered = false
             accelerating = false

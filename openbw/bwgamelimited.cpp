@@ -1560,15 +1560,6 @@ namespace bwgame {
 
 namespace bwgame {
 
-	static const std::array<unsigned int, 64> tan_table = {
-		7, 13, 19, 26, 32, 38, 45, 51, 58, 65, 71, 78, 85, 92,
-		99, 107, 114, 122, 129, 137, 146, 154, 163, 172, 181,
-		190, 200, 211, 221, 233, 244, 256, 269, 283, 297, 312,
-		329, 346, 364, 384, 405, 428, 452, 479, 509, 542, 578,
-		619, 664, 716, 775, 844, 926, 1023, 1141, 1287, 1476,
-		1726, 2076, 2600, 3471, 5211, 10429, std::numeric_limits<unsigned int>::max()
-	};
-
 	static const std::array<int, 16 * 2> repulse_adjust_table = {
 		-5, -5, -5, 5, 5, -5, 5, 5, 5, -5, 5, 5, -5, -5, -5, 5, -5, 5, 5, -5, -5, -5, 5, 5, -5, 5, 5, -5, 5, 5, -5, -5
 	};
@@ -1822,12 +1813,6 @@ namespace bwgame {
 				if (turn > direction_t::truncate(u->flingy_turn_rate)) turn = direction_t::truncate(u->flingy_turn_rate);
 				else if (turn < direction_t::truncate(-u->flingy_turn_rate)) turn = -direction_t::truncate(u->flingy_turn_rate);
 				u->heading += turn;
-				if (u->flingy_type->id >= (FlingyTypes)0x8d && u->flingy_type->id <= (FlingyTypes)0xab) {
-					u->flingy_turn_rate += 1_fp8;
-				}
-				else if (u->flingy_type->id >= (FlingyTypes)0xc9 && u->flingy_type->id <= (FlingyTypes)0xce) {
-					u->flingy_turn_rate += 1_fp8;
-				}
 				if (velocity_direction == u->desired_velocity_direction) {
 					if (u->heading == u->desired_velocity_direction) {
 						u_unset_movement_flag(u, 1);
@@ -1853,34 +1838,13 @@ namespace bwgame {
 			}
 		}
 
-		bool finish_flingy_movement(flingy_t* u, execute_movement_struct& ems) {
-			bool moved = u->position != ems.position;
-			u->movement_flags = ems.post_movement_flags;
-			u->next_speed = u->current_speed;
-			u->position = ems.position;
-			u->exact_position = ems.exact_position;
-			update_unit_heading(u, u->current_velocity_direction);
-			if (ems.stopping_movement) {
-				if (!s_flag(u->sprite, sprite_t::flag_iscript_nobrk)) {
-					sprite_run_anim(u->sprite, iscript_anims::WalkingToIdle);
-				}
-			}
-			else if (ems.starting_movement) {
-				sprite_run_anim(u->sprite, iscript_anims::Walking);
-			}
-			return moved;
-		}
-
 		size_t tile_index(xy pos) const {
 			// TODO
 			return 0;
 		}
 
 		bool finish_unit_movement(unit_t* u, execute_movement_struct& ems) {
-			auto prev_pos = u->position;
-			if (!finish_flingy_movement(u, ems)) return false;
-			//if (tile_index(prev_pos) != tile_index(u->position)) ems.refresh_vision = true;
-			return true;
+			// PORTED
 		}
 		int xy_length(xy vec) const {
 			unsigned int x = std::abs(vec.x);
@@ -2244,29 +2208,12 @@ namespace bwgame {
 			return us_flag(u, sprite_t::flag_hidden);
 		}
 
-		template<size_t integer_bits>
-		direction_t atan(fixed_point<integer_bits, 8, true> x) const {
-			bool negative = x < decltype(x)::zero();
-			if (negative) x = -x;
-			typename decltype(x)::raw_unsigned_type uv = x.raw_value;
-			size_t r = std::lower_bound(tan_table.begin(), tan_table.end(), uv) - tan_table.begin();
-			return negative ? -direction_t::from_raw((direction_t::raw_type)r) : direction_t::from_raw((direction_t::raw_type)r);
-		}
-
 		direction_t xy_direction(xy_fp8 pos) const {
-			if (pos.x == 0_fp8) return pos.y <= 0_fp8 ? 0_dir : -128_dir;
-			direction_t r = atan(pos.y / pos.x);
-			if (pos.x > 0_fp8) r += 64_dir;
-			else r = -64_dir + r;
-			return r;
+			// PORTED
 		}
 
 		direction_t xy_direction(xy pos) const {
-			if (pos.x == 0) return pos.y <= 0 ? 0_dir : -128_dir;
-			direction_t r = atan(fp8::integer(pos.y) / pos.x);
-			if (pos.x > 0) r = 64_dir + r;
-			else r = -64_dir + r;
-			return r;
+			// PORTED
 		}
 
 		rect unit_type_inner_bounding_box(const unit_type_t* unit_type) const {
@@ -2419,170 +2366,37 @@ namespace bwgame {
 
 
 		direction_t unit_turn_rate(const flingy_t* u, direction_t desired_turn) const {
-			ufp8 uturn_rate = u->flingy_turn_rate.as_unsigned();
-			if (u->flingy_movement_type != 2) uturn_rate /= 2u;
-			fp8 turn_rate = uturn_rate.as_signed();
-			fp8 turn = fp8::extend(desired_turn);
-			if (turn > turn_rate) turn = turn_rate;
-			else if (turn < -turn_rate) turn = -turn_rate;
-			return direction_t::truncate(turn);
+			// PORTED
 		}
 
 		void set_current_velocity_direction(flingy_t* u, direction_t current_velocity_direction) {
-			if (u->current_velocity_direction == current_velocity_direction) return;
-			u->current_velocity_direction = current_velocity_direction;
-			u->velocity = direction_xy(current_velocity_direction, u->current_speed);
+			// PORTED
 		}
 		void set_desired_velocity_direction(flingy_t* u, direction_t desired_velocity_direction) {
-			u->desired_velocity_direction = desired_velocity_direction;
-			if (u->next_velocity_direction != desired_velocity_direction) {
-				auto turn = unit_turn_rate(u, desired_velocity_direction - u->next_velocity_direction);
-				set_current_velocity_direction(u, u->next_velocity_direction + turn);
-			}
-			else {
-				set_current_velocity_direction(u, desired_velocity_direction);
-			}
+			// PORTED
 		}
 
 		void update_current_velocity_direction_towards_waypoint(flingy_t* u) {
-			if (u->position != u->next_movement_waypoint) {
-				set_desired_velocity_direction(u, xy_direction(u->next_movement_waypoint - u->position));
-			}
-			else {
-				if (u->position != u->next_target_waypoint) {
-					set_desired_velocity_direction(u, xy_direction(u->next_target_waypoint - u->position));
-				}
-				else {
-					set_desired_velocity_direction(u, u->heading);
-				}
-			}
+			// PORTED
 		}
 
 		xy_fp8 to_xy_fp8(xy position) const {
 			return { fp8::integer(position.x), fp8::integer(position.y) };
 		}
 		void update_current_speed_towards_waypoint(flingy_t* u) {
-			if (u->flingy_movement_type == 0) {
-				if (unit_is_at_move_target(u)) {
-					if (u->next_speed < 192_fp8) {
-						if (!u_movement_flag(u, 0x20) && !u_movement_flag(u, 0x10)) {
-							u_unset_movement_flag(u, 4);
-							set_current_speed(u, 0_fp8);
-							return;
-						}
-					}
-				}
-			}
-			else if (u->flingy_movement_type == 1) {
-				if (unit_is_at_move_target(u)) {
-					u_unset_movement_flag(u, 4);
-					set_current_speed(u, 0_fp8);
-					return;
-				}
-			}
-			else if (u->flingy_movement_type == 2) {
-				if (unit_is_at_move_target(u)) {
-					u_unset_movement_flag(u, 4);
-					set_current_speed(u, 0_fp8);
-				}
-				else {
-					if (!u_movement_flag(u, 1)) {
-						set_current_speed(u, u->next_speed);
-					}
-					else {
-						auto heading_error = fp8::extend(u->heading - u->desired_velocity_direction).abs();
-						if (heading_error >= 32_fp8) {
-							if (u_movement_flag(u, 2)) {
-								u_unset_movement_flag(u, 2);
-								u_unset_movement_flag(u, 4);
-								set_current_speed(u, 0_fp8);
-							}
-						}
-						else {
-							set_current_speed(u, u->next_speed);
-						}
-					}
-				}
-				return;
-			}
-			set_current_speed(u, u->next_speed);
-			int d = xy_length(u->next_movement_waypoint - u->position);
-			bool accelerate = false;
-			if (u->current_velocity_direction == u->desired_velocity_direction) accelerate = true;
-			else if (d >= 32) accelerate = true;
-			else {
-				fp8 turn_rate = u->flingy_turn_rate;
-				fp8 diff = fp8::extend(u->desired_velocity_direction - u->current_velocity_direction).abs();
-
-				unsigned int val = fp8::divide_multiply(diff * 2 + turn_rate - 1_fp8, turn_rate, u->next_speed).integer_part();
-				if (val * 3 / 2 <= (unsigned int)d) accelerate = true;
-			}
-			if (accelerate) {
-				if (u->flingy_movement_type == 0) {
-					if (!u_movement_flag(u, 0x20) || u->next_movement_waypoint != u->move_target.pos) {
-						if (!u_movement_flag(u, 0x10) || u_movement_flag(u, 0x40)) {
-							fp8 remaining_d = xy_length(to_xy_fp8(u->next_movement_waypoint) - u->exact_position);
-							if (unit_halt_distance(u) >= remaining_d) accelerate = false;
-						}
-					}
-				}
-			}
-			fp8 speed = u->current_speed;
-			if (accelerate) speed += u->flingy_acceleration;
-			else speed -= u->flingy_acceleration;
-			if (speed < 0_fp8) speed = 0_fp8;
-			else if (speed > u->flingy_top_speed) speed = u->flingy_top_speed;
-			set_current_speed(u, speed);
+			// PORTED
 		}
 
 		void set_movement_flags(flingy_t* u, execute_movement_struct& ems) {
-			ems.starting_movement = false;
-			ems.stopping_movement = false;
-			if (!unit_is_at_move_target(u)) {
-				if (!u_movement_flag(u, 2)) {
-					if (u->flingy_movement_type != 2 || !u_movement_flag(u, 8)) u_set_movement_flag(u, 2);
-					if (!u_movement_flag(u, 8)) ems.starting_movement = true;
-				}
-			}
-			else {
-				if (u_movement_flag(u, 2)) {
-					u_unset_movement_flag(u, 2);
-					if (!u_movement_flag(u, 8)) ems.stopping_movement = true;
-				}
-			}
+			// PORTED
 		}
 
 		void set_movement_values(flingy_t* u, execute_movement_struct& ems) {
-			ems.speed = u->current_speed;
-			if (!u_movement_flag(u, 2) || u->current_speed == 0_fp8) {
-				ems.position = u->position;
-				ems.exact_position = u->exact_position;
-			}
-			else {
-				fp8 remaining_d = xy_length(to_xy_fp8(u->next_movement_waypoint) - u->exact_position);
-				if (u->current_speed >= remaining_d) {
-					ems.position = u->next_movement_waypoint;
-					ems.exact_position = to_xy_fp8(ems.position);
-					ems.speed = remaining_d;
-				}
-				else {
-					ems.exact_position = u->exact_position + u->velocity;
-					ems.position = to_xy(ems.exact_position);
-				}
-				if (u->flingy_movement_type == 2) {
-					set_current_speed(u, 0_fp8);
-				}
-			}
+			// PORTED
 		}
 
 		void update_unit_movement_values(flingy_t* u, execute_movement_struct& ems) {
-			ems.pre_movement_flags = u->movement_flags;
-			update_current_velocity_direction_towards_waypoint(u);
-			update_current_speed_towards_waypoint(u);
-			set_movement_flags(u, ems);
-			set_movement_values(u, ems);
-			ems.post_movement_flags = u->movement_flags;
-			u->movement_flags = ems.pre_movement_flags;
+			// PORTED
 		}
 
 		bool u_burrowed(const unit_t* u) const {
@@ -3033,15 +2847,7 @@ namespace bwgame {
 		}
 
 		bool movement_UM_Dormant(unit_t* u, execute_movement_struct& ems) {
-			bool rest = false;
-			if (u_collision(u) && u_ground_unit(u)) rest = true;
-			if (!unit_is_at_move_target(u)) rest = true;
-			if (u->position != u->next_target_waypoint) rest = true;
-			if (rest) {
-				u->movement_state = movement_states::UM_AtRest;
-				return true;
-			}
-			return false;
+			// PORTED
 		}
 
 		bool movement_UM_Turret(unit_t* u, execute_movement_struct& ems) {
@@ -3159,30 +2965,7 @@ namespace bwgame {
 		}
 
 		bool movement_UM_Flyer(unit_t* u, execute_movement_struct& ems) {
-			if (u->sprite->position != u->move_target.pos) {
-				xy move_target = u->move_target.pos;
-				if (move_target != u->move_target.pos) {
-					set_flingy_move_target(u, move_target);
-					u_set_status_flag(u, unit_t::status_flag_immovable);
-				}
-			}
-			update_unit_movement_values(u, ems);
-			bool being_repulsed = apply_repulse_field(u, ems);
-			finish_unit_movement(u, ems);
-			if (u_can_move(u) && !ut_building(u) && u->unit_type->id != UnitTypes::Protoss_Interceptor) {
-				size_t index = repulse_index(u->position);
-				if (index != u->repulse_index) {
-					decrement_repulse_field(u);
-					increment_repulse_field(u);
-				}
-				if (being_repulsed) {
-					if (std::max(std::abs(u->move_target.pos.x - u->position.x), std::abs(u->move_target.pos.y - u->position.y)) < 24) {
-						u->move_target.pos = u->position;
-						u->next_movement_waypoint = u->position;
-					}
-				}
-			}
-			return false;
+			// PORTED
 		}
 
 		bool movement_UM_AnotherPath(unit_t* u, execute_movement_struct& ems) {
@@ -3283,15 +3066,7 @@ namespace bwgame {
 		}
 
 		bool movement_UM_AtMoveTarget(unit_t* u, execute_movement_struct& ems) {
-			free_path(u);
-			if (u->next_movement_waypoint != u->move_target.pos) u->next_movement_waypoint = u->move_target.pos;
-			if (!u_ground_unit(u) || u_movement_flag(u, 4)) {
-				u->movement_state = movement_states::UM_AtRest;
-			}
-			else {
-				u->movement_state = movement_states::UM_CheckIllegal;
-			}
-			return true;
+			// PORTED
 		}
 
 		bool movement_UM_NewMoveTarget(unit_t* u, execute_movement_struct& ems) {

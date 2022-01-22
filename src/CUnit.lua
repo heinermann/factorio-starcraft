@@ -205,10 +205,13 @@ function CUnit:createInitType()
     self.data.path = nil
     self.data.movement_state = UM_Init
     self.data.move_target_timer = 0
-    --if type is invincible, make invincible
+
+    if IS_INVINCIBLE[self.entity.name] then
+        self.entity.destructible = false
+    end
 
     --self.data.remaining_build_time = 
-    --self.data.hp_construction_rate = TODO: Maybe unnecessary, handled by CUnitPBuild
+    --self.data.hp_construction_rate = TODO: Unnecessary, handled by CUnitPBuild
 
     self:updateUnitSpeedUpgrades()
     self:updateUnitSpeed()

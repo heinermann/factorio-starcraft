@@ -1,6 +1,8 @@
 # factorio-starcraft
 A mod that brings a 1:1 Starcraft simulation to Factorio. The goal is to introduce all 3 races as unique, separate, AI controlled factions pitted against the player, biters, and each other.
 
+You will also need the [factorio-starcraft-assettool](https://github.com/heinermann/factorio-starcraft-assettool) and own a copy of Starcraft: Remastered.
+
 ## Dependencies
 - base >= 1.1
 - stdlib >= 1.4.6

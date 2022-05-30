@@ -1,15 +1,17 @@
 require("__starcraft__/external/class/class")
+require("Orders")
+
 local Entity = require('__stdlib__/stdlib/entity/entity')
 
-CThingy = class()
+AirUnit = class()
 
-function CThingy:init(entity)
+function CUnit:init(entity)
     self.entity = entity
     self:restoreData()
+
 end
 
 function CThingy:createInit()
-    -- HP and sprite handled by Factorio
 end
 
 function CThingy:restoreData()

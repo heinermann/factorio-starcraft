@@ -365,13 +365,13 @@ function ScourgeAirAttkInit()
 	sprol(132, 0, 0)	-- Scourge Explosion (zerg\zavExplo.grp)
 	wait(1) 
 	attackwith(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
-function ScourgeLocal00()
-::ScourgeLocal00_label::
+function Wait125()
+::Wait125_label::
 	wait(125) 
-	goto ScourgeLocal00_label
+	goto Wait125_label
 end
 
 function ScourgeWalking()
@@ -615,7 +615,7 @@ end
 
 function InfestedTerranWalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedTerranDeath()
@@ -674,12 +674,12 @@ function InfestedTerranSpecialState1()
 	attackwith(1) 
 	sprol(136, 0, 0)	-- Infested Terran Explosion (thingy\zbgExplo.grp)
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedTerranSpecialState2()
 	playfram(0xdd)	-- Frame set 13
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedTerranBurrow()
@@ -697,7 +697,7 @@ function InfestedTerranBurrow()
 	playfram(0xdd)	-- Frame set 13
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedTerranUnBurrow()
@@ -715,7 +715,7 @@ function InfestedTerranUnBurrow()
 	wait(1) 
 	playfram(0x00)	-- Frame set 0
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -825,7 +825,7 @@ end
 
 function GuardianCocoonSpecialState1()
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function GuardianCocoonSpecialState2()
@@ -842,7 +842,7 @@ function GuardianCocoonSpecialState2()
 	playfram(9)	-- Frame set 0,  direction 9
 	wait(2) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -973,7 +973,7 @@ end
 
 function DefilerSpecialState2()
 	playfram(0x110)	-- Frame set 16
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DefilerBurrow()
@@ -989,7 +989,7 @@ function DefilerBurrow()
 	playfram(0x110)	-- Frame set 16
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DefilerUnBurrow()
@@ -1045,11 +1045,11 @@ iscript[11] = {
   GndAttkRpt =    	DroneGndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	DroneWalking,
-  WalkingToIdle = 	ScourgeLocal00,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	nil,
   SpecialState2 = 	DroneSpecialState2,
   AlmostBuilt =   	DroneAlmostBuilt,
@@ -1071,7 +1071,7 @@ iscript[11] = {
 function DroneInit()
 	imgul(18, 0, 7)	-- Drone Shadow (zerg\drone.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DroneDeath()
@@ -1104,7 +1104,7 @@ function DroneGndAttkInit()
 	wait(1) 
 	attackwith(1) 
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DroneWalking()
@@ -1129,7 +1129,7 @@ end
 
 function DroneSpecialState2()
 	playfram(0x176)	-- Frame set 22
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DroneAlmostBuilt()
@@ -1151,7 +1151,7 @@ end
 
 function DroneLiftOff()
 	sigorder(16) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DroneBurrow()
@@ -1167,7 +1167,7 @@ function DroneBurrow()
 	playfram(0x176)	-- Frame set 22
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DroneUnBurrow()
@@ -1183,7 +1183,7 @@ function DroneUnBurrow()
 	wait(1) 
 	playfram(0x00)	-- Frame set 0
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -1302,7 +1302,7 @@ function EggSpecialState1()
 	wait(2) 
 	sigorder(4) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -1474,7 +1474,7 @@ function GuardianBirthSpecialState1()
 	wait(2) 
 	sigorder(4) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -1702,7 +1702,7 @@ end
 
 function HydraliskSpecialState2()
 	playfram(280)	-- Frame set 16,  direction 8
-	ScourgeLocal00()
+	Wait125()
 end
 
 function HydraliskBurrow()
@@ -1718,7 +1718,7 @@ function HydraliskBurrow()
 	playfram(280)	-- Frame set 16,  direction 8
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function HydraliskUnBurrow()
@@ -1913,7 +1913,7 @@ function InfestedKerriganCastSpell()
 	playfram(0x00)	-- Frame set 0
 	nobrkcodeend()
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedKerriganWalking()
@@ -1948,7 +1948,7 @@ end
 function InfestedKerriganBurrow()
 	imgol(423, 0, 0)	-- Burrowing Dust (thingy\bDust.grp)
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedKerriganUnBurrow()
@@ -1956,7 +1956,7 @@ function InfestedKerriganUnBurrow()
 	imgul(423, 0, 0)	-- Burrowing Dust (thingy\bDust.grp)
 	playfram(0x88)	-- Frame set 8
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -1984,7 +1984,7 @@ iscript[21] = {
 
 function LarvaInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function LarvaDeath()
@@ -2168,14 +2168,14 @@ end
 
 function OverlordLocal00()
 ::OverlordLocal00_label::
-	setvertpos(1) 
-	waitrand(8, 10) 
-	setvertpos(2) 
-	waitrand(8, 10) 
-	setvertpos(1) 
-	waitrand(8, 10) 
-	setvertpos(0) 
-	waitrand(8, 10) 
+	setvertpos(1)
+	waitrand(8, 10)
+	setvertpos(2)
+	waitrand(8, 10)
+	setvertpos(1)
+	waitrand(8, 10)
+	setvertpos(0)
+	waitrand(8, 10)
 	goto OverlordLocal00_label
 end
 
@@ -2387,7 +2387,7 @@ end
 
 function UltraliskGndAttkToIdle()
 	playfram(0x99)	-- Frame set 9
-	ScourgeLocal00()
+	Wait125()
 end
 
 function UltraliskDeath()
@@ -2548,7 +2548,7 @@ end
 
 function ZerglingGndAttkToIdle()
 	playfram(0x55)	-- Frame set 5
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ZerglingDeath()
@@ -2618,7 +2618,7 @@ end
 
 function ZerglingSpecialState2()
 	playfram(0x110)	-- Frame set 16
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ZerglingBurrow()
@@ -2634,7 +2634,7 @@ function ZerglingBurrow()
 	playfram(0x110)	-- Frame set 16
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ZerglingUnBurrow()
@@ -2741,7 +2741,7 @@ iscript[36] = {
 
 function ZergBirthInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ZergBirthDeath()
@@ -2768,7 +2768,7 @@ function ZergBirthSpecialState1()
 	sigorder(4) 
 	lowsprul(319, 0, 0)	-- Egg Spawn (zerg\zegspawn.grp)
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -2812,8 +2812,8 @@ iscript[39] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	InfestedCommandCenterSpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	nil,
@@ -2834,7 +2834,7 @@ end
 
 function InfestedCommandCenterBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedCommandCenterDeath()
@@ -2848,7 +2848,7 @@ end
 
 function InfestedCommandCenterSpecialState1()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedCommandCenterLanding()
@@ -2866,7 +2866,7 @@ function InfestedCommandCenterLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedCommandCenterLiftOff()
@@ -2881,12 +2881,12 @@ function InfestedCommandCenterLiftOff()
 	playfram(4)	-- Frame set 0,  direction 4
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InfestedCommandCenterIsWorking()
 	imgol(276, 0, 0)	-- Command Center Overlay (terran\controlT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -2923,7 +2923,7 @@ iscript[46] = {
 function SunkenColonyInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(77, 0, 0)	-- Sunken Colony Shadow (zerg\zluShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SunkenColonyGndAttkInit()
@@ -3146,7 +3146,7 @@ iscript[52] = {
 
 function Overmind_withShell_Init()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Overmind_withShell_Death()
@@ -3230,7 +3230,7 @@ iscript[56] = {
 function ExtractorInit()
 	imgul(94, 0, 0)	-- Extractor Shadow (zerg\zreShad.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ExtractorDeath()
@@ -3278,14 +3278,14 @@ iscript[59] = {
 function SporeColonyInit()
 	imgul(100, 0, 0)	-- Spore Colony Shadow (zerg\zscShad.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SporeColonyAirAttkInit()
 	wait(1) 
 	attackwith(2) 
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SporeColonyAirAttkToIdle()
@@ -3415,7 +3415,7 @@ function ZergConstruction_Small_AlmostBuilt()
 	playfram(12)	-- Frame set 0,  direction 12
 	wait(2) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -3512,7 +3512,7 @@ function ZergConstruction_Medium_AlmostBuilt()
 	playfram(21)	-- Frame set 1,  direction 4
 	wait(2) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -3630,7 +3630,7 @@ function ZergBuildingMorphAlmostBuilt()
 	playfram(30)	-- Frame set 1,  direction 13
 	wait(2) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -3714,8 +3714,8 @@ iscript[66] = {
   GndAttkRpt =    	BattlecruiserGndAttkInit,
   AirAttkRpt =    	BattlecruiserAirAttkInit,
   CastSpell =     	BattlecruiserCastSpell,
-  GndAttkToIdle = 	ScourgeLocal00,
-  AirAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
+  AirAttkToIdle = 	Wait125,
   Unused2 =       	nil,
   Walking =       	BattlecruiserWalking,
   WalkingToIdle = 	OverlordLocal00,
@@ -3726,7 +3726,7 @@ iscript[66] = {
 function BattlecruiserInit()
 	imgul(219, 0, 42)	-- Battlecruiser Shadow (terran\BattleCr.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BattlecruiserDeath()
@@ -3744,7 +3744,7 @@ function BattlecruiserLocal00()
 	wait(1) 
 	attackwith(1) 
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BattlecruiserAirAttkInit()
@@ -3754,12 +3754,12 @@ end
 
 function BattlecruiserCastSpell()
 	imgolorig(543)	-- Yamato Gun Overlay (thingy\eycBlast.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BattlecruiserWalking()
 	imgol(220, 0, 0)	-- Battlecruiser Engines (thingy\tbaGlow.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -3880,7 +3880,7 @@ end
 function DropshipWalking()
 	imgol(225, 0, 0)	-- Dropship Engines (thingy\tdrGlow.grp)
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -4256,7 +4256,7 @@ function GhostSpecialState1()
 	wait(1) 
 	playfram(0x22)	-- Frame set 2
 	wait(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -4390,7 +4390,7 @@ end
 
 function Goliath_Base_WalkingToIdle()
 	playfram(0x77)	-- Frame set 7
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Goliath_Base_Death()
@@ -4438,7 +4438,7 @@ function Goliath_Base_StarEditInit()
 	imgol(235, 0, 0)	-- Goliath Turret (terran\goliathT.grp)
 	imgul(236, 0, 0)	-- Goliath Shadow (terran\tgoShad.grp)
 	playfram(0x77)	-- Frame set 7
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -4466,7 +4466,7 @@ iscript[76] = {
 
 function Goliath_Turret_Init()
 	playfram(0x77)	-- Frame set 7
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Goliath_Turret_GndAttkInit()
@@ -4726,7 +4726,7 @@ function SarahKerriganSpecialState1()
 	wait(1) 
 	playfram(0x22)	-- Frame set 2
 	wait(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -4999,7 +4999,7 @@ function ScannerSweepInit()
 	wait(63) 
 	wait(63) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScannerSweepDeath()
@@ -5044,7 +5044,7 @@ end
 function WraithWalking()
 	imgol(245, 0, 0)	-- Wraith Engines (thingy\tphGlow.grp)
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5097,7 +5097,7 @@ iscript[84] = {
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	SCVWalking,
-  WalkingToIdle = 	ScourgeLocal00,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	nil,
   SpecialState2 = 	nil,
   AlmostBuilt =   	SCVAlmostBuilt
@@ -5107,7 +5107,7 @@ iscript[84] = {
 function SCVInit()
 	imgul(248, 0, 7)	-- SCV Shadow (terran\SCV.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SCVDeath()
@@ -5125,19 +5125,19 @@ function SCVGndAttkInit()
 	playfram(0x11)	-- Frame set 1
 	wait(1) 
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SCVGndAttkToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SCVWalking()
 	playfram(0x00)	-- Frame set 0
 	imgol(249, 0, 0)	-- SCV Glow (thingy\tscGlow.grp)
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SCVAlmostBuilt()
@@ -5170,11 +5170,11 @@ iscript[86] = {
   GndAttkRpt =    	BattlecruiserLocal00,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	VultureSpecialState1
 }
 -- ----------------------------------------------------------------------------- --
@@ -5182,7 +5182,7 @@ iscript[86] = {
 function VultureInit()
 	imgul(257, 0, 7)	-- Vulture Shadow (terran\Vulture.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function VultureDeath()
@@ -5241,7 +5241,7 @@ end
 
 function SpiderMineWalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SpiderMineDeath()
@@ -5282,7 +5282,7 @@ end
 function SpiderMineSpecialState1()
 	castspell()
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SpiderMineBurrow()
@@ -5299,7 +5299,7 @@ function SpiderMineBurrow()
 	wait(1) 
 	sigorder(4) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SpiderMineUnBurrow()
@@ -5335,8 +5335,8 @@ iscript[88] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -5345,7 +5345,7 @@ function ScienceVessel_Base_Init()
 	imgol(261, 0, 0)	-- Science Vessel (Turret) (terran\wesselt.grp)
 	imgul(262, 0, 42)	-- Science Vessel Shadow (terran\tveShad.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceVessel_Base_Death()
@@ -5362,7 +5362,7 @@ function ScienceVessel_Base_CastSpell()
 	nobrkcodeend()
 	gotorepeatattk()
 	sigorder(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5378,19 +5378,19 @@ iscript[89] = {
   Unused1 =       	nil,
   GndAttkRpt =    	nil,
   AirAttkRpt =    	nil,
-  CastSpell =     	ScourgeLocal00,
+  CastSpell =     	Wait125,
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	nil
 }
 -- ----------------------------------------------------------------------------- --
 
 function ScienceVessel_Turret_Init()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5435,7 +5435,7 @@ end
 
 function SiegeTank_Tank_BaseWalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Tank_BaseDeath()
@@ -5465,7 +5465,7 @@ function SiegeTank_Tank_BaseStarEditInit()
 	imgul(252, 0, 0)	-- Siege Tank (Tank) Base Shadow (terran\ttaShad.grp)
 	setfldirect(12) 
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5482,19 +5482,19 @@ iscript[91] = {
   GndAttkRpt =    	SiegeTank_Tank_TurretGndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
-  SpecialState1 = 	ScourgeLocal00
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
+  SpecialState1 = 	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
 function SiegeTank_Tank_TurretInit()
 	wait(1) 
 	setfldirect(12) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Tank_TurretGndAttkInit()
@@ -5506,7 +5506,7 @@ function SiegeTank_Tank_TurretGndAttkInit()
 	attackwith(1) 
 	nobrkcodeend()
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5560,7 +5560,7 @@ function SiegeTank_Siege_BaseInit()
 	playfram(5)	-- Frame set 0,  direction 5
 	wait(38) 
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Siege_BaseDeath()
@@ -5583,7 +5583,7 @@ function SiegeTank_Siege_BaseSpecialState2()
 	playfram(0x00)	-- Frame set 0
 	wait(5) 
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Siege_BaseStarEditInit()
@@ -5605,7 +5605,7 @@ function SiegeTank_Siege_BaseStarEditInit()
 	playfram(5)	-- Frame set 0,  direction 5
 	wait(38) 
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5622,12 +5622,12 @@ iscript[93] = {
   GndAttkRpt =    	SiegeTank_Siege_TurretGndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
-  WalkingToIdle = 	ScourgeLocal00,
-  SpecialState1 = 	ScourgeLocal00,
+  WalkingToIdle = 	Wait125,
+  SpecialState1 = 	Wait125,
   SpecialState2 = 	SiegeTank_Siege_TurretSpecialState2,
   AlmostBuilt =   	nil
 }
@@ -5651,7 +5651,7 @@ function SiegeTank_Siege_TurretInit()
 	setfldirect(28) 
 	playfram(0x00)	-- Frame set 0
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Siege_TurretGndAttkInit()
@@ -5666,7 +5666,7 @@ function SiegeTank_Siege_TurretGndAttkInit()
 	nobrkcodeend()
 	gotorepeatattk()
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SiegeTank_Siege_TurretSpecialState2()
@@ -5681,7 +5681,7 @@ function SiegeTank_Siege_TurretSpecialState2()
 	playfram(0x22)	-- Frame set 2
 	wait(3) 
 	playfram(0x11)	-- Frame set 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5707,8 +5707,8 @@ iscript[94] = {
   SpecialState2 = 	nil,
   AlmostBuilt =   	AcademyAlmostBuilt,
   Built =         	AcademyBuilt,
-  Landing =       	ScourgeLocal00,
-  LiftOff =       	ScourgeLocal00,
+  Landing =       	Wait125,
+  LiftOff =       	Wait125,
   IsWorking =     	AcademyIsWorking,
   WorkingToIdle = 	AcademyBuilt,
   WarpIn =        	nil
@@ -5718,7 +5718,7 @@ iscript[94] = {
 function AcademyInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(265, 0, 0)	-- Academy Shadow (terran\tacShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function AcademyDeath()
@@ -5732,17 +5732,17 @@ end
 
 function AcademyAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function AcademyBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function AcademyIsWorking()
 	imgol(264, 0, 0)	-- Academy Overlay (terran\AcademyT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5815,8 +5815,8 @@ iscript[96] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	BarracksSpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	BarracksAlmostBuilt,
@@ -5836,22 +5836,22 @@ iscript[96] = {
 function BarracksInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(267, 0, 0)	-- Barracks Shadow (terran\tbrShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksSpecialState1()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksLanding()
@@ -5869,7 +5869,7 @@ function BarracksLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksLiftOff()
@@ -5884,7 +5884,7 @@ function BarracksLiftOff()
 	playfram(4)	-- Frame set 0,  direction 4
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BarracksIsWorking()
@@ -5907,7 +5907,7 @@ function BarracksIsWorking()
 end
 
 function BarracksDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -5933,8 +5933,8 @@ iscript[97] = {
   SpecialState2 = 	nil,
   AlmostBuilt =   	ArmoryAlmostBuilt,
   Built =         	ArmoryBuilt,
-  Landing =       	ScourgeLocal00,
-  LiftOff =       	ScourgeLocal00,
+  Landing =       	Wait125,
+  LiftOff =       	Wait125,
   IsWorking =     	ArmoryIsWorking,
   WorkingToIdle = 	ArmoryBuilt,
   WarpIn =        	nil
@@ -5948,17 +5948,17 @@ end
 
 function ArmoryBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ArmoryAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ArmoryIsWorking()
 	imgol(269, 0, 0)	-- Armory Overlay (terran\chemlabT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6035,8 +6035,8 @@ iscript[99] = {
   AlmostBuilt =   	ComsatStationAlmostBuilt,
   Built =         	ComsatStationBuilt,
   Landing =       	ComsatStationLanding,
-  LiftOff =       	ScourgeLocal00,
-  IsWorking =     	ScourgeLocal00,
+  LiftOff =       	Wait125,
+  IsWorking =     	Wait125,
   WorkingToIdle = 	ComsatStationWorkingToIdle,
   WarpIn =        	nil
 }
@@ -6045,12 +6045,12 @@ iscript[99] = {
 function ComsatStationInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(274, 0, 0)	-- Comsat Station Shadow (terran\tcsShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ComsatStationAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ComsatStationBuilt()
@@ -6060,12 +6060,12 @@ end
 
 function ComsatStationWorkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ComsatStationLanding()
 	imgol(272, 0, 0)	-- Comsat Station Connector (terran\ComSatC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6094,11 +6094,11 @@ iscript[100] = {
   Landing =       	ComsatConnectorDeath,
   LiftOff =       	ComsatConnectorLiftOff,
   IsWorking =     	ComsatConnectorIsWorking,
-  WorkingToIdle = 	ScourgeLocal00,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -6115,7 +6115,7 @@ end
 
 function ComsatConnectorIsWorking()
 	playfram(3)	-- Frame set 0,  direction 3
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ComsatConnectorDeath()
@@ -6156,20 +6156,20 @@ iscript[101] = {
   AlmostBuilt =   	nil,
   Built =         	nil,
   Landing =       	ComsatOverlayLanding,
-  LiftOff =       	ScourgeLocal00,
+  LiftOff =       	Wait125,
   IsWorking =     	ComsatOverlayIsWorking,
   WorkingToIdle = 	ComsatOverlayIsWorking,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
 
 function ComsatOverlayInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ComsatOverlayDeath()
@@ -6223,8 +6223,8 @@ iscript[102] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	CommandCenterSpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	CommandCenterAlmostBuilt,
@@ -6244,17 +6244,17 @@ end
 
 function CommandCenterBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CommandCenterSpecialState1()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CommandCenterAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CommandCenterLanding()
@@ -6272,7 +6272,7 @@ function CommandCenterLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CommandCenterLiftOff()
@@ -6287,12 +6287,12 @@ function CommandCenterLiftOff()
 	playfram(4)	-- Frame set 0,  direction 4
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CommandCenterIsWorking()
 	imgol(276, 0, 0)	-- Command Center Overlay (terran\controlT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6413,8 +6413,8 @@ iscript[104] = {
   Built =         	CrashedBattlecruiserBuilt,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
-  WorkingToIdle = 	ScourgeLocal00,
+  IsWorking =     	Wait125,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -6426,7 +6426,7 @@ end
 
 function CrashedBattlecruiserBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6454,7 +6454,7 @@ iscript[105] = {
   Built =         	SupplyDepotBuilt,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
+  IsWorking =     	Wait125,
   WorkingToIdle = 	SupplyDepotWorkingToIdle,
   WarpIn =        	nil,
   Unused3 =       	nil,
@@ -6467,12 +6467,12 @@ iscript[105] = {
 function SupplyDepotInit()
 	imgul(280, 0, 0)	-- Supply Depot Shadow (terran\tdeShad.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SupplyDepotAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SupplyDepotBuilt()
@@ -6482,11 +6482,11 @@ end
 
 function SupplyDepotWorkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function SupplyDepotDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6519,7 +6519,7 @@ iscript[106] = {
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -6569,7 +6569,7 @@ iscript[107] = {
   AlmostBuilt =   	ControlTowerAlmostBuilt,
   Built =         	ControlTowerBuilt,
   Landing =       	ControlTowerLanding,
-  LiftOff =       	ScourgeLocal00,
+  LiftOff =       	Wait125,
   IsWorking =     	ControlTowerIsWorking,
   WorkingToIdle = 	ControlTowerBuilt,
   WarpIn =        	nil,
@@ -6587,26 +6587,26 @@ end
 
 function ControlTowerBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ControlTowerAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ControlTowerLanding()
 	imgol(282, 0, 0)	-- Control Tower Connector (terran\DryDockC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ControlTowerIsWorking()
 	imgol(283, 0, 0)	-- Control Tower Overlay (terran\DryDockT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ControlTowerDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6639,7 +6639,7 @@ iscript[108] = {
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -6658,7 +6658,7 @@ end
 
 function ControlTowerConnectorIsWorking()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ControlTowerConnectorDeath()
@@ -6747,8 +6747,8 @@ iscript[111] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	FactorySpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	FactoryAlmostBuilt,
@@ -6768,22 +6768,22 @@ iscript[111] = {
 function FactoryInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(287, 0, 0)	-- Factory Shadow (terran\tfaShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactorySpecialState1()
 	playfram(5)	-- Frame set 0,  direction 5
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryLanding()
@@ -6803,7 +6803,7 @@ function FactoryLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryLiftOff()
@@ -6820,16 +6820,16 @@ function FactoryLiftOff()
 	playfram(5)	-- Frame set 0,  direction 5
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryIsWorking()
 	imgol(286, 0, 0)	-- Factory Overlay (terran\factoryT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FactoryDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6906,7 +6906,7 @@ iscript[113] = {
   AlmostBuilt =   	CovertOpsAlmostBuilt,
   Built =         	CovertOpsBuilt,
   Landing =       	CovertOpsLanding,
-  LiftOff =       	ScourgeLocal00,
+  LiftOff =       	Wait125,
   IsWorking =     	CovertOpsIsWorking,
   WorkingToIdle = 	CovertOpsBuilt,
   WarpIn =        	nil
@@ -6920,22 +6920,22 @@ end
 
 function CovertOpsBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CovertOpsAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CovertOpsLanding()
 	imgol(289, 0, 0)	-- Covert Ops Connector (terran\GeneLabC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CovertOpsIsWorking()
 	imgol(290, 0, 0)	-- Covert Ops Overlay (terran\GeneLabT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -6964,11 +6964,11 @@ iscript[114] = {
   Landing =       	CovertOpsConnectorDeath,
   LiftOff =       	CovertOpsConnectorLiftOff,
   IsWorking =     	CovertOpsConnectorIsWorking,
-  WorkingToIdle = 	ScourgeLocal00,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -6987,7 +6987,7 @@ end
 
 function CovertOpsConnectorIsWorking()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CovertOpsConnectorDeath()
@@ -7084,15 +7084,15 @@ iscript[116] = {
   Built =         	IonCannonInit,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
-  WorkingToIdle = 	ScourgeLocal00,
+  IsWorking =     	Wait125,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --
 
 function IonCannonInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7119,7 +7119,7 @@ iscript[117] = {
   AlmostBuilt =   	MachineShopAlmostBuilt,
   Built =         	MachineShopBuilt,
   Landing =       	MachineShopLanding,
-  LiftOff =       	ScourgeLocal00,
+  LiftOff =       	Wait125,
   IsWorking =     	MachineShopIsWorking,
   WorkingToIdle = 	MachineShopBuilt,
   WarpIn =        	nil,
@@ -7133,22 +7133,22 @@ iscript[117] = {
 function MachineShopInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(295, 0, 0)	-- Machine Shop Shadow (terran\tmsShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MachineShopAlmostBuilt()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MachineShopBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MachineShopLanding()
 	imgol(294, 0, 0)	-- Machine Shop Connector (terran\machineC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MachineShopIsWorking()
@@ -7165,7 +7165,7 @@ function MachineShopIsWorking()
 end
 
 function MachineShopDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7194,11 +7194,11 @@ iscript[118] = {
   Landing =       	MachineShopConnectorDeath,
   LiftOff =       	MachineShopConnectorLiftOff,
   IsWorking =     	MachineShopConnectorIsWorking,
-  WorkingToIdle = 	ScourgeLocal00,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -7215,7 +7215,7 @@ end
 
 function MachineShopConnectorIsWorking()
 	playfram(3)	-- Frame set 0,  direction 3
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MachineShopConnectorDeath()
@@ -7240,14 +7240,14 @@ iscript[119] = {
   Type =          	20,
   Init =          	MissileTurret_Base_Init,
   Death =         	AcademyDeath,
-  GndAttkInit =   	ScourgeLocal00,
-  AirAttkInit =   	ScourgeLocal00,
+  GndAttkInit =   	Wait125,
+  AirAttkInit =   	Wait125,
   Unused1 =       	nil,
-  GndAttkRpt =    	ScourgeLocal00,
-  AirAttkRpt =    	ScourgeLocal00,
+  GndAttkRpt =    	Wait125,
+  AirAttkRpt =    	Wait125,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
-  AirAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
+  AirAttkToIdle = 	Wait125,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
@@ -7257,7 +7257,7 @@ iscript[119] = {
   Built =         	MissileTurret_Base_Built,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
+  IsWorking =     	Wait125,
   WorkingToIdle = 	MissileTurret_Base_WorkingToIdle,
   WarpIn =        	nil
 }
@@ -7266,12 +7266,12 @@ iscript[119] = {
 function MissileTurret_Base_Init()
 	playfram(2)	-- Frame set 0,  direction 2
 	imgul(298, 0, 0)	-- Missile Turret (Base) Shadow (terran\tmiShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MissileTurret_Base_AlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MissileTurret_Base_Built()
@@ -7281,7 +7281,7 @@ end
 
 function MissileTurret_Base_WorkingToIdle()
 	playfram(2)	-- Frame set 0,  direction 2
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7305,7 +7305,7 @@ iscript[120] = {
   WalkingToIdle = 	nil,
   SpecialState1 = 	nil,
   SpecialState2 = 	nil,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	MissileTurret_Turret_Built,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -7314,7 +7314,7 @@ iscript[120] = {
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -7387,17 +7387,17 @@ end
 
 function PhysicsLabBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function PhysicsLabAlmostBuilt()
 	playfram(6)	-- Frame set 0,  direction 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function PhysicsLabLanding()
 	imgol(302, 0, 0)	-- Physics Lab Connector (terran\physicsC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function PhysicsLabIsWorking()
@@ -7441,11 +7441,11 @@ iscript[122] = {
   Landing =       	PhysicsLabConnectorDeath,
   LiftOff =       	PhysicsLabConnectorLiftOff,
   IsWorking =     	PhysicsLabConnectorIsWorking,
-  WorkingToIdle = 	ScourgeLocal00,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -7464,7 +7464,7 @@ end
 
 function PhysicsLabConnectorIsWorking()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function PhysicsLabConnectorDeath()
@@ -7513,7 +7513,7 @@ iscript[123] = {
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -7525,12 +7525,12 @@ end
 
 function BunkerBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function BunkerAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7583,7 +7583,7 @@ iscript[125] = {
   Built =         	RefineryBuilt,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
+  IsWorking =     	Wait125,
   WorkingToIdle = 	RefineryBuilt,
   WarpIn =        	nil
 }
@@ -7641,8 +7641,8 @@ iscript[126] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	ScienceFacilitySpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	ScienceFacilityAlmostBuilt,
@@ -7662,17 +7662,17 @@ end
 
 function ScienceFacilityBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceFacilitySpecialState1()
 	playfram(5)	-- Frame set 0,  direction 5
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceFacilityAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceFacilityLanding()
@@ -7688,7 +7688,7 @@ function ScienceFacilityLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceFacilityLiftOff()
@@ -7703,12 +7703,12 @@ function ScienceFacilityLiftOff()
 	playfram(5)	-- Frame set 0,  direction 5
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScienceFacilityIsWorking()
 	imgol(310, 0, 0)	-- Science Facility Overlay (terran\ResearcT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7788,7 +7788,7 @@ iscript[128] = {
   AlmostBuilt =   	NuclearSiloAlmostBuilt,
   Built =         	NuclearSiloBuilt,
   Landing =       	NuclearSiloLanding,
-  LiftOff =       	ScourgeLocal00,
+  LiftOff =       	Wait125,
   IsWorking =     	NuclearSiloIsWorking,
   WorkingToIdle = 	NuclearSiloBuilt,
   WarpIn =        	nil,
@@ -7806,26 +7806,26 @@ end
 
 function NuclearSiloBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearSiloAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearSiloLanding()
 	imgol(313, 0, 0)	-- Nuclear Silo Connector (terran\NukeSilC.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearSiloIsWorking()
 	imgol(314, 0, 0)	-- Nuclear Silo Overlay (terran\NukeSilT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearSiloDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -7854,11 +7854,11 @@ iscript[129] = {
   Landing =       	NuclearSiloConnectorDeath,
   LiftOff =       	NuclearSiloConnectorLiftOff,
   IsWorking =     	NuclearSiloConnectorIsWorking,
-  WorkingToIdle = 	ScourgeLocal00,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil,
   Unused3 =       	nil,
   StarEditInit =  	nil,
-  Disable =       	ScourgeLocal00,
+  Disable =       	Wait125,
   Burrow =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -7877,7 +7877,7 @@ end
 
 function NuclearSiloConnectorIsWorking()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearSiloConnectorDeath()
@@ -7967,7 +7967,7 @@ iscript[131] = {
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	NuclearMissileWalking,
-  WalkingToIdle = 	ScourgeLocal00,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	NuclearMissileSpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	nil,
@@ -7982,7 +7982,7 @@ iscript[131] = {
 
 function NuclearMissileInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearMissileDeath()
@@ -8015,14 +8015,14 @@ function NuclearMissileSpecialState1()
 	tmprmgraphicstart()
 	imgol(428, 0, 0)	-- Nuclear Missile Death (thingy\small.grp)
 	sprol(267, 0, -42)	-- Nuke Hit (thingy\NukeHit.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function NuclearMissileWarpIn()
 	wait(125) 
 	wait(125) 
 	sigorder(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8113,8 +8113,8 @@ iscript[134] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	StarportSpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	StarportAlmostBuilt,
@@ -8134,17 +8134,17 @@ end
 
 function StarportBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function StarportSpecialState1()
 	playfram(3)	-- Frame set 0,  direction 3
-	ScourgeLocal00()
+	Wait125()
 end
 
 function StarportAlmostBuilt()
 	playfram(5)	-- Frame set 0,  direction 5
-	ScourgeLocal00()
+	Wait125()
 end
 
 function StarportLanding()
@@ -8162,7 +8162,7 @@ function StarportLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function StarportLiftOff()
@@ -8177,12 +8177,12 @@ function StarportLiftOff()
 	playfram(3)	-- Frame set 0,  direction 3
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function StarportIsWorking()
 	imgol(320, 0, 0)	-- Starport Overlay (terran\StarpoT.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8252,15 +8252,15 @@ iscript[136] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	EngineeringBaySpecialState1,
   SpecialState2 = 	nil,
   AlmostBuilt =   	EngineeringBayAlmostBuilt,
   Built =         	EngineeringBayBuilt,
   Landing =       	EngineeringBayLanding,
   LiftOff =       	EngineeringBayLiftOff,
-  IsWorking =     	ScourgeLocal00,
+  IsWorking =     	Wait125,
   WorkingToIdle = 	EngineeringBayWorkingToIdle,
   WarpIn =        	nil,
   Unused3 =       	nil,
@@ -8273,17 +8273,17 @@ iscript[136] = {
 function EngineeringBayInit()
 	playfram(0x00)	-- Frame set 0
 	imgul(324, 0, 0)	-- Engineering Bay Shadow (terran\twpShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBaySpecialState1()
 	playfram(4)	-- Frame set 0,  direction 4
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayAlmostBuilt()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayBuilt()
@@ -8293,7 +8293,7 @@ end
 
 function EngineeringBayWorkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayLanding()
@@ -8311,7 +8311,7 @@ function EngineeringBayLanding()
 	playfram(0x00)	-- Frame set 0
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayLiftOff()
@@ -8326,11 +8326,11 @@ function EngineeringBayLiftOff()
 	playfram(4)	-- Frame set 0,  direction 4
 	sigorder(16) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayDisable()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8350,14 +8350,14 @@ iscript[137] = {
   GndAttkToIdle = 	nil,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
-  Walking =       	ScourgeLocal00,
-  WalkingToIdle = 	ScourgeLocal00,
+  Walking =       	Wait125,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	EngineeringBayOverlayDeath,
   SpecialState2 = 	nil,
   AlmostBuilt =   	nil,
-  Built =         	ScourgeLocal00,
-  Landing =       	ScourgeLocal00,
-  LiftOff =       	ScourgeLocal00,
+  Built =         	Wait125,
+  Landing =       	Wait125,
+  LiftOff =       	Wait125,
   IsWorking =     	EngineeringBayOverlayIsWorking,
   WorkingToIdle = 	EngineeringBayOverlayInit,
   WarpIn =        	nil,
@@ -8370,7 +8370,7 @@ iscript[137] = {
 
 function EngineeringBayOverlayInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function EngineeringBayOverlayDeath()
@@ -8422,17 +8422,17 @@ iscript[138] = {
 function TerranConstruction_Large_Init()
 	playfram(0x00)	-- Frame set 0
 	imgul(326, 0, 0)	-- Terran Construction (Large) Shadow (terran\tb2Shad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Large_SpecialState1()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Large_SpecialState2()
 	playfram(2)	-- Frame set 0,  direction 2
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8463,17 +8463,17 @@ iscript[139] = {
 function TerranConstruction_Medium_Init()
 	playfram(0x00)	-- Frame set 0
 	imgul(328, 0, 0)	-- Terran Construction (Medium) Shadow (terran\tb3Shad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Medium_SpecialState1()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Medium_SpecialState2()
 	playfram(2)	-- Frame set 0,  direction 2
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8504,17 +8504,17 @@ iscript[140] = {
 function TerranConstruction_Small_Init()
 	playfram(0x00)	-- Frame set 0
 	imgul(331, 0, 0)	-- Terran Construction (Small) Shadow (terran\tb1Shad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Small_SpecialState1()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function TerranConstruction_Small_SpecialState2()
 	playfram(2)	-- Frame set 0,  direction 2
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -8536,8 +8536,8 @@ iscript[141] = {
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
-  SpecialState1 = 	ScourgeLocal00,
-  SpecialState2 = 	ScourgeLocal00,
+  SpecialState1 = 	Wait125,
+  SpecialState2 = 	Wait125,
   AlmostBuilt =   	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -8764,7 +8764,7 @@ function ArbiterGndAttkRpt()
 	playfram(0x00)	-- Frame set 0
 	nobrkcodeend()
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ArbiterCastSpell()
@@ -8775,19 +8775,19 @@ function ArbiterCastSpell()
 	nobrkcodeend()
 	gotorepeatattk()
 	sigorder(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ArbiterWalking()
 	imgol(132, 0, 0)	-- Arbiter Engines (thingy\pabGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ArbiterWarpIn()
 	imgol(133, 0, 0)	-- Arbiter Warp Flash (protoss\arbiter.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9126,12 +9126,12 @@ end
 
 function CarrierWalking()
 	imgol(114, 0, 0)	-- Carrier Engines (thingy\pcaGlow.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CarrierWarpIn()
 	imgol(115, 0, 0)	-- Carrier Warp Flash (protoss\carrier.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9148,7 +9148,7 @@ iscript[152] = {
   GndAttkRpt =    	DarkTemplar_Hero_GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	DarkTemplar_Hero_CastSpell,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	DarkTemplar_Hero_Walking,
@@ -9159,7 +9159,7 @@ iscript[152] = {
 
 function DarkTemplar_Hero_Init()
 	playfram(0xdd)	-- Frame set 13
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DarkTemplar_Hero_Death()
@@ -9392,7 +9392,7 @@ end
 
 function DragoonWarpIn()
 	imgol(125, 0, 0)	-- Dragoon Warp Flash (protoss\dragoon.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9433,8 +9433,8 @@ iscript[155] = {
   GndAttkRpt =    	InterceptorGndAttkInit,
   AirAttkRpt =    	InterceptorGndAttkInit,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
-  AirAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
+  AirAttkToIdle = 	Wait125,
   Unused2 =       	nil,
   Walking =       	InterceptorWalking,
   WalkingToIdle = 	OverlordLocal00,
@@ -9461,13 +9461,13 @@ function InterceptorGndAttkInit()
 	wait(1) 
 	playfram(0x00)	-- Frame set 0
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InterceptorWalking()
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9484,11 +9484,11 @@ iscript[156] = {
   GndAttkRpt =    	BattlecruiserLocal00,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	ProbeWalking,
-  WalkingToIdle = 	ScourgeLocal00,
+  WalkingToIdle = 	Wait125,
   SpecialState1 = 	nil,
   SpecialState2 = 	nil,
   AlmostBuilt =   	ProbeAlmostBuilt,
@@ -9504,7 +9504,7 @@ iscript[156] = {
 function ProbeInit()
 	imgul(138, 0, 7)	-- Probe Shadow (protoss\probe.grp)
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ProbeDeath()
@@ -9515,7 +9515,7 @@ end
 
 function ProbeWalking()
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ProbeAlmostBuilt()
@@ -9528,7 +9528,7 @@ end
 
 function ProbeWarpIn()
 	imgol(139, 0, 0)	-- Probe Warp Flash (protoss\probe.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9582,12 +9582,12 @@ function ShuttleWalking()
 	imgol(120, 0, 0)	-- Shuttle Engines (thingy\pshGlow.grp)
 	setvertpos(0) 
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ShuttleWarpIn()
 	imgol(121, 0, 0)	-- Shuttle Warp Flash (protoss\shuttle.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9683,7 +9683,7 @@ function HighTemplarGndAttkInit()
 	nobrkcodeend()
 	gotorepeatattk()
 	playfram(0x66)	-- Frame set 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function HighTemplarCastSpell()
@@ -9703,7 +9703,7 @@ function HighTemplarCastSpell()
 	nobrkcodeend()
 	gotorepeatattk()
 	playfram(0x66)	-- Frame set 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function HighTemplarWalking()
@@ -9737,7 +9737,7 @@ end
 
 function HighTemplarWarpIn()
 	imgol(128, 0, 0)	-- High Templar Warp Flash (protoss\templar.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9778,7 +9778,7 @@ end
 
 function ReaverWalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ReaverDeath()
@@ -9835,7 +9835,7 @@ end
 
 function ReaverWarpIn()
 	imgol(146, 0, 0)	-- Reaver Warp Flash (protoss\trilob.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9863,7 +9863,7 @@ iscript[160] = {
 
 function ScarabInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScarabDeath()
@@ -9883,7 +9883,7 @@ end
 function ScarabSpecialState1()
 	useweapon(82)	-- Scarab (Scarab)
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9947,7 +9947,7 @@ function ScoutGndAttkInit()
 	wait(1) 
 	playfram(0x00)	-- Frame set 0
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScoutAirAttkInit()
@@ -9956,19 +9956,19 @@ function ScoutAirAttkInit()
 	attackwith(2) 
 	playfram(0x00)	-- Frame set 0
 	gotorepeatattk()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScoutWalking()
 	imgol(142, 0, 0)	-- Scout Engines (thingy\pscGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ScoutWarpIn()
 	imgol(143, 0, 0)	-- Scout Warp Flash (protoss\scout.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10041,7 +10041,7 @@ end
 
 function ZealotWalkingToIdle()
 	playfram(0x55)	-- Frame set 5
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ZealotDeath()
@@ -10134,7 +10134,7 @@ end
 
 function ZealotWarpIn()
 	imgol(154, 0, 0)	-- Zealot Warp Flash (protoss\zealot.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10194,12 +10194,12 @@ end
 function ObserverWalking()
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ObserverWarpIn()
 	imgol(150, 0, 0)	-- Observer Warp Flash (protoss\witness.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10232,7 +10232,7 @@ end
 
 function Ragnasaur_AshworldCritter_WalkingToIdle()
 	playfram(0x66)	-- Frame set 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Ragnasaur_AshworldCritter_Death()
@@ -10318,7 +10318,7 @@ end
 
 function Rhynadon_BadlandsCritter_WalkingToIdle()
 	playfram(0x66)	-- Frame set 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Rhynadon_BadlandsCritter_Death()
@@ -10410,7 +10410,7 @@ end
 
 function Bengalaas_JungleCritter_WalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Bengalaas_JungleCritter_Death()
@@ -10561,7 +10561,7 @@ iscript[211] = {
 function ZergBeaconInit()
 	playfram(0x00)	-- Frame set 0
 	imgol(355, 0, 0)	-- Zerg Beacon Overlay (zerg\zCirGlow.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10578,7 +10578,7 @@ iscript[212] = {
 function ProtossBeaconInit()
 	playfram(0x00)	-- Frame set 0
 	imgol(359, 0, 0)	-- Protoss Beacon Overlay (protoss\pCirGlow.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10595,7 +10595,7 @@ iscript[213] = {
 function TerranBeaconInit()
 	playfram(0x00)	-- Frame set 0
 	imgol(357, 0, 0)	-- Terran Beacon Overlay (terran\tCirGlow.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10609,7 +10609,7 @@ iscript[214] = {
 
 function Unknwon214Init()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Unknwon214Death()
@@ -10643,7 +10643,7 @@ iscript[215] = {
 
 function PowerupsShadowHeaderInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10766,13 +10766,13 @@ function DataDiskInit()
 	playfram(0x00)	-- Frame set 0
 	pwrupcondjmp(DataDiskLocal00)
 	imgul(409, 0, 0)	-- Data Disk Shadow (Ground) (neutral\nddShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DataDiskLocal00()
 	wait(1) 
 	switchul(410)	-- Data Disk Shadow (Carried) (neutral\nddSha2.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DataDiskDeath()
@@ -10797,13 +10797,13 @@ function CrystalsShadowsInit()
 	playfram(0x00)	-- Frame set 0
 	pwrupcondjmp(CrystalsShadowsLocal00)
 	imgul(413, 0, 0)	-- Crystal Shadow (Ground) (neutral\nkhShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CrystalsShadowsLocal00()
 	wait(1) 
 	switchul(414)	-- Crystal Shadow (Carried) (neutral\nkhSha2.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CrystalsShadowsDeath()
@@ -10826,13 +10826,13 @@ function YoungChrysalisInit()
 	playfram(0x00)	-- Frame set 0
 	pwrupcondjmp(YoungChrysalisLocal00)
 	imgul(415, 0, 0)	-- Young Chrysalis Shadow (Ground) (neutral\nkeShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function YoungChrysalisLocal00()
 	wait(1) 
 	switchul(416)	-- Young Chrysalis Shadow (Carried) (neutral\nkeSha2.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function YoungChrysalisDeath()
@@ -10853,9 +10853,9 @@ iscript[221] = {
 
 function OreChunkInit()
 	playfram(0x00)	-- Frame set 0
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(405, 0, 0)	-- Mineral Chunk Shadow (neutral\norShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function OreChunkDeath()
@@ -10887,9 +10887,9 @@ iscript[223] = {
 
 function GasSacInit()
 	playfram(0x00)	-- Frame set 0
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(407, 0, 0)	-- Zerg Gas Sac Shadow (neutral\ngsShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function GasSacDeath()
@@ -10910,9 +10910,9 @@ iscript[224] = {
 
 function GasSac2Init()
 	playfram(0x11)	-- Frame set 1
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(407, 0, 0)	-- Zerg Gas Sac Shadow (neutral\ngsShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10928,9 +10928,9 @@ iscript[225] = {
 
 function GasOrbInit()
 	playfram(0x00)	-- Frame set 0
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(406, 0, 0)	-- Protoss Gas Orb Shadow (neutral\ngoShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function GasOrbDeath()
@@ -10951,9 +10951,9 @@ iscript[226] = {
 
 function GasOrb2Init()
 	playfram(0x11)	-- Frame set 1
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(406, 0, 0)	-- Protoss Gas Orb Shadow (neutral\ngoShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -10969,9 +10969,9 @@ iscript[227] = {
 
 function GasTankInit()
 	playfram(0x00)	-- Frame set 0
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(408, 0, 0)	-- Terran Gas Tank Shadow (neutral\ngcShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 function GasTankDeath()
@@ -10992,9 +10992,9 @@ iscript[228] = {
 
 function GasTank2Init()
 	playfram(1)	-- Frame set 0,  direction 1
-	pwrupcondjmp(ScourgeLocal00)
+	pwrupcondjmp(Wait125)
 	imgul(408, 0, 0)	-- Terran Gas Tank Shadow (neutral\ngcShad.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -11574,7 +11574,7 @@ iscript[243] = {
   Type =          	2,
   Init =          	ATA_ATSLaserBattery_BurstLasersInit,
   Death =         	ATA_ATSLaserBattery_BurstLasersDeath,
-  GndAttkInit =   	ScourgeLocal00,
+  GndAttkInit =   	Wait125,
   AirAttkInit =   	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -11588,7 +11588,7 @@ function ATA_ATSLaserBattery_BurstLasersInit()
 	wait(1) 
 	sigorder(1) 
 	wait(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ATA_ATSLaserBattery_BurstLasersLocal00()
@@ -11597,7 +11597,7 @@ function ATA_ATSLaserBattery_BurstLasersLocal00()
 	wait(1) 
 	sigorder(1) 
 	wait(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ATA_ATSLaserBattery_BurstLasersDeath()
@@ -12312,7 +12312,7 @@ function QueenSpellHolderInit()
 end
 
 function QueenSpellHolderGndAttkInit()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function QueenSpellHolderDeath()
@@ -13891,12 +13891,12 @@ iscript[340] = {
 
 function InstallationDoodadInit()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodadAlmostBuilt()
 	playfram(9)	-- Frame set 0,  direction 9
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodadStarEditInit()
@@ -13920,7 +13920,7 @@ function InstallationDoodadStarEditInit()
 	wait(2) 
 	playfram(0x00)	-- Frame set 0
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodadDisable()
@@ -13944,7 +13944,7 @@ function InstallationDoodadDisable()
 	wait(2) 
 	playfram(9)	-- Frame set 0,  direction 9
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -13988,13 +13988,13 @@ iscript[341] = {
 function InstallationDoodad2Init()
 	playfram(0x00)	-- Frame set 0
 	setflipstate(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodad2AlmostBuilt()
 	playfram(9)	-- Frame set 0,  direction 9
 	setflipstate(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodad2StarEditInit()
@@ -14019,7 +14019,7 @@ function InstallationDoodad2StarEditInit()
 	wait(2) 
 	playfram(0x00)	-- Frame set 0
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function InstallationDoodad2Disable()
@@ -14041,7 +14041,7 @@ function InstallationDoodad2Disable()
 	wait(2) 
 	playfram(9)	-- Frame set 0,  direction 9
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14158,14 +14158,14 @@ iscript[345] = {
   GndAttkRpt =    	FloorMissileTrapGndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
   SpecialState1 = 	FloorMissileTrapSpecialState1,
   SpecialState2 = 	FloorMissileTrapSpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14177,13 +14177,13 @@ iscript[345] = {
   Disable =       	FloorMissileTrapSpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
 function FloorMissileTrapInit()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorMissileTrapDeath()
@@ -14196,7 +14196,7 @@ function FloorMissileTrapGndAttkInit()
 	attackwith(1) 
 	gotorepeatattk()
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorMissileTrapSpecialState1()
@@ -14223,7 +14223,7 @@ function FloorMissileTrapSpecialState1()
 	playfram(11)	-- Frame set 0,  direction 11
 	imgol(737, 0, 0)	-- Floor Missile Trap Turret (thingy\tileset\install\CLPlat1T.grp)
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorMissileTrapSpecialState2()
@@ -14261,7 +14261,7 @@ function FloorMissileTrapLocal01()
 	wait(2) 
 	playfram(1)	-- Frame set 0,  direction 1
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorMissileTrapStarEditInit()
@@ -14284,7 +14284,7 @@ function FloorMissileTrapStarEditInit()
 	playfram(9)	-- Frame set 0,  direction 9
 	wait(2) 
 	playfram(10)	-- Frame set 0,  direction 10
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14295,13 +14295,13 @@ iscript[346] = {
   Type =          	24,
   Init =          	FloorMissileTrapTurretInit,
   Death =         	ScourgeExplosionDeath,
-  GndAttkInit =   	ScourgeLocal00,
+  GndAttkInit =   	Wait125,
   AirAttkInit =   	nil,
   Unused1 =       	nil,
-  GndAttkRpt =    	ScourgeLocal00,
+  GndAttkRpt =    	Wait125,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
@@ -14326,7 +14326,7 @@ function FloorMissileTrapTurretInit()
 	playfram(0x00)	-- Frame set 0
 	wait(1) 
 	setfldirect(20) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorMissileTrapTurretSpecialState2()
@@ -14366,7 +14366,7 @@ iscript[347] = {
   WalkingToIdle = 	nil,
   SpecialState1 = 	FloorGunTrapSpecialState1,
   SpecialState2 = 	FloorGunTrapSpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14378,13 +14378,13 @@ iscript[347] = {
   Disable =       	FloorGunTrapSpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
 function FloorGunTrapInit()
 	playfram(1)	-- Frame set 0,  direction 1
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorGunTrapDeath()
@@ -14412,12 +14412,12 @@ function FloorGunTrapGndAttkInit()
 	nobrkcodeend()
 	gotorepeatattk()
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorGunTrapGndAttkToIdle()
 	playfram(10)	-- Frame set 0,  direction 10
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorGunTrapSpecialState1()
@@ -14441,7 +14441,7 @@ function FloorGunTrapSpecialState1()
 	wait(2) 
 	sigorder(1) 
 	playfram(10)	-- Frame set 0,  direction 10
-	ScourgeLocal00()
+	Wait125()
 end
 
 function FloorGunTrapSpecialState2()
@@ -14463,7 +14463,7 @@ function FloorGunTrapSpecialState2()
 	wait(2) 
 	playfram(1)	-- Frame set 0,  direction 1
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14480,14 +14480,14 @@ iscript[348] = {
   GndAttkRpt =    	WallMissileTrapType1GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
   SpecialState1 = 	WallMissileTrapType1SpecialState1,
   SpecialState2 = 	WallMissileTrapType1SpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14499,7 +14499,7 @@ iscript[348] = {
   Disable =       	WallMissileTrapType1SpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -14507,7 +14507,7 @@ function WallMissileTrapType1Init()
 	playfram(1)	-- Frame set 0,  direction 1
 	wait(1) 
 	setfldirect(12) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapType1Death()
@@ -14520,7 +14520,7 @@ function WallMissileTrapType1GndAttkInit()
 	attackwith(1) 
 	gotorepeatattk()
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapType1SpecialState1()
@@ -14536,7 +14536,7 @@ function WallMissileTrapType1SpecialState1()
 	wait(2) 
 	playfram(6)	-- Frame set 0,  direction 6
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapType1SpecialState2()
@@ -14550,7 +14550,7 @@ function WallMissileTrapType1SpecialState2()
 	wait(2) 
 	playfram(1)	-- Frame set 0,  direction 1
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14567,14 +14567,14 @@ iscript[349] = {
   GndAttkRpt =    	WallMissileTrapTypet2GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
   SpecialState1 = 	WallMissileTrapTypet2SpecialState1,
   SpecialState2 = 	WallMissileTrapTypet2SpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14586,7 +14586,7 @@ iscript[349] = {
   Disable =       	WallMissileTrapTypet2SpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -14595,7 +14595,7 @@ function WallMissileTrapTypet2Init()
 	setflipstate(1) 
 	wait(1) 
 	setfldirect(20) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapTypet2Death()
@@ -14608,7 +14608,7 @@ function WallMissileTrapTypet2GndAttkInit()
 	attackwith(1) 
 	gotorepeatattk()
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapTypet2SpecialState1()
@@ -14625,7 +14625,7 @@ function WallMissileTrapTypet2SpecialState1()
 	wait(2) 
 	playfram(6)	-- Frame set 0,  direction 6
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallMissileTrapTypet2SpecialState2()
@@ -14639,7 +14639,7 @@ function WallMissileTrapTypet2SpecialState2()
 	wait(2) 
 	playfram(1)	-- Frame set 0,  direction 1
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14656,14 +14656,14 @@ iscript[350] = {
   GndAttkRpt =    	WallFlameTrapType1GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
   SpecialState1 = 	WallFlameTrapType1SpecialState1,
   SpecialState2 = 	WallFlameTrapType1SpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14675,7 +14675,7 @@ iscript[350] = {
   Disable =       	WallFlameTrapType1SpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -14683,7 +14683,7 @@ function WallFlameTrapType1Init()
 	playfram(1)	-- Frame set 0,  direction 1
 	wait(1) 
 	setfldirect(12) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType1Death()
@@ -14703,7 +14703,7 @@ function WallFlameTrapType1GndAttkInit()
 	attkshiftproj(80) 
 	wait(10) 
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType1SpecialState1()
@@ -14727,7 +14727,7 @@ function WallFlameTrapType1SpecialState1()
 	wait(2) 
 	playfram(10)	-- Frame set 0,  direction 10
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType1SpecialState2()
@@ -14750,7 +14750,7 @@ function WallFlameTrapType1SpecialState2()
 	playfram(1)	-- Frame set 0,  direction 1
 	wait(2) 
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14767,14 +14767,14 @@ iscript[351] = {
   GndAttkRpt =    	WallFlameTrapType2GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	nil,
   WalkingToIdle = 	nil,
   SpecialState1 = 	WallFlameTrapType2SpecialState1,
   SpecialState2 = 	WallFlameTrapType2SpecialState2,
-  AlmostBuilt =   	ScourgeLocal00,
+  AlmostBuilt =   	Wait125,
   Built =         	nil,
   Landing =       	nil,
   LiftOff =       	nil,
@@ -14786,7 +14786,7 @@ iscript[351] = {
   Disable =       	WallFlameTrapType2SpecialState2,
   Burrow =        	nil,
   UnBurrow =      	nil,
-  Enable =        	ScourgeLocal00
+  Enable =        	Wait125
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -14795,7 +14795,7 @@ function WallFlameTrapType2Init()
 	setflipstate(1) 
 	wait(1) 
 	setfldirect(20) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType2Death()
@@ -14815,7 +14815,7 @@ function WallFlameTrapType2GndAttkInit()
 	attkshiftproj(80) 
 	wait(10) 
 	ignorerest()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType2SpecialState1()
@@ -14840,7 +14840,7 @@ function WallFlameTrapType2SpecialState1()
 	wait(2) 
 	playfram(10)	-- Frame set 0,  direction 10
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function WallFlameTrapType2SpecialState2()
@@ -14863,7 +14863,7 @@ function WallFlameTrapType2SpecialState2()
 	playfram(1)	-- Frame set 0,  direction 1
 	wait(2) 
 	sigorder(1) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -14983,7 +14983,7 @@ end
 
 function LurkerEggSpecialState1()
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function LurkerEggSpecialState2()
@@ -15004,7 +15004,7 @@ function LurkerEggSpecialState2()
 	playfram(12)	-- Frame set 0,  direction 12
 	wait(2) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -15140,7 +15140,7 @@ function LurkerGndAttkRpt()
 end
 
 function LurkerGndAttkToIdle()
-	ScourgeLocal00()
+	Wait125()
 end
 
 function LurkerWalking()
@@ -15171,7 +15171,7 @@ end
 
 function LurkerSpecialState2()
 	playfram(0x198)	-- Frame set 24
-	ScourgeLocal00()
+	Wait125()
 end
 
 function LurkerBurrow()
@@ -15221,7 +15221,7 @@ function LurkerBurrow()
 	playfram(0x198)	-- Frame set 24
 	wait(1) 
 	sigorder(4) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function LurkerUnBurrow()
@@ -15418,7 +15418,7 @@ function DevourerBirthSpecialState1()
 	wait(2) 
 	sigorder(4) 
 	nobrkcodeend()
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -15530,7 +15530,7 @@ function MedicCastSpell()
 	nobrkcodeend()
 	gotorepeatattk()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function MedicWalking()
@@ -15674,7 +15674,7 @@ function ValkyrieWalking()
 	imgol(941, 0, 0)	-- Valkyrie Engines (thingy\tbmGlow.grp)
 	sigorder(64) 
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function ValkyrieWalkingToIdle()
@@ -16132,12 +16132,12 @@ function CorsairWalking()
 	imgol(931, 0, 0)	-- Corsair Engines (thingy\pcsGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CorsairWarpIn()
 	imgol(143, 0, 0)	-- Scout Warp Flash (protoss\scout.grp)
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -16186,7 +16186,7 @@ iscript[372] = {
   GndAttkRpt =    	DarkTemplar_Unit_GndAttkInit,
   AirAttkRpt =    	nil,
   CastSpell =     	DarkTemplar_Unit_CastSpell,
-  GndAttkToIdle = 	ScourgeLocal00,
+  GndAttkToIdle = 	Wait125,
   AirAttkToIdle = 	nil,
   Unused2 =       	nil,
   Walking =       	DarkTemplar_Unit_Walking,
@@ -16197,7 +16197,7 @@ iscript[372] = {
 
 function DarkTemplar_Unit_Init()
 	playfram(0xdd)	-- Frame set 13
-	ScourgeLocal00()
+	Wait125()
 end
 
 function DarkTemplar_Unit_Death()
@@ -16392,7 +16392,7 @@ end
 
 function Scantid_DesertCritter_WalkingToIdle()
 	playfram(0x66)	-- Frame set 6
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Scantid_DesertCritter_Death()
@@ -16604,7 +16604,7 @@ end
 
 function Ursadon_IceCritter_WalkingToIdle()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 function Ursadon_IceCritter_Death()
@@ -16809,7 +16809,7 @@ function CorrosiveAcidGndAttkInit()
 	wait(2) 
 	playfram(0x33)	-- Frame set 3
 	wait(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CorrosiveAcidLocal00()
@@ -16825,7 +16825,7 @@ function CorrosiveAcidLocal00()
 	wait(2) 
 	playfram(0x33)	-- Frame set 3
 	wait(2) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 function CorrosiveAcidDeath()
@@ -17026,7 +17026,7 @@ function IceDoodadInit()
 	playfram(0x00)	-- Frame set 0
 	setflipstate(1) 
 	imgulnextid(0, 0) 
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -17667,8 +17667,8 @@ iscript[407] = {
   Built =         	PsiDisrupterBuilt,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
-  WorkingToIdle = 	ScourgeLocal00,
+  IsWorking =     	Wait125,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --
@@ -17680,7 +17680,7 @@ end
 
 function PsiDisrupterBuilt()
 	playfram(0x00)	-- Frame set 0
-	ScourgeLocal00()
+	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -17708,8 +17708,8 @@ iscript[408] = {
   Built =         	PowerGeneratorBuilt,
   Landing =       	nil,
   LiftOff =       	nil,
-  IsWorking =     	ScourgeLocal00,
-  WorkingToIdle = 	ScourgeLocal00,
+  IsWorking =     	Wait125,
+  WorkingToIdle = 	Wait125,
   WarpIn =        	nil
 }
 -- ----------------------------------------------------------------------------- --

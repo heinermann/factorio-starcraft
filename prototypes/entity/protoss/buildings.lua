@@ -102,6 +102,14 @@ local forge_main = {
     vshift = -1/16
 }
 
+local forge_shadow = {
+    filename = "forge_shad",
+    size = { 290, 176 },
+    hr_size = { 580, 352 },
+    vshift = -1/16,
+    hshift = (580 - 385) / 2 / 64
+}
+
 local stargate_main = {
     name = "main_199",
     size = { 248, 264 },
@@ -784,8 +792,13 @@ create_warpin_building{
 create_warpin_building{
     name = "starcraft-forge",
     icon_id = 166,
-    animation = {   -- idle
-        create_layered_anim(forge_main, {"main", "teamcolor", "emissive"}),
+    animation = {
+        {   -- idle
+            layers = {
+                create_layered_anim(forge_main, {"main", "teamcolor", "emissive"}),
+                create_custom_shadow_anim(forge_shadow)
+            }
+        },
         {   -- working anim
             layers = {
                 create_layered_anim(table.dictionary_merge(forge_main, {
@@ -800,11 +813,19 @@ create_warpin_building{
                     frame_count = 3,
                     animation_speed = 1/7.5, -- 126ms in SC (3 ticks)
                     vshift = -1/16
-                }, {"main"})
+                }, {"main"}),
+                create_custom_shadow_anim(table.dictionary_merge(forge_shadow, {
+                    repeat_count = 3,
+                    animation_speed = 1/7.5 -- 126ms in SC (3 ticks)
+                }))
             }
         },
-        -- disabled
-        create_layered_anim(forge_main, {"main", "teamcolor"}),
+        {   -- disabled
+            layers = {
+                create_layered_anim(forge_main, {"main", "teamcolor"}),
+                create_custom_shadow_anim(forge_shadow)
+            }
+        }
     },
 
     corpse = "starcraft-p_bldg_rubble_sml",

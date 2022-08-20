@@ -112,9 +112,7 @@ local function make_common_unit(data)
     friction = data.friction,
     weight = data.weight or 1,
     allow_passengers = true,
-    equipment_grid = nil,
-    crash_trigger = nil,
-    stop_trigger = nil,
+    equipment_grid = nil, -- TODO
     terrain_friction_modifier = data.terrain_friction_modifier,
 
     --------------------------------------------------------------------
@@ -133,7 +131,7 @@ local function make_common_unit(data)
     has_belt_immunity = data.has_belt_immunity,
     immune_to_tree_impacts = true,
     immune_to_rock_impacts = true,
-    render_layer = "object",
+    render_layer = data.render_layer or "object",
   }
 
   if data.created_script then
@@ -163,6 +161,20 @@ local function make_common_unit(data)
     }
   end
 
+  if data.crash_script then
+    result.crash_trigger = {
+      type = "script",
+      effect_id = data.crash_script
+    }
+  end
+
+  if data.stop_script then
+    result.stop_trigger = {
+      type = "script",
+      effect_id = data.stop_script
+    }
+  end
+
   if data.icon_id then
     result.icon = "__starcraft__/graphics/cmdicons/" .. tostring(data.icon_id) .. ".png"
     result.icon_size = data.icon_size or 128
@@ -171,9 +183,26 @@ local function make_common_unit(data)
   return result
 end
 
+local function to_air_unit(data)
+  data.collision_mask = {}
+  if data.render_layer == "object" then
+    data.render_layer = "air-object"
+  end
+  data.has_belt_immunity = true
+end
+
 function make_protoss_unit(data)
   local result = make_common_unit(data)
   protossify_prototype(result)
+  result.subgroup = "starcraft-protoss-ground-units"
+  return result
+end
+
+function make_protoss_air_unit(data)
+  local result = make_common_unit(data)
+  protossify_prototype(result)
+  to_air_unit(result)
+  result.subgroup = "starcraft-protoss-air-units"
   return result
 end
 
@@ -454,6 +483,14 @@ function create_anim(data)
 end
 
 function create_shadow_anim(data)
+  data.filename = data.filename .. ".png"
+  local result = create_anim(data)
+  result.draw_as_shadow = true
+  result.hr_version.draw_as_shadow = true
+  return result
+end
+
+function create_custom_shadow_anim(data)
   local result = create_anim(data)
   result.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. ".png"
   result.hr_version.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. "_hr.png"

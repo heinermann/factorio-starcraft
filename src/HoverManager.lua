@@ -26,8 +26,14 @@ local function to_ticks(value)
     return math.ceil((value * 42) * 0.06)
 end
 
+function to_tiles(value)
+    return value / 32 * 2
+end
+
 -- setvertpos(1) moves the unit's graphic down 1 pixel. We should move the shadow to the left to match.
 local function setvertpos(entity, y_offset)
+    y_offset = to_tiles(y_offset)
+
     local data = Entity.get_data(entity)
 
     if data.main_graphic then
@@ -42,20 +48,28 @@ end
 -- Hover updates
 ------------------------------------------------------------------------------------------------------------------------------------------
 
+local function add_next_update(entity, index, ticks)
+    local data = Entity.get_data(entity) or {}
+    data.flyer_hover_index = index
+    Entity.set_data(entity, data)
+
+    update_tracker:add(entity, ticks)
+end
+
 -- TODO: Scourge will desync with its animation
 local scourge_update_fns = {
     [1] = function(entity)
         setvertpos(entity, 0)
         add_next_update(entity, 2, to_ticks(6))
-    end
+    end,
     [2] = function(entity)
         setvertpos(entity, 1)
         add_next_update(entity, 3, to_ticks(3))
-    end
+    end,
     [3] = function(entity)
         setvertpos(entity, 2)
         add_next_update(entity, 4, to_ticks(3))
-    end
+    end,
     [4] = function(entity)
         setvertpos(entity, 1)
         add_next_update(entity, 1, to_ticks(3))
@@ -66,28 +80,20 @@ local hover_update_fns = {
     [1] = function(entity)
         setvertpos(entity, 1)
         add_next_update(entity, 2, to_ticks(math.random(8, 10)))
-    end
+    end,
     [2] = function(entity)
         setvertpos(entity, 2)
         add_next_update(entity, 3, to_ticks(math.random(8, 10)))
-    end
+    end,
     [3] = function(entity)
         setvertpos(entity, 1)
         add_next_update(entity, 4, to_ticks(math.random(8, 10)))
-    end
+    end,
     [4] = function(entity)
         setvertpos(entity, 0)
         add_next_update(entity, 1, to_ticks(math.random(8, 10)))
     end
 }
-
-local function add_next_update(entity, index, ticks)
-    local data = Entity.get_data(entity) or {}
-    data.flyer_hover_index = index
-    Entity.set_data(entity, data)
-
-    update_tracker:add(entity, ticks)
-end
 
 local function hover_update(entity)
     if entity == nil or not entity.valid then return end
@@ -103,7 +109,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------
 -- Properties
 ------------------------------------------------------------------------------------------------------------------------------------------
-local hovering_entities = {
+local valid_hovering_entities = {
     ['starcraft-scourge'] = true,
     ['starcraft-overlord'] = true,
     ['starcraft-battlecruiser'] = true,

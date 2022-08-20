@@ -224,7 +224,7 @@ end
 local function make_common_states(data, shadow_data)
     local shadow_anim = nil
     if shadow_data then
-        shadow_anim = create_shadow_anim(shadow_data)
+        shadow_anim = create_custom_shadow_anim(shadow_data)
     end
 
     return {
@@ -525,7 +525,7 @@ create_warpin_building{
             layers = {
                 create_layered_anim(nexus_main, {"main", "teamcolor", "emissive"}),
                 create_anim(nexus_overlay),
-                create_shadow_anim(nexus_shadow)
+                create_custom_shadow_anim(nexus_shadow)
             }
         },
         {   -- working anim
@@ -539,7 +539,7 @@ create_warpin_building{
                     frame_sequence = { 2, 3, 4, 5 },
                     animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
                 })),
-                create_shadow_anim(table.dictionary_merge(nexus_shadow, {
+                create_custom_shadow_anim(table.dictionary_merge(nexus_shadow, {
                     repeat_count = 4,
                     animation_speed = 1/2.5 -- 42ms in SC (1 ticks)
                 }))
@@ -584,7 +584,7 @@ create_warpin_building{
     picture = {
         layers = {
             create_layered_anim(pylon_main, {"main", "teamcolor", "emissive"}),
-            create_shadow_anim(pylon_shadow)
+            create_custom_shadow_anim(pylon_shadow)
         }
     },
     dying_explosion = "starcraft-p_explode_death_xlrg",

@@ -16,6 +16,7 @@ local CUnitPBuild = require('src.CUnitPBuild')
 local CUnitZerg = require('src.CUnitZerg')
 local ShieldManager = require('src.ShieldManager')
 local BldgFireManager = require('src.BldgFireManager')
+local HoverManager = require('src.HoverManager')
 
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
@@ -71,6 +72,7 @@ script.on_nth_tick(1, function(event)
   CUnitZerg.on_update()
   CUnitProtoss.on_update()
   CUnitPBuild.on_update()
+  HoverManager.on_update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -148,12 +150,36 @@ end
 
 local function on_protoss_unit_created(entity)
   init_starcraft_actor(entity)
-  ShieldManager.init_shields(entity) -- TODO: Move to equipment grid for performance? Still need shield overlays though
+  -- TODO: Move to equipment grid for performance? Still need shield overlays though
+  ShieldManager.init_shields(entity)
 end
 
 local function on_protoss_unit_destroyed(entity)
   ShieldManager.unregister_shield_entity(entity)
   remove_starcraft_actor(entity)
+end
+
+local function on_scout_created(entity)
+  on_protoss_unit_created(entity)
+  
+  local data = Entity.get_data(entity) or {}
+  data.main_graphic = rendering.draw_animation({
+    animation = "starcraft-scout-anim-main",
+    render_layer = "146", -- see elevation.md
+    target = entity,
+    surface = entity.surface
+  })
+
+  data.shadow_graphic = rendering.draw_animation({
+    animation = "starcraft-scout-anim-shadow",
+    render_layer = "137", -- TODO not sure which level the shadow should be but we can change it later
+    target = entity,
+    surface = entity.surface
+  })
+
+  Entity.set_data(entity, data)
+
+  HoverManager.register_for_hovering(entity)
 end
 
 local script_lookup = {
@@ -173,15 +199,15 @@ local script_lookup = {
   ["on_extractor_created"] = Resources.register_gas_building,
   ["on_protoss_unit_created"] = on_protoss_unit_created,
   ["on_protoss_unit_destroyed"] = on_protoss_unit_destroyed,
+  ["on_scout_created"] = on_scout_created
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)
   local fn = script_lookup[event.effect_id]
   local entity = event.target_entity or event.source_entity
 
-  if fn then
-    fn(entity)
-  end
+  -- Yes we want this to fail if a script isn't found
+  fn(entity)
 end)
 
 ---------------------------------------------------------------------------------------------------------------------
@@ -266,6 +292,7 @@ script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   {filter = "name", name = "starcraft-khaydarin-crystal-formation"},
 
   {filter = "name", name = "starcraft-probe"},
+  {filter = "name", name = "starcraft-scout"},
 
   {filter = "name", name = "starcraft-cerebrate"},
   {filter = "name", name = "starcraft-daggoth"},

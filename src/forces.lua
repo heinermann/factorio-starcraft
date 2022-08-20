@@ -1,5 +1,7 @@
 local forces = {}
 
+-- TODO: Use new force.custom_color write
+
 local function create_new_force(forcename)
     local newforce = game.create_force(forcename)
 

@@ -21,7 +21,6 @@ data:extend({
         name = "starcraft-probe",
         icon_id = 64,
         collision_box = sc_bounds_to_factorio{11, 11, 11, 11},
-        subgroup = "starcraft-protoss-ground-units",
         --dying_explosion = "starcraft-probe-death",
         max_health = 20,
         size_type = "small",

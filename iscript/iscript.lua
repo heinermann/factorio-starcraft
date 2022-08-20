@@ -8719,15 +8719,6 @@ iscript[146] = {
   Unused2 =       	nil,
   Walking =       	ArbiterWalking,
   WalkingToIdle = 	OverlordLocal00,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ArbiterWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -8782,11 +8773,6 @@ function ArbiterWalking()
 	imgol(132, 0, 0)	-- Arbiter Engines (thingy\pabGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	Wait125()
-end
-
-function ArbiterWarpIn()
-	imgol(133, 0, 0)	-- Arbiter Warp Flash (protoss\arbiter.grp)
 	Wait125()
 end
 
@@ -9100,15 +9086,6 @@ iscript[151] = {
   Unused2 =       	nil,
   Walking =       	CarrierWalking,
   WalkingToIdle = 	OverlordLocal00,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	CarrierWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9126,11 +9103,6 @@ end
 
 function CarrierWalking()
 	imgol(114, 0, 0)	-- Carrier Engines (thingy\pcaGlow.grp)
-	Wait125()
-end
-
-function CarrierWarpIn()
-	imgol(115, 0, 0)	-- Carrier Warp Flash (protoss\carrier.grp)
 	Wait125()
 end
 
@@ -9252,15 +9224,6 @@ iscript[153] = {
   Unused2 =       	nil,
   Walking =       	DragoonWalking,
   WalkingToIdle = 	DragoonWalkingToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	DragoonWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9390,11 +9353,6 @@ function DragoonWalking()
 	goto DragoonWalking_label
 end
 
-function DragoonWarpIn()
-	imgol(125, 0, 0)	-- Dragoon Warp Flash (protoss\dragoon.grp)
-	Wait125()
-end
-
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
 -- 124 Dragoon Remnants (protoss\pdrDeath.grp)
@@ -9492,12 +9450,6 @@ iscript[156] = {
   SpecialState1 = 	nil,
   SpecialState2 = 	nil,
   AlmostBuilt =   	ProbeAlmostBuilt,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ProbeWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9526,11 +9478,6 @@ function ProbeAlmostBuilt()
 	goto ProbeAlmostBuilt_label
 end
 
-function ProbeWarpIn()
-	imgol(139, 0, 0)	-- Probe Warp Flash (protoss\probe.grp)
-	Wait125()
-end
-
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
 -- 118 Shuttle (protoss\shuttle.grp)
@@ -9550,15 +9497,6 @@ iscript[157] = {
   Unused2 =       	nil,
   Walking =       	ShuttleWalking,
   WalkingToIdle = 	ShuttleWalkingToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ShuttleWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9585,11 +9523,6 @@ function ShuttleWalking()
 	Wait125()
 end
 
-function ShuttleWarpIn()
-	imgol(121, 0, 0)	-- Shuttle Warp Flash (protoss\shuttle.grp)
-	Wait125()
-end
-
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
 -- 126 High Templar (protoss\templar.grp)
@@ -9609,15 +9542,6 @@ iscript[158] = {
   Unused2 =       	nil,
   Walking =       	HighTemplarWalking,
   WalkingToIdle = 	HighTemplarWalkingToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	HighTemplarWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9735,11 +9659,6 @@ function HighTemplarWalkingToIdle()
 	HighTemplarGndAttkToIdle()
 end
 
-function HighTemplarWarpIn()
-	imgol(128, 0, 0)	-- High Templar Warp Flash (protoss\templar.grp)
-	Wait125()
-end
-
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
 -- 144 Reaver (protoss\trilob.grp)
@@ -9759,15 +9678,6 @@ iscript[159] = {
   Unused2 =       	nil,
   Walking =       	ReaverWalking,
   WalkingToIdle = 	ReaverWalkingToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ReaverWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9831,11 +9741,6 @@ function ReaverWalking()
 	wait(1) 
 	playfram(0x00)	-- Frame set 0
 	goto ReaverWalking_label
-end
-
-function ReaverWarpIn()
-	imgol(146, 0, 0)	-- Reaver Warp Flash (protoss\trilob.grp)
-	Wait125()
 end
 
 -- ----------------------------------------------------------------------------- --
@@ -9905,15 +9810,6 @@ iscript[161] = {
   Unused2 =       	nil,
   Walking =       	ScoutWalking,
   WalkingToIdle = 	OverlordLocal00,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ScoutWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -9963,11 +9859,6 @@ function ScoutWalking()
 	imgol(142, 0, 0)	-- Scout Engines (thingy\pscGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	Wait125()
-end
-
-function ScoutWarpIn()
-	imgol(143, 0, 0)	-- Scout Warp Flash (protoss\scout.grp)
 	Wait125()
 end
 
@@ -10022,15 +9913,6 @@ iscript[163] = {
   Unused2 =       	nil,
   Walking =       	ZealotWalking,
   WalkingToIdle = 	ZealotWalkingToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ZealotWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -10132,11 +10014,6 @@ function ZealotWalking()
 	goto ZealotWalking_label
 end
 
-function ZealotWarpIn()
-	imgol(154, 0, 0)	-- Zealot Warp Flash (protoss\zealot.grp)
-	Wait125()
-end
-
 -- ----------------------------------------------------------------------------- --
 -- This header is used by images.dat function entries()
 -- 153 Zealot Death (protoss\zealot.grp)
@@ -10167,15 +10044,6 @@ iscript[165] = {
   Unused2 =       	nil,
   Walking =       	ObserverWalking,
   WalkingToIdle = 	OverlordLocal00,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	ObserverWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -10194,11 +10062,6 @@ end
 function ObserverWalking()
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	Wait125()
-end
-
-function ObserverWarpIn()
-	imgol(150, 0, 0)	-- Observer Warp Flash (protoss\witness.grp)
 	Wait125()
 end
 
@@ -16033,15 +15896,6 @@ iscript[369] = {
   Unused2 =       	nil,
   Walking =       	CorsairWalking,
   WalkingToIdle = 	CorsairGndAttkToIdle,
-  SpecialState1 = 	nil,
-  SpecialState2 = 	nil,
-  AlmostBuilt =   	nil,
-  Built =         	nil,
-  Landing =       	nil,
-  LiftOff =       	nil,
-  IsWorking =     	nil,
-  WorkingToIdle = 	nil,
-  WarpIn =        	CorsairWarpIn
 }
 -- ----------------------------------------------------------------------------- --
 
@@ -16132,11 +15986,6 @@ function CorsairWalking()
 	imgol(931, 0, 0)	-- Corsair Engines (thingy\pcsGlow.grp)
 	playfram(0x00)	-- Frame set 0
 	setvertpos(0) 
-	Wait125()
-end
-
-function CorsairWarpIn()
-	imgol(143, 0, 0)	-- Scout Warp Flash (protoss\scout.grp)
 	Wait125()
 end
 

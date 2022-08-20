@@ -14,7 +14,7 @@ data:extend({
                     size = { 240, 304 },
                     hr_size = { 480, 608 }
                 }, {"main", "emissive"}),
-                create_shadow_anim({
+                create_custom_shadow_anim({
                     filename = "stasis_cell_shad",
                     size = { 365, 109 },
                     hr_size = { 731, 219 },
@@ -87,7 +87,7 @@ data:extend({
                     hr_size = { 769, 1040 },
                     vshift = -16/16
                 }, {"main", "emissive"}),
-                create_shadow_anim({
+                create_custom_shadow_anim({
                     filename = "xelnaga_shad",
                     size = { 522, 262 },
                     hr_size = { 1043, 523 },

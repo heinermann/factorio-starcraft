@@ -64,14 +64,16 @@ local SHIELD_VALUES = {
     ["starcraft-shield-battery-warp-fade"] = 200,
 
     ["starcraft-probe"] = 20,
+    ["starcraft-scout"] = 100,
 }
 
 -- Default is 2 for omitted items
+-- Dictated by 
 local SHIELD_SIZES = {
     ["starcraft-nexus"] = 3,
     ["starcraft-nexus-warp-anchor"] = 3,
     ["starcraft-nexus-warp-fade"] = 3,
-    ["starcraft-probe"] = 1
+    ["starcraft-probe"] = 1,
 }
 
 -- Copy of vertical offset from entity anim definitions to include in shield hit overlays
@@ -124,6 +126,11 @@ local SHIELD_VOFFSETS = {
     ["starcraft-shield-battery-warp-fade"] = -3/16,
 
     ["starcraft-probe"] = -6/16,
+    ["starcraft-scout"] = -7/16,    -- TODO: HoverManager support
+}
+
+local AIR_UNITS = {
+    ["starcraft-scout"] = true,
 }
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -388,9 +395,15 @@ local function create_shield_overlay(entity, source)
     -- TODO: Precompute these divisions into lo.lua
     local x = entity.position.x + shield_pos[1] / 16
     local y = entity.position.y + shield_pos[2] / 16 + (SHIELD_VOFFSETS[entity.name] or 0)
+
+    -- NOTE: Not a bug, Starcraft only uses the up-facing shield
+    local smoke_name = "starcraft-shield-hit-1-ground"
+    if AIR_UNITS[entity.name] then
+        smoke_name = "starcraft-shield-hit-1-air"
+    end
+
     entity.surface.create_trivial_smoke{
-        -- NOTE: Not a bug, Starcraft only uses the up-facing shield, whoops
-        name = "starcraft-shield-hit-1",
+        name = smoke_name,
         position = { x, y }
     }
 end

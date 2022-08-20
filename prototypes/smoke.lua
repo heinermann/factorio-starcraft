@@ -37,11 +37,12 @@ local function make_simple_smoke_anim(data)
     affected_by_wind = false,
     show_when_smoke_off = true,
     movement_slow_down_factor = 0,
-    color = {1, 1, 1, data.alpha or 1}
+    color = {1, 1, 1, data.alpha or 1},
+    render_layer = data.render_layer or "smoke"
   }
 end
 
-local function make_shield_hit(index)
+local function make_shield_hit(index, type)
   local hr_filename = index <= 27 and "main_424_diffuse_1.png" or "main_424_diffuse_2.png"
 
   local anim_data = {
@@ -57,9 +58,17 @@ local function make_shield_hit(index)
     frame_time = 2.52,
   }
 
+  local layer = "smoke"
+  if type == "ground" then
+    layer = "wires-above" -- 136
+  elseif type == "air" then
+    layer = "light-effect" -- 148 (using 147 for some air units)
+  end
+
   return make_simple_smoke_anim({
-    name = "starcraft-shield-hit-" .. tostring(index),
-    anim = anim_data
+    name = "starcraft-shield-hit-" .. tostring(index) .. "-" .. type,
+    anim = anim_data,
+    render_layer = layer,
   })
 end
 
@@ -271,6 +280,7 @@ data:extend({
 -- Shield hit overlays
 for i = 1, 32 do
   data:extend({
-    make_shield_hit(i)
+    make_shield_hit(i, "ground"),
+    make_shield_hit(i, "air"),
   })
 end

@@ -159,6 +159,7 @@ local function on_protoss_unit_destroyed(entity)
   remove_starcraft_actor(entity)
 end
 
+-- TODO This is just for prototyping, general functionality will be moved out later
 local function on_scout_created(entity)
   on_protoss_unit_created(entity)
   

@@ -96,7 +96,7 @@ local hover_update_fns = {
 }
 
 local function hover_update(entity)
-    if entity == nil or not entity.valid then return end
+    if entity == nil or not entity.valid or not hovering_entities:contains(entity) then return end
 
     local data = Entity.get_data(entity)
     if entity.name == 'starcraft-scourge' then
@@ -137,6 +137,7 @@ function HoverManager.on_update()
 end
 
 function HoverManager.register_for_hovering(entity)
+    if not valid_hovering_entities[entity.name] then return end
     hovering_entities:insert(entity)
 
     if entity.name == "starcraft-scourge" then
@@ -147,6 +148,7 @@ function HoverManager.register_for_hovering(entity)
 end
 
 function HoverManager.unregister_for_hovering(entity)
+    if not valid_hovering_entities[entity.name] then return end
     hovering_entities:remove(entity)
     setvertpos(entity, 0)
 end

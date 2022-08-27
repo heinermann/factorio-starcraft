@@ -560,10 +560,10 @@ function make_zerg_structure(data)
     table.unpack(result.flags)
   }
 
-  result.damaged_trigger_effect = {
-    type = "script",
-    effect_id = "on_zerg_bldg_dmg" -- Used to update overlays
-  }
+  --result.damaged_trigger_effect = {
+  --  type = "script",
+  --  effect_id = "on_zerg_bldg_dmg" -- Used to update overlays
+  --}
 
   -- This is the magic that makes creep work, since creep tiles collide with object-layer to prevent other structures
   -- from being placed on it, that means structures cannot have object-layer collision (so it has other collision masks to make up for it)
@@ -597,10 +597,10 @@ function make_terran_structure(data)
 
   -- TODO: repair_speed_modifier
 
-  result.damaged_trigger_effect = {
-    type = "script",
-    effect_id = "on_terran_bldg_dmg" -- Used to update overlays
-  }
+  --result.damaged_trigger_effect = {
+  --  type = "script",
+  --  effect_id = "on_terran_bldg_dmg" -- Used to update overlays
+  --}
   return result
 end
 

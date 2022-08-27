@@ -68,7 +68,6 @@ local SHIELD_VALUES = {
 }
 
 -- Default is 2 for omitted items
--- Dictated by 
 local SHIELD_SIZES = {
     ["starcraft-nexus"] = 3,
     ["starcraft-nexus-warp-anchor"] = 3,
@@ -334,6 +333,8 @@ function ShieldManager.add_shields(entity, amount)
     return false
 end
 
+-- Subtracts `amount` of shields from the given `entity`.
+-- Returns the remaining amount to apply as damage (or 0 if the attack was fully shielded).
 function ShieldManager.subtract_shields(entity, amount)
     local data = Entity.get_data(entity) or {}
 
@@ -412,12 +413,13 @@ function ShieldManager.on_damaged(event)
     if not event.entity.valid then return end
     if not tracking_shield_entities:contains(event.entity) then return end
 
-    if event.original_damage_amount <= 0 or ShieldManager.get_shields(event.entity) == 0 then
+    if event.original_damage_amount <= 0 or ShieldManager.get_shields(event.entity) < 1 then
         ShieldManager.queue_update_shield_bar(event.entity)
 
         -- Enable the entity in case it's unpowered, so that it can die
-        if event.entity.health == 0 then
+        if event.original_damage_amount > 0 and event.entity.health < 1 then
             event.entity.active = true
+            event.entity.die(event.force, event.cause)
         end
         return
     end

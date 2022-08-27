@@ -198,7 +198,9 @@ script.on_event(defines.events.on_script_trigger_effect, function(event)
   local fn = script_lookup[event.effect_id]
   local entity = event.target_entity or event.source_entity
 
-  -- Yes we want this to fail if a script isn't found
+  if fn == nil then
+    log("CALLBACK IS NIL: " .. event.effect_id)
+  end
   fn(entity)
 end)
 

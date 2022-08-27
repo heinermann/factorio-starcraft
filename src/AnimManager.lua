@@ -45,6 +45,7 @@ local function get_shadow_name(entity, variation)
   return ANIMS[entity.name][variation].shadow .. tostring(math.floor(entity.orientation * 32))
 end
 
+-- TODO might not use this
 local function get_entity_state(entity)
   if entity.active then
     if entity.shooting_state ~= defines.shooting.not_shooting then
@@ -57,17 +58,16 @@ local function get_entity_state(entity)
 end
 
 -- Update entity when its orientation changes
-function AnimManager.update_entity(entity)
+function AnimManager.set_entity_animation(entity, animation)
   local gfx = ANIMS[entity.name]
   if not gfx then return end
 
   local data = Entity.get_data(entity)
-  local entitystate = get_entity_state(entity)
 
   for i = 1, 3 do
-    rendering.set_animation(data.main_graphics[i], get_anim_name(entity, entitystate, i))
+    rendering.set_animation(data.main_graphics[i], get_anim_name(entity, animation, i))
   end
-  rendering.set_animation(data.shadow_graphic, get_shadow_name(entity, entitystate))
+  rendering.set_animation(data.shadow_graphic, get_shadow_name(entity, animation))
 end
 
 function AnimManager.cloak(entity)

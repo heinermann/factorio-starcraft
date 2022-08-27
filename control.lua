@@ -161,10 +161,15 @@ local function on_protoss_unit_destroyed(entity)
 end
 
 -- TODO This is just for prototyping, general functionality will be moved out later
-local function on_scout_created(entity)
+local function on_protoss_air_unit_created(entity)
   entity.orientation = math.random()
   on_protoss_unit_created(entity)
   AnimManager.add(entity)
+  HoverManager.register_for_hovering(entity)
+end
+
+local function on_protoss_air_unit_stopped(entity)
+  AnimManager.set_entity_animation(entity, "idle")
   HoverManager.register_for_hovering(entity)
 end
 
@@ -185,7 +190,8 @@ local script_lookup = {
   ["on_extractor_created"] = Resources.register_gas_building,
   ["on_protoss_unit_created"] = on_protoss_unit_created,
   ["on_protoss_unit_destroyed"] = on_protoss_unit_destroyed,
-  ["on_scout_created"] = on_scout_created
+  ["on_protoss_air_unit_created"] = on_protoss_air_unit_created,
+  ["on_protoss_air_unit_stopped"] = on_protoss_air_unit_stopped
 }
 
 script.on_event(defines.events.on_script_trigger_effect, function(event)

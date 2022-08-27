@@ -9814,7 +9814,6 @@ iscript[161] = {
 -- ----------------------------------------------------------------------------- --
 
 function ScoutInit()
-	imgul(141, 0, 42)	-- Scout Shadow (protoss\scout.grp)
 	ScoutGndAttkToIdle()
 end
 
@@ -9853,45 +9852,6 @@ function ScoutAirAttkInit()
 	playfram(0x00)	-- Frame set 0
 	gotorepeatattk()
 	Wait125()
-end
-
-function ScoutWalking()
-	imgol(142, 0, 0)	-- Scout Engines (thingy\pscGlow.grp)
-	playfram(0x00)	-- Frame set 0
-	setvertpos(0) 
-	Wait125()
-end
-
--- ----------------------------------------------------------------------------- --
--- This header is used by images.dat function entries()
--- 142 Scout Engines (thingy\pscGlow.grp)
-iscript[162] = {
-  IsId =          	162,
-  Type =          	12,
-  Init =          	ScoutEnginesInit,
-  Death =         	ScourgeExplosionDeath,
-  GndAttkInit =   	ScourgeExplosionDeath,
-  AirAttkInit =   	ScourgeExplosionDeath,
-  Unused1 =       	nil,
-  GndAttkRpt =    	nil,
-  AirAttkRpt =    	nil,
-  CastSpell =     	nil,
-  GndAttkToIdle = 	ScourgeExplosionDeath,
-  AirAttkToIdle = 	ScourgeExplosionDeath,
-  Unused2 =       	nil,
-  Walking =       	ScoutEnginesInit,
-  WalkingToIdle = 	ScourgeExplosionDeath,
-  SpecialState1 = 	nil
-}
--- ----------------------------------------------------------------------------- --
-
-function ScoutEnginesInit()
-::ScoutEnginesInit_label::
-	wait(1) 
-	engframe(0) 
-	wait(1) 
-	engframe(17) 
-	goto ScoutEnginesInit_label
 end
 
 -- ----------------------------------------------------------------------------- --

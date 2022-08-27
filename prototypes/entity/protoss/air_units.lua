@@ -221,8 +221,8 @@ data:extend({
 
     animation = blank_anim,
     render_layer = "air-entity-info-icon", -- Should be "146" instead but that is invalid here
-    created_script = "on_scout_created",
+    created_script = "on_protoss_air_unit_created",
     dying_script = "on_protoss_unit_destroyed",
-    --stop_script = "return_to_idle_anim"
+    stop_script = "on_protoss_air_unit_stopped"
   }
 })

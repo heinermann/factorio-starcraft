@@ -18,9 +18,6 @@ local function create_rotated_anim_variation(protodata, direction)
   for _, layer in ipairs(protodata.layers) do
     local basedir = layer.basedir or 0
     local hr_basedir = layer.hr_basedir or 0
-    if hr_basedir > 0 then
-      log(tostring(hr_basedir))
-    end
 
     layer.y = (direction - basedir) * layer.size[2]
     layer.hr_y = (direction - hr_basedir) * layer.hr_size[2]
@@ -73,7 +70,7 @@ for i = 0, 31 do
 end
 
 ------------------------------------------------------------------------------
--- SCOUT MOVING (w/ engine)
+-- SCOUT MOVING (w/ engine) TODO: animate
 ------------------------------------------------------------------------------
 local scout_moving_data = table.deep_copy(scout_base_data)
 scout_moving_data.basename = "starcraft-scout-anim-moving-"

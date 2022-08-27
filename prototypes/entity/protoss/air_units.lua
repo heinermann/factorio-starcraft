@@ -27,6 +27,19 @@ local function create_rotated_anim_variation(protodata, direction)
   data:extend({proto})
 end
 
+local function copy_and_name(protodata, basename)
+  local result = table.deep_copy(protodata)
+  result.basename = basename
+  return result
+end
+
+local function update_frames(protodata, framedata)
+  for _, layer in ipairs(protodata.layers) do
+    layer.frame_count = framedata.frame_count
+    layer.frame_sequence = framedata.frame_sequence
+  end
+end
+
 ------------------------------------------------------------------------------
 -- SCOUT DATA
 ------------------------------------------------------------------------------
@@ -42,15 +55,25 @@ local scout_engine_data = {
   vshift = -7/16,
 }
 
-local scout_base_data = {
+local scout_base_data_l1 = {
   layers = {
     table.dictionary_merge({
       filename = "main_140_diffuse.png"
-    }, scout_data),
+    }, scout_data)
+  }
+}
+
+local scout_base_data_l2 = {
+  layers = {
     table.dictionary_merge({
       filename = "main_140_teamcolor.png",
       apply_runtime_tint = true
-    }, scout_data),
+    }, scout_data)
+  }
+}
+
+local scout_base_data_l3 = {
+  layers = {
     table.dictionary_merge({
       filename = "main_140_emissive.png",
       blend_mode = "additive",
@@ -59,43 +82,6 @@ local scout_base_data = {
   }
 }
 
-------------------------------------------------------------------------------
--- SCOUT IDLE (TODO: investigate hover here instead of in code, using stripes)
-------------------------------------------------------------------------------
-local scout_idle_data = table.deep_copy(scout_base_data)
-scout_idle_data.basename = "starcraft-scout-anim-idle-"
-
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_idle_data, i)
-end
-
-------------------------------------------------------------------------------
--- SCOUT MOVING (w/ engine) TODO: animate
-------------------------------------------------------------------------------
-local scout_moving_data = table.deep_copy(scout_base_data)
-scout_moving_data.basename = "starcraft-scout-anim-moving-"
-
-table.insert(scout_moving_data.layers, table.dictionary_merge({
-  filename = "main_142_diffuse.png",
-  hr_filename = "main_142_diffuse_1.png",
-  draw_as_glow = true
-}, scout_engine_data))
-
-for i = 0, 25 do
-  create_rotated_anim_variation(scout_moving_data, i)
-end
-
-log("scout moving")
--- Remaining engine frames are on another sheet
-scout_moving_data.layers[4].hr_filename = "main_142_diffuse_2.png"
-scout_moving_data.layers[4].hr_basedir = 26
-for i = 26, 31 do
-  create_rotated_anim_variation(scout_moving_data, i)
-end
-
-------------------------------------------------------------------------------
--- SCOUT SHADOW
-------------------------------------------------------------------------------
 local scout_shadow_data = {
   basename = "starcraft-scout-anim-shadow-",
   layers = {
@@ -109,7 +95,54 @@ local scout_shadow_data = {
     }
   }
 }
-log("scout shadow")
+
+------------------------------------------------------------------------------
+-- SCOUT IDLE (TODO: investigate hover here instead of in code, using stripes)
+------------------------------------------------------------------------------
+local scout_idle1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-idle1-")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_idle1_data, i)
+end
+
+local scout_idle2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-idle2-")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_idle2_data, i)
+end
+
+local scout_idle3_data = copy_and_name(scout_base_data_l3, "starcraft-scout-anim-idle3-")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_idle3_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT MOVING (w/ engine) TODO: animate
+------------------------------------------------------------------------------
+local scout_moving3_data = copy_and_name(scout_base_data_l3, "starcraft-scout-anim-moving3-")
+for _, layer in ipairs(scout_moving3_data.layers) do
+  layer.repeat_count = 4
+end
+table.insert(scout_moving3_data.layers, table.dictionary_merge({
+  filename = "main_142_diffuse.png",
+  hr_filename = "main_142_diffuse_1.png",
+  draw_as_glow = true,
+  frame_count = 2,
+  frame_sequence = {1, 1, 2, 2}
+}, scout_engine_data))
+
+for i = 0, 25 do
+  create_rotated_anim_variation(scout_moving3_data, i)
+end
+
+-- Remaining engine frames are on another sheet
+scout_moving3_data.layers[#scout_moving3_data.layers].hr_filename = "main_142_diffuse_2.png"
+scout_moving3_data.layers[#scout_moving3_data.layers].hr_basedir = 26
+for i = 26, 31 do
+  create_rotated_anim_variation(scout_moving3_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT SHADOW (TODO: different anim shadows, for other units)
+------------------------------------------------------------------------------
 for i = 0, 31 do
   create_rotated_anim_variation(scout_shadow_data, i)
 end
@@ -117,29 +150,53 @@ end
 ------------------------------------------------------------------------------
 -- SCOUT GROUND ATTACK
 ------------------------------------------------------------------------------
-local scout_grnd_atk_data = table.deep_copy(scout_base_data)
-scout_grnd_atk_data.basename = "starcraft-scout-anim-groundatk-"
-for _, layer in ipairs(scout_grnd_atk_data.layers) do
-  layer.frame_count = 2
-  layer.frame_sequence = { 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 }
-end
-log("scout ground attack")
+local ground_atk_framedata = {
+  frame_count = 2,
+  frame_sequence = { 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 }
+}
+
+local scout_grnd_atk1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-groundatk1-")
+update_frames(scout_grnd_atk1_data, ground_atk_framedata)
 for i = 0, 31 do
-  create_rotated_anim_variation(scout_grnd_atk_data, i)
+  create_rotated_anim_variation(scout_grnd_atk1_data, i)
+end
+
+local scout_grnd_atk2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-groundatk2-")
+update_frames(scout_grnd_atk2_data, ground_atk_framedata)
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_grnd_atk2_data, i)
+end
+
+local scout_grnd_atk3_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-groundatk3-")
+update_frames(scout_grnd_atk3_data, ground_atk_framedata)
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_grnd_atk3_data, i)
 end
 
 ------------------------------------------------------------------------------
 -- SCOUT AIR ATTACK
 ------------------------------------------------------------------------------
-local scout_air_atk_data = table.deep_copy(scout_base_data)
-scout_air_atk_data.basename = "starcraft-scout-anim-airatk-"
-for _, layer in ipairs(scout_air_atk_data.layers) do
-  layer.frame_count = 2
-  layer.frame_sequence = { 2, 2, 1, 1 }
-end
-log("scout air attack")
+local air_atk_framedata = {
+  frame_count = 2,
+  frame_sequence = { 2, 2, 1, 1 }
+}
+
+local scout_air_atk1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-airatk1-")
+update_frames(scout_air_atk1_data, air_atk_framedata)
 for i = 0, 31 do
-  create_rotated_anim_variation(scout_air_atk_data, i)
+  create_rotated_anim_variation(scout_air_atk1_data, i)
+end
+
+local scout_air_atk2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-airatk2-")
+update_frames(scout_air_atk2_data, air_atk_framedata)
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_air_atk2_data, i)
+end
+
+local scout_air_atk3_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-airatk3-")
+update_frames(scout_air_atk3_data, air_atk_framedata)
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_air_atk3_data, i)
 end
 
 ------------------------------------------------------------------------------

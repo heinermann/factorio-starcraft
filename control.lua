@@ -162,7 +162,7 @@ end
 
 -- TODO This is just for prototyping, general functionality will be moved out later
 local function on_scout_created(entity)
-  entity.orientation = 0.625
+  entity.orientation = math.random()
   on_protoss_unit_created(entity)
   AnimManager.add(entity)
   HoverManager.register_for_hovering(entity)

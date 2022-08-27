@@ -36,8 +36,10 @@ local function setvertpos(entity, y_offset)
 
     local data = Entity.get_data(entity)
 
-    if data.main_graphic then
-        rendering.set_target(data.main_graphic, entity, {0, y_offset})
+    if data.main_graphics then
+        for _, graphic in ipairs(data.main_graphics) do
+            rendering.set_target(graphic, entity, {0, y_offset})
+        end
     end
     if data.shadow_graphic then
         -- Note: The main shadow offset should be determined in data, makes this easier

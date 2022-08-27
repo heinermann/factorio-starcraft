@@ -8,109 +8,147 @@ local blank_anim = {
   direction_count = 1
 }
 
--- TODO stripes (dual-sheets support)
-local function create_rotated_anim_variations(basename, variation, data, engine_data)
-  for i = 0, 31 do
-    data.y = i * data.size[2]
-    data.hr_y = i * data.hr_size[2]
+local function create_rotated_anim_variation(protodata, direction)
+  local proto = {
+    type = "animation",
+    name = protodata.basename .. tostring(direction),
+    layers = {}
+  }
 
-    if engine_data then
-      engine_data.y = i * engine_data.size[2]
-      engine_data.hr_y = i * engine_data.hr_size[2]
+  for _, layer in ipairs(protodata.layers) do
+    local basedir = layer.basedir or 0
+    local hr_basedir = layer.hr_basedir or 0
+    if hr_basedir > 0 then
+      log(tostring(hr_basedir))
     end
 
-    local anim_definition = {
-      type = "animation",
-      name = basename .. "-anim-" .. variation .. "-" .. str(i),
-      layers = {
-        create_anim(table.dictionary_merge({
-          filename = (data.filename or (data.name .. "_diffuse")) .. ".png"
-        }, data)),
-      }
-    }
+    layer.y = (direction - basedir) * layer.size[2]
+    layer.hr_y = (direction - hr_basedir) * layer.hr_size[2]
 
-    if not data.draw_as_shadow then
-      table.insert(anim_definition.layers, create_anim(table.dictionary_merge({
-        filename = data.name .. "_teamcolor.png",
-        apply_runtime_tint = true,
-      }, data)))
-    end
-
-    if not data.draw_as_shadow and data.has_emissive then
-      table.insert(anim_definition.layers, create_anim(table.dictionary_merge({
-        filename = data.name .. "_emissive.png",
-        blend_mode = "additive",
-        draw_as_light = true
-      }, data)))
-    end
-
-    if not data.draw_as_shadow and engine_data then
-      table.insert(anim_definition.layers, create_anim(table.dictionary_merge({
-        filename = engine_data.name .. "_diffuse.png",
-        draw_as_glow = true
-      }, engine_data)))
-    end
-
-    data:extend(anim_definition)
+    table.insert(proto.layers, create_anim(layer))
   end
+  data:extend({proto})
 end
 
-create_rotated_anim_variations("starcraft-scout", "idle", {
-  name = "main_140",
+------------------------------------------------------------------------------
+-- SCOUT DATA
+------------------------------------------------------------------------------
+local scout_data = {
   size = { 115, 84 },
   hr_size = { 230, 166 },
-  vshift = -7/16,
-  has_emissive = true
-})
-create_rotated_anim_variations("starcraft-scout", "moving", {
-  name = "main_140",
-  size = { 115, 84 },
-  hr_size = { 230, 166 },
-  vshift = -7/16,
-  has_emissive = true
-},{
+  vshift = -7/16
+}
 
-})
-create_rotated_anim_variations("starcraft-scout", "shadow", {
-  filename = "main_140_shadow",
-  size = { 117, 92 },
-  hr_size = { 232, 184 },
-  vshift = 3,
-  hshift = 3,
-  draw_as_shadow = true
-})
+local scout_engine_data = {
+  size = { 193, 156 },
+  hr_size = { 386, 314 },
+  vshift = -7/16,
+}
 
+local scout_base_data = {
+  layers = {
+    table.dictionary_merge({
+      filename = "main_140_diffuse.png"
+    }, scout_data),
+    table.dictionary_merge({
+      filename = "main_140_teamcolor.png",
+      apply_runtime_tint = true
+    }, scout_data),
+    table.dictionary_merge({
+      filename = "main_140_emissive.png",
+      blend_mode = "additive",
+      draw_as_light = true
+    }, scout_data)
+  }
+}
+
+------------------------------------------------------------------------------
+-- SCOUT IDLE (TODO: investigate hover here instead of in code, using stripes)
+------------------------------------------------------------------------------
+local scout_idle_data = table.deep_copy(scout_base_data)
+scout_idle_data.basename = "starcraft-scout-anim-idle-"
+
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_idle_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT MOVING (w/ engine)
+------------------------------------------------------------------------------
+local scout_moving_data = table.deep_copy(scout_base_data)
+scout_moving_data.basename = "starcraft-scout-anim-moving-"
+
+table.insert(scout_moving_data.layers, table.dictionary_merge({
+  filename = "main_142_diffuse.png",
+  hr_filename = "main_142_diffuse_1.png",
+  draw_as_glow = true
+}, scout_engine_data))
+
+for i = 0, 25 do
+  create_rotated_anim_variation(scout_moving_data, i)
+end
+
+log("scout moving")
+-- Remaining engine frames are on another sheet
+scout_moving_data.layers[4].hr_filename = "main_142_diffuse_2.png"
+scout_moving_data.layers[4].hr_basedir = 26
+for i = 26, 31 do
+  create_rotated_anim_variation(scout_moving_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT SHADOW
+------------------------------------------------------------------------------
+local scout_shadow_data = {
+  basename = "starcraft-scout-anim-shadow-",
+  layers = {
+    {
+      filename = "main_140_shadow.png",
+      size = { 117, 92 },
+      hr_size = { 232, 184 },
+      vshift = 3,
+      hshift = 3,
+      draw_as_shadow = true
+    }
+  }
+}
+log("scout shadow")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_shadow_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT GROUND ATTACK
+------------------------------------------------------------------------------
+local scout_grnd_atk_data = table.deep_copy(scout_base_data)
+scout_grnd_atk_data.basename = "starcraft-scout-anim-groundatk-"
+for _, layer in ipairs(scout_grnd_atk_data.layers) do
+  layer.frame_count = 2
+  layer.frame_sequence = { 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 }
+end
+log("scout ground attack")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_grnd_atk_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT AIR ATTACK
+------------------------------------------------------------------------------
+local scout_air_atk_data = table.deep_copy(scout_base_data)
+scout_air_atk_data.basename = "starcraft-scout-anim-airatk-"
+for _, layer in ipairs(scout_air_atk_data.layers) do
+  layer.frame_count = 2
+  layer.frame_sequence = { 2, 2, 1, 1 }
+end
+log("scout air attack")
+for i = 0, 31 do
+  create_rotated_anim_variation(scout_air_atk_data, i)
+end
+
+------------------------------------------------------------------------------
+-- SCOUT UNIT
+------------------------------------------------------------------------------
 data:extend({
-  { -- TODO: Replace
-    type = "animation",
-    name = "starcraft-scout-anim-ground-attack",
-    layers = {
-      create_layered_anim({
-        name = "main_140",
-        size = { 115, 84 },
-        hr_size = { 230, 166 },
-        vshift = -7/16,
-        direction_count = 32,
-        frame_count = 2,
-        frame_sequence = { 2, 2, 1, 1, 2, 2, 1, 1, 2, 2, 1, 1 },
-      }, {"main", "teamcolor", "emissive"})
-    }
-  },
-  { -- TODO: Replace
-    type = "animation",
-    name = "starcraft-scout-anim-air-attack",
-    layers = {
-      create_layered_anim({
-        name = "main_140",
-        size = { 115, 84 },
-        hr_size = { 230, 166 },
-        vshift = -7/16,
-        direction_count = 32,
-        frame_count = 2,
-        frame_sequence = { 2, 2, 1, 1 },
-      }, {"main", "teamcolor", "emissive"})
-    }
-  },
   make_protoss_air_unit{
     name = "starcraft-scout",
     icon_id = 70,

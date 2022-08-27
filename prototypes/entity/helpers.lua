@@ -437,7 +437,6 @@ end
 function create_anim(data)
   if data == nil then return nil end
   local result = {
-      filename = "__starcraft__/graphics/low/" .. (data.low_filename or data.filename),
       line_length = data.line_length or data.frame_count or 1,
       size = data.size,
       frame_count = data.frame_count or 1,
@@ -453,9 +452,9 @@ function create_anim(data)
       direction_count = data.direction_count or 1,
       shift = data.shift,
       y = data.y,
+      stripes = data.stripes,
 
       hr_version = {
-          filename = "__starcraft__/graphics/hd/" .. (data.hr_filename or data.filename),
           line_length = data.hr_line_length or data.frame_count or 1,
           size = data.hr_size,
           scale = 0.5,
@@ -471,13 +470,22 @@ function create_anim(data)
           repeat_count = data.repeat_count,
           direction_count = data.direction_count or 1,
           shift = data.shift,
-          y = data.hr_y
+          y = data.hr_y,
+          stripes = data.hr_stripes,
     }
   }
 
+  if data.low_filename or data.filename then
+    result.filename = "__starcraft__/graphics/low/" .. (data.low_filename or data.filename)
+  end
+
+  if data.hr_filename or data.filename then
+    result.hr_version.filename = "__starcraft__/graphics/hd/" .. (data.hr_filename or data.filename)
+  end
+
   if data.vshift ~= nil or data.hshift ~= nil then
     result.shift = { data.hshift or 0, data.vshift or 0 }
-    result.hr_version.shift = result.shift
+    result.hr_version.shift = { data.hshift or 0, data.vshift or 0 }
   end
   return result
 end
@@ -525,7 +533,6 @@ function create_layered_anim(data, layers)
         return create_anim(table.dictionary_merge({
           filename = data.name .. "_teamcolor.png",
           apply_runtime_tint = true,
-          --flags = { "mask" },
         }, common_attributes))
       elseif layer == "emissive" then
         return create_anim(table.dictionary_merge({

@@ -2,7 +2,6 @@ local Entity = require('__stdlib__/stdlib/entity/entity')
 
 local AnimManager = {}
 
-
 -- We need a way to do RotatedAnimationVariations on cars, but they only support RotatedAnimation (no good).
 -- Cars do not support all the other animation types we need.
 --
@@ -23,7 +22,7 @@ local ANIMS = {
 }
 
 local function get_anim_name(entity, variation)
-  return entity.name .. "-anim-" .. variation .. "-" .. str(math.floor(orientation))
+  return entity.name .. "-anim-" .. variation .. "-" .. tostring(math.floor(entity.orientation * 32))
 end
 
 local function get_entity_state(entity)
@@ -57,11 +56,11 @@ function AnimManager.decloak(entity)
 end
 
 function AnimManager.add(entity)
-  local gfx = GRAPHICS[entity.name]
+  local gfx = ANIMS[entity.name]
   if not gfx then return end
   
   local data = Entity.get_data(entity) or {}
-  
+
   data.main_graphic = rendering.draw_animation({
     animation = get_anim_name(entity, "idle"),
     render_layer = gfx.render_main, -- see elevation.md
@@ -81,4 +80,4 @@ function AnimManager.add(entity)
   Entity.set_data(entity, data)
 end
 
-return GraphicManager
+return AnimManager

@@ -17,6 +17,7 @@ local CUnitZerg = require('src.CUnitZerg')
 local ShieldManager = require('src.ShieldManager')
 local BldgFireManager = require('src.BldgFireManager')
 local HoverManager = require('src.HoverManager')
+local AnimManager = require('src.AnimManager')
 
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
@@ -161,25 +162,9 @@ end
 
 -- TODO This is just for prototyping, general functionality will be moved out later
 local function on_scout_created(entity)
+  entity.orientation = 0.625
   on_protoss_unit_created(entity)
-  
-  local data = Entity.get_data(entity) or {}
-  data.main_graphic = rendering.draw_animation({
-    animation = "starcraft-scout-anim-main",
-    render_layer = "146", -- see elevation.md
-    target = entity,
-    surface = entity.surface
-  })
-
-  data.shadow_graphic = rendering.draw_animation({
-    animation = "starcraft-scout-anim-shadow",
-    render_layer = "137", -- TODO not sure which level the shadow should be but we can change it later
-    target = entity,
-    surface = entity.surface
-  })
-
-  Entity.set_data(entity, data)
-
+  AnimManager.add(entity)
   HoverManager.register_for_hovering(entity)
 end
 

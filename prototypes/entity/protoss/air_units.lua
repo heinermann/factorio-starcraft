@@ -100,22 +100,16 @@ local scout_shadow_data = {
 -- SCOUT IDLE (TODO: investigate hover here instead of in code, using stripes)
 ------------------------------------------------------------------------------
 local scout_idle1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-idle1-")
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_idle1_data, i)
-end
-
 local scout_idle2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-idle2-")
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_idle2_data, i)
-end
-
 local scout_idle3_data = copy_and_name(scout_base_data_l3, "starcraft-scout-anim-idle3-")
 for i = 0, 31 do
+  create_rotated_anim_variation(scout_idle1_data, i)
+  create_rotated_anim_variation(scout_idle2_data, i)
   create_rotated_anim_variation(scout_idle3_data, i)
 end
 
 ------------------------------------------------------------------------------
--- SCOUT MOVING (w/ engine) TODO: animate
+-- SCOUT MOVING (w/ engine)
 ------------------------------------------------------------------------------
 local scout_moving3_data = copy_and_name(scout_base_data_l3, "starcraft-scout-anim-moving3-")
 for _, layer in ipairs(scout_moving3_data.layers) do
@@ -141,7 +135,7 @@ for i = 26, 31 do
 end
 
 ------------------------------------------------------------------------------
--- SCOUT SHADOW (TODO: different anim shadows, for other units)
+-- SCOUT SHADOW
 ------------------------------------------------------------------------------
 for i = 0, 31 do
   create_rotated_anim_variation(scout_shadow_data, i)
@@ -157,19 +151,16 @@ local ground_atk_framedata = {
 
 local scout_grnd_atk1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-groundatk1-")
 update_frames(scout_grnd_atk1_data, ground_atk_framedata)
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_grnd_atk1_data, i)
-end
 
 local scout_grnd_atk2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-groundatk2-")
 update_frames(scout_grnd_atk2_data, ground_atk_framedata)
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_grnd_atk2_data, i)
-end
 
 local scout_grnd_atk3_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-groundatk3-")
 update_frames(scout_grnd_atk3_data, ground_atk_framedata)
+
 for i = 0, 31 do
+  create_rotated_anim_variation(scout_grnd_atk1_data, i)
+  create_rotated_anim_variation(scout_grnd_atk2_data, i)
   create_rotated_anim_variation(scout_grnd_atk3_data, i)
 end
 
@@ -183,19 +174,16 @@ local air_atk_framedata = {
 
 local scout_air_atk1_data = copy_and_name(scout_base_data_l1, "starcraft-scout-anim-airatk1-")
 update_frames(scout_air_atk1_data, air_atk_framedata)
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_air_atk1_data, i)
-end
 
 local scout_air_atk2_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-airatk2-")
 update_frames(scout_air_atk2_data, air_atk_framedata)
-for i = 0, 31 do
-  create_rotated_anim_variation(scout_air_atk2_data, i)
-end
 
 local scout_air_atk3_data = copy_and_name(scout_base_data_l2, "starcraft-scout-anim-airatk3-")
 update_frames(scout_air_atk3_data, air_atk_framedata)
+
 for i = 0, 31 do
+  create_rotated_anim_variation(scout_air_atk1_data, i)
+  create_rotated_anim_variation(scout_air_atk2_data, i)
   create_rotated_anim_variation(scout_air_atk3_data, i)
 end
 

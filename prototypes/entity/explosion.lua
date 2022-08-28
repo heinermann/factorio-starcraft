@@ -15,11 +15,11 @@ data:extend({
             animation_speed = 1/5 -- 84 ms per frame
         },
         sound = {
-            type = "sound",
             filename = "__starcraft__/sound/zerg/bldg/zbldgdth.wav",
             aggregation = {
                 max_count = 4,
-                remove = false
+                remove = false,
+                count_already_playing = true
             }
         }
     },
@@ -39,12 +39,11 @@ data:extend({
             animation_speed = 1/5 -- 84 ms per frame
         },
         sound = {
-            type = "sound",
             filename = "__starcraft__/sound/misc/explolrg.wav",
-            audible_distance_modifier = 40.0,
             aggregation = {
                 max_count = 4,
-                remove = false
+                remove = false,
+                count_already_playing = true
             }
         }
     },
@@ -63,12 +62,33 @@ data:extend({
             animation_speed = 1/5 -- 84 ms per frame
         },
         sound = {
-            type = "sound",
             filename = "__starcraft__/sound/misc/explolrg.wav",
-            audible_distance_modifier = 40.0,
             aggregation = {
                 max_count = 4,
-                remove = false
+                remove = false,
+                count_already_playing = true
+            }
+        }
+    },
+    {
+        type = "explosion",
+        name = "starcraft-scout-death",
+        animations = create_anim{
+            filename = "main_213_diffuse.png",
+            frame_count = 9,
+            line_length = 9,
+            size = { 245, 264 },
+            hr_line_length = 8,
+            hr_size = { 489, 529 },
+            draw_as_glow = true,
+            animation_speed = 1/5 -- 84 ms per frame
+        },
+        sound = {
+            filename = "__starcraft__/sound/protoss/scout/pscdth00.wav",
+            aggregation = {
+                max_count = 4,
+                remove = false,
+                count_already_playing = true
             }
         }
     },

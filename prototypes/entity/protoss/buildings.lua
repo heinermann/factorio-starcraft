@@ -205,7 +205,8 @@ local warp_anchor_loop_sfx = {
     filename = "__starcraft__/sound/protoss/shuttle/pshbld04.wav",
     aggregation = {
         max_count = 4,
-        remove = false
+        remove = false,
+        count_already_playing = true
     }
 }
 
@@ -693,7 +694,8 @@ create_warpin_building{
             filename = "__starcraft__/sound/bullet/dragbull.wav",
             aggregation = {
                 max_count = 4,
-                remove = false
+                remove = false,
+                count_already_playing = true
             }
         },
         projectile_center = { 0, -sc_pixels_to_factorio_tiles(20)/2 },

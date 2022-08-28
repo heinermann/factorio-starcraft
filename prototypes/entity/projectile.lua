@@ -38,10 +38,10 @@ data:extend({
                         type = "play-sound",
                         sound = {
                             filename = "__starcraft__/sound/misc/explomed.wav",
-                            audible_distance_modifier = 30.0,
                             aggregation = {
                               max_count = 4,
-                              remove = false
+                              remove = false,
+                              count_already_playing = true
                             }
                         }
                     }

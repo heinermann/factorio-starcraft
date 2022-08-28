@@ -195,7 +195,7 @@ data:extend({
     name = "starcraft-scout",
     icon_id = 70,
     collision_box = sc_bounds_to_factorio{18, 16, 17, 15},
-    --dying_explosion = "starcraft-scout-death",
+    dying_explosion = "starcraft-scout-death",
     max_health = 150,
     size_type = "large",
 
@@ -208,9 +208,12 @@ data:extend({
     consumption = tostring(32.8868891*60) .. "W",
 
     animation = blank_anim,
-    render_layer = "air-entity-info-icon", -- Should be "146" instead but that is invalid here
+    --render_layer = "air-entity-info-icon", -- Should be "146" instead but that is invalid here
     created_script = "on_protoss_air_unit_created",
     dying_script = "on_protoss_unit_destroyed",
-    stop_script = "on_protoss_air_unit_stopped"
+    stop_script = "on_protoss_air_unit_stopped",
+
+    guns = { "starcraft-wpn-dual-photon-blasters" },
   }
 })
+

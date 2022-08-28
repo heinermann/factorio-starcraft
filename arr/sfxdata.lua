@@ -58,7 +58,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explolrg.wav",
-    audible_distance_modifier = 40.0,
+    --audible_distance_modifier = 40.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -67,7 +67,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explomed.wav",
-    audible_distance_modifier = 30.0,
+    --audible_distance_modifier = 30.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -76,7 +76,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explosm.wav",
-    audible_distance_modifier = 20.0,
+    --audible_distance_modifier = 20.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -85,7 +85,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explo1.wav",
-    audible_distance_modifier = 10.0,
+    --audible_distance_modifier = 10.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -94,7 +94,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explo2.wav",
-    audible_distance_modifier = 10.0,
+    --audible_distance_modifier = 10.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -103,7 +103,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explo3.wav",
-    audible_distance_modifier = 10.0,
+    --audible_distance_modifier = 10.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -112,7 +112,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explo4.wav",
-    audible_distance_modifier = 10.0,
+    --audible_distance_modifier = 10.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -121,7 +121,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/misc/explo5.wav",
-    audible_distance_modifier = 10.0,
+    --audible_distance_modifier = 10.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -600,7 +600,7 @@ local sounds = {
   nil, {
     type = "sound",
     filename = "sound/bullet/tnsfir00.wav",
-    audible_distance_modifier = 20.0,
+    --audible_distance_modifier = 20.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -609,7 +609,7 @@ local sounds = {
   }, {
     type = "sound",
     filename = "sound/bullet/tnshit00.wav",
-    audible_distance_modifier = 50.0,
+    --audible_distance_modifier = 50.0,
     aggregation = {
       max_count = 4,
       remove = false
@@ -1792,7 +1792,7 @@ local sounds = {
   nil, {
     type = "sound",
     filename = "sound/terran/bldg/tcssca00.wav",
-    audible_distance_modifier = 50.0,
+    --audible_distance_modifier = 50.0,
     aggregation = {
       max_count = 4,
       remove = false

@@ -274,7 +274,18 @@ data:extend({
       frame_count = 1,
       size = {1, 1}
     }
-  }
+  },
+  make_simple_smoke_anim{
+    name = "starcraft-blastgn-hit",
+    anim = {
+      filename = "main_519_diffuse.png",
+      size = { 166, 115 },
+      hr_size = { 332, 231 },
+      frame_count = 8,
+      draw_as_glow = true,
+      frame_time = 2.52
+    }
+  },
 })
 
 -- Shield hit overlays

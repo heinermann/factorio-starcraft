@@ -1,6 +1,5 @@
 require("factorio_libs.UpdateManager")
 local Entity = require('__stdlib__/stdlib/entity/entity')
-local table = require('__stdlib__/stdlib/utils/table')
 
 local Resources = {}
 local vespene_geyser_tracker = UpdateManager:new("VespeneGeysers")
@@ -238,10 +237,7 @@ function Resources.register_gas_building(entity)
 end
 
 function Resources.on_update()
-    local advances = vespene_geyser_tracker:pop_current_tick()
-    if advances ~= nil then
-        table.each(advances, advance_gas_anim)
-    end
+    vespene_geyser_tracker:update(advance_gas_anim)
 end
 
 return Resources

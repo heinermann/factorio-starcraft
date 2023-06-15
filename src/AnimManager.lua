@@ -14,6 +14,7 @@ local AnimManager = {}
 -- Burrow/Unburrow/Siege/Unsiege will take the form of an entity replacement
 -- (replaced by a simple-entity-with-force or turret for tanks/lurkers)
 
+-- Diffuse, teamcolour, emissive
 local ANIMS = {
   ["starcraft-scout"] = {
     render_main = "146", -- see elevation.md
@@ -81,7 +82,7 @@ end
 function AnimManager.add(entity)
   local gfx = ANIMS[entity.name]
   if not gfx then return end
-  
+
   local data = Entity.get_data(entity) or {}
 
   data.main_graphics = {

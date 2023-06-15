@@ -13,7 +13,7 @@ function AirUnit:init(entity)
 end
 
 function AirUnit:createInit()
-    
+
 end
 
 function AirUnit:restoreData()

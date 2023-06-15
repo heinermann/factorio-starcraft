@@ -2,7 +2,6 @@ require("factorio_libs.UpdateManager")
 require("factorio_libs.EntitySet")
 
 local Entity = require('__stdlib__/stdlib/entity/entity')
-local table = require('__stdlib__/stdlib/utils/table')
 
 local HoverManager = {}
 local hovering_entities = EntitySet:new("AirUnitHovering")
@@ -132,10 +131,7 @@ local valid_hovering_entities = {
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 function HoverManager.on_update()
-    local advances = update_tracker:pop_current_tick()
-    if advances ~= nil then
-        table.each(advances, hover_update)
-    end
+    update_tracker:update(hover_update)
 end
 
 function HoverManager.register_for_hovering(entity)

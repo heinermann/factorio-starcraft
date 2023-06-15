@@ -1,7 +1,6 @@
 require("factorio_libs.UpdateManager")
 require("factorio_libs.EntitySet")
 
-local table = require('__stdlib__/stdlib/utils/table')
 local Entity = require('__stdlib__/stdlib/entity/entity')
 local ShieldManager = require("ShieldManager")
 
@@ -213,10 +212,7 @@ local function update_entity_progress(entity)
 end
 
 function CUnitPBuild.on_update()
-    local advances = update_tracker:pop_current_tick()
-    if advances ~= nil then
-        table.each(advances, update_entity_progress)
-    end
+    update_tracker:update(update_entity_progress)
 
     tracking_protoss_constructions:foreach(function(entity)
         local data = Entity.get_data(entity) or {}

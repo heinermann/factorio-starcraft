@@ -214,6 +214,6 @@ data:extend({
     stop_script = "on_protoss_air_unit_stopped",
 
     guns = { "starcraft-wpn-dual-photon-blasters" },
-  }
+  },
 })
 

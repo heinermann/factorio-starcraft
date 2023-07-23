@@ -18,6 +18,7 @@ local function make_gun(proto)
       turn_range = proto.turn_range,
       range_mode = "bounding-box-to-bounding-box",
       cooldown_deviation = 0.15,
+      ammo_consumption_modifier = 0,
       warmup = proto.warmup,
       lead_target_for_projectile_speed = proto.lead_target_for_projectile_speed,
       ammo_type = proto.ammo_type, -- IMPORTANT
@@ -36,6 +37,29 @@ local function make_gun(proto)
 end
 
 data:extend({
+  {
+    type = "ammo-category",
+    name = "starcraft-protoss-air-weapons",
+  },
+})
+data:extend({
+  {
+    type = "ammo",
+    name = "starcraft-protoss-air-weapons-ammo",
+    icon = "__starcraft__/graphics/cmdicons/358.png",
+    icon_size = 128,
+    stack_size = 1,
+    flags = { "not-stackable" },
+    subgroup = "starcraft-weapons",
+    magazine_size = 1e38,
+    ammo_type = {
+      category = "starcraft-protoss-air-weapons",
+      consumption_modifier = 0,
+    }
+  },
+})
+
+data:extend({
   make_gun{
     name = "starcraft-wpn-dual-photon-blasters",
     icon_id = 358,
@@ -44,7 +68,7 @@ data:extend({
     turn_range = 16 / 256.0,
     warmup = sc_ticks_to_factorio_ticks(1),
     ammo_type = {
-      category = "beam",
+      category = "starcraft-protoss-air-weapons",
       action = {
         type = "direct",
         action_delivery = {

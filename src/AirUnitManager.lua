@@ -21,7 +21,25 @@ local function update_target(entity)
   if entity == nil or not entity.valid or not air_unit_entities:contains(entity) then return end
 
   set_entity(entity)
-  -- TODO do targetting stuff
+
+  -- TODO air vs ground attack
+  -- TODO gun max range
+  -- TODO don't call this more than once if we have a target (see AAI vehicles for example)
+  local target = entity.surface.find_nearest_enemy_entity_with_owner{
+    position = entity.position,
+    max_distance = 16,
+    force = entity.force
+  }
+  -- TODO check ground and air weapons
+  if target ~= nil then
+    local driver = entity.get_driver()
+    --driver.selected = target
+    driver.shooting_state = {
+      state = defines.shooting.shooting_enemies,
+      position = target.position
+    }
+  end
+  target_tracker:add(entity, 8)
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,6 +51,8 @@ function AirUnitManager.on_update()
 end
 
 function AirUnitManager.add(entity)
+  entity.get_inventory(defines.inventory.car_ammo).insert{ name = "starcraft-protoss-air-weapons-ammo" }
+  entity.get_inventory(defines.inventory.car_trunk).insert{ name = "starcraft-protoss-air-weapons-ammo" }
   air_unit_entities:insert(entity)
   target_tracker:add(entity, 8)
 end

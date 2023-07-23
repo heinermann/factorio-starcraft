@@ -125,7 +125,7 @@ local function make_common_unit(data)
     },
     consumption = data.consumption,
     effectivity = data.effectivity,
-    inventory_size = 0,
+    inventory_size = 1,
     rotation_speed = data.rotation_speed,
     guns = data.guns,
     has_belt_immunity = data.has_belt_immunity,

@@ -18,6 +18,7 @@ local ShieldManager = require('src.ShieldManager')
 local BldgFireManager = require('src.BldgFireManager')
 local HoverManager = require('src.HoverManager')
 local AnimManager = require('src.AnimManager')
+local AirUnitManager = require('src.AirUnitManager')
 
 ---------------------------------------------------------------------------------------------------------------------
 -- ON_LOAD
@@ -73,6 +74,7 @@ script.on_nth_tick(1, function(event)
   CUnitProtoss.on_update()
   CUnitPBuild.on_update()
   HoverManager.on_update()
+  AirUnitManager.on_update()
 end)
 
 script.on_nth_tick(300, function(event)
@@ -165,6 +167,7 @@ local function on_protoss_air_unit_created(entity)
   on_protoss_unit_created(entity)
   AnimManager.add(entity)
   HoverManager.register_for_hovering(entity)
+  AirUnitManager.add(entity)
 end
 
 local function on_protoss_air_unit_stopped(entity)

@@ -55,21 +55,21 @@ data:extend({
     stage_counts = {750, 500, 250, 0},
     stages = {
       sheet = {
-        filename = "__starcraft__/graphics/hd/main_347_diffuse.png",
+        filename = "__starcraft__/graphics/minerals_combined_diffuse.png",
         priority = "extra-high",
-        size = { 262, 253 },
+        size = { 262, 254 },
         scale = 0.5,
-        frame_count = 1,
+        frame_count = 3,
         variation_count = 4
       }
     },
     stages_effect = {
       sheet = {
-        filename = "__starcraft__/graphics/hd/main_347_emissive.png",
+        filename = "__starcraft__/graphics/minerals_combined_emissive.png",
         priority = "medium",
-        size = { 262, 253 },
+        size = { 262, 254 },
         scale = 0.5,
-        frame_count = 1,
+        frame_count = 3,
         variation_count = 4,
         flags = {"light"},
         draw_as_light = true

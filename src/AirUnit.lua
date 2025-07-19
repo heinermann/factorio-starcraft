@@ -1,7 +1,7 @@
 require("__starcraft__/external/class/class")
 require("Orders")
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 local HoverManager = require('src.HoverManager')
 
 -- Once this is done with, must call saveData()

@@ -1,4 +1,4 @@
-local table = require('__stdlib__/stdlib/utils/table')
+local table = require("__starcraft__/external/stdlib/utils/table")
 
 IS_SCOUT_TYPE = {
     ["starcraft-scout"] = true,

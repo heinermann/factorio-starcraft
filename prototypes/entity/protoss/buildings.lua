@@ -1,178 +1,154 @@
 require("prototypes.entity.helpers")
-local table = require('__stdlib__/stdlib/utils/table')
+local table = require("__starcraft__/external/stdlib/utils/table")
 
 
 local nexus_main = {
     name = "main_179",
-    size = { 291, 311 },
-    hr_size = { 582, 622 },
+    size = { 582, 622 },
     vshift = -4/16
 }
 local nexus_overlay = {
     filename = "main_181_diffuse.png",
-    size = { 239, 311 },
-    hr_size = { 478, 622 },
+    size = { 478, 622 },
     draw_as_glow = true,
     vshift = -4/16
 }
 
 local nexus_shadow = {
     filename = "nexus_shad",
-    size = { 392, 311 },
-    hr_size = { 785, 622 },
+    size = { 785, 622 },
     vshift = -4/16,
     hshift = 203/64 / 2
 }
 
 local robo_facility_main = {
     name = "main_192",
-    size = { 193, 256 },
-    hr_size = { 386, 512 },
+    size = { 386, 512 },
     vshift = -8/16
 }
 
 local pylon_main = {
     name = "main_189",
-    size = { 112, 129 },
-    hr_size = { 223, 258 },
+    size = { 223, 258 },
     vshift = -11/16
 }
 
 local pylon_shadow = {
     filename = "pylon_shad",
-    size = { 155, 54 },
-    hr_size = { 310, 107 },
+    size = { 310, 107 },
     vshift = 258 / 2 / 64 - 10/16,
     hshift = 310 / 64 / 2 + 1/16
 }
 
 local assimilator_main = {
     name = "main_158",
-    size = { 248, 235 },
-    hr_size = { 494, 469 }
+    size = { 494, 469 }
 }
 
 local observatory_main = {
     name = "main_161",
-    size = { 195, 190 },
-    hr_size = { 390, 380 },
+    size = { 390, 380 },
     vshift = -8/16
 }
 
 local observatory_shadow = {
     filename = "observatory_shad",
-    size = { 300, 190 },
-    hr_size = { 600, 380 },
+    size = { 600, 380 },
     vshift = -8/16,
     hshift = (600 - 390) / 2 / 64
 }
 
 local gateway_main = {
     name = "main_171",
-    size = { 253, 248 },
-    hr_size = { 506, 497 },
+    size = { 506, 497 },
     vshift = -11/16
 }
 
 local citadel_main = {
     name = "main_164",
-    size = { 196, 203 },
-    hr_size = { 392, 404 },
+    size = { 392, 404 },
     vshift = -13/16
 }
 
 local cyber_core_main = {
     name = "main_174",
-    size = { 174, 217 },
-    hr_size = { 349, 434 },
+    size = { 349, 434 },
     vshift = -1/16
 }
 
 local archives_main = {
     name = "main_155",
-    size = { 303, 367 },
-    hr_size = { 606, 735 },
+    size = { 606, 735 },
     vshift = -5/16
 }
 
 local forge_main = {
     name = "main_167",
-    size = { 193, 176 },
-    hr_size = { 385, 352 },
+    size = { 385, 352 },
     vshift = -1/16
 }
 
 local forge_shadow = {
     filename = "forge_shad",
-    size = { 290, 176 },
-    hr_size = { 580, 352 },
+    size = { 580, 352 },
     vshift = -1/16,
     hshift = (580 - 385) / 2 / 64
 }
 
 local stargate_main = {
     name = "main_199",
-    size = { 248, 264 },
-    hr_size = { 496, 528 },
+    size = { 496, 528 },
     vshift = -16/16
 }
 
 local stargate_overlay = {
     filename = "main_200_diffuse.png",
-    size = { 204, 144 },
-    hr_size = { 408, 288 },
+    size = { 408, 288 },
     draw_as_glow = true,
     vshift = -16/16
 }
 
 local fleet_beacon_main = {
     name = "main_208",
-    size = { 266, 210 },
-    hr_size = { 533, 421 },
+    size = { 533, 421 },
     vshift = -7/16
 }
 
 local tribunal_main = {
     name = "main_186",
-    size = { 186, 171 },
-    hr_size = { 373, 342 },
+    size = { 373, 342 },
     vshift = -4/16
 }
 
 local tribunal_shadow = {
     filename = "tribunal_shad",
-    size = { 225, 171 },
-    hr_size = { 450, 342 },
+    size = { 450, 342 },
     vshift = -4/16,
     hshift = (450 - 373) / 2 / 64
 }
 
 local robotics_support_main = {
     name = "main_204",
-    size = { 202, 213 },
-    hr_size = { 403, 427 },
+    size = { 403, 427 },
     vshift = -6/16
 }
 
 local robotics_support_shadow = {
     filename = "robo_support_shad",
-    size = { 275, 213 },
-    hr_size = { 550, 427 },
+    size = { 550, 427 },
     vshift = -6/16,
     hshift = (550 - 403) / 2 / 64
 }
 
 local shield_battery_main = {
     name = "main_195",
-    size = { 169, 118 },
-    hr_size = { 337, 237 },
+    size = { 337, 237 },
     vshift = -3/16
 }
 
 local shield_battery_overlay = {
     filename = "main_196_diffuse.png",
-    size = { 185, 142 },
-    hr_size = { 369, 285 },
+    size = { 369, 285 },
     draw_as_glow = true,
     vshift = -3/16
 }
@@ -180,10 +156,8 @@ local shield_battery_overlay = {
 local warp_anchor_anim = {
     filename = "main_211_diffuse.png",
     frame_count = 14,
-    line_length = 13,
-    size = { 298, 300 },
-    hr_line_length = 6,
-    hr_size = { 596, 599 },
+    line_length = 6,
+    size = { 596, 599 },
     draw_as_glow = true
 }
 
@@ -221,8 +195,7 @@ local warp_in_sfx = {
 local function make_photon_cannon_anim(frame_seq)
     return create_layered_anim({
         name = "main_183",
-        size = { 128, 129 },
-        hr_size = { 256, 258 },
+        size = { 256, 258 },
         frame_count = 4,
         frame_sequence = frame_seq,
         animation_speed = 1/5, -- 84ms in SC (2 ticks)
@@ -261,129 +234,97 @@ end
 local warp_fade_anim_lookup = {
     ["starcraft-nexus"] = {
         filename = "main_179_diffuse_warp_in.png",
-        size = { 291, 311 },
-        hr_size = { 582, 622 },
-        hr_line_length = 7,
-        line_length = 14,
+        size = { 582, 622 },
+        line_length = 7,
         vshift = -4/16
     },
     ["starcraft-robotics-facility"] = {
         filename = "main_192_diffuse_warp_in.png",
-        size = { 193, 256 },
-        hr_size = { 386, 512 },
-        hr_line_length = 10,
-        line_length = 21,
+        size = { 386, 512 },
+        line_length = 10,
         vshift = -8/16
     },
     ["starcraft-pylon"] = {
         filename = "main_189_diffuse_warp_in.png",
-        size = { 112, 129 },
-        hr_size = { 223, 258 },
-        hr_line_length = 18,
-        line_length = 36,
+        size = { 223, 258 },
+        line_length = 18,
         vshift = -11/16
     },
     ["starcraft-assimilator"] = {
         filename = "main_158_diffuse_warp_in.png",
-        size = { 248, 235 },
-        hr_size = { 494, 469 },
-        hr_line_length = 8,
-        line_length = 16
+        size = { 494, 469 },
+        line_length = 8,
     },
     ["starcraft-observatory"] = {
         filename = "main_161_diffuse_warp_in.png",
-        size = { 195, 190 },
-        hr_size = { 390, 380 },
-        hr_line_length = 10,
-        line_length = 21,
+        size = { 390, 380 },
+        line_length = 10,
         vshift = -8/16
     },
     ["starcraft-gateway"] = {
         filename = "main_171_diffuse_warp_in.png",
-        size = { 253, 248 },
-        hr_size = { 506, 497 },
-        hr_line_length = 8,
-        line_length = 16,
+        size = { 506, 497 },
+        line_length = 8,
         vshift = -11/16
     },
     ["starcraft-cannon"] = {
         filename = "main_183_diffuse_warp_in.png",
-        size = { 128, 129 },
-        hr_size = { 256, 258 },
-        hr_line_length = 16,
-        line_length = 32,
+        size = { 256, 258 },
+        line_length = 16,
         vshift = -2/16
     },
     ["starcraft-citadel"] = {
         filename = "main_164_diffuse_warp_in.png",
-        size = { 196, 203 },
-        hr_size = { 392, 404 },
-        hr_line_length = 10,
-        line_length = 20,
+        size = { 392, 404 },
+        line_length = 10,
         vshift = -13/16
     },
     ["starcraft-cyber-core"] = {
         filename = "main_174_diffuse_warp_in.png",
-        size = { 174, 217 },
-        hr_size = { 349, 434 },
-        hr_line_length = 11,
-        line_length = 23,
+        size = { 349, 434 },
+        line_length = 11,
         vshift = -1/16
     },
     ["starcraft-archives"] = {
         filename = "main_155_diffuse_warp_in.png",
-        size = { 303, 367 },
-        hr_size = { 606, 735 },
-        hr_line_length = 6,
-        line_length = 13,
+        size = { 606, 735 },
+        line_length = 6,
         vshift = -5/16
     },
     ["starcraft-forge"] = {
         filename = "main_167_diffuse_warp_in.png",
-        size = { 193, 176 },
-        hr_size = { 385, 352 },
-        hr_line_length = 10,
-        line_length = 21,
+        size = { 385, 352 },
+        line_length = 10,
         vshift = -1/16
     },
     ["starcraft-stargate"] = {
         filename = "main_199_diffuse_warp_in.png",
-        size = { 248, 264 },
-        hr_size = { 496, 528 },
-        hr_line_length = 8,
-        line_length = 16,
+        size = { 496, 528 },
+        line_length = 8,
         vshift = -16/16
     },
     ["starcraft-fleet-beacon"] = {
         filename = "main_208_diffuse_warp_in.png",
-        size = { 266, 210 },
-        hr_size = { 533, 421 },
-        hr_line_length = 7,
-        line_length = 15,
+        size = { 533, 421 },
+        line_length = 7,
         vshift = -7/16
     },
     ["starcraft-tribunal"] = {
         filename = "main_186_diffuse_warp_in.png",
-        size = { 186, 171 },
-        hr_size = { 373, 342 },
-        hr_line_length = 10,
-        line_length = 22,
+        size = { 373, 342 },
+        line_length = 10,
         vshift = -4/16
     },
     ["starcraft-robotics-support-bay"] = {
         filename = "main_204_diffuse_warp_in.png",
-        size = { 202, 213 },
-        hr_size = { 403, 427 },
-        hr_line_length = 10,
-        line_length = 20,
+        size = { 403, 427 },
+        line_length = 10,
         vshift = -6/16
     },
     ["starcraft-shield-battery"] = {
         filename = "main_195_diffuse_warp_in.png",
-        size = { 169, 118 },
-        hr_size = { 337, 237 },
-        hr_line_length = 12,
-        line_length = 24,
+        size = { 337, 237 },
+        line_length = 12,
         vshift = -3/16
     }
 }
@@ -497,10 +438,8 @@ local function create_warpin_building(proto_data)
     --    animations = create_anim{
     --        filename = "main_211_diffuse.png",
     --        frame_count = 14,
-    --        line_length = 13,
-    --        size = { 298, 300 },
-    --        hr_line_length = 6,
-    --        hr_size = { 596, 599 },
+    --        line_length = 6,
+    --        size = { 596, 599 },
     --        draw_as_glow = true,
     --        frame_sequence = { 8, 7, 6, 5, 4, 3 },
     --        animation_speed = 1/5 -- 84 ms per frame
@@ -709,10 +648,13 @@ create_warpin_building{
                     starting_speed = 0
                 }
             }
-        }
+        },
+        ammo_category = "beam",
+        ammo_consumption_modifier = 0,
     },
     dying_script = "on_protoss_bldg_destroyed",
-    created_script = "on_protoss_powered_bldg_created"
+    created_script = "on_protoss_powered_bldg_created",
+    graphics_set = {},
 }
 --------------------------------------------------------------------------------------------------
 -- CITADEL OF ADUN
@@ -748,8 +690,7 @@ create_warpin_building{
                 }), {"main", "teamcolor", "emissive"}),
                 create_layered_anim({
                     name = "main_176",
-                    size = { 174, 217 },
-                    hr_size = { 349, 434 },
+                    size = { 349, 434 },
 
                     frame_count = 2,
                     animation_speed = 1/2.5, -- 42ms in SC (1 ticks)
@@ -809,8 +750,7 @@ create_warpin_building{
                 }), {"main", "teamcolor", "emissive"}),
                 create_layered_anim({
                     name = "main_168",
-                    size = { 181, 104 },
-                    hr_size = { 361, 208 },
+                    size = { 361, 208 },
 
                     frame_count = 3,
                     animation_speed = 1/7.5, -- 126ms in SC (3 ticks)

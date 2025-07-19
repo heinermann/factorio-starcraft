@@ -8,8 +8,7 @@ data:extend({
         max_speed = sc_pixels_per_frame_to_factorio_tiles_per_tick(160),
         animation = create_anim{
             filename = "main_524_diffuse.png",
-            size = { 96, 77 },
-            hr_size = { 193, 155 },
+            size = { 193, 155 },
             draw_as_glow = true,
             frame_count = 11,
             animation_speed = 1/2.5 -- 42ms in SC (1 ticks)

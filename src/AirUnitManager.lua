@@ -1,7 +1,7 @@
 require("factorio_libs.UpdateManager")
 require("factorio_libs.EntitySet")
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 
 local AirUnitManager = {}
 local air_unit_entities = EntitySet:new("AirUnitManager")

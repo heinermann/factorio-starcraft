@@ -3,7 +3,7 @@
 -- WARNING: Scripts need modification to run outside of coroutines or moved into native Factorio facilities (i.e. smoke overlays)
 
 local convert = require("__starcraft__/glue/convert")
-local Log = require('__stdlib__/stdlib/misc/logger').new("iscript")
+local Log = require('__starcraft__/external/stdlib/misc/logger').new("iscript")
 
 -- Convert a BW pixel to Factorio tile
 local function to_tiles(value)
@@ -57,7 +57,7 @@ local function image_create(img, x, y, render_layer)
         surface = iscript.entity.surface
       }
       iscript.init_obj_data(img_track_id)
-      global.iscript_images[img_track_id] = {}
+      storage.iscript_images[img_track_id] = {}
 
     elseif imgtype == "sprite" then
       local img_track_id = rendering.draw_sprite{
@@ -90,7 +90,7 @@ local function playfram(num)
   if iscript.anim == nil then return end
 
   -- TODO: GFXTurns
-  rendering.set_animation_offset(iscript.anim, num)
+  iscript.anim.animation_offset = num
 end
 
 local function waitrand(min, max)
@@ -106,8 +106,12 @@ end
 
 local function setvertpos(y_offset)
   if iscript.anim ~= nil then
-    local target = rendering.get_target(iscript.anim)
-    rendering.set_target(target.entity or target.position, {target.entity_offset[1], to_tiles(y_offset)})
+	local target = iscript.anim.target
+	iscript.anim.target = {
+		entity = target.entity,
+		position = target.position,
+		offset = { target.offset.x, to_tiles(y_offset) }
+	}
   end
 end
 
@@ -165,7 +169,7 @@ end
 
 local function setfldirect(direction)
   if iscript.anim ~= nil then
-    rendering.set_orientation(iscript.anim, to_orientation(direction))
+	iscript.anim.orientation = to_orientation(direction)
   elseif iscript.entity ~= nil then
     iscript.entity.orientation = to_orientation(direction)
     iscript.entity.direction = to_direction(direction)

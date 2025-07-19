@@ -1,4 +1,4 @@
-local table = require('__stdlib__/stdlib/utils/table')
+local table = require("__starcraft__/external/stdlib/utils/table")
 require("entity.helpers")
 
 local function register_sticker(tbl)
@@ -55,20 +55,17 @@ def_size_sticker{
   anims = {
     {
       filename = "main_361_diffuse.png",
-      hr_size = { 287, 286 },
-      size = { 144, 143 }
+      size = { 287, 286 },
     },
     {
       filename = "main_362_diffuse.png",
-      hr_size = { 399, 428 },
-      hr_line_length = 10,
-      size = { 200, 214 }
+      size = { 399, 428 },
+      line_length = 10,
     },
     {
       filename = "main_363_diffuse.png",
-      hr_size = { 516, 532 },
-      hr_line_length = 7,
-      size = { 258, 266 }
+      size = { 516, 532 },
+      line_length = 7,
     }
   }
 }
@@ -86,29 +83,24 @@ def_size_sticker{
   anims = {
     {
       filename = "main_982_diffuse.png",
-      hr_size = { 118, 123 },
-      size = { 59, 62 }
+      size = { 118, 123 },
     },
     {
       filename = "main_983_diffuse.png",
-      hr_size = { 238, 241 },
-      hr_line_length = 17,
-      size = { 119, 120 }
+      size = { 238, 241 },
+      line_length = 17,
     },
     {
       filename = "main_984_diffuse.png",
-      hr_size = { 470, 484 },
-      hr_line_length = 8,
-      size = { 235, 242 },
-      line_length = 17
+      size = { 470, 484 },
+      line_length = 8,
     }
   }
 }
 
 local stasis_anim_sm = {
   filename = "main_365_diffuse.png",
-  hr_size = { 273, 236 },
-  size = { 137, 119 }
+  size = { 273, 236 },
 }
 
 def_size_sticker{
@@ -130,9 +122,8 @@ def_size_sticker{
     stasis_anim_sm,
     {
       filename = "main_367_diffuse.png",
-      hr_size = { 375, 377 },
-      hr_line_length = 10,
-      size = { 188, 189 }
+      size = { 375, 377 },
+      line_length = 10,
     }
   }
 }
@@ -160,8 +151,7 @@ register_sticker{
     filename = "main_380_diffuse.png",
     frame_count = 6,
     animation_speed = 1/5, -- 84 ms per frame
-    size = { 262, 251 },
-    hr_size = { 524, 504 }
+    size = { 524, 504 }
   }
 }
 
@@ -186,18 +176,15 @@ def_size_sticker{
   anims = {
     {
       filename = "main_388_diffuse.png",
-      hr_size = { 76, 85 },
-      size = { 38, 43 }
+      size = { 76, 85 },
     },
     {
       filename = "main_389_diffuse.png",
-      hr_size = { 130, 110 },
-      size = { 65, 55 }
+      size = { 130, 110 },
     },
     {
       filename = "main_390_diffuse.png",
-      hr_size = { 220, 182 },
-      size = { 110, 92 }
+      size = { 220, 182 },
     }
   }
 }
@@ -216,18 +203,15 @@ def_size_sticker{
   anims = {
     {
       filename = "main_384_diffuse.png",
-      hr_size = { 80, 94 },
-      size = { 41, 47 }
+      size = { 80, 94 },
     },
     {
       filename = "main_385_diffuse.png",
-      hr_size = { 134, 117 },
-      size = { 67, 58 }
+      size = { 134, 117 },
     },
     {
       filename = "main_386_diffuse.png",
-      hr_size = { 220, 182 },
-      size = { 110, 92 }
+      size = { 220, 182 },
     }
   }
 }

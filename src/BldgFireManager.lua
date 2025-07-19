@@ -1,5 +1,5 @@
-local Entity = require('__stdlib__/stdlib/entity/entity')
-local table = require('__stdlib__/stdlib/utils/table')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
+local table = require("__starcraft__/external/stdlib/utils/table")
 
 local BldgFireManager = {}
 
@@ -275,17 +275,17 @@ local lg_to_sm_transitions = {
 
 local function DecreaseDmgOverlays(entity, data)
     -- Iterate all overlays, find the first large overlay and replace it with a small overlay
-    for _, anim_id in pairs(data.overlays or {}) do
-        local transition_name = lg_to_sm_transitions[rendering.get_animation(anim_id)]
+    for _, anim in pairs(data.overlays or {}) do
+        local transition_name = lg_to_sm_transitions[anim.animation]
         if transition_name ~= nil then
-            rendering.set_animation(anim_id, transition_name)
+            anim.animation = transition_name
             return
         end
     end
 
     -- If a large overlay wasn't found, remove the first small overlay
-    for slot, anim_id in pairs(data.overlays or {}) do
-        rendering.destroy(anim_id)
+    for slot, anim in pairs(data.overlays or {}) do
+        anim.destroy()
         data.overlays[slot] = nil
         return
     end
@@ -299,10 +299,10 @@ local function IncreaseDmgOverlays(entity, data)
     end
 
     -- Iterate overlays, find the first small overlay and replace it with a large overlay
-    for slot, anim_id in pairs(data.overlays or {}) do
-        local transition_name = sm_to_lg_transitions[rendering.get_animation(anim_id)]
+    for slot, anim in pairs(data.overlays or {}) do
+        local transition_name = sm_to_lg_transitions[anim.animation]
         if transition_name ~= nil then
-            rendering.set_animation(anim_id, transition_name)
+            anim.animation = transition_name
             return
         end
         slots_available[slot] = nil
@@ -333,8 +333,8 @@ local function UpdateDmgOverlays(entity)
     local num_dmg_overlays = #overlays.animations   -- Number of overlay positions * 2 (small + big overlays)
     local current_overlay_state = data.overlay_state or 0 -- starts as numDmgOverlays (would be a data member)
 
-    local onethird_health = math.floor(entity.prototype.max_health / 3)
-    local total_state_health = entity.prototype.max_health - onethird_health
+    local onethird_health = math.floor(entity.max_health / 3)
+    local total_state_health = entity.max_health - onethird_health
     local num_dmg_states = math.floor(total_state_health / (num_dmg_overlays*2 + 1))
     local desired_state = math.floor((entity.health - total_state_health % num_dmg_states - onethird_health - 1) / num_dmg_states)
     if desired_state < 0 then desired_state = 0 end

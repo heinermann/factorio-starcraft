@@ -7,7 +7,7 @@ data:extend({
     icon = "__starcraft__/graphics/hd/main_397_diffuse.png",
     icon_size = 74,
     stack_size = 64,
-    flags = {"hidden"}
+    hidden = true
   },
   {
     type = "item",
@@ -15,7 +15,7 @@ data:extend({
     icon = "__starcraft__/graphics/hd/main_399_diffuse.png",
     icon_size = 78,
     stack_size = 64,
-    flags = {"hidden"}
+    hidden = true
   },
   {
     type = "item",
@@ -23,7 +23,7 @@ data:extend({
     icon = "__starcraft__/graphics/hd/main_401_diffuse.png",
     icon_size = 78,
     stack_size = 64,
-    flags = {"hidden"}
+    hidden = true
   },
   {
     type = "item",
@@ -31,7 +31,7 @@ data:extend({
     icon = "__starcraft__/graphics/hd/main_403_diffuse.png",
     icon_size = 72,
     stack_size = 64,
-    flags = {"hidden"}
+    hidden = true
   },
   {
     type = "resource",
@@ -40,7 +40,15 @@ data:extend({
     icon = "__starcraft__/graphics/icons/0.png",
     icon_size = 56,
     flags = {"placeable-neutral"},
-    collision_mask = {"item-layer", "object-layer", "player-layer", "water-tile", "resource-layer"},
+    collision_mask = {
+      layers = {
+        item = true,
+        object = true,
+        player = true,
+        water_tile = true,
+        resource = true
+      }
+    },
     collision_box = {{-32/16 + 0.001, -16/16 + 0.001}, {32/16 - 0.001, 16/16 - 0.001}},
     selection_box = {{-32/16, -16/16}, {32/16, 16/16}},
 
@@ -112,7 +120,15 @@ data:extend({
     icon = "__starcraft__/graphics/icons/2.png",
     icon_size = 56,
     flags = {"placeable-neutral"},
-    collision_mask = {"item-layer", "object-layer", "player-layer", "water-tile", "resource-layer"},
+    collision_mask = {
+      layers = {
+        item = true,
+        object = true,
+        player = true,
+        water_tile = true,
+        resource = true
+      }
+    },
     collision_box = {{-64/16 + 0.001, -32/16 + 0.001}, {64/16 - 0.001, 32/16 - 0.001}},
     selection_box = {{-64/16, -32/16}, {64/16, 32/16}},
 
@@ -162,7 +178,7 @@ data:extend({
     minable = {
       mining_time = (75 * 42)/1000 /10,-- / 60, -- ((75 frames * 42ms/frame) / 1000ms/s) / 60ticks/s
       results = {
-        { "starcraft-vespene-gas-tank", 8 }
+        { type = "item", name = "starcraft-vespene-gas-tank", amount = 8 }
       }
     },
     remove_decoratives = "true",

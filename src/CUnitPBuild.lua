@@ -1,7 +1,7 @@
 require("factorio_libs.UpdateManager")
 require("factorio_libs.EntitySet")
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 local ShieldManager = require("ShieldManager")
 
 local CUnitPBuild = {}
@@ -216,7 +216,7 @@ function CUnitPBuild.on_update()
 
     tracking_protoss_constructions:foreach(function(entity)
         local data = Entity.get_data(entity) or {}
-        entity.health = math.min(entity.health + data.hp_gain, entity.prototype.max_health)
+        entity.health = math.min(entity.health + data.hp_gain, entity.max_health)
         data.shields = math.min(data.shields + data.shield_gain, data.max_shields)
         Entity.set_data(entity, data)
         ShieldManager.queue_update_shield_bar(entity)
@@ -230,10 +230,10 @@ function CUnitPBuild.add_warp_anchor(entity)
     local data = Entity.get_data(entity) or {}
     local build_time = build_times[entity.name]
 
-    entity.health = entity.prototype.max_health / 10
+    entity.health = entity.max_health / 10
     data.shields = data.max_shields / 10
 
-    data.hp_gain = get_hp_gain(entity.prototype.max_health, build_time)
+    data.hp_gain = get_hp_gain(entity.max_health, build_time)
     data.shield_gain = get_shield_gain(data.max_shields, build_time)
     Entity.set_data(entity, data)
 

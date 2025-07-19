@@ -7,10 +7,8 @@ data:extend({
         animations = create_anim{
             filename = "main_060_diffuse.png",
             frame_count = 12,
-            line_length = 8,
-            size = { 478, 415 },
-            hr_line_length = 4,
-            hr_size = { 955, 828 },
+            line_length = 4,
+            size = { 955, 828 },
 
             animation_speed = 1/5 -- 84 ms per frame
         },
@@ -30,10 +28,8 @@ data:extend({
             -- TODO: Figure out how ofire remapping works in remastered then remake this
             filename = "main_215_diffuse.png",
             frame_count = 14,
-            line_length = 7,
-            size = { 534, 557 },
-            hr_line_length = 3,
-            hr_size = { 1067, 1113 },
+            line_length = 3,
+            size = { 1067, 1113 },
             draw_as_glow = true,
 
             animation_speed = 1/5 -- 84 ms per frame
@@ -53,10 +49,8 @@ data:extend({
         animations = create_anim{
             filename = "main_215_diffuse.png",
             frame_count = 14,
-            line_length = 7,
-            size = { 534, 557 },
-            hr_line_length = 3,
-            hr_size = { 1067, 1113 },
+            line_length = 3,
+            size = { 1067, 1113 },
             draw_as_glow = true,
 
             animation_speed = 1/5 -- 84 ms per frame
@@ -76,10 +70,8 @@ data:extend({
         animations = create_anim{
             filename = "main_213_diffuse.png",
             frame_count = 9,
-            line_length = 9,
-            size = { 245, 264 },
-            hr_line_length = 8,
-            hr_size = { 489, 529 },
+            line_length = 8,
+            size = { 489, 529 },
             draw_as_glow = true,
             animation_speed = 1/5 -- 84 ms per frame
         },
@@ -98,10 +90,8 @@ data:extend({
         animations = create_anim{
             filename = "main_211_diffuse.png",
             frame_count = 14,
-            line_length = 13,
-            size = { 298, 300 },
-            hr_line_length = 6,
-            hr_size = { 596, 599 },
+            line_length = 6,
+            size = { 596, 599 },
             draw_as_glow = true,
             frame_sequence = {
                 8, 8, 8, 8, 8,

@@ -1,9 +1,10 @@
 require("factorio_libs.EntitySet")
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
-local Surface = require('__stdlib__/stdlib/area/surface')
-local Area = require('__stdlib__/stdlib/area/area')
-local Position = require('__stdlib__/stdlib/area/position')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
+local Area = require('__starcraft__/external/stdlib/area/area')
+local Position = require('__starcraft__/external/stdlib/area/position')
+
+local Log = require('__starcraft__/external/stdlib/misc/logger').new("CUnitZerg")
 
 local Tile = require('Tile')
 
@@ -29,7 +30,7 @@ end
 
 local function can_spread_creep_to(pos, surface)
     local tile = surface.get_tile(pos)
-    return tile.name ~= "zerg-creep" and not has_collision_nearby(pos, surface, "water-tile")
+    return tile.name ~= "zerg-creep" and not has_collision_nearby(pos, surface, "water_tile")
 end
 
 -- TODO Find only structures...
@@ -37,7 +38,7 @@ local function tile_occupied(pos, surface)
     -- TODO: Look into `find_non_colliding_position_in_box`
     return surface.count_entities_filtered{
         area = Position.to_tile_area(pos),
-        collision_mask = "object-layer",
+        collision_mask = "object",
         limit = 1
     } ~= 0
 end
@@ -69,6 +70,9 @@ local function queue_tile_creep(position, surface)
 
     table.insert(creep_update_cache[surface.index], { position = position, name = "zerg-creep" })
     Tile.set_data(surface, UNDER_CREEP_TILE_KEY, position, surface.get_tile(position).name)
+    surface.destroy_decoratives{
+        position = position
+    }
 end
 
 local tile_neighbours = {
@@ -166,6 +170,8 @@ local CUnitZerg = {}
 function CUnitZerg.on_creep_provider_created(entity)
     make_creep_below_structure(entity)
 
+    Log.log("Creep provider created for " .. entity.name)
+    Log.write()
     local data = Entity.get_data(entity) or {}
 
     -- 15 starcraft ticks, but there are 4 factorio tiles in 1 starcraft tile
@@ -176,6 +182,8 @@ function CUnitZerg.on_creep_provider_created(entity)
 end
 
 function CUnitZerg.on_creep_provider_destroyed(entity)
+    Log.log("Creep provider destroyed for " .. entity.name)
+    Log.write()
     creep_entities:remove(entity)
 end
 
@@ -189,6 +197,10 @@ end
 function CUnitZerg.on_update()
     creep_entities:foreach(function(entity)
         local data = Entity.get_data(entity) or {}
+
+        Log.log(helpers.table_to_json(data))
+        Log.write()
+
         if data.creep_timer > 0 then
             data.creep_timer = data.creep_timer - 1
         else

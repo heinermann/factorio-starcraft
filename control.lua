@@ -4,10 +4,7 @@
 --
 -- https://lua-api.factorio.com/latest/Data-Lifecycle.html
 
-local Surface = require('__stdlib__/stdlib/area/surface')
-local Entity = require('__stdlib__/stdlib/entity/entity')
-
-local Log = require('__stdlib__/stdlib/misc/logger').new("control")
+local Log = require('__starcraft__/external/stdlib/misc/logger').new("control")
 
 local Resources = require('src.resources')
 local Forces = require('src.forces')
@@ -24,7 +21,7 @@ local AirUnitManager = require('src.AirUnitManager')
 -- ON_LOAD
 ---------------------------------------------------------------------------------------------------------------------
 -- Called once every time the game is loaded, but not when it's first started
--- Should never modify `global`
+-- Should never modify `storage`
 script.on_load(function()
 end)
 
@@ -330,3 +327,5 @@ script.on_event(defines.events.on_entity_damaged, on_entity_damaged, {
   {filter = "name", name = "starcraft-starport"},
   {filter = "name", name = "starcraft-engineering-bay"},
 })
+
+

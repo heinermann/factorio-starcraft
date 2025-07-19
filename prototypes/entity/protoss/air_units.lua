@@ -1,4 +1,4 @@
-local table = require('__stdlib__/stdlib/utils/table')
+local table = require("__starcraft__/external/stdlib/utils/table")
 require("prototypes.entity.helpers")
 
 local blank_anim = {
@@ -17,10 +17,8 @@ local function create_rotated_anim_variation(protodata, direction)
 
   for _, layer in ipairs(protodata.layers) do
     local basedir = layer.basedir or 0
-    local hr_basedir = layer.hr_basedir or 0
 
     layer.y = (direction - basedir) * layer.size[2]
-    layer.hr_y = (direction - hr_basedir) * layer.hr_size[2]
 
     table.insert(proto.layers, create_anim(layer))
   end
@@ -44,14 +42,12 @@ end
 -- SCOUT DATA
 ------------------------------------------------------------------------------
 local scout_data = {
-  size = { 115, 84 },
-  hr_size = { 230, 166 },
+  size = { 230, 166 },
   vshift = -7/16
 }
 
 local scout_engine_data = {
-  size = { 193, 156 },
-  hr_size = { 386, 314 },
+  size = { 386, 314 },
   vshift = -7/16,
 }
 
@@ -87,8 +83,7 @@ local scout_shadow_data = {
   layers = {
     {
       filename = "main_140_shadow.png",
-      size = { 117, 92 },
-      hr_size = { 232, 184 },
+      size = { 232, 184 },
       vshift = 3,
       hshift = 3,
       draw_as_shadow = true
@@ -116,8 +111,7 @@ for _, layer in ipairs(scout_moving3_data.layers) do
   layer.repeat_count = 4
 end
 table.insert(scout_moving3_data.layers, table.dictionary_merge({
-  filename = "main_142_diffuse.png",
-  hr_filename = "main_142_diffuse_1.png",
+  filename = "main_142_diffuse_1.png",
   draw_as_glow = true,
   frame_count = 2,
   frame_sequence = {1, 1, 2, 2}
@@ -128,8 +122,8 @@ for i = 0, 25 do
 end
 
 -- Remaining engine frames are on another sheet
-scout_moving3_data.layers[#scout_moving3_data.layers].hr_filename = "main_142_diffuse_2.png"
-scout_moving3_data.layers[#scout_moving3_data.layers].hr_basedir = 26
+scout_moving3_data.layers[#scout_moving3_data.layers].filename = "main_142_diffuse_2.png"
+scout_moving3_data.layers[#scout_moving3_data.layers].basedir = 26
 for i = 26, 31 do
   create_rotated_anim_variation(scout_moving3_data, i)
 end

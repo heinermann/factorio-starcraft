@@ -11,13 +11,11 @@ data:extend({
             layers = {
                 create_layered_anim({
                     name = "main_203",
-                    size = { 240, 304 },
-                    hr_size = { 480, 608 }
+                    size = { 480, 608 }
                 }, {"main", "emissive"}),
                 create_custom_shadow_anim({
                     filename = "stasis_cell_shad",
-                    size = { 365, 109 },
-                    hr_size = { 731, 219 },
+                    size = { 731, 219 },
                     vshift = 68 / 64,
                     hshift = (731 - 480) / 2 / 64
                 })
@@ -39,8 +37,7 @@ data:extend({
         icon_id = 173,
         picture = create_layered_anim({
             name = "main_178",
-            size = { 259, 256 },
-            hr_size = { 518, 512 },
+            size = { 518, 512 },
             vshift = -16/16
         }, {"main", "emissive"}),
 
@@ -60,8 +57,7 @@ data:extend({
         icon_id = 174,
         picture = create_layered_anim({
             name = "main_207",
-            size = { 451, 308 },
-            hr_size = { 902, 616 },
+            size = { 902, 616 },
             vshift = -7/16
         }, {"main"}),
 
@@ -83,14 +79,12 @@ data:extend({
             layers = {
                 create_layered_anim({
                     name = "main_937",
-                    size = { 385, 520 },
-                    hr_size = { 769, 1040 },
+                    size = { 769, 1040 },
                     vshift = -16/16
                 }, {"main", "emissive"}),
                 create_custom_shadow_anim({
                     filename = "xelnaga_shad",
-                    size = { 522, 262 },
-                    hr_size = { 1043, 523 },
+                    size = { 1043, 523 },
                     vshift = 106 / 64 - 16/16,
                     hshift = (1043 - 769) / 2 / 64
                 })
@@ -114,8 +108,7 @@ data:extend({
             layers = {
                 create_layered_anim({
                     name = "main_934",
-                    size = { 247, 452 },
-                    hr_size = { 493, 905 },
+                    size = { 493, 905 },
 
                     frame_count = 1,
                     repeat_count = 10,
@@ -123,8 +116,7 @@ data:extend({
                 }, {"main", "emissive"}),
                 create_anim({
                     filename = "main_936_diffuse.png",
-                    size = { 103, 382 },
-                    hr_size = { 207, 765 },
+                    size = { 207, 765 },
 
                     draw_as_glow = true,
 

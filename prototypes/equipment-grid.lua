@@ -5,29 +5,22 @@
 -- 4. Defense matrix shields? (unlikely as it will conflict with protoss shields unless I can guarantee it hits this first)
 
 local tempSprite = {
-  filename = "__base__/graphics/equipment/fusion-reactor-equipment.png",
-  width = 128,
-  height = 128,
+  filename = "__base__/graphics/equipment/fission-reactor-equipment.png",
+  width = 256,
+  height = 256,
   priority = "medium",
-  hr_version =
-  {
-    filename = "__base__/graphics/equipment/hr-fusion-reactor-equipment.png",
-    width = 256,
-    height = 256,
-    priority = "medium",
-    scale = 0.5
-  }
+  scale = 0.5
 }
 
 local function fake_item(name)
   return {
     type = "item",
     name = name,
-    icon = "__base__/graphics/icons/fusion-reactor-equipment.png",
+    icon = "__base__/graphics/icons/fission-reactor-equipment.png",
     icon_size = 64, icon_mipmaps = 4,
     subgroup = "starcraft-mechanics",
     stack_size = 1,
-    flags = {"hidden", "not-stackable", "hide-from-bonus-gui"}
+    hidden = true
   }
 end
 

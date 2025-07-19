@@ -43,18 +43,15 @@ local function make_simple_smoke_anim(data)
 end
 
 local function make_shield_hit(index, type)
-  local hr_filename = index <= 27 and "main_424_diffuse_1.png" or "main_424_diffuse_2.png"
+  local filename = index <= 27 and "main_424_diffuse_1.png" or "main_424_diffuse_2.png"
 
   local anim_data = {
-    hr_filename = hr_filename,
-    low_filename = "main_424_diffuse.png",
-    size = { 114, 147 },
-    hr_size = { 229, 294 },
+    filename = filename,
+    size = { 229, 294 },
     frame_count = 4,
     line_length = 4,
     draw_as_glow = true,
-    y = 147 * ((index - 1) % 27),
-    hr_y = 294 * ((index - 1) % 27),
+    y = 294 * ((index - 1) % 27),
     frame_time = 2.52,
   }
 
@@ -77,8 +74,7 @@ data:extend({
     name = "starcraft-vespene-smoke-1",
     anim = {
       filename = "main_430_diffuse.png",
-      size = { 87, 182 },
-      hr_size = { 174, 367 },
+      size = { 174, 367 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 5.04
@@ -88,8 +84,7 @@ data:extend({
     name = "starcraft-vespene-smoke-2",
     anim = {
       filename = "main_431_diffuse.png",
-      size = { 86, 156 },
-      hr_size = { 172, 310 },
+      size = { 172, 310 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 5.04
@@ -99,8 +94,7 @@ data:extend({
     name = "starcraft-vespene-smoke-3",
     anim = {
       filename = "main_432_diffuse.png",
-      size = { 60, 89 },
-      hr_size = { 118, 177 },
+      size = { 118, 177 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 5.04
@@ -110,8 +104,7 @@ data:extend({
     name = "starcraft-vespene-smoke-4",
     anim = {
       filename = "main_433_diffuse.png",
-      size = { 76, 154 },
-      hr_size = { 152, 308 },
+      size = { 152, 308 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 5.04
@@ -121,8 +114,7 @@ data:extend({
     name = "starcraft-vespene-smoke-5",
     anim = {
       filename = "main_434_diffuse.png",
-      size = { 65, 102 },
-      hr_size = { 128, 202 },
+      size = { 128, 202 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 5.04
@@ -132,8 +124,7 @@ data:extend({
     name = "starcraft-vespene-smoke-depleted",
     anim = {
       filename = "main_435_diffuse.png",
-      size = { 28, 46 },
-      hr_size = { 56, 90 },
+      size = { 56, 90 },
       frame_count = 5,
       draw_as_glow = true,
       frame_time = 5.04
@@ -143,8 +134,7 @@ data:extend({
     name = "starcraft-dragbull_explode",
     anim = {
       filename = "main_427_diffuse.png",
-      size = { 118, 121 },
-      hr_size = { 237, 243 },
+      size = { 237, 243 },
       frame_count = 14,
       draw_as_glow = true,
       frame_time = 2.52
@@ -155,10 +145,8 @@ data:extend({
     anim = {
       filename = "main_211_diffuse.png",
       frame_count = 14,
-      line_length = 13,
-      size = { 298, 300 },
-      hr_line_length = 6,
-      hr_size = { 596, 599 },
+      line_length = 6,
+      size = { 596, 599 },
       draw_as_glow = true,
       frame_sequence = { 1, 2 },
       frame_time = 5.04
@@ -169,8 +157,7 @@ data:extend({
     anim = {
       filename = "main_423_diffuse.png",
       frame_count = 7,
-      size = { 104, 56 },
-      hr_size = { 209, 112 },
+      size = { 209, 112 },
       frame_time = 5.04
     }
   },
@@ -179,8 +166,7 @@ data:extend({
     anim = {
       filename = "main_494_diffuse.png",
       frame_count = 10,
-      size = { 61, 48 },
-      hr_size = { 122, 97 },
+      size = { 122, 97 },
       frame_time = 7.56
     }
   },
@@ -189,8 +175,7 @@ data:extend({
     anim = {
       filename = "main_495_diffuse.png",
       frame_count = 8,
-      size = { 77, 97 },
-      hr_size = { 156, 194 },
+      size = { 156, 194 },
       frame_time = 7.56
     }
   },
@@ -199,8 +184,7 @@ data:extend({
     anim = {
       filename = "main_496_diffuse.png",
       frame_count = 10,
-      size = { 61, 44 },
-      hr_size = { 124, 87 },
+      size = { 124, 87 },
       frame_time = 7.56
     }
   },
@@ -209,8 +193,7 @@ data:extend({
     anim = {
       filename = "main_497_diffuse.png",
       frame_count = 8,
-      size = { 106, 102 },
-      hr_size = { 213, 204 },
+      size = { 213, 204 },
       frame_time = 7.56
     }
   },
@@ -219,8 +202,7 @@ data:extend({
     anim = {
       filename = "main_498_diffuse.png",
       frame_count = 8,
-      size = { 106, 99 },
-      hr_size = { 211, 197 },
+      size = { 211, 197 },
       frame_time = 7.56
     }
   },
@@ -229,8 +211,7 @@ data:extend({
     anim = {
       filename = "main_499_diffuse.png",
       frame_count = 10,
-      size = { 58, 87 },
-      hr_size = { 116, 174 },
+      size = { 116, 174 },
       frame_time = 7.56
     }
   },
@@ -239,8 +220,7 @@ data:extend({
     anim = {
       filename = "main_500_diffuse.png",
       frame_count = 10,
-      size = { 51, 76 },
-      hr_size = { 103, 154 },
+      size = { 103, 154 },
       frame_time = 7.56
     }
   },
@@ -249,8 +229,7 @@ data:extend({
     anim = {
       filename = "main_501_diffuse.png",
       frame_count = 10,
-      size = { 62, 78 },
-      hr_size = { 122, 155 },
+      size = { 122, 155 },
       frame_time = 7.56
     }
   },
@@ -259,8 +238,7 @@ data:extend({
     anim = {
       filename = "main_502_diffuse.png",
       frame_count = 10,
-      size = { 76, 80 },
-      hr_size = { 152, 159 },
+      size = { 152, 159 },
       frame_time = 7.56
     }
   },
@@ -279,8 +257,7 @@ data:extend({
     name = "starcraft-blastgn-hit",
     anim = {
       filename = "main_519_diffuse.png",
-      size = { 166, 115 },
-      hr_size = { 332, 231 },
+      size = { 332, 231 },
       frame_count = 8,
       draw_as_glow = true,
       frame_time = 2.52

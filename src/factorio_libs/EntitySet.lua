@@ -5,37 +5,37 @@ EntitySet = class()
 function EntitySet:init(identifier)
     self.identifier = "entity_set_" .. identifier
 
-    if global[self.identifier] == nil then
-        global[self.identifier] = {}
+    if storage[self.identifier] == nil then
+        storage[self.identifier] = {}
     end
 end
 
 function EntitySet:insert(entity)
-    global[self.identifier][entity.unit_number] = entity
+    storage[self.identifier][entity.unit_number] = entity
 end
 
 function EntitySet:remove(entity)
-    global[self.identifier][entity.unit_number] = nil
+    storage[self.identifier][entity.unit_number] = nil
 end
 
 function EntitySet:remove_id(id)
-    global[self.identifier][id] = nil
+    storage[self.identifier][id] = nil
 end
 
 function EntitySet:pairs()
-    return pairs(global[self.identifier])
+    return pairs(storage[self.identifier])
 end
 
 function EntitySet:clear()
-    global[self.identifier] = {}
+    storage[self.identifier] = {}
 end
 
 function EntitySet:table()
-    return global[self.identifier]
+    return storage[self.identifier]
 end
 
 function EntitySet:contains(entity)
-    return global[self.identifier][entity.unit_number] ~= nil
+    return storage[self.identifier][entity.unit_number] ~= nil
 end
 
 function EntitySet:foreach(fn)

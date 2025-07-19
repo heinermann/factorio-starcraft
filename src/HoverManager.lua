@@ -1,7 +1,7 @@
 require("factorio_libs.UpdateManager")
 require("factorio_libs.EntitySet")
 
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 
 local HoverManager = {}
 local hovering_entities = EntitySet:new("AirUnitHovering")
@@ -37,12 +37,12 @@ local function setvertpos(entity, y_offset)
 
     if data.main_graphics then
         for _, graphic in ipairs(data.main_graphics) do
-            rendering.set_target(graphic, entity, {0, y_offset})
+            graphic.target = { entity = entity, offset = {0, y_offset} }
         end
     end
     if data.shadow_graphic then
         -- Note: The main shadow offset should be determined in data, makes this easier
-        rendering.set_target(data.shadow_graphic, entity, {-y_offset, 0})
+        data.shadow_graphic.target = { entity = entity, offset = {-y_offset, 0} }
     end
 end
 ------------------------------------------------------------------------------------------------------------------------------------------

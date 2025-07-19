@@ -18,7 +18,7 @@ data:extend({
     icon_size = 64,
     allow_copy_paste = false,
     build_sound = nil,
-    collision_mask = {},
+    collision_mask = { layers = {} },
     created_smoke = {
       smoke_name = "starcraft-smokeless"
     },
@@ -28,7 +28,6 @@ data:extend({
       "not-repairable",
       "not-blueprintable",
       "not-deconstructable",
-      "hidden",
       "not-flammable",
       "no-automated-item-removal",
       "no-automated-item-insertion",
@@ -37,6 +36,7 @@ data:extend({
       "not-upgradable",
       "not-in-kill-statistics"
     },
+    hidden = true,
     selectable_in_game = false,
     subgroup = "starcraft-terran-ground-units",
 
@@ -68,6 +68,7 @@ data:extend({
     ticks_to_stay_in_combat = 0,
     damage_hit_tint = {},
     running_sound_animation_positions = {},
+    moving_sound_animation_positions = {},
     mining_with_tool_particles_animation_positions = {},
     animations = {
       {
@@ -81,6 +82,6 @@ data:extend({
     tool_attack_distance = 0,
     has_belt_immunity = true,
     crafting_categories = {"starcraft-none"},
-    mining_categories = {"starcraft-none"}
+    mining_categories = {"starcraft-none"},
   }
 })

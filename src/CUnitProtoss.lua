@@ -1,9 +1,8 @@
-local Entity = require('__stdlib__/stdlib/entity/entity')
-local Position = require('__stdlib__/stdlib/area/position')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
+local Position = require('__starcraft__/external/stdlib/area/position')
 
 require('factorio_libs.ForceTileData')
 local ShieldManager = require("ShieldManager")
-
 
 local CUnitProtoss = {}
 local powered_tiles = ForceTileData:new("PylonPower")

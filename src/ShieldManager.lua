@@ -1,7 +1,7 @@
 require("factorio_libs.EntitySet")
 
-local math = require('__stdlib__/stdlib/utils/math')
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local math = require('__starcraft__/external/stdlib/utils/math')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 local lo_data = require("__starcraft__/unit/lo")
 
 
@@ -155,25 +155,25 @@ local function update_shield_bar(entity)
 
     -- Set colours
     local should_show_faded_health = health_ratio == 1 and shield_ratio ~= 1
-    rendering.set_visible(data.faded_health_bar_bg, should_show_faded_health)
-    rendering.set_visible(data.faded_health_bar, should_show_faded_health)
+    data.faded_health_bar_bg.visible = should_show_faded_health
+    data.faded_health_bar.visible = should_show_faded_health
 
     if shield_ratio == 1 then
         local should_show_faded_shields = health_ratio ~= 1
-        rendering.set_visible(data.shield_bar_bg, should_show_faded_shields)
-        rendering.set_visible(data.shield_bar_filled, should_show_faded_shields)
-        rendering.set_visible(data.shield_bar_empty, should_show_faded_shields)
+        data.shield_bar_bg.visible = should_show_faded_shields
+        data.shield_bar_filled.visible = should_show_faded_shields
+        data.shield_bar_empty.visible = should_show_faded_shields
 
         if should_show_faded_shields then
-            rendering.set_color(data.shield_bar_bg, FADED_BLACK_COLOR)
-            rendering.set_color(data.shield_bar_filled, FADED_SHIELD_COLOR)
+            data.shield_bar_bg.color = FADED_BLACK_COLOR
+            data.shield_bar_filled.color = FADED_SHIELD_COLOR
         end
     else
-        rendering.set_visible(data.shield_bar_bg, true)
-        rendering.set_visible(data.shield_bar_filled, true)
-        rendering.set_visible(data.shield_bar_empty, true)
-        rendering.set_color(data.shield_bar_bg, BLACK_COLOR)
-        rendering.set_color(data.shield_bar_filled, SHIELD_COLOR)
+        data.shield_bar_bg.visible = true
+        data.shield_bar_filled.visible = true
+        data.shield_bar_empty.visible = true
+        data.shield_bar_bg.color = BLACK_COLOR
+        data.shield_bar_filled.color = SHIELD_COLOR
     end
 
     -- Set bar progress
@@ -183,15 +183,15 @@ local function update_shield_bar(entity)
     local mid_point = sel.left_top.x + 0.005 + filled_boxes * 7/32
 
     if filled_boxes == 0 then
-        rendering.set_visible(data.shield_bar_filled, false)
+        data.shield_bar_filled.visible = false
     else
-        rendering.set_to(data.shield_bar_filled, entity, {mid_point - 1/32, sel.right_bottom.y - 1/9 - 0.003})
+        data.shield_bar_filled.to = { entity = entity, offset = {mid_point - 1/32, sel.right_bottom.y - 1/9 - 0.003} }
     end
 
     if filled_boxes == num_boxes then
-        rendering.set_visible(data.shield_bar_empty, false)
+        data.shield_bar_empty.visible = false
     else
-        rendering.set_from(data.shield_bar_empty, entity, {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003})
+        data.shield_bar_empty.from = { entity = entity, offset = {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003} }
     end
 end
 
@@ -208,15 +208,19 @@ local function create_shield_bars(entity)
     local data = Entity.get_data(entity) or {}
     local sel = entity.prototype.selection_box
     local num_boxes = math.floor((sel.right_bottom.x - sel.left_top.x) * 32 / 7)
-    local mid_point = sel.left_top.x + 0.005 + num_boxes * 7/32
+    local end_point = sel.left_top.x + 0.005 + num_boxes * 7/32
 
     data.shield_bar_bg = rendering.draw_rectangle{
         color = BLACK_COLOR,
         filled = true,
-        left_top = entity,
-        left_top_offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 7/32 - 0.001},
-        right_bottom = entity,
-        right_bottom_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32, sel.right_bottom.y - 0.001},
+        left_top = {
+            entity = entity,
+            offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 7/32 - 0.001},
+        },
+        right_bottom = {
+            entity = entity,
+            offset = {end_point, sel.right_bottom.y - 0.001},
+        },
         surface = entity.surface
     }
 
@@ -225,10 +229,14 @@ local function create_shield_bars(entity)
         width = 5,
         gap_length = 2/32,
         dash_length = 5/32,
-        from = entity,
-        from_offset = {sel.left_top.x + 1/32, sel.right_bottom.y - 1/9 - 0.003},
-        to = entity,
-        to_offset = {mid_point - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        from = {
+            entity = entity,
+            offset = {sel.left_top.x + 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        },
+        to = {
+            entity = entity,
+            offset = {end_point - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        },
         surface = entity.surface
     }
 
@@ -237,20 +245,28 @@ local function create_shield_bars(entity)
         width = 5,
         gap_length = 2/32,
         dash_length = 5/32,
-        from = entity,
-        from_offset = {mid_point + 1/32, sel.right_bottom.y - 1/9 - 0.003},
-        to = entity,
-        to_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32 - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        from = {
+            entity = entity,
+            offset = {end_point + 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        },
+        to = {
+            entity = entity,
+            offset = {end_point - 1/32, sel.right_bottom.y - 1/9 - 0.003},
+        },
         surface = entity.surface
     }
 
     data.faded_health_bar_bg = rendering.draw_rectangle{
         color = FADED_BLACK_COLOR,
         filled = true,
-        left_top = entity,
-        left_top_offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 0.001},
-        right_bottom = entity,
-        right_bottom_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32, sel.right_bottom.y + 7/32 - 0.001},
+        left_top = {
+            entity = entity,
+            offset = {sel.left_top.x + 0.005, sel.right_bottom.y - 0.001},
+        },
+        right_bottom = {
+            entity = entity,
+            offset = {end_point, sel.right_bottom.y + 7/32 - 0.001},
+        },
         surface = entity.surface
     }
 
@@ -259,10 +275,14 @@ local function create_shield_bars(entity)
         width = 5,
         gap_length = 2/32,
         dash_length = 5/32,
-        from = entity,
-        from_offset = {sel.left_top.x + 1/32, sel.right_bottom.y + 1/9 + 0.003},
-        to = entity,
-        to_offset = {sel.left_top.x + 0.005 + num_boxes * 7/32 - 1/32, sel.right_bottom.y + 1/9 + 0.003},
+        from = {
+            entity = entity,
+            offset = {sel.left_top.x + 1/32, sel.right_bottom.y + 1/9 + 0.003},
+        },
+        to = {
+            entity = entity,
+            offset = {end_point - 1/32, sel.right_bottom.y + 1/9 + 0.003},
+        },
         surface = entity.surface
     }
 

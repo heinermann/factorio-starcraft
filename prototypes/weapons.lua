@@ -5,10 +5,11 @@ local function make_gun(proto)
     type = "gun",
     name = proto.name,
     stack_size = 1,
-    flags = { "hidden", "not-stackable" },
+    hidden = true,
     subgroup = "starcraft-weapons",
     attack_parameters = {
       type = "projectile",
+      ammo_category = proto.ammo_category,
       projectile_center = proto.projectile_center,
       projectile_creation_distance = proto.projectile_creation_distance,
       projectile_creation_parameters = proto.projectile_creation_parameters,
@@ -51,11 +52,10 @@ data:extend({
     stack_size = 1,
     flags = { "not-stackable" },
     subgroup = "starcraft-weapons",
-    magazine_size = 1e38,
+    ammo_category = "starcraft-protoss-air-weapons",
     ammo_type = {
-      category = "starcraft-protoss-air-weapons",
       consumption_modifier = 0,
-    }
+    },
   },
 })
 
@@ -67,8 +67,8 @@ data:extend({
     cooldown = sc_ticks_to_factorio_ticks(30 - 1),
     turn_range = 16 / 256.0,
     warmup = sc_ticks_to_factorio_ticks(1),
+    ammo_category = "starcraft-protoss-air-weapons",
     ammo_type = {
-      category = "starcraft-protoss-air-weapons",
       action = {
         type = "direct",
         action_delivery = {

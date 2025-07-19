@@ -1,5 +1,5 @@
 require("factorio_libs.UpdateManager")
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 
 local Resources = {}
 local vespene_geyser_tracker = UpdateManager:new("VespeneGeysers")

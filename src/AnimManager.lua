@@ -1,4 +1,4 @@
-local Entity = require('__stdlib__/stdlib/entity/entity')
+local Entity = require('__starcraft__/external/stdlib/entity/entity')
 
 local AnimManager = {}
 
@@ -66,9 +66,9 @@ function AnimManager.set_entity_animation(entity, animation)
   local data = Entity.get_data(entity)
 
   for i = 1, 3 do
-    rendering.set_animation(data.main_graphics[i], get_anim_name(entity, animation, i))
+    data.main_graphics[i].animation = get_anim_name(entity, animation, i)
   end
-  rendering.set_animation(data.shadow_graphic, get_shadow_name(entity, animation))
+  data.shadow_graphic.animation = get_shadow_name(entity, animation)
 end
 
 function AnimManager.cloak(entity)

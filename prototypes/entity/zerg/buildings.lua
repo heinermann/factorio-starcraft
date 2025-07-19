@@ -9,8 +9,7 @@ data:extend({
         icon_id = 131,
         animation = create_layered_anim({
             name = "main_070",
-            size = { 259, 204 },
-            hr_size = { 520, 408 },
+            size = { 520, 408 },
 
             frame_count = 6,
             frame_sequence = { 1, 2, 3, 4, 4, 3, 2, 1 },
@@ -36,8 +35,7 @@ data:extend({
         icon_id = 132,
         animation = create_layered_anim({
             name = "main_074",
-            size = { 263, 261 },
-            hr_size = { 524, 523 },
+            size = { 524, 523 },
 
             frame_count = 5,
             frame_sequence = { 1, 2, 3, 4, 4, 3, 2, 1 },
@@ -63,8 +61,7 @@ data:extend({
         icon_id = 133,
         animation = create_layered_anim({
             name = "main_072",
-            size = { 253, 342 },
-            hr_size = { 508, 685 },
+            size = { 508, 685 },
 
             frame_count = 5,
             frame_sequence = { 1, 2, 3, 4, 4, 3, 2, 1 },
@@ -90,8 +87,7 @@ data:extend({
         icon_id = 134,
         animation = create_layered_anim({
             name = "main_086",
-            size = { 141, 164 },
-            hr_size = { 283, 328 },
+            size = { 283, 328 },
 
             frame_count = 5,
             frame_sequence = { 1, 2, 3, 4, 4, 3, 2, 1 },
@@ -117,8 +113,7 @@ data:extend({
         icon_id = 135,
         animation = create_layered_anim({
             name = "main_095",
-            size = { 213, 234 },
-            hr_size = { 428, 468 },
+            size = { 428, 468 },
 
             frame_count = 3,
             frame_sequence = { 1, 2, 3, 3, 2, 1 },
@@ -144,8 +139,7 @@ data:extend({
         icon_id = 136,
         animation = create_layered_anim({
             name = "main_082",
-            size = { 229, 211 },
-            hr_size = { 459, 420 },
+            size = { 459, 420 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 2 },
@@ -170,8 +164,7 @@ data:extend({
         icon_id = 137,
         animation = create_layered_anim({
             name = "main_080",
-            size = { 159, 294 },
-            hr_size = { 317, 588 },
+            size = { 317, 588 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3 },
@@ -197,8 +190,7 @@ data:extend({
         icon_id = 138,
         animation = create_layered_anim({
             name = "main_084",
-            size = { 158, 197 },
-            hr_size = { 316, 395 },
+            size = { 316, 395 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 3, 2, 1 },
@@ -224,8 +216,7 @@ data:extend({
         icon_id = 139,
         animation = create_layered_anim({
             name = "main_066",
-            size = { 196, 230 },
-            hr_size = { 392, 458 },
+            size = { 392, 458 },
 
             frame_count = 3,
             frame_sequence = { 1, 2, 3 },
@@ -251,8 +242,7 @@ data:extend({
         icon_id = 140,
         animation = create_layered_anim({
             name = "main_091",
-            size = { 194, 232 },
-            hr_size = { 388, 464 },
+            size = { 388, 464 },
 
             frame_count = 3,
             frame_sequence = { 1, 2, 3, 3, 2, 1 },
@@ -278,8 +268,7 @@ data:extend({
         icon_id = 141,
         animation = create_layered_anim({
             name = "main_097",
-            size = { 133, 260 },
-            hr_size = { 267, 520 },
+            size = { 267, 520 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 3, 2, 1 },
@@ -305,8 +294,7 @@ data:extend({
         icon_id = 142,
         animation = create_layered_anim({
             name = "main_064",
-            size = { 193, 141 },
-            hr_size = { 386, 283 },
+            size = { 386, 283 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 4 },
@@ -332,8 +320,7 @@ data:extend({
         icon_id = 143,
         animation = create_layered_anim({
             name = "main_068",
-            size = { 137, 116 },
-            hr_size = { 275, 231 },
+            size = { 275, 231 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 4 },
@@ -359,8 +346,7 @@ data:extend({
         icon_id = 144,
         animation = create_layered_anim({
             name = "main_099",
-            size = { 138, 173 },
-            hr_size = { 278, 345 },
+            size = { 278, 345 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 4 },
@@ -386,10 +372,8 @@ data:extend({
         icon_id = 146,
         animation = create_layered_anim({
             name = "main_076",
-            size = { 174, 173 },
-            line_length = 23,
-            hr_size = { 349, 347 },
-            hr_line_length = 11,
+            size = { 349, 347 },
+            line_length = 11,
 
             frame_count = 34,
             frame_sequence = { 1, 2, 3 },
@@ -416,8 +400,7 @@ data:extend({
         icon_id = 149,
         animation = create_layered_anim({
             name = "main_093",
-            size = { 249, 341 },
-            hr_size = { 498, 683 },
+            size = { 498, 683 },
 
             frame_count = 4,
             frame_sequence = { 1, 2, 3, 4, 3, 2 },

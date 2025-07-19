@@ -1,4 +1,4 @@
-local table = require('__stdlib__/stdlib/utils/table')
+local table = require("__starcraft__/external/stdlib/utils/table")
 
 local unitSizeTypes = {
   independent = {
@@ -68,14 +68,19 @@ local function make_common_unit(data)
     allow_copy_paste = false,
     build_sound = data.build_sound,
     collision_box = data.collision_box,
-    collision_mask = {"player-layer", "train-layer", "consider-tile-transitions"},
+    collision_mask = {
+      layers = {
+        player = true,
+        train = true,
+      },
+      consider_tile_transitions = true
+    },
 
     fast_replaceable_group = data.fast_replaceable_group,
     flags = {
       "not-rotatable",
       "not-blueprintable",
       "not-deconstructable",
-      "hidden",
       "not-flammable",
       "no-automated-item-removal",
       "no-automated-item-insertion",
@@ -84,6 +89,7 @@ local function make_common_unit(data)
       "player-creation",
       "placeable-off-grid"
     },
+    hidden = true,
 
     selection_box = data.collision_box, -- TODO: Make this larger
     shooting_cursor_size = -data.collision_box[1][1] + data.collision_box[2][1] + 1,
@@ -184,7 +190,7 @@ local function make_common_unit(data)
 end
 
 local function to_air_unit(data)
-  data.collision_mask = {}
+  data.collision_mask = { layers = {} }
   if data.render_layer == "object" then
     data.render_layer = "air-object"
   end
@@ -253,11 +259,13 @@ local function make_common_structure(data)
     build_sound = data.build_sound,
     collision_box = data.collision_box,
     collision_mask = {
-      "item-layer",
-      "object-layer",
-      "train-layer",
-      "player-layer",
-      "water-tile"
+      layers = {
+        item = true,
+        object = true,
+        train = true,
+        player = true,
+        water_tile = true
+      }
     },
 
     fast_replaceable_group = data.fast_replaceable_group,
@@ -265,7 +273,6 @@ local function make_common_structure(data)
       "not-rotatable",
       "not-blueprintable",
       "not-deconstructable",
-      "hidden",
       "not-flammable",
       "no-automated-item-removal",
       "no-automated-item-insertion",
@@ -273,6 +280,7 @@ local function make_common_structure(data)
       "not-upgradable",
       "player-creation"
     },
+    hidden = true,
 
     map_generator_bounding_box = {{-data.tile_width/2, -data.tile_height/2}, {data.tile_width/2, data.tile_height/2}},
     remove_decoratives = "true",
@@ -283,7 +291,8 @@ local function make_common_structure(data)
     tile_width = data.tile_width,
     created_smoke = {
       smoke_name = "starcraft-smokeless"
-    }
+    },
+    graphics_set = data.graphics_set,
 
     -- trigger_target_mask
   }
@@ -437,55 +446,28 @@ end
 function create_anim(data)
   if data == nil then return nil end
   local result = {
-      line_length = data.line_length or data.frame_count or 1,
-      size = data.size,
-      frame_count = data.frame_count or 1,
-      frame_sequence = data.frame_sequence,
-      animation_speed = data.animation_speed,
-      flags = data.flags,
-      draw_as_shadow = data.draw_as_shadow,
-      draw_as_glow = data.draw_as_glow,
-      draw_as_light = data.draw_as_light,
-      apply_runtime_tint = data.apply_runtime_tint,
-      blend_mode = data.blend_mode,
-      repeat_count = data.repeat_count,
-      direction_count = data.direction_count or 1,
-      shift = data.shift,
-      y = data.y,
-      stripes = data.stripes,
-
-      hr_version = {
-          line_length = data.hr_line_length or data.frame_count or 1,
-          size = data.hr_size,
-          scale = 0.5,
-          frame_count = data.frame_count or 1,
-          frame_sequence = data.frame_sequence,
-          animation_speed = data.animation_speed,
-          flags = data.flags,
-          draw_as_shadow = data.draw_as_shadow,
-          draw_as_glow = data.draw_as_glow,
-          draw_as_light = data.draw_as_light,
-          apply_runtime_tint = data.apply_runtime_tint,
-          blend_mode = data.blend_mode,
-          repeat_count = data.repeat_count,
-          direction_count = data.direction_count or 1,
-          shift = data.shift,
-          y = data.hr_y,
-          stripes = data.hr_stripes,
-    }
+    filename = "__starcraft__/graphics/hd/" .. data.filename,
+    line_length = data.line_length or data.frame_count or 1,
+    size = data.size,
+    scale = 0.5,
+    frame_count = data.frame_count or 1,
+    frame_sequence = data.frame_sequence,
+    animation_speed = data.animation_speed,
+    flags = data.flags,
+    draw_as_shadow = data.draw_as_shadow,
+    draw_as_glow = data.draw_as_glow,
+    draw_as_light = data.draw_as_light,
+    apply_runtime_tint = data.apply_runtime_tint,
+    blend_mode = data.blend_mode,
+    repeat_count = data.repeat_count,
+    direction_count = data.direction_count or 1,
+    shift = data.shift,
+    y = data.y,
+    stripes = data.stripes,
   }
-
-  if data.low_filename or data.filename then
-    result.filename = "__starcraft__/graphics/low/" .. (data.low_filename or data.filename)
-  end
-
-  if data.hr_filename or data.filename then
-    result.hr_version.filename = "__starcraft__/graphics/hd/" .. (data.hr_filename or data.filename)
-  end
 
   if data.vshift ~= nil or data.hshift ~= nil then
     result.shift = { data.hshift or 0, data.vshift or 0 }
-    result.hr_version.shift = { data.hshift or 0, data.vshift or 0 }
   end
   return result
 end
@@ -494,16 +476,13 @@ function create_shadow_anim(data)
   data.filename = data.filename .. ".png"
   local result = create_anim(data)
   result.draw_as_shadow = true
-  result.hr_version.draw_as_shadow = true
   return result
 end
 
 function create_custom_shadow_anim(data)
   local result = create_anim(data)
-  result.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. ".png"
-  result.hr_version.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. "_hr.png"
+  result.filename = "__starcraft__/graphics2/shadows/" .. data.filename .. "_hr.png"
   result.draw_as_shadow = true
-  result.hr_version.draw_as_shadow = true
   return result
 end
 
@@ -512,8 +491,6 @@ function create_layered_anim(data, layers)
   local common_attributes = {
     size = data.size,
     line_length = data.line_length,
-    hr_size = data.hr_size,
-    hr_line_length = data.hr_line_length,
     frame_count = data.frame_count,
     frame_sequence = data.frame_sequence,
     animation_speed = data.animation_speed,
@@ -568,10 +545,12 @@ function make_zerg_structure(data)
   -- This is the magic that makes creep work, since creep tiles collide with object-layer to prevent other structures
   -- from being placed on it, that means structures cannot have object-layer collision (so it has other collision masks to make up for it)
   result.collision_mask = {
-    "item-layer",
-    "train-layer",
-    "player-layer",
-    "water-tile"
+    layers = {
+      item = true,
+      train = true,
+      player = true,
+      water_tile = true
+    }
   }
 
   return result
